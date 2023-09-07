@@ -1,11 +1,17 @@
 {
-  "name": "thierry_v1",
-  "version": "0.1.0",
-  "private": true,
+  "name": "thierry_next",
+  "homepage": "https://thierrycasters.fr",
+  "version": "1.0.0",
+  "description": "Artist's portfolio",
+  "repository": "thierry_v1",
+  "keywords": [],
+  "author": "Marion Casters",
+  "license": "ISC",
+  "main": "server.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_ENV=development node server.js",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.js",
     "lint": "next lint"
   },
   "dependencies": {
@@ -14,6 +20,7 @@
     "@types/react-dom": "18.2.7",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
+    "express": "^4.18.2",
     "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
