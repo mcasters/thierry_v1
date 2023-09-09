@@ -80,9 +80,8 @@
   * ======================================================================== */
   --font-size-xtitle: 2.4rem;
   --font-size-title: 1.8rem;
-  --font-size-plus-plus: 1.2rem;
-  --font-size-plus: 1rem;
-  --font-size: 0.8rem;
+  --font-size-plus: 1.2rem;
+  --font-size: 1rem;
   --font-size-min: 0.7rem;
 
   /*
@@ -119,6 +118,7 @@ body {
    */
   font-family: var(--font-base);
   -webkit-font-smoothing: antialiased;
+  font-size: var(--font-size);
 }
 
 html,
@@ -130,13 +130,27 @@ body {
 }
 
 
-a {
+a, .buttonLink {
   text-decoration: none;
   color: var(--color-blue-light);
   transition: color 0.4s;
 }
 
-a:hover {
+a:hover, .buttonLink:hover {
   color: var(--color-blue-xlight);
   transition: color 0.4s;
+}
+
+.buttonLink {
+  font-family: var(--font-base) !important;
+  font-size: var(--font-size);
+  padding: 2px 5px;
+  display: inline;
+  margin: 0;
+  background: none;
+  box-shadow: none;
+  border: none;
+  width: inherit;
+  line-height: inherit;
+  cursor: pointer;
 }
