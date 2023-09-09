@@ -41,6 +41,12 @@ model PostImage {
   postAlbumId Int?
 }
 
+model Content {
+  id       Int     @id @default(autoincrement())
+  label    String  @unique
+  text     String  @db.LongText
+}
+
 model Painting {
   id          Int      @id @default(autoincrement())
   title       String
