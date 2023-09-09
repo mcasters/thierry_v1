@@ -1,14 +1,18 @@
 .container {
   text-align: center;
-  margin-top: var(--red-line-height);
 }
 
-.intro {}
+.intro {
+  max-width: 55ch;
+  width: calc(100% - var(--space));
+  margin: 6px auto 8rem;
+  padding: var(--space);
+}
 
 .title {
   font-size: 2.5em;
   font-variant: small-caps;
-  text-align: center;
+  font-weight: lighter;
   margin: 0;
   height: 100px;
   line-height: 100px;
@@ -16,9 +20,7 @@
 
 .text {
   padding: 5em 0;
-  display: inline-block;
   vertical-align: baseline;
-  max-width: 400px;
   margin: 0 auto;
 }
 

@@ -38,6 +38,7 @@ next-env.d.ts
 notes/
 .idea
 package-lock.json
+/public/assets
 
 # database
 /prisma/migrations
