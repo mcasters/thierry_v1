@@ -1,7 +1,8 @@
 import Image from 'next/image';
-import styles from '@/styles/Home.module.css';
+import s from '@/styles/Home.module.css';
 import Layout from '../components/layout/Layout';
 import HomePart from '@/components/home/HomePart';
+import HomeContactPart from '@/components/home/HomeContactPart';
 
 export default function Home() {
   const introduction =
@@ -10,16 +11,16 @@ export default function Home() {
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et ligula ullamcorper malesuada proin libero nunc consequat. Eu lobortis elementum nibh tellus molestie nunc non blandit. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Magna fermentum iaculis eu non diam phasellus. Curabitur vitae nunc sed velit. Fringilla phasellus faucibus scelerisque eleifend donec. Gravida quis blandit turpis cursus. Sed libero enim sed faucibus turpis in eu mi. Risus quis varius quam quisque id diam vel quam. Nunc vel risus commodo viverra maecenas accumsan. Enim nec dui nunc mattis. Pulvinar sapien et ligula ullamcorper malesuada proin. Quam nulla porttitor massa id.\n' +
     '\n' +
     'Diam quis enim lobortis scelerisque fermentum dui faucibus in ornare. Duis at consectetur lorem donec massa. Integer quis auctor elit sed vulputate mi sit amet. Aenean euismod elementum nisi quis eleifend quam. Curabitur vitae nunc sed velit dignissim sodales ut eu sem. Nisl condimentum id venenatis a. Dignissim enim sit amet venenatis urna. Duis tristique sollicitudin nibh sit amet. Ornare lectus sit amet est placerat in egestas. Quisque id diam vel quam elementum pulvinar etiam non. Lacus sed turpis tincidunt id aliquet risus. Arcu non odio euismod lacinia at quis risus sed vulputate. Porttitor massa id neque aliquam vestibulum morbi blandit cursus. Tellus mauris a diam maecenas sed enim ut sem.';
-  const contact =
+  const demarche =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus in hac habitasse platea dictumst vestibulum rhoncus. Interdum velit laoreet id donec ultrices tincidunt arcu non sodales. Nulla malesuada pellentesque elit eget gravida cum sociis natoque. In fermentum et sollicitudin ac orci phasellus egestas tellus. Tellus in metus vulputate eu scelerisque felis imperdiet. Magna sit amet purus gravida. Urna neque viverra justo nec. Tellus rutrum tellus pellentesque eu tincidunt tortor. Non tellus orci ac auctor augue mauris augue. Odio tempor orci dapibus ultrices in.';
 
   return (
     <>
       <Layout introduction={introduction}>
-        <div className={`${styles.main}`}>
-          <div className={styles.center}>
+        <div className={s.main}>
+          <div className={s.center}>
             <Image
-              className={styles.logo}
+              className={s.logo}
               src="/next.svg"
               alt="Next.js Logo"
               width={180}
@@ -27,10 +28,10 @@ export default function Home() {
               priority
             />
           </div>
-          <div className={styles.grid}>
+          <div className={s.grid}>
             <a
               href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              className={styles.card}
+              className={s.card}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -44,7 +45,7 @@ export default function Home() {
 
             <a
               href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              className={styles.card}
+              className={s.card}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -58,7 +59,7 @@ export default function Home() {
 
             <a
               href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              className={styles.card}
+              className={s.card}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -72,7 +73,7 @@ export default function Home() {
 
             <a
               href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              className={styles.card}
+              className={s.card}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -89,13 +90,14 @@ export default function Home() {
         <HomePart
           title="Présentation"
           content={presentation}
-          imageSrc="assets/presentation.jpeg"
+          imageSrc="assets/4.jpeg"
         />
         <HomePart
-          title="Contact"
-          content={contact}
-          imageSrc="assets/contact.jpeg"
+          title="Démarche artistique"
+          content={demarche}
+          imageSrc="assets/1.jpeg"
         />
+        <HomeContactPart title="Contact" imageSrc="assets/2.jpeg" />
       </Layout>
     </>
   );

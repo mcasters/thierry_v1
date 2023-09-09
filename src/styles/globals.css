@@ -37,6 +37,8 @@
    */
   --color-blue: #24445C;
   --color-blue-rgb: 36, 68, 92;
+  --color-blue-light: #427da9;
+  --color-blue-xlight: #669dd3;
 
   --color-brown-dark: #462e1b;
   --color-brown-dark-rgb: 70, 46, 27;
@@ -74,14 +76,14 @@
   );
 
   /*
-   * Font size
-   * ======================================================================== */
-  --font-size-tab: 20px;
-  --font-size-nav: 17px;
-  --font-size-current-title: 15px;
-  --font-size-current-plus-plus: 14px;
-  --font-size-current-plus: 13px;
-  --font-size-current: 12px;
+  * Font size
+  * ======================================================================== */
+  --font-size-xtitle: 2.4rem;
+  --font-size-title: 1.8rem;
+  --font-size-plus-plus: 1.2rem;
+  --font-size-plus: 1rem;
+  --font-size: 0.8rem;
+  --font-size-min: 0.7rem;
 
   /*
    * Form
@@ -104,13 +106,17 @@
 
 
 body {
-  color: rgb(255, 255, 255);
+  color: var(--color-light);
+  background-color: var(--color-blue-dark);
+  /*
   background: linear-gradient(
           to bottom,
           transparent,
           rgb(var(--color-blue-xdark-rgb))
   )
   rgb(var(--color-blue-dark-rgb));
+
+   */
   font-family: var(--font-base);
   -webkit-font-smoothing: antialiased;
 }
@@ -125,6 +131,12 @@ body {
 
 
 a {
-  color: inherit;
   text-decoration: none;
+  color: var(--color-blue-light);
+  transition: color 0.4s;
+}
+
+a:hover {
+  color: var(--color-blue-xlight);
+  transition: color 0.4s;
 }

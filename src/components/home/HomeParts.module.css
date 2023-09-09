@@ -56,8 +56,8 @@
 
 .article {
     position: relative;
-    margin: 10vh auto -10vh;
-    padding: 8rem 30rem;
+    margin: 45vh auto -10vh;
+    padding: 8rem 30rem 12rem;
     background: hsla(202, 44%, 14.7%, 0.9);
 }
 
@@ -65,6 +65,34 @@
     margin-top: 3rem;
 }
 
-.articlePresentation {
-    padding: 8rem 30rem;
+.article h1 {
+    position: absolute;
+    top: 10%;
+    left: 25%;
+    transform-origin: left;
+    font-size: 3rem;
+    letter-spacing: 6px;
+    color: var(--color-blue-light);
+    font-weight: lighter;
+}
+
+.instagram {
+    width: initial;
+    text-align: center;
+    border: none;
+    background: none;
+    font-size: 20px;
+    padding: 0.3em;
+    margin: 0;
+    box-shadow: none;
+}
+
+.instagram svg {
+    color: var(--color-blue-light);
+    transition: color 0.4s;
+}
+
+.instagram svg:hover {
+    color: var(--color-blue-xlight);
+    transition: color 0.4s;
 }

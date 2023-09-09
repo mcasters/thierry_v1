@@ -1,0 +1,9 @@
+.footer {
+  text-align: center;
+  background-color: var(--color-brown-dark);
+  padding: 1.5rem;
+}
+
+.footer a {
+  display: inline-block;
+}

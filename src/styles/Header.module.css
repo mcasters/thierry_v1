@@ -5,7 +5,7 @@
 .intro {
   max-width: 55ch;
   width: calc(100% - var(--space));
-  margin: 6px auto 8rem;
+  margin: 0 auto;
   padding: var(--space);
 }
 
