@@ -1,0 +1,32 @@
+.line {
+    position: fixed;
+    height: 6px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-brown);
+    z-index: 9999;
+}
+
+.main {
+    background-color: var(--color-xlight);
+    text-align: center;
+    padding-top: 140px;
+    padding-bottom: 3em;
+    margin: auto;
+}
+
+.wrapper {
+    max-width: 55ch;
+    width: calc(100% - var(--space));
+    margin: calc(var(--red-line-height) + var(--nav-height)) auto 8rem;
+    padding: var(--space);
+}
+
+.main {
+    background-color: var(--color-xlight);
+    text-align: center;
+    padding-top: 140px;
+    padding-bottom: 3em;
+    margin: auto;
+}
