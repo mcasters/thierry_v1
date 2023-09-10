@@ -57,10 +57,11 @@ model Painting {
   width       Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  image       Image    @relation("PaintingImage", fields: [imageId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  imageId     Int      @unique
   isToSell    Boolean
   price       Int?
+  // One-to-one relation
+  image       Image    @relation(fields: [imageId], references: [id])
+  imageId     Int      @unique
 }
 
 model Sculpture {
@@ -74,9 +75,10 @@ model Sculpture {
   length      Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  images      Image[]  @relation("SculptureImages")
   isToSell    Boolean
   price       Int?
+  // One-to-many relation
+  images      Image[]
 }
 
 model Image {
@@ -84,8 +86,9 @@ model Image {
   filename        String     @unique
   width           Int
   height          Int
-  paintingImg     Painting?  @relation("PaintingImage")
-  paintingId      Int?       @unique
-  sculptureImages Sculpture? @relation("SculptureImages", fields: [sculptureId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  // One-to-one relation
+  painting        Painting?
+  // One-to-many relation
+  sculpture       Sculpture? @relation(fields: [sculptureId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   sculptureId     Int?
 }

@@ -1,15 +1,15 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import multer from "multer";
-import { mkdir, stat, rm, rename } from "fs";
-import sharp from "sharp";
-import { getDirnameFromNameOrTitle } from "@/utils/commonUtils";
-import { join } from "path";
+import { NextApiRequest, NextApiResponse } from 'next';
+import multer from 'multer';
+import { mkdir, stat, rm, rename } from 'fs';
+import sharp from 'sharp';
+import { join } from 'path';
+import { PersistentFile } from 'formidable';
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
 
 export const parseFormData = async (
   req: NextApiRequest & { files?: any },
-  res: NextApiResponse
+  res: NextApiResponse,
 ) => {
   const storage = multer.memoryStorage();
   const multerUpload = multer({ storage });
@@ -30,17 +30,12 @@ export const parseFormData = async (
 
 export const getActuPath = (title: string) => {
   const dirName = getDirnameFromNameOrTitle(title);
-  return join(`${serverLibraryPath}`, "actu", `${dirName}`);
-};
-
-export const getHorsePath = (name: string) => {
-  const dirName = getDirnameFromNameOrTitle(name);
-  return join(`${serverLibraryPath}`, "chevaux", `${dirName}`);
+  return join(`${serverLibraryPath}`, 'actu', `${dirName}`);
 };
 
 export const createDir = (dir: string) => {
   stat(dir, (err) => {
-    if (err?.code === "ENOENT")
+    if (err?.code === 'ENOENT')
       mkdir(dir, { recursive: true }, (err) => {
         throw err;
       });
@@ -56,10 +51,9 @@ export const renameDir = (oldPath: string, newPath: string) => {
   });
 };
 
-export const resizeAndSaveImage = async (file: Buffer, filepath: string) => {
-  const px = 400;
-  // const bufferFile = Buffer.from(await file.arrayBuffer());
-  const image = sharp(file);
+export const resizeAndSaveImage = async (file: PersistentFile, dir: string) => {
+  const px = 2000;
+  const image = sharp(file.filepath);
 
   return image
     .resize(px, px, {
@@ -69,12 +63,11 @@ export const resizeAndSaveImage = async (file: Buffer, filepath: string) => {
     .withMetadata({
       exif: {
         IFD0: {
-          Copyright: "Alizée Roussel",
+          Copyright: 'Thierry Casters',
         },
       },
     })
-    .toFormat("jpeg")
-    .toFile(filepath);
+    .toFile(`${dir}/${file.newFilename}.webp`);
 };
 
 export const deleteAllFiles = (dir: string) => {

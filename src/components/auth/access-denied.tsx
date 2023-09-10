@@ -1,5 +1,5 @@
-import { signIn } from "next-auth/react";
-import Link from "next/link";
+import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 
 export default function AccessDenied() {
   return (
@@ -12,6 +12,7 @@ export default function AccessDenied() {
             e.preventDefault();
             signIn();
           }}
+          legacyBehavior={false}
         >
           You must be signed in to view this page
         </Link>

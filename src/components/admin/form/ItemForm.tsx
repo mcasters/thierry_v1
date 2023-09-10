@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { MutableRefObject, useState } from 'react';
 
 import { Item } from '@/interfaces';
 import { TYPE } from '@/constants';
@@ -7,7 +7,7 @@ import ImageForm from '@/components/admin/form/imageForm/ImageForm';
 import s from './form.module.css';
 
 interface Props {
-  formRef: React.MutableRefObject<null>;
+  formRef: MutableRefObject<HTMLFormElement>;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   item?: Item;
   type: string;

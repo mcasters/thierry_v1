@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { MutableRefObject, useRef } from 'react';
 import toast from 'react-hot-toast';
 
 import { useSWRConfig } from 'swr';
@@ -8,10 +8,10 @@ interface Props {
   type: string;
 }
 export default function AddItemComponent({ type }: Props) {
-  const form = useRef(null);
+  const form = useRef<HTMLFormElement>();
   const { mutate } = useSWRConfig();
   const api = `/api/${type}/add`;
-  const apiToUpdate = `/api/${type}`;
+  // const apiToUpdate = `/api/${type}`;
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,7 +20,8 @@ export default function AddItemComponent({ type }: Props) {
       fetch(api, { method: 'POST', body: formData }).then((res) => {
         if (res.ok) {
           toast(`${type} ajoutée`);
-          mutate(apiToUpdate);
+          // mutate(apiToUpdate);
+          form.current?.reset();
         } else toast("Erreur à l'enregistrement");
       });
     }
