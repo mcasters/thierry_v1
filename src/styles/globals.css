@@ -42,8 +42,12 @@
 
   --color-brown-dark: #462e1b;
   --color-brown-dark-rgb: 70, 46, 27;
-  --color-brown: #5C3C24;
-  --color-brown-rgb: 92, 60, 36;
+  --color-brown1: #5c3b24;
+  --color-brown1-rgb: 92, 59, 36;
+  --color-brown2: #6b3d2a;
+  --color-brown2-rgb: 107, 61, 42;
+  --color-brown: #5c3524;
+  --color-brown-rgb: 92, 53, 36;
 
 
   --max-width: 1100px;

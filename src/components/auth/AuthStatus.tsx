@@ -1,4 +1,7 @@
 import { signIn, signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
+
+import s from './AuthStatus.module.css';
 
 export default function AuthStatus() {
   const { data: session } = useSession();
@@ -18,11 +21,14 @@ export default function AuthStatus() {
       {session?.user && (
         <>
           <span>
+            <br />
             <small>Signed in as</small>
             <br />
             <strong>{session.user.email}</strong>
           </span>
           <br />
+          <Link href="/admin">Administration du site</Link>
+          <span className={s.separator}>-</span>
           <button
             className="buttonLink"
             onClick={() => {

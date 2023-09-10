@@ -1,4 +1,4 @@
-import Link from 'next/Link';
+import Link from 'next/link';
 
 import s from './HomeParts.module.css';
 import { SiInstagram } from 'react-icons/si';
