@@ -1,0 +1,28 @@
+.nav {
+    position: fixed;
+    top: calc(var(--line-height) + var(--nav-height));
+    left: 0;
+    height: var(--admin-nav-height);
+    line-height: var(--admin-nav-height);
+    width: 100%;
+    background-color: var(--color-blue-medium);
+    border-bottom: solid var(--color-xdark) 1px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+
+.navItems {
+    margin-bottom: 2rem;
+    padding: 0;
+    list-style: none;
+}
+
+.navItem {
+    display: inline-block;
+    width: 80px;
+    margin: 0 auto;
+}
+
+.navItem a {
+    color: var(--color-light);
+}

@@ -11,10 +11,9 @@
 
   --max-content-width: 540px;
   --max-content-half-width: 270px;
-  --red-line-height: 6px;
+  --line-height: 6px;
   --nav-height: 32px;
-  --nav-height-without-border: 31px;
-  --red-line-nav-height: 38px;
+  --admin-nav-height: 42px;
 
   /*
    * Colors

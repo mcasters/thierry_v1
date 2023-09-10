@@ -51,7 +51,7 @@ model Painting {
   id          Int      @id @default(autoincrement())
   title       String
   date        DateTime
-  technique   String
+  technique   String   @db.LongText
   description String?  @db.LongText
   height      Int
   width       Int
@@ -67,14 +67,14 @@ model Sculpture {
   id          Int      @id @default(autoincrement())
   title       String
   date        DateTime
-  technique   String
+  technique   String   @db.LongText
   description String?  @db.LongText
   height      Int
   width       Int
   length      Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  image       Image[]  @relation("SculptureImages")
+  images      Image[]  @relation("SculptureImages")
   isToSell    Boolean
   price       Int?
 }
