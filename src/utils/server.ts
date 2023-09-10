@@ -1,32 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import multer from 'multer';
 import { mkdir, stat, rm, rename } from 'fs';
 import sharp from 'sharp';
 import { join } from 'path';
 import { PersistentFile } from 'formidable';
+import { getDirnameFromNameOrTitle } from '@/utils/common';
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
-
-export const parseFormData = async (
-  req: NextApiRequest & { files?: any },
-  res: NextApiResponse,
-) => {
-  const storage = multer.memoryStorage();
-  const multerUpload = multer({ storage });
-  const multerFiles = multerUpload.any();
-  await new Promise((resolve, reject) => {
-    multerFiles(req as any, res as any, (result: any) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-      return resolve(result);
-    });
-  });
-  return {
-    fields: req.body,
-    files: req.files,
-  };
-};
 
 export const getActuPath = (title: string) => {
   const dirName = getDirnameFromNameOrTitle(title);

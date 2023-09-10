@@ -1,34 +1,34 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth/next";
-import prisma from "@/lib/prisma";
-// @ts-ignore
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth/next';
+
+import prisma from '@/lib/prisma';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { TYPE } from '@/constants';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   // @ts-ignore
   const session = await getServerSession(req, res, authOptions);
 
   if (session) {
-    const horses = await prisma.horse.findMany({
+    const paintings = await prisma.painting.findMany({
       include: {
-        mainImage: {
-          select: { filename: true },
+        image: {
+          select: {
+            filename: true,
+            height: true,
+            width: true,
+          },
         },
-        images: {
-          select: { filename: true },
-        },
-        achievements: {
-          select: { id: true, year: true, title: true, location: true },
-        },
+        type: TYPE.PAINTING,
       },
     });
-    return horses
-      ? res.status(200).json(horses)
-      : res.status(404).json({ message: `No horse found.` });
+    return paintings
+      ? res.status(200).json(paintings)
+      : res.status(404).json({ message: `No painting found.` });
   } else {
-    return res.status(401).send({ message: "Unauthorized" });
+    return res.status(401).send({ message: 'Unauthorized' });
   }
 }
