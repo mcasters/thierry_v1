@@ -11,22 +11,14 @@
 .main {
     background-color: var(--color-xlight);
     text-align: center;
-    padding-top: 140px;
+    padding-top: calc(var(--line-height) + var(--nav-height) + var(--admin-nav-height));
     padding-bottom: 3em;
-    margin: auto;
 }
 
 .wrapper {
     max-width: 55ch;
     width: calc(100% - var(--space));
-    margin: calc(var(--red-line-height) + var(--nav-height)) auto 8rem;
+    margin:  2em auto;
     padding: var(--space);
 }
 
-.main {
-    background-color: var(--color-xlight);
-    text-align: center;
-    padding-top: 140px;
-    padding-bottom: 3em;
-    margin: auto;
-}

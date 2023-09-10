@@ -1,0 +1,22 @@
+.imageContainer {
+ display: inline-block;
+}
+
+.form h2 {
+    font-size: var(--font-size-title);
+    padding-bottom: 2em;
+}
+
+.trash {
+    width: 100%;
+    text-align: center;
+    border: none;
+    background: none;
+    font-size: 1.4em;
+    padding: 0 0.4em 0.4em;
+}
+
+.separate {
+    padding-top: 1em;
+    border-bottom: 1px solid var(--color-light);
+}

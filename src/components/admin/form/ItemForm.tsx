@@ -4,14 +4,12 @@ import { Item } from '@/interfaces';
 import { TYPE } from '@/constants';
 import DayPickerComponent from '@/components/admin/form/daypicker/DayPickerComponent';
 import ImageForm from '@/components/admin/form/imageForm/ImageForm';
-import s from '../form.module.css';
-import { is } from 'date-fns/locale';
+import s from './form.module.css';
 
 interface Props {
   formRef: React.MutableRefObject<null>;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   item?: Item;
-
   type: string;
 }
 export default function HorseForm({ formRef, onSubmit, item, type }: Props) {
@@ -69,11 +67,10 @@ export default function HorseForm({ formRef, onSubmit, item, type }: Props) {
         required
       />
       <textarea
-        cols={80}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description (facultatif)"
         name="description"
-        rows={10}
+        rows={5}
         value={description}
       />
       <input
@@ -102,13 +99,13 @@ export default function HorseForm({ formRef, onSubmit, item, type }: Props) {
         />
       )}
       <label>
+        À vendre :
         <input
           onChange={() => setIsToSell(!isToSell)}
           name="isToSell"
           type="checkbox"
           defaultChecked={isToSell}
         />
-        À vendre
       </label>
       {isToSell && (
         <input
@@ -121,6 +118,7 @@ export default function HorseForm({ formRef, onSubmit, item, type }: Props) {
       )}
       <ImageForm item={item ? item : null} type={type} />
       <div>
+        <div className={s.separate}></div>
         <input
           disabled={
             !title ||
