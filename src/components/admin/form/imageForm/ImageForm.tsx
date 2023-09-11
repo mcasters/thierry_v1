@@ -7,16 +7,21 @@ type Props = {
   item: Item | null;
   type: string;
   setHasImage: (boolean) => void;
+  reset: number;
 };
 
-export default function ImageForm({ item, type, setHasImage }: Props) {
+export default function ImageForm({ item, type, setHasImage, reset }: Props) {
   return (
     <>
       {type === TYPE.PAINTING && (
-        <SingleImageForm item={item} setHasImage={setHasImage} />
+        <SingleImageForm item={item} setHasImage={setHasImage} reset={reset} />
       )}
       {type === TYPE.SCULPTURE && (
-        <MultipleImagesForm item={item} setHasImage={setHasImage} />
+        <MultipleImagesForm
+          item={item}
+          setHasImage={setHasImage}
+          reset={reset}
+        />
       )}
     </>
   );

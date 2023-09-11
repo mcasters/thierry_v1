@@ -57,7 +57,7 @@ export default async function handler(
       },
     });
 
-    return res.status(200).redirect('/admin');
+    return res.status(200).send({ message: 'ok' });
   } else {
     return res.status(401).send({ message: 'Unauthorized' });
   }

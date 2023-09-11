@@ -11,7 +11,7 @@ export const FileUploader = ({ handleFile, isMultiple, name }: Props) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    hiddenFileInput.current.click();
+    hiddenFileInput.current?.click();
   };
 
   const handleChange = (e) => {

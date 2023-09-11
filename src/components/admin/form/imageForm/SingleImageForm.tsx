@@ -10,9 +10,10 @@ import { FileUploader } from '@/components/admin/form/FileUploader';
 type Props = {
   item: Item | null;
   setHasImage: (boolean) => void;
+  reset: number;
 };
 
-export default function SingleImageForm({ item, setHasImage }: Props) {
+export default function SingleImageForm({ item, setHasImage, reset }: Props) {
   const [newImage, setNewImage] = useState<string>('');
   const [existantImage, setExistantImage] = useState<string>(() =>
     item ? item.image.filename : '',
@@ -23,7 +24,12 @@ export default function SingleImageForm({ item, setHasImage }: Props) {
     setHasImage(existantImage !== '' || newImage !== '');
   }, [newImage, existantImage]);
 
-  const deleteFile = () => {
+  useEffect(() => {
+    setNewImage('');
+  }, [reset]);
+
+  const deleteFile = (e) => {
+    e.preventDefault();
     setExistantImage('');
   };
 

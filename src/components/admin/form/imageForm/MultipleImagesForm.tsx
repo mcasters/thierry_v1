@@ -9,9 +9,14 @@ import s from '@/components/admin/form/form.module.css';
 type Props = {
   item: Item | null;
   setHasImage: (boolean) => void;
+  reset: number;
 };
 
-export default function MultipleImagesForm({ item, setHasImage }: Props) {
+export default function MultipleImagesForm({
+  item,
+  setHasImage,
+  reset,
+}: Props) {
   const [newAlbum, setNewAlbum] = useState<string[]>([]);
   const [existantAlbum, setExistantAlbum] = useState<string[]>(() => {
     return item && item.images
@@ -23,6 +28,10 @@ export default function MultipleImagesForm({ item, setHasImage }: Props) {
   useEffect(() => {
     setHasImage(newAlbum.length >= 4 || existantAlbum >= 4);
   }, [newAlbum, existantAlbum]);
+
+  useEffect(() => {
+    setNewAlbum([]);
+  }, [reset]);
 
   const deleteAlbumFile = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

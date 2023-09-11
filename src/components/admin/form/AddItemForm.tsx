@@ -6,6 +6,7 @@ import DayPickerComponent from '@/components/admin/form/daypicker/DayPickerCompo
 import ImageForm from '@/components/admin/form/imageForm/ImageForm';
 import s from './form.module.css';
 import toast from 'react-hot-toast';
+import { useSWRConfig } from 'swr';
 
 interface Props {
   item?: Item;
@@ -13,6 +14,8 @@ interface Props {
 }
 export default function AddItemForm({ item, type }: Props) {
   const formRef = useRef<HTMLFormElement>();
+  const resetImageRef = useRef<number>(0);
+  const { mutate } = useSWRConfig();
   const [title, setTitle] = useState<string>(item?.title || '');
   const [date, setDate] = useState<Date>(
     item?.date ? new Date(item.date) : new Date(),
@@ -21,13 +24,15 @@ export default function AddItemForm({ item, type }: Props) {
   const [description, setDescription] = useState<string>(
     item?.description || '',
   );
-  const [height, setHeight] = useState<number>(item?.height || null);
-  const [width, setWidth] = useState<number>(item?.width || null);
-  const [length, setLength] = useState<number>(item?.length || null);
-  const [price, setPrice] = useState<number>(item?.price || null);
+  const [height, setHeight] = useState<string>(item?.height.toString || '');
+  const [width, setWidth] = useState<string>(item?.width.toString || '');
+  const [length, setLength] = useState<string>(item?.length.toString || '');
+  const [price, setPrice] = useState<string>(item?.price?.toString || '');
   const [isToSell, setIsToSell] = useState<boolean>(item?.isToSell || false);
+
   const [hasImage, setHasImage] = useState<boolean>(false);
   const api = `/api/${type}/add`;
+  const apiToUpdate = `/api/${type}`;
 
   const handleDayChange = (date: any) => {
     setDate(date);
@@ -38,21 +43,23 @@ export default function AddItemForm({ item, type }: Props) {
     setDate(new Date());
     setTechnique('');
     setDescription('');
-    setHeight(null);
-    setWidth(null);
-    setLength(null);
-    setPrice(null);
+    setHeight('');
+    setWidth('');
+    setLength('');
+    setPrice('');
     setIsToSell(false);
+    resetImageRef.current = resetImageRef.current + 1;
   };
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (formRef.current && confirm('Tu confirmes ?')) {
       const formData = new FormData(formRef.current);
       fetch(api, { method: 'POST', body: formData }).then((res) => {
-        console.log(res);
         if (res.ok) {
-          console.log('// IN');
           toast(`${type} ajoutée`);
+          reset();
+          mutate(apiToUpdate);
         } else toast("Erreur à l'enregistrement");
       });
     }
@@ -93,7 +100,7 @@ export default function AddItemForm({ item, type }: Props) {
         value={description}
       />
       <input
-        onChange={(e) => setHeight(parseInt(e.target.value))}
+        onChange={(e) => setHeight(e.target.value)}
         placeholder="Hauteur"
         name="height"
         type="number"
@@ -101,7 +108,7 @@ export default function AddItemForm({ item, type }: Props) {
         required
       />
       <input
-        onChange={(e) => setWidth(parseInt(e.target.value))}
+        onChange={(e) => setWidth(e.target.value)}
         placeholder="Largeur"
         name="width"
         type="number"
@@ -109,7 +116,7 @@ export default function AddItemForm({ item, type }: Props) {
       />
       {type === TYPE.SCULPTURE && (
         <input
-          onChange={(e) => setLength(parseInt(e.target.value))}
+          onChange={(e) => setLength(e.target.value)}
           placeholder="Profondeur"
           name="length"
           type="number"
@@ -128,7 +135,7 @@ export default function AddItemForm({ item, type }: Props) {
       </label>
       {isToSell && (
         <input
-          onChange={(e) => setPrice(parseInt(e.target.value))}
+          onChange={(e) => setPrice(e.target.value)}
           placeholder="Prix"
           name="price"
           type="text"
@@ -139,6 +146,7 @@ export default function AddItemForm({ item, type }: Props) {
         item={item ? item : null}
         type={type}
         setHasImage={setHasImage}
+        reset={resetImageRef.current}
       />
       <div>
         <div className={s.separate}></div>
