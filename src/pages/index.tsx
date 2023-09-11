@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import s from '@/styles/Home.module.css';
-import Layout from '../components/layout-components/Layout';
+import Layout from '../components/layout-components';
 import HomePart from '@/components/home/HomePart';
 import HomeContactPart from '@/components/home/HomeContactPart';
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FiTrash2 } from 'react-icons/fi';
 
@@ -8,9 +8,10 @@ import s from '@/components/admin/form/form.module.css';
 
 type Props = {
   item: Item | null;
+  setHasImage: (boolean) => void;
 };
 
-export default function MultipleImagesForm({ item }: Props) {
+export default function MultipleImagesForm({ item, setHasImage }: Props) {
   const [newAlbum, setNewAlbum] = useState<string[]>([]);
   const [existantAlbum, setExistantAlbum] = useState<string[]>(() => {
     return item && item.images
@@ -18,6 +19,10 @@ export default function MultipleImagesForm({ item }: Props) {
       : [];
   });
   const path = item !== null ? `/images/${item.type}` : undefined;
+
+  useEffect(() => {
+    setHasImage(newAlbum.length >= 4 || existantAlbum >= 4);
+  }, [newAlbum, existantAlbum]);
 
   const deleteAlbumFile = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

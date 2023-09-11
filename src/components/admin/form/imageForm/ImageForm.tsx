@@ -6,13 +6,18 @@ import MultipleImagesForm from '@/components/admin/form/imageForm/MultipleImages
 type Props = {
   item: Item | null;
   type: string;
+  setHasImage: (boolean) => void;
 };
 
-export default function ImageForm({ item, type }: Props) {
+export default function ImageForm({ item, type, setHasImage }: Props) {
   return (
     <>
-      {type === TYPE.PAINTING && <SingleImageForm item={item} />}
-      {type === TYPE.SCULPTURE && <MultipleImagesForm item={item} />}
+      {type === TYPE.PAINTING && (
+        <SingleImageForm item={item} setHasImage={setHasImage} />
+      )}
+      {type === TYPE.SCULPTURE && (
+        <MultipleImagesForm item={item} setHasImage={setHasImage} />
+      )}
     </>
   );
 }

@@ -1,18 +1,18 @@
-import React, { MutableRefObject, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { Item } from '@/interfaces';
 import { TYPE } from '@/constants';
 import DayPickerComponent from '@/components/admin/form/daypicker/DayPickerComponent';
 import ImageForm from '@/components/admin/form/imageForm/ImageForm';
 import s from './form.module.css';
+import toast from 'react-hot-toast';
 
 interface Props {
-  formRef: MutableRefObject<HTMLFormElement>;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   item?: Item;
   type: string;
 }
-export default function HorseForm({ formRef, onSubmit, item, type }: Props) {
+export default function AddItemForm({ item, type }: Props) {
+  const formRef = useRef<HTMLFormElement>();
   const [title, setTitle] = useState<string>(item?.title || '');
   const [date, setDate] = useState<Date>(
     item?.date ? new Date(item.date) : new Date(),
@@ -21,26 +21,45 @@ export default function HorseForm({ formRef, onSubmit, item, type }: Props) {
   const [description, setDescription] = useState<string>(
     item?.description || '',
   );
-  const [height, setHeight] = useState<number | undefined>(
-    item?.height || undefined,
-  );
-  const [width, setWidth] = useState<number | undefined>(
-    item?.width || undefined,
-  );
-  const [length, setLength] = useState<number | undefined>(
-    item?.length || undefined,
-  );
-  const [price, setPrice] = useState<number | undefined>(
-    item?.price || undefined,
-  );
+  const [height, setHeight] = useState<number>(item?.height || null);
+  const [width, setWidth] = useState<number>(item?.width || null);
+  const [length, setLength] = useState<number>(item?.length || null);
+  const [price, setPrice] = useState<number>(item?.price || null);
   const [isToSell, setIsToSell] = useState<boolean>(item?.isToSell || false);
+  const [hasImage, setHasImage] = useState<boolean>(false);
+  const api = `/api/${type}/add`;
 
   const handleDayChange = (date: any) => {
     setDate(date);
   };
 
+  const reset = () => {
+    setTitle('');
+    setDate(new Date());
+    setTechnique('');
+    setDescription('');
+    setHeight(null);
+    setWidth(null);
+    setLength(null);
+    setPrice(null);
+    setIsToSell(false);
+  };
+
+  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (formRef.current && confirm('Tu confirmes ?')) {
+      const formData = new FormData(formRef.current);
+      fetch(api, { method: 'POST', body: formData }).then((res) => {
+        console.log(res);
+        if (res.ok) {
+          console.log('// IN');
+          toast(`${type} ajoutée`);
+        } else toast("Erreur à l'enregistrement");
+      });
+    }
+  };
+
   return (
-    <form ref={formRef} className={s.form} onSubmit={onSubmit}>
+    <form ref={formRef} className={s.form} onSubmit={submit}>
       <h2>{item ? `Modifier une ${item.type}` : `Ajouter une ${type}`}</h2>
       {item && <input type="hidden" name="id" value={item.id} />}
       <input type="hidden" name="isToSell" value={String(isToSell)} />
@@ -101,7 +120,7 @@ export default function HorseForm({ formRef, onSubmit, item, type }: Props) {
       <label>
         À vendre :
         <input
-          onChange={() => setIsToSell(!isToSell)}
+          onChange={(e) => setIsToSell(e.target.checked)}
           name="isToSell"
           type="checkbox"
           defaultChecked={isToSell}
@@ -116,7 +135,11 @@ export default function HorseForm({ formRef, onSubmit, item, type }: Props) {
           value={price}
         />
       )}
-      <ImageForm item={item ? item : null} type={type} />
+      <ImageForm
+        item={item ? item : null}
+        type={type}
+        setHasImage={setHasImage}
+      />
       <div>
         <div className={s.separate}></div>
         <input
@@ -127,12 +150,21 @@ export default function HorseForm({ formRef, onSubmit, item, type }: Props) {
             !height ||
             !width ||
             (type === TYPE.SCULPTURE && !length) ||
-            (isToSell && !price)
+            (isToSell && !price) ||
+            !hasImage
           }
           type="submit"
           value="Enregistrer"
         />
-        <input type="reset" />
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            reset();
+          }}
+          className="adminButton"
+        >
+          Annuler
+        </button>
       </div>
     </form>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FiTrash2 } from 'react-icons/fi';
 
@@ -9,14 +9,19 @@ import { FileUploader } from '@/components/admin/form/FileUploader';
 
 type Props = {
   item: Item | null;
+  setHasImage: (boolean) => void;
 };
 
-export default function SingleImageForm({ item }: Props) {
+export default function SingleImageForm({ item, setHasImage }: Props) {
   const [newImage, setNewImage] = useState<string>('');
   const [existantImage, setExistantImage] = useState<string>(() =>
     item ? item.image.filename : '',
   );
   const path = item !== null ? `/images/${item.type}` : undefined;
+
+  useEffect(() => {
+    setHasImage(existantImage !== '' || newImage !== '');
+  }, [newImage, existantImage]);
 
   const deleteFile = () => {
     setExistantImage('');

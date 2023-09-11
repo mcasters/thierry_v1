@@ -206,7 +206,7 @@ textarea {
   width: 100%;
 }
 
-.button-upload,
+.adminButton,
 input {
   padding: 0.5em;
   width: 100%;
@@ -220,7 +220,7 @@ label {
   text-align: left;
 }
 
-.button-upload,
+.adminButton,
 [type="submit"],
 [type="reset"] {
   width: 48%;
