@@ -6,9 +6,16 @@ import { getDirnameFromNameOrTitle } from '@/utils/common';
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
 
-export const getActuPath = (title: string) => {
-  const dirName = getDirnameFromNameOrTitle(title);
-  return join(`${serverLibraryPath}`, 'actu', `${dirName}`);
+export const getPaintingImagePath = (painting) => {
+  return join(
+    `${serverLibraryPath}`,
+    `${painting.type}`,
+    `${painting.image.filename}`,
+  );
+};
+
+export const getPaintingDir = () => {
+  return join(`${serverLibraryPath}`, 'peinture');
 };
 
 export const createDir = (dir: string) => {

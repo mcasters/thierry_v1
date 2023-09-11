@@ -61,7 +61,7 @@ model Painting {
   price       Int?
   sold        Boolean  @default(false)
   // One-to-one relation
-  image       Image    @relation(fields: [imageId], references: [id])
+  image       Image    @relation(fields: [imageId], references: [id], onDelete: Cascade)
   imageId     Int      @unique
 }
 

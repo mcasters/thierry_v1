@@ -5,11 +5,8 @@ import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
 
 import prisma from '@/lib/prisma';
-import { resizeAndSaveImage, createDir } from '@/utils/server';
+import { resizeAndSaveImage, createDir, getPaintingDir } from '@/utils/server';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { TYPE } from '@/constants';
-
-const serverLibraryPath = process.env.PHOTOS_PATH;
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,8 +16,7 @@ export default async function handler(
   const session = await getServerSession(req, res, authOptions);
 
   if (session) {
-    const dir = join(`${serverLibraryPath}`, `${TYPE.PAINTING}`);
-    createDir(dir);
+    createDir(getPaintingDir());
 
     const form = formidable({ maxFile: 1, maxFileSize: 1024 * 1024 });
     let fields;
