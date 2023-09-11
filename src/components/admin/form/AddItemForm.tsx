@@ -24,10 +24,10 @@ export default function AddItemForm({ item, type }: Props) {
   const [description, setDescription] = useState<string>(
     item?.description || '',
   );
-  const [height, setHeight] = useState<string>(item?.height.toString || '');
-  const [width, setWidth] = useState<string>(item?.width.toString || '');
-  const [length, setLength] = useState<string>(item?.length.toString || '');
-  const [price, setPrice] = useState<string>(item?.price?.toString || '');
+  const [height, setHeight] = useState<string>(item?.height.toString() || '');
+  const [width, setWidth] = useState<string>(item?.width.toString() || '');
+  const [length, setLength] = useState<string>(item?.length?.toString() || '');
+  const [price, setPrice] = useState<string>(item?.price?.toString() || '');
   const [isToSell, setIsToSell] = useState<boolean>(item?.isToSell || false);
 
   const [hasImage, setHasImage] = useState<boolean>(false);

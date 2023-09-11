@@ -39,6 +39,7 @@ notes/
 .idea
 package-lock.json
 /public/assets
+/public/images
 
 # database
 /prisma/migrations
