@@ -22,7 +22,6 @@ export default async function handler(
             width: true,
           },
         },
-        type: TYPE.PAINTING,
       },
     });
     return paintings

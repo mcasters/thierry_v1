@@ -1,11 +1,40 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma, Painting } from '@prisma/client';
+import { TYPE } from '@/constants';
 
-declare global {
-  var prisma: PrismaClient | undefined;
-}
+const prismaClientSingleton = () => {
+  return new PrismaClient({
+    log:
+      process.env.NODE_ENV === 'development'
+        ? ['query', 'error', 'warn']
+        : ['error'],
+  }).$extends({
+    result: {
+      painting: {
+        type: {
+          compute(): string {
+            return `${TYPE.PAINTING}`;
+          },
+        },
+      },
+      sculpture: {
+        type: {
+          compute(): string {
+            return `${TYPE.SCULPTURE}`;
+          },
+        },
+      },
+    },
+  });
+};
 
-const prisma = global.prisma || new PrismaClient();
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
 
-if (process.env.NODE_ENV === "development") global.prisma = prisma;
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClientSingleton | undefined;
+};
+
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
 
 export default prisma;
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;

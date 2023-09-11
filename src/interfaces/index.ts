@@ -1,3 +1,5 @@
+import { Painting } from '.prisma/client';
+
 export type User = {
   id: number;
   email: string;
@@ -35,6 +37,8 @@ export type Item = {
   price: number | null;
   sold: boolean;
 };
+
+export type ff = Painting & { type: 'peinture' };
 
 export type Image = {
   id: number;

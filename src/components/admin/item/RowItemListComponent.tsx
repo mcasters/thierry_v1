@@ -8,10 +8,6 @@ interface Props {
 }
 
 export default function RowItemListComponent({ item }: Props) {
-  console.log('//////// item');
-  console.log(item);
-  console.log('//////// item.type');
-  console.log(item.type);
   return (
     <ul className={s.item}>
       <li>
