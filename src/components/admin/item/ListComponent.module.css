@@ -1,0 +1,58 @@
+.listContainer {
+  margin: 50px 0 10px;
+  text-align: center;
+}
+
+.listContainer h2 {
+  font-size: var(--font-size-title);
+}
+
+.list {
+  font-size: var(--font-size-min);
+  display: block;
+  margin-top: 2em;
+  width: 100%;
+  height: 300px;
+  overflow: scroll;
+  border-collapse: collapse;
+  background-color: white;
+  border-bottom: 2px solid var(--color-light);
+  border-top: 2px solid var(--color-light);
+}
+
+.item {
+  border-bottom: 1px dotted var(--color-light);
+  display: flex;
+  width: 100%;
+  align-items: center;
+  ;
+}
+
+.item li {
+  display: block;
+  flex: auto;
+}
+
+.title, .name {
+  font-weight: bold;
+}
+
+.iconButton {
+  width: initial;
+  text-align: center;
+  border: none;
+  background: none;
+  font-size: var(--font-size-plus);
+  padding: 0.3em;
+  margin: 0;
+  box-shadow: none;
+}
+
+.iconButton svg {
+
+}
+
+
+
+
+

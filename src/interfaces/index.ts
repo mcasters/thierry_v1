@@ -33,6 +33,7 @@ export type Item = {
   images: Image[];
   isToSell: boolean;
   price: number | null;
+  sold: boolean;
 };
 
 export type Image = {

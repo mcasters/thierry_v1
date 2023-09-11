@@ -59,6 +59,7 @@ model Painting {
   updatedAt   DateTime @updatedAt
   isToSell    Boolean
   price       Int?
+  sold        Boolean  @default(false)
   // One-to-one relation
   image       Image    @relation(fields: [imageId], references: [id])
   imageId     Int      @unique
@@ -77,6 +78,7 @@ model Sculpture {
   updatedAt   DateTime @updatedAt
   isToSell    Boolean
   price       Int?
+  sold        Boolean  @default(false)
   // One-to-many relation
   images      Image[]
 }

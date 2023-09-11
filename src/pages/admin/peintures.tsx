@@ -1,10 +1,11 @@
 import { useSession } from 'next-auth/react';
 
-import Layout from '@/components/layout-components/layout';
+import Layout from '@/components/layout-components';
 import AccessDenied from '@/components/auth/access-denied';
 import AdminNav from '@/components/layout-components/AdminNav';
 import { TYPE } from '@/constants';
-import AddItemComponent from '@/components/admin/item/AddItemComponent';
+import ItemListComponent from '@/components/admin/item/ItemListComponent';
+import AddItemForm from '@/components/admin/form/AddItemForm';
 
 export default function Peintures() {
   const { data: session } = useSession();
@@ -20,7 +21,8 @@ export default function Peintures() {
   return (
     <Layout>
       <AdminNav />
-      <AddItemComponent type={TYPE.PAINTING} />
+      <ItemListComponent type={TYPE.PAINTING} />
+      <AddItemForm type={TYPE.PAINTING} />
     </Layout>
   );
 }

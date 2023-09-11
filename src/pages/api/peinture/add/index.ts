@@ -36,13 +36,6 @@ export default async function handler(
     if (!file) return res.status(404).send('Image is missing');
 
     const fileInfo = await resizeAndSaveImage(file, dir);
-    const image = await prisma.Image.create({
-      data: {
-        filename: `${file.newFilename}.${fileInfo.format}`,
-        width: fileInfo.width,
-        height: fileInfo.height,
-      },
-    });
 
     const newPainting = await prisma.painting.create({
       data: {
@@ -54,7 +47,13 @@ export default async function handler(
         width: Number(fields.width),
         isToSell: fields.isToSell[0] === 'true',
         price: Number(fields.price),
-        imageId: image.id,
+        image: {
+          create: {
+            filename: `${file.newFilename}.${fileInfo.format}`,
+            width: fileInfo.width,
+            height: fileInfo.height,
+          },
+        },
       },
     });
 
