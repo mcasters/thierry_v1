@@ -1,0 +1,21 @@
+.container {
+    color: var(--color-xlight);
+    background-color: hsl(5, 15%, 5%);
+}
+
+.horseListSection {
+    max-width: 55ch;
+    width: calc(100% - var(--space));
+    margin: calc(var(--red-line-height) + var(--header-height)) auto 8rem;
+    padding: var(--space);
+}
+
+.horseListSection h1 {
+    font-size: var(--font-size-xtitle);
+}
+
+.horseListSection button {
+    border: solid var(--yellow-dark) 1px;
+    padding: 10px;
+    margin: 10px;
+}

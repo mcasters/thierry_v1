@@ -7,18 +7,19 @@ import Footer from '@/components/layout-components/Footer';
 
 export default function Layout({ introduction, children }) {
   const router = useRouter();
-  const isHome = router.pathname === ROUTES.HOME;
+  const isLarge = router.pathname === ROUTES.HOME;
+  const isDark = router.pathname === ROUTES.PAINTING || ROUTES.SCULPTURE;
 
   return (
     <>
       <div className={s.line}></div>
-      <Header introduction={introduction} isHome={isHome} />
-      {!isHome && (
-        <main className={s.main}>
+      <Header introduction={introduction} isHome={isLarge} />
+      {!isLarge && (
+        <main className={isDark ? `${s.main} ${s.dark}` : `${s.main}`}>
           <div className={s.wrapper}>{children}</div>
         </main>
       )}
-      {isHome && <main>{children}</main>}
+      {isLarge && <main>{children}</main>}
       <Footer />
     </>
   );
