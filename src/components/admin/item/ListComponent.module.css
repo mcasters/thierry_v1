@@ -1,6 +1,5 @@
 .listContainer {
-  margin: 50px 0 10px;
-  text-align: center;
+  margin-bottom: 4em;
 }
 
 .listContainer h2 {
@@ -22,14 +21,26 @@
 
 .item {
   border-bottom: 1px dotted var(--color-light);
+  padding-left: 1em;
   display: flex;
   width: 100%;
   align-items: center;
-  ;
 }
 
 .item li {
   display: block;
+}
+
+.itemTitle {
+  text-align: left;
+  flex:  150px;
+}
+
+.itemImage {
+  flex: auto;
+}
+
+.itemIcon {
   flex: auto;
 }
 
@@ -50,6 +61,12 @@
 
 .iconButton svg {
 color: var(--color-blue-light);
+transition: color 0.4s ease;
+}
+
+.iconButton:hover svg {
+  color: var(--color-blue-xlight);
+  transition: color 0.4s ease;
 }
 
 

@@ -11,8 +11,9 @@ import { useSWRConfig } from 'swr';
 interface Props {
   item?: Item;
   type: string;
+  toggleModal?: () => void;
 }
-export default function AddItemForm({ item, type }: Props) {
+export default function AddItemForm({ item, type, toggleModal }: Props) {
   const formRef = useRef<HTMLFormElement>();
   const resetImageRef = useRef<number>(0);
   const { mutate } = useSWRConfig();
@@ -31,7 +32,7 @@ export default function AddItemForm({ item, type }: Props) {
   const [isToSell, setIsToSell] = useState<boolean>(item?.isToSell || false);
 
   const [hasImage, setHasImage] = useState<boolean>(false);
-  const api = `/api/${type}/add`;
+  const api = item ? `/api/${type}/update` : `/api/${type}/add`;
   const apiToUpdate = `/api/${type}`;
 
   const handleDayChange = (date: any) => {
@@ -57,8 +58,8 @@ export default function AddItemForm({ item, type }: Props) {
       const formData = new FormData(formRef.current);
       fetch(api, { method: 'POST', body: formData }).then((res) => {
         if (res.ok) {
-          toast(`${type} ajoutée`);
-          reset();
+          toast(item ? `${type} modifiée` : `${type} ajoutée`);
+          toggleModal ? toggleModal() : reset();
           mutate(apiToUpdate);
         } else toast("Erreur à l'enregistrement");
       });
@@ -66,114 +67,116 @@ export default function AddItemForm({ item, type }: Props) {
   };
 
   return (
-    <form ref={formRef} className={s.form} onSubmit={submit}>
+    <div className={s.formContainer}>
       <h2>{item ? `Modifier une ${item.type}` : `Ajouter une ${type}`}</h2>
-      {item && <input type="hidden" name="id" value={item.id} />}
-      <input type="hidden" name="isToSell" value={String(isToSell)} />
-      <input
-        autoFocus
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Titre"
-        name="title"
-        type="text"
-        value={title}
-        required
-      />
-      <DayPickerComponent
-        handleDayChange={handleDayChange}
-        alreadyDay={date}
-        fieldName="date"
-      />
-      <input
-        onChange={(e) => setTechnique(e.target.value)}
-        placeholder="Technique"
-        name="technique"
-        type="text"
-        value={technique}
-        required
-      />
-      <textarea
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Description (facultatif)"
-        name="description"
-        rows={5}
-        value={description}
-      />
-      <input
-        onChange={(e) => setHeight(e.target.value)}
-        placeholder="Hauteur"
-        name="height"
-        type="number"
-        value={height}
-        required
-      />
-      <input
-        onChange={(e) => setWidth(e.target.value)}
-        placeholder="Largeur"
-        name="width"
-        type="number"
-        value={width}
-      />
-      {type === TYPE.SCULPTURE && (
+      <form ref={formRef} onSubmit={submit}>
+        {item && <input type="hidden" name="id" value={item.id} />}
+        <input type="hidden" name="isToSell" value={String(isToSell)} />
         <input
-          onChange={(e) => setLength(e.target.value)}
-          placeholder="Profondeur"
-          name="length"
-          type="number"
-          value={length}
+          autoFocus
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Titre"
+          name="title"
+          type="text"
+          value={title}
           required
         />
-      )}
-      <label>
-        À vendre :
-        <input
-          onChange={(e) => setIsToSell(e.target.checked)}
-          name="isToSell"
-          type="checkbox"
-          defaultChecked={isToSell}
+        <DayPickerComponent
+          handleDayChange={handleDayChange}
+          alreadyDay={date}
+          fieldName="date"
         />
-      </label>
-      {isToSell && (
         <input
-          onChange={(e) => setPrice(e.target.value)}
-          placeholder="Prix"
-          name="price"
+          onChange={(e) => setTechnique(e.target.value)}
+          placeholder="Technique"
+          name="technique"
           type="text"
-          value={price}
+          value={technique}
+          required
         />
-      )}
-      <ImageForm
-        item={item ? item : null}
-        type={type}
-        setHasImage={setHasImage}
-        reset={resetImageRef.current}
-      />
-      <div>
-        <div className={s.separate}></div>
+        <textarea
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description (facultatif)"
+          name="description"
+          rows={5}
+          value={description}
+        />
         <input
-          disabled={
-            !title ||
-            !date ||
-            !technique ||
-            !height ||
-            !width ||
-            (type === TYPE.SCULPTURE && !length) ||
-            (isToSell && !price) ||
-            !hasImage
-          }
-          type="submit"
-          value="Enregistrer"
+          onChange={(e) => setHeight(e.target.value)}
+          placeholder="Hauteur"
+          name="height"
+          type="number"
+          value={height}
+          required
         />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            reset();
-          }}
-          className="adminButton"
-        >
-          Annuler
-        </button>
-      </div>
-    </form>
+        <input
+          onChange={(e) => setWidth(e.target.value)}
+          placeholder="Largeur"
+          name="width"
+          type="number"
+          value={width}
+        />
+        {type === TYPE.SCULPTURE && (
+          <input
+            onChange={(e) => setLength(e.target.value)}
+            placeholder="Profondeur"
+            name="length"
+            type="number"
+            value={length}
+            required
+          />
+        )}
+        <label>
+          À vendre :
+          <input
+            onChange={(e) => setIsToSell(e.target.checked)}
+            name="isToSell"
+            type="checkbox"
+            defaultChecked={isToSell}
+          />
+        </label>
+        {isToSell && (
+          <input
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="Prix"
+            name="price"
+            type="text"
+            value={price}
+          />
+        )}
+        <ImageForm
+          item={item ? item : null}
+          type={type}
+          setHasImage={setHasImage}
+          reset={resetImageRef.current}
+        />
+        <div>
+          <div className={s.separate}></div>
+          <input
+            disabled={
+              !title ||
+              !date ||
+              !technique ||
+              !height ||
+              !width ||
+              (type === TYPE.SCULPTURE && !length) ||
+              (isToSell && !price) ||
+              !hasImage
+            }
+            type="submit"
+            value="Enregistrer"
+          />
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              reset();
+            }}
+            className="adminButton"
+          >
+            Annuler
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

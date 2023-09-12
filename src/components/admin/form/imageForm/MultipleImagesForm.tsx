@@ -7,7 +7,7 @@ import { getPath } from '@/utils/common';
 import s from '@/components/admin/form/form.module.css';
 
 type Props = {
-  item: Item | null;
+  item?: Item;
   setHasImage: (boolean) => void;
   reset: number;
 };
@@ -65,23 +65,25 @@ export default function MultipleImagesForm({
             <Image
               src={`${path}/${filename}`}
               alt="image"
-              width={100}
-              height={100}
+              layout="fill"
+              sizes="150px"
+              className={s.image}
             />
-            <button
-              onClick={deleteAlbumFile}
-              data-filename={filename}
-              className={s.trash}
-            >
-              <FiTrash2 />
-            </button>
           </div>
         ))}
       <input type="hidden" name="existentFiles" value={existantAlbum} />
       <input type="file" name="files" onChange={getAlbumPreview} multiple />
       {newAlbum.length > 0 &&
         newAlbum.map((src) => (
-          <Image key={src} src={src} alt="image" width={100} height={100} />
+          <div key={src} className={s.imageContainer}>
+            <Image
+              src={src}
+              alt="image"
+              layout="fill"
+              sizes="150px"
+              className={s.image}
+            />
+          </div>
         ))}
     </>
   );

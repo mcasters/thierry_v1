@@ -40,7 +40,7 @@ export default async function handler(
     }
     return paintingDeleted && imageDBDeleted
       ? res.status(200).send({ message: 'ok' })
-      : res.status(404).json({ error: `No horse found.` });
+      : res.status(404).send({ error: 'Delete error' });
   } else {
     return res.status(401).send({ error: 'Unauthorized' });
   }

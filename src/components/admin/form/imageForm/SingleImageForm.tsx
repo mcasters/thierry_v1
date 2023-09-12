@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { FiTrash2 } from 'react-icons/fi';
 
 import { Item } from '@/interfaces';
-import { getDirnameFromNameOrTitle, getPath } from '@/utils/common';
 import s from '@/components/admin/form/form.module.css';
 import { FileUploader } from '@/components/admin/form/FileUploader';
 
 type Props = {
-  item: Item | null;
+  item?: Item;
   setHasImage: (boolean) => void;
   reset: number;
 };
@@ -18,7 +16,7 @@ export default function SingleImageForm({ item, setHasImage, reset }: Props) {
   const [existantImage, setExistantImage] = useState<string>(() =>
     item ? item.image.filename : '',
   );
-  const path = item !== null ? `/images/${item.type}` : undefined;
+  const path = item ? `/images/${item.type}` : undefined;
 
   useEffect(() => {
     setHasImage(existantImage !== '' || newImage !== '');
@@ -27,11 +25,6 @@ export default function SingleImageForm({ item, setHasImage, reset }: Props) {
   useEffect(() => {
     setNewImage('');
   }, [reset]);
-
-  const deleteFile = (e) => {
-    e.preventDefault();
-    setExistantImage('');
-  };
 
   const getPreview = (filesUploaded: FileList) => {
     if (filesUploaded?.length) {
@@ -47,23 +40,27 @@ export default function SingleImageForm({ item, setHasImage, reset }: Props) {
     <>
       <h4 className={s.separate}>Image :</h4>
       {existantImage !== '' && (
-        <>
+        <div className={s.imageContainer}>
           <Image
             src={`${path}/${existantImage}`}
             alt="image"
-            width={100}
-            height={100}
+            layout="fill"
+            sizes="150px"
+            className={s.image}
           />
-          <button onClick={deleteFile} className={s.trash}>
-            <FiTrash2 />
-          </button>
-        </>
+        </div>
       )}
       <input type="hidden" name="existentFile" value={existantImage} />
       <FileUploader name="file" handleFile={getPreview} isMultiple={false} />
       {newImage !== '' && (
-        <div>
-          <Image src={newImage} alt="image" width={100} height={100} />
+        <div className={s.imageContainer}>
+          <Image
+            src={newImage}
+            alt="image"
+            layout="fill"
+            sizes="150px"
+            className={s.image}
+          />
         </div>
       )}
     </>

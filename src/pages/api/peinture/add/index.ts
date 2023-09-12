@@ -1,6 +1,5 @@
 import formidable from 'formidable';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { join } from 'path';
 import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
 
@@ -16,12 +15,12 @@ export default async function handler(
   const session = await getServerSession(req, res, authOptions);
 
   if (session) {
-    createDir(getPaintingDir());
+    const dir = getPaintingDir();
+    createDir(dir);
 
-    const form = formidable({ maxFile: 1, maxFileSize: 1024 * 1024 });
     let fields;
     let files;
-
+    const form = formidable({ maxFile: 1, maxFileSize: 1024 * 1024 });
     try {
       [fields, files] = await form.parse(req);
     } catch (err) {
@@ -29,7 +28,7 @@ export default async function handler(
     }
 
     const file = files.file?.[0];
-    if (!file) return res.status(404).send('Image is missing');
+    if (!file) return res.status(404).send({ message: 'Image is missing' });
 
     const fileInfo = await resizeAndSaveImage(file, dir);
 
@@ -53,7 +52,9 @@ export default async function handler(
       },
     });
 
-    return res.status(200).send({ message: 'ok' });
+    return newPainting
+      ? res.status(200).send({ message: 'ok' })
+      : res.status(404).send({ message: 'Add error' });
   } else {
     return res.status(401).send({ message: 'Unauthorized' });
   }

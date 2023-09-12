@@ -2,19 +2,19 @@ import { ReactNode } from 'react';
 
 import s from './Modal.module.css';
 
-interface ModalType {
+interface Props {
   children?: ReactNode;
   isOpen: boolean;
   toggle: () => void;
 }
 
-export default function Modal(props: ModalType) {
+export default function Modal({ children, isOpen, toggle }: Props) {
   return (
     <>
-      {props.isOpen && (
-        <div className={s.modalOverlay} onClick={props.toggle}>
+      {isOpen && (
+        <div className={s.modalOverlay} onClick={toggle}>
           <div className={s.modalBox} onClick={(e) => e.stopPropagation()}>
-            {props.children}
+            {children}
           </div>
         </div>
       )}

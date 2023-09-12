@@ -4,7 +4,7 @@ import { TYPE } from '@/constants';
 import MultipleImagesForm from '@/components/admin/form/imageForm/MultipleImagesForm';
 
 type Props = {
-  item: Item | null;
+  item?: Item;
   type: string;
   setHasImage: (boolean) => void;
   reset: number;
