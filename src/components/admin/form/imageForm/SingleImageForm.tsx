@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-import { Item } from '@/interfaces';
 import s from '@/components/admin/form/form.module.css';
 import { FileUploader } from '@/components/admin/form/FileUploader';
 
 type Props = {
-  item?: Item;
+  existantImageSrc?: string;
   setHasImage: (boolean) => void;
   reset: number;
 };
 
-export default function SingleImageForm({ item, setHasImage, reset }: Props) {
+export default function SingleImageForm({
+  existantImageSrc,
+  setHasImage,
+  reset,
+}: Props) {
   const [newImage, setNewImage] = useState<string>('');
-  const [existantImage, setExistantImage] = useState<string>(() =>
-    item ? item.image.filename : '',
-  );
-  const path = item ? `/images/${item.type}` : undefined;
 
   useEffect(() => {
-    setHasImage(existantImage !== '' || newImage !== '');
-  }, [newImage, existantImage]);
+    setHasImage(existantImageSrc || newImage !== '');
+  }, [newImage]);
 
   useEffect(() => {
     setNewImage('');
@@ -31,7 +30,6 @@ export default function SingleImageForm({ item, setHasImage, reset }: Props) {
       const file = filesUploaded[0];
       if (file) {
         setNewImage(URL.createObjectURL(file));
-        setExistantImage('');
       }
     }
   };
@@ -39,10 +37,10 @@ export default function SingleImageForm({ item, setHasImage, reset }: Props) {
   return (
     <>
       <h4 className={s.separate}>Image :</h4>
-      {existantImage !== '' && (
+      {existantImageSrc && (
         <div className={s.imageContainer}>
           <Image
-            src={`${path}/${existantImage}`}
+            src={`${existantImageSrc}`}
             alt="image"
             layout="fill"
             sizes="150px"
@@ -50,7 +48,11 @@ export default function SingleImageForm({ item, setHasImage, reset }: Props) {
           />
         </div>
       )}
-      <input type="hidden" name="existentFile" value={existantImage} />
+      <input
+        type="hidden"
+        name="existentFile"
+        value={existantImageSrc?.split('/')[existantImageSrc?.length - 1]}
+      />
       <FileUploader name="file" handleFile={getPreview} isMultiple={false} />
       {newImage !== '' && (
         <div className={s.imageContainer}>

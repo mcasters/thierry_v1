@@ -38,13 +38,19 @@ export type Item = {
   sold: boolean;
 };
 
-export type ff = Painting & { type: 'peinture' };
-
 export type Image = {
   id: number;
   filename: string;
   width: number;
   height: number;
+};
+
+export type Content = {
+  id: number;
+  label: string;
+  title: string;
+  text: string;
+  filename: string;
 };
 
 export type ResponseError = {

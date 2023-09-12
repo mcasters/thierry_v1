@@ -145,7 +145,7 @@ export default function AddItemForm({ item, type, toggleModal }: Props) {
           />
         )}
         <ImageForm
-          item={item ? item : null}
+          item={item ? item : undefined}
           type={type}
           setHasImage={setHasImage}
           reset={resetImageRef.current}

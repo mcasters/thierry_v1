@@ -1,6 +1,6 @@
 .nav {
     position: fixed;
-    top: 0;
+    top: var(--line-height);
     left: 0;
     width: 100%;
     background-color: var(--color-blue-medium);
@@ -15,7 +15,7 @@
     color: var(--color-blue-light);
     letter-spacing: 4px;
     font-weight: bold;
-
+font-size: var(--font-size-plus);
 }
 
 .navItems {
