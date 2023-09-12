@@ -9,7 +9,7 @@ import useSWR from 'swr';
 
 export default function Home() {
   const { data: session } = useSession();
-  const api = '/api/contenu';
+  const api = '/api/home';
   const { data: contents } = useSWR(api, (apiURL: string) =>
     fetch(apiURL).then((res) => res.json()),
   );

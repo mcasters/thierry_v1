@@ -47,7 +47,7 @@ export default function HomeForm({ content, label }: Props) {
       <form ref={formRef} onSubmit={submit}>
         {content && <input type="hidden" name="id" value={content.id} />}
         <input
-          autoFocus
+          autoFocus={label === Label.HOME_1}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Titre (facultatif)"
           name="title"
