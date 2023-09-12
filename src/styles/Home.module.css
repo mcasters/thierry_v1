@@ -5,6 +5,8 @@
   align-items: center;
   padding: 6rem;
   height: 70vh;
+  color: var(--color-font-home);
+
 }
 
 .grid {

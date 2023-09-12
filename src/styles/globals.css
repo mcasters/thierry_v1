@@ -12,7 +12,7 @@
   --font-size-title: 1.8rem;
   --font-size-plus: 1.2rem;
   --font-size: 1rem;
-  --font-size-min: 0.7rem;
+  --font-size-min: 0.8rem;
 
   /*
    * Layout
@@ -20,8 +20,8 @@
 
   --max-content-width: 540px;
   --max-content-half-width: 270px;
-  --line-height: 6px;
-  --nav-height: 32px;
+  --line-height: 4px;
+  --nav-height: 38px;
   --admin-nav-height: 42px;
 
   /*
@@ -33,24 +33,25 @@
   --color-dark: #a1a1a1;
   --color-xdark: #333;
 
-  --color-blue-xdark: #0e1d23;
+  --color-blue-xdark: #0f1f26;
   --color-blue-xdark-rgb: 14, 29, 35;
   --color-blue-dark: #152a36;
   --color-blue-dark-rgb: 21, 42, 54;
-  --color-blue-medium: #1c3649;
+  --color-blue-medium: #1c3949;
   --color-blue-medium-rgb: 28, 54, 73;
   /*
   Original prussian blue
    */
   --color-blue: #24445C;
   --color-blue-rgb: 36, 68, 92;
-  --color-blue-light: #376c91;
-  --color-blue-xlight: #669dd3;
+  --color-blue-light: #2e6177;
+  --color-blue-xlight: #4289a6;
+  --color-blue-xxlight: #66bad3;
+  --color-font-home: #b5d1d5;
 
   --color-brown-dark: #462e1b;
   --color-brown-dark-rgb: 70, 46, 27;
-  --color-brown1: #5c3b24;
-  --color-brown1-rgb: 92, 59, 36;
+  --color-brown1: #a4874f;
   --color-brown2: #6b3d2a;
   --color-brown2-rgb: 107, 61, 42;
   --color-brown: #5c3524;
@@ -88,7 +89,7 @@
    * Parallax
    * ======================================================================== */
   --scale: 0.1;
-  --space: 6vmin;
+  --space: 1vmin;
 
 }
 
@@ -102,7 +103,7 @@
 body {
   overflow: visible;
   min-height: 100%;
-  color: var(--color-light);
+  color: var(--color-font-home);
   background-color: var(--color-blue-dark);
   font-family: var(--font-base);
   font-size: var(--font-size);
@@ -129,13 +130,13 @@ button {
 
 a, .buttonLink {
   text-decoration: none;
-  color: var(--color-blue-light);
+  color: var(--color-blue-xlight);
   transition: color 0.4s;
 }
 
 a:hover, .buttonLink:hover, a:focus,
 .buttonLink:focus {
-  color: var(--color-blue-xlight);
+  color: var(--color-blue-xxlight);
   transition: color 0.4s;
 }
 
@@ -225,6 +226,10 @@ label {
 [type="reset"] {
   width: 48%;
   margin: 2em 0.3em;
+}
+
+.hidden {
+  display: none;
 }
 
 /*

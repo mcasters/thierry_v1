@@ -9,14 +9,7 @@ export default function Nav({ navRef, isFix }) {
   const router = useRouter();
 
   return (
-    <nav
-      ref={navRef}
-      className={isFix ? `${s.nav} ${s.sticky}` : `${s.nav}`}
-      style={{
-        height: `${LAYOUT.NAV_HEIGHT}px`,
-        lineHeight: `${LAYOUT.NAV_HEIGHT}px`,
-      }}
-    >
+    <nav ref={navRef} className={isFix ? `${s.nav} ${s.sticky}` : `${s.nav}`}>
       <ul>
         {MENU.map((item) => {
           const isSubPageActive = router.pathname === `${item.PATH}/[year]`;

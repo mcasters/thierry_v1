@@ -1,10 +1,10 @@
 .line {
     position: fixed;
-    height: 6px;
+    height: var(--line-height);
     top: 0;
     left: 0;
     width: 100%;
-    background-color: var(--color-brown);
+    background-color: var(--color-brown1);
     z-index: 9999;
 }
 
@@ -15,10 +15,12 @@
     padding-bottom: 3em;
 }
 
+.dark {
+    background-color: var(--color-blue-xdark);
+}
+
 .wrapper {
-    max-width: 55ch;
-    width: calc(100% - var(--space));
+    max-width: 75ch;
     margin:  2em auto;
-    padding: var(--space);
 }
 

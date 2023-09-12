@@ -24,7 +24,7 @@ export default async function handler(
 
     const form = formidable({
       maxFile: 1,
-      maxFileSize: 1024 * 1024,
+      maxFileSize: 1536 * 1536,
       allowEmptyFiles: true,
       minFileSize: 0,
     });

@@ -32,4 +32,3 @@ export const MENU = [
     NAME: NAMES.SCULPTURE,
   },
 ];
-
