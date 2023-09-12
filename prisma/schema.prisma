@@ -43,8 +43,18 @@ model PostImage {
 
 model Content {
   id       Int     @id @default(autoincrement())
-  label    String  @unique
+  label    Label   @unique
+  title    String?
   text     String  @db.LongText
+  filename String
+}
+
+enum Label {
+  HOME_1
+  HOME_2
+  HOME_3
+  HOME_4
+  HOME_5
 }
 
 model Painting {
@@ -61,7 +71,7 @@ model Painting {
   price       Int?
   sold        Boolean  @default(false)
   // One-to-one relation
-  image       Image    @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  image       Image    @relation(fields: [imageId], references: [id])
   imageId     Int      @unique
 }
 

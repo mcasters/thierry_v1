@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { MENU } from '@/constants/routes';
-import LAYOUT from '@/constants/layout';
 import s from '../../styles/Nav.module.css';
 
 export default function Nav({ navRef, isFix }) {

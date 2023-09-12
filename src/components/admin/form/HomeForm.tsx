@@ -1,20 +1,22 @@
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
+import { Label } from '@prisma/client';
 
 import { Content } from '@/interfaces';
 import s from './form.module.css';
 import SingleImageForm from '@/components/admin/form/imageForm/SingleImageForm';
 
 interface Props {
-  content: Content;
+  content?: Content;
+  label: Label;
 }
-export default function ContentForm({ content }: Props) {
+export default function HomeForm({ content, label }: Props) {
   const formRef = useRef<HTMLFormElement>();
   const resetImageRef = useRef<number>(0);
   const { mutate } = useSWRConfig();
-  const [title, setTitle] = useState<string>(content.title || '');
-  const [text, setText] = useState<string>(content.text || '');
+  const [title, setTitle] = useState<string>(content?.title || '');
+  const [text, setText] = useState<string>(content?.text || '');
 
   const [hasImage, setHasImage] = useState<boolean>(false);
   const api = '/api/content/update';
@@ -40,10 +42,10 @@ export default function ContentForm({ content }: Props) {
   };
 
   return (
-    <div className={s.formContainer}>
-      <h2>Ajout/modification du contenu {content.label}</h2>
+    <div className={s.homeFormContainer}>
+      <h2>{label}</h2>
       <form ref={formRef} onSubmit={submit}>
-        <input type="hidden" name="id" value={content.id} />
+        {content && <input type="hidden" name="id" value={content.id} />}
         <input
           autoFocus
           onChange={(e) => setTitle(e.target.value)}

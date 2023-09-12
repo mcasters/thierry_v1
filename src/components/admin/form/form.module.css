@@ -35,3 +35,11 @@
     box-sizing: border-box;
     padding: 2px;
 }
+
+.homeFormContainer {
+padding: 3em 0;
+}
+
+.homeFormContainer h2 {
+    padding-bottom: 0.8em;
+}
