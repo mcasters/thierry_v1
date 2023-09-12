@@ -7,7 +7,6 @@
   font-variant: small-caps;
   background: none;
   border-bottom: 1px solid transparent;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
   transition: all ease-in-out 0.2s;
 }
 
@@ -16,6 +15,7 @@
   top: var(--line-height);
   background-color: var(--color-blue-medium);
   border-bottom: 1px solid var(--color-blue-light);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
   transition: all ease-in-out 0.2s;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .nav .link {
-  color: var(--color-blue-xlight);
+  color: var(--color-blue-xxxlight);
   display: inline-block;
 }
 

@@ -1,28 +1,34 @@
 .nav {
     position: fixed;
-    top: calc(var(--line-height) + var(--nav-height));
+    top: 0;
     left: 0;
-    height: var(--admin-nav-height);
-    line-height: var(--admin-nav-height);
     width: 100%;
     background-color: var(--color-blue-medium);
     border-bottom: solid var(--color-xdark) 1px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
     text-align: center;
+    padding-top: 0.6em;
+    z-index: 2;
+}
+
+.nav span {
+    color: var(--color-blue-light);
+    letter-spacing: 4px;
+    font-weight: bold;
+
 }
 
 .navItems {
-    margin-bottom: 2rem;
-    padding: 0;
     list-style: none;
 }
 
 .navItem {
     display: inline-block;
-    width: 80px;
-    margin: 0 auto;
+    margin: auto;
 }
 
 .navItem a {
-    color: var(--color-light);
+    color: var(--color-blue-xxxlight);
+    display: block;
+    padding: 1em;
 }

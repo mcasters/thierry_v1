@@ -9,14 +9,13 @@
 }
 
 .main {
-    background-color: var(--color-xlight);
     text-align: center;
     padding-top: calc(var(--line-height) + var(--nav-height) + var(--admin-nav-height));
     padding-bottom: 3em;
 }
 
-.dark {
-    background-color: var(--color-blue-xdark);
+.light {
+    background-color: var(--color-xlight);
 }
 
 .wrapper {

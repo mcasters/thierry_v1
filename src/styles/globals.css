@@ -22,7 +22,7 @@
   --max-content-half-width: 270px;
   --line-height: 4px;
   --nav-height: 38px;
-  --admin-nav-height: 42px;
+  --admin-nav-height: 62px;
 
   /*
    * Colors
@@ -47,7 +47,7 @@
   --color-blue-light: #2e6177;
   --color-blue-xlight: #4289a6;
   --color-blue-xxlight: #66bad3;
-  --color-font-home: #b5d1d5;
+  --color-blue-xxxlight: #b5d1d5;
 
   --color-brown-dark: #462e1b;
   --color-brown-dark-rgb: 70, 46, 27;
@@ -103,7 +103,7 @@
 body {
   overflow: visible;
   min-height: 100%;
-  color: var(--color-font-home);
+  color: var(--color-blue-xxxlight);
   background-color: var(--color-blue-dark);
   font-family: var(--font-base);
   font-size: var(--font-size);

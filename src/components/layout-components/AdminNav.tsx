@@ -5,6 +5,7 @@ import s from '@/styles/AdminNav.module.css';
 export default function AdminNav() {
   return (
     <nav className={s.nav}>
+      <span>Administration</span>
       <ul className={s.navItems}>
         <li className={s.navItem}>
           <Link href="/admin/actualites">Actualités</Link>
