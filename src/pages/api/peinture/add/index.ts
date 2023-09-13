@@ -4,7 +4,11 @@ import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
 
 import prisma from '@/lib/prisma';
-import { resizeAndSaveImage, createDir, getPaintingDir } from '@/utils/server';
+import {
+  resizeAndSaveImage,
+  createDirIfNecessary,
+  getPaintingDir,
+} from '@/utils/server';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
 export default async function handler(
@@ -16,7 +20,7 @@ export default async function handler(
 
   if (session) {
     const dir = getPaintingDir();
-    createDir(dir);
+    createDirIfNecessary(dir);
 
     let fields;
     let files;

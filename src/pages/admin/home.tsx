@@ -28,9 +28,11 @@ export default function Home() {
       {/* eslint-disable-next-line react/no-unescaped-entities */}
       <h1>Contenus de la page d'accueil</h1>
       {(Object.keys(Label) as Array<keyof typeof Label>).map((label, i) => {
-        const contentForLabel = contents.filter(
-          (content) => content.label === label,
-        );
+        let contentForLabel = undefined;
+        if (contents) {
+          const res = contents?.filter((content) => content.label === label);
+          if (res) contentForLabel = res;
+        }
         return <HomeForm key={i} content={contentForLabel} label={label} />;
       })}
     </Layout>

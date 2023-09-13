@@ -19,8 +19,8 @@ export default function HomeForm({ content, label }: Props) {
   const [text, setText] = useState<string>(content?.text || '');
 
   const [hasImage, setHasImage] = useState<boolean>(false);
-  const api = '/api/content/update';
-  const apiToUpdate = '/api/content';
+  const api = '/api/home/update';
+  const apiToUpdate = '/api/home';
 
   const reset = () => {
     setTitle('');
@@ -45,7 +45,8 @@ export default function HomeForm({ content, label }: Props) {
     <div className={s.homeFormContainer}>
       <h2>{label}</h2>
       <form ref={formRef} onSubmit={submit}>
-        {content && <input type="hidden" name="id" value={content.id} />}
+        <input type="hidden" name="id" value={content?.id | ''} />
+        <input type="hidden" name="label" value={label} />
         <input
           autoFocus={label === Label.HOME_1}
           onChange={(e) => setTitle(e.target.value)}

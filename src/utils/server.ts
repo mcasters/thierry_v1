@@ -2,7 +2,6 @@ import { mkdir, stat, rm, rename } from 'fs';
 import sharp from 'sharp';
 import { join } from 'path';
 import { PersistentFile } from 'formidable';
-import { getDirnameFromNameOrTitle } from '@/utils/common';
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
 
@@ -18,7 +17,11 @@ export const getPaintingDir = () => {
   return join(`${serverLibraryPath}`, 'peinture');
 };
 
-export const createDir = (dir: string) => {
+export const getMiscellaneousDir = () => {
+  return join(`${serverLibraryPath}`, 'miscellaneous');
+};
+
+export const createDirIfNecessary = (dir: string) => {
   stat(dir, (err) => {
     if (err?.code === 'ENOENT')
       mkdir(dir, { recursive: true }, (err) => {
