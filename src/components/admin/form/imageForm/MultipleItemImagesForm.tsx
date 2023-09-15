@@ -57,8 +57,8 @@ export default function MultipleItemImagesForm({
   };
 
   return (
-    <>
-      <h4 className={s.separate}>Images :</h4>
+    <div className={s.imageFormContainer}>
+      <h4>Images :</h4>
       {existantAlbum.length > 0 &&
         existantAlbum.map((filename) => (
           <div key={filename} className={s.imageContainer}>
@@ -85,6 +85,6 @@ export default function MultipleItemImagesForm({
             />
           </div>
         ))}
-    </>
+    </div>
   );
 }

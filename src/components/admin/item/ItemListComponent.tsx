@@ -10,7 +10,7 @@ interface Props {
 }
 export default function ItemListComponent({ type }: Props) {
   const api = `/api/${type}`;
-  const title = `Liste des ${type}`;
+  const title = `Liste des ${type}s`;
   const { data: items, error } = useSWR(api, (apiURL: string) =>
     fetch(apiURL).then((res) => res.json()),
   );

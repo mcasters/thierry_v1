@@ -1,30 +1,36 @@
-import { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useSWRConfig } from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { Label } from '@prisma/client';
 
-import { Content } from '@/interfaces';
 import s from './form.module.css';
 import SingleImageForm from '@/components/admin/form/imageForm/SingleImageForm';
 
 interface Props {
-  content?: Content;
   label: Label;
 }
-export default function HomeForm({ content, label }: Props) {
+export default function HomeForm({ label }: Props) {
+  const api = `/api/home/${label}`;
+  const apiToUpdate = '/api/home/update';
+  const { data: content, error } = useSWR(api, (apiURL: string) =>
+    fetch(apiURL).then((res) => res.json()),
+  );
   const formRef = useRef<HTMLFormElement>();
   const resetImageRef = useRef<number>(0);
   const { mutate } = useSWRConfig();
+
   const [title, setTitle] = useState<string>(content?.title || '');
   const [text, setText] = useState<string>(content?.text || '');
-
   const [hasImage, setHasImage] = useState<boolean>(false);
-  const api = '/api/home/update';
-  const apiToUpdate = '/api/home';
 
-  const reset = () => {
-    setTitle('');
-    setText('');
+  useEffect(() => {
+    if (content) {
+      setTitle(content.title);
+      setText(content.text);
+    }
+  }, [content]);
+
+  const resetNewImage = () => {
     resetImageRef.current = resetImageRef.current + 1;
   };
 
@@ -32,20 +38,22 @@ export default function HomeForm({ content, label }: Props) {
     e.preventDefault();
     if (formRef.current && confirm('Tu confirmes ?')) {
       const formData = new FormData(formRef.current);
-      fetch(api, { method: 'POST', body: formData }).then((res) => {
+      fetch(apiToUpdate, { method: 'POST', body: formData }).then((res) => {
         if (res.ok) {
           toast('contenu modifié');
-          mutate(apiToUpdate);
+          mutate(api);
+          resetNewImage();
         } else toast("Erreur à l'enregistrement");
       });
     }
   };
 
+  if (error) return <div>failed to load</div>;
+
   return (
     <div className={s.homeFormContainer}>
       <h2>{label}</h2>
       <form ref={formRef} onSubmit={submit}>
-        <input type="hidden" name="id" value={content?.id | ''} />
         <input type="hidden" name="label" value={label} />
         <input
           autoFocus={label === Label.HOME_1}
@@ -71,7 +79,6 @@ export default function HomeForm({ content, label }: Props) {
           reset={resetImageRef.current}
         />
         <div>
-          <div className={s.separate}></div>
           <input
             disabled={!text || !hasImage}
             type="submit"
@@ -80,7 +87,8 @@ export default function HomeForm({ content, label }: Props) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              reset();
+              resetNewImage();
+              mutate(api);
             }}
             className="adminButton"
           >

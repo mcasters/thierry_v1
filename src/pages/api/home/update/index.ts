@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { join } from 'path';
-import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
 import formidable from 'formidable';
 
@@ -12,7 +11,6 @@ import {
 } from '@/utils/server';
 import prisma from '@/lib/prisma';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { getPaintingDir } from '@/utils/server';
 
 export default async function handler(
   req: NextApiRequest,
@@ -42,31 +40,30 @@ export default async function handler(
       return res.status(400).send({ message: err.message });
     }
 
-    const contentId = Number(fields.id);
     let content;
     let fileInfo = undefined;
     const file = files.file?.[0];
-
     if (file.size !== 0) fileInfo = await resizeAndSaveImage(file, dir);
 
-    if (contentId === 0) {
+    const label = fields.label[0];
+    const BDContent = await prisma.content.findUnique({
+      where: { label },
+    });
+
+    if (!BDContent) {
       if (!fileInfo)
         return res.status(400).send({ message: 'Image is missing' });
       else
         content = await prisma.content.create({
           data: {
-            label: fields.label[0],
+            label,
             title: fields.title[0],
             text: fields.text[0],
             filename: `${file.newFilename}.${fileInfo.format}`,
           },
         });
     } else {
-      const BDContent = await prisma.painting.findUnique({
-        where: { id: contentId },
-      });
-
-      let filename = {};
+      let filename = undefined;
       if (fileInfo) {
         filename = `${file.newFilename}.${fileInfo.format}`;
         deleteFile(join(`${dir}`, `${BDContent.filename}`));
@@ -74,10 +71,9 @@ export default async function handler(
 
       content = await prisma.content.update({
         where: {
-          id: contentId,
+          label,
         },
         data: {
-          label: fields.label[0],
           title: fields.title[0],
           text: fields.text[0],
           filename,

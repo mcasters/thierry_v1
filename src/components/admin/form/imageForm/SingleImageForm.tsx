@@ -18,7 +18,7 @@ export default function SingleImageForm({
   const [newImage, setNewImage] = useState<string>('');
 
   useEffect(() => {
-    setHasImage(existantImageSrc || newImage !== '');
+    setHasImage(existantImageSrc !== '' || newImage !== '');
   }, [newImage]);
 
   useEffect(() => {
@@ -35,8 +35,8 @@ export default function SingleImageForm({
   };
 
   return (
-    <>
-      <h4 className={s.separate}>Image :</h4>
+    <div className={s.imageFormContainer}>
+      <h4>Image :</h4>
       {existantImageSrc && (
         <div className={s.imageContainer}>
           <Image
@@ -61,6 +61,6 @@ export default function SingleImageForm({
           />
         </div>
       )}
-    </>
+    </div>
   );
 }

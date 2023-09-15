@@ -1,10 +1,28 @@
+import { GetServerSideProps } from 'next';
 import Image from 'next/image';
+
 import s from '@/styles/Home.module.css';
 import Layout from '../components/layout-components';
 import HomePart from '@/components/home/HomePart';
 import HomeContactPart from '@/components/home/HomeContactPart';
+import prisma from '@/lib/prisma';
+import { Content } from '@/interfaces';
 
-export default function Home() {
+export type Props = {
+  contents: [Content];
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const res = await prisma.content.findMany();
+  const contents = JSON.parse(JSON.stringify(res));
+  return {
+    props: {
+      contents,
+    },
+  };
+};
+
+export default function Home({ contents }: Props) {
   const introduction =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus in hac habitasse platea dictumst vestibulum rhoncus. Interdum velit laoreet id donec ultrices tincidunt arcu non sodales. Nulla malesuada pellentesque elit eget gravida cum sociis natoque. In fermentum et sollicitudin ac orci phasellus egestas tellus. Tellus in metus vulputate eu scelerisque felis imperdiet. Magna sit amet purus gravida. Urna neque viverra justo nec. Tellus rutrum tellus pellentesque eu tincidunt tortor. Non tellus orci ac auctor augue mauris augue. Odio tempor orci dapibus ultrices in.';
   const presentation =
@@ -86,16 +104,15 @@ export default function Home() {
             </a>
           </div>
         </div>
-        <HomePart
-          title="Présentation"
-          content={presentation}
-          imageSrc="assets/4.jpeg"
-        />
-        <HomePart
-          title="Démarche artistique"
-          content={demarche}
-          imageSrc="assets/1.jpeg"
-        />
+        {contents.map((content) => (
+          <HomePart
+            key={content.id}
+            title={content.title}
+            content={content.text}
+            imageSrc={`/images/miscellaneous/${content.filename}`}
+          />
+        ))}
+
         <HomeContactPart title="Contact" imageSrc="assets/2.jpeg" />
       </Layout>
     </>

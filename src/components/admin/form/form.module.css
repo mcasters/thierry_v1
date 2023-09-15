@@ -21,6 +21,11 @@
     margin-bottom: 1em;
 }
 
+.imageFormContainer {
+    margin-top: 2em;
+
+}
+
 .imageContainer {
     position: relative;
     display: block;
