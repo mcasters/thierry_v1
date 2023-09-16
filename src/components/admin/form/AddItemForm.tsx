@@ -153,7 +153,7 @@ export default function AddItemForm({ item, type, toggleModal }: Props) {
           reset={resetImageRef.current}
         />
         <div>
-          <div className={s.separate}></div>
+          <div className="separate"></div>
           <input
             disabled={
               !title ||

@@ -1,12 +1,11 @@
 import React, { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Label } from '@prisma/client';
-import { useRouter } from 'next/router';
 
-import s from './form.module.css';
 import SingleImageForm from '@/components/admin/form/imageForm/SingleImageForm';
 import { Content } from '@/interfaces';
 import { useSWRConfig } from 'swr';
+import s from './form.module.css';
 
 interface Props {
   content?: Content;
@@ -38,40 +37,43 @@ export default function HomeForm({ content, label, toggleModal }: Props) {
     }
   };
 
-  const cancel = (e) => {};
-
   return (
-    <div className={s.homeFormContainer}>
-      <h2>{label}</h2>
+    <div className={s.formContainer}>
+      <h2 className={s.titleForm}>{label}</h2>
       <form ref={formRef} onSubmit={submit}>
         <input type="hidden" name="label" value={label} />
-        <input
-          autoFocus={label === Label.HOME_1}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Titre (facultatif)"
-          name="title"
-          type="text"
-          value={title}
-          required
-        />
+        {label !== Label.INTRO && (
+          <input
+            autoFocus={label === Label.HOME_1}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Titre (facultatif)"
+            name="title"
+            type="text"
+            value={title}
+          />
+        )}
         <textarea
+          autoFocus={label === Label.INTRO}
           onChange={(e) => setText(e.target.value)}
           placeholder="Texte"
           name="text"
           rows={10}
           value={text}
+          required
         />
-        <SingleImageForm
-          existantImageSrc={
-            content ? `/images/miscellaneous/${content.filename}` : undefined
-          }
-          setHasImage={setHasImage}
-          reset={resetImageRef.current}
-        />
+        {label !== Label.INTRO && (
+          <SingleImageForm
+            existantImageSrc={
+              content ? `/images/miscellaneous/${content.filename}` : undefined
+            }
+            setHasImage={setHasImage}
+            reset={resetImageRef.current}
+          />
+        )}
         <div>
-          <div className={s.separate}></div>
+          {label !== Label.INTRO && <div className="separate"></div>}
           <input
-            disabled={!text || !hasImage}
+            disabled={label === Label.INTRO ? !text : !text || !hasImage}
             type="submit"
             value="Enregistrer"
           />

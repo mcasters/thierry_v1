@@ -6,7 +6,6 @@ import s from './form.module.css';
 import { Label } from '@prisma/client';
 
 type Props = {
-  id: number;
   label: Label;
   disabled: boolean;
 };

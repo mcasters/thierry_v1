@@ -5,6 +5,7 @@ import prisma from '@/lib/prisma';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { deleteFile, getMiscellaneousDir } from '@/utils/server';
 import { join } from 'path';
+import { Label } from '@prisma/client';
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,14 +19,13 @@ export default async function handler(
   const { label } = req.query;
 
   if (req.method === 'DELETE') {
-    const dir = getMiscellaneousDir();
-
-    const BDContent = await prisma.content.findUnique({
-      where: { label },
-    });
-
-    deleteFile(join(`${dir}`, `${BDContent.filename}`));
-
+    if (label !== Label.INTRO) {
+      const dir = getMiscellaneousDir();
+      const BDContent = await prisma.content.findUnique({
+        where: { label },
+      });
+      deleteFile(join(`${dir}`, `${BDContent.filename}`));
+    }
     const content = await prisma.content.delete({
       where: { label },
     });

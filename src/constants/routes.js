@@ -24,6 +24,10 @@ export const NAMES = {
 
 export const MENU = [
   {
+    PATH: ROUTES.HOME,
+    NAME: NAMES.HOME,
+  },
+  {
     PATH: ROUTES.PAINTING,
     NAME: NAMES.PAINTING,
   },

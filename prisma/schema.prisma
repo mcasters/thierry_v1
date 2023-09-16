@@ -50,6 +50,7 @@ model Content {
 }
 
 enum Label {
+  INTRO
   HOME_1
   HOME_2
   HOME_3

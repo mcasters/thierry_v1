@@ -5,7 +5,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,9 +13,9 @@
 
 .modalBox {
     display: block;
-    background: white;
+    background: var(--color-light);
     width: var(--max-content-width);
-    height: 90%;
+    max-height: 90%;
     padding: 1rem 5rem;
     border-radius: 0.3rem;
     overflow: scroll;

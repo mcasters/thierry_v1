@@ -1,9 +1,15 @@
-.formContainer h2 {
-    font-size: var(--font-size-title);
-}
-
 .formContainer form {
     margin-top: 2em;
+    text-align: center;
+}
+
+.formContainer h2 {
+    font-size: var(--font-size-title);
+    padding-bottom: 1em;
+}
+
+.formContainer .titleForm {
+    margin: 0;
 }
 
 .trash {
@@ -13,16 +19,6 @@
     background: none;
     font-size: 1.4em;
     padding: 0 0.4em 0.4em;
-}
-
-.separate {
-    padding-top: 1em;
-    border-bottom: 1px solid var(--color-light);
-    margin-bottom: 1em;
-}
-
-.homeFormContainer h2 {
-    padding-bottom: 0.8em;
 }
 
 .imageFormContainer {

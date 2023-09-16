@@ -11,6 +11,7 @@ import {
 } from '@/utils/server';
 import prisma from '@/lib/prisma';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { Label } from '@prisma/client';
 
 export default async function handler(
   req: NextApiRequest,
@@ -43,7 +44,7 @@ export default async function handler(
     let content;
     let fileInfo = undefined;
     const file = files.file?.[0];
-    if (file.size !== 0) fileInfo = await resizeAndSaveImage(file, dir);
+    if (file && file.size !== 0) fileInfo = await resizeAndSaveImage(file, dir);
 
     const label = fields.label[0];
     const BDContent = await prisma.content.findUnique({
@@ -51,22 +52,37 @@ export default async function handler(
     });
 
     if (!BDContent) {
-      if (!fileInfo)
+      let filename, title;
+      if (fileInfo) {
+        filename = `${file.newFilename}.${fileInfo.format}`;
+        title = fields.title[0];
+      } else if (label === Label.INTRO) {
+        filename = '';
+        title = '';
+      } else {
         return res.status(400).send({ message: 'Image is missing' });
-      else
-        content = await prisma.content.create({
-          data: {
-            label,
-            title: fields.title[0],
-            text: fields.text[0],
-            filename: `${file.newFilename}.${fileInfo.format}`,
-          },
-        });
+      }
+      content = await prisma.content.create({
+        data: {
+          label,
+          title,
+          text: fields.text[0],
+          filename,
+        },
+      });
     } else {
       let filename = undefined;
+      let title;
       if (fileInfo) {
         filename = `${file.newFilename}.${fileInfo.format}`;
         deleteFile(join(`${dir}`, `${BDContent.filename}`));
+      }
+
+      if (label === Label.INTRO) {
+        filename = '';
+        title = '';
+      } else {
+        title = fields.title[0];
       }
 
       content = await prisma.content.update({
@@ -74,7 +90,7 @@ export default async function handler(
           label,
         },
         data: {
-          title: fields.title[0],
+          title,
           text: fields.text[0],
           filename,
         },
