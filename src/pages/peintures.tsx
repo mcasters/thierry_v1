@@ -1,4 +1,3 @@
-import React from 'react';
 import { GetServerSideProps } from 'next';
 
 import prisma from '@/lib/prisma';
@@ -32,7 +31,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 export default function Peintures({ paintings: items }: Props) {
-  console.log(items);
   return (
     <Layout>
       <div className={s.container}>

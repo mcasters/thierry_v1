@@ -1,8 +1,10 @@
 import Link from 'next/link';
 
+import AuthStatus from '@/components/auth/AuthStatus';
 import s from '@/styles/AdminNav.module.css';
 
 export default function AdminNav() {
+  const authStatus = AuthStatus();
   return (
     <nav className={s.nav}>
       <span>Administration</span>
@@ -20,6 +22,7 @@ export default function AdminNav() {
           <Link href="/admin/home">Home</Link>
         </li>
       </ul>
+      <div className={s.authStatus}>{authStatus}</div>
     </nav>
   );
 }

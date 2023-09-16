@@ -10,6 +10,8 @@ export default function Footer() {
       <footer className={s.footer}>
         <div className={s.center}>
           <Link href="/policy">Politique de confidentialité</Link>
+          <br />
+          <br />
           {authStatus}
         </div>
       </footer>

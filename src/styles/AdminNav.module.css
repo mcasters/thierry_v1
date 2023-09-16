@@ -32,3 +32,27 @@ font-size: var(--font-size-plus);
     display: block;
     padding: 1em;
 }
+
+.authStatus {
+    background-color: var(--color-light);
+    padding: 1em;
+    font-size: 0.8em;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+}
+
+.authStatus p, .authStatus button, .authStatus a  {
+    font-size: 1em;
+    display: block;
+    margin: 0 auto;
+}
+
+.authStatus p  {
+    padding-bottom: 1em;
+}
+
+.authStatus span {
+    display: none;
+}

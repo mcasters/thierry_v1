@@ -20,13 +20,11 @@ export default function AuthStatus() {
       )}
       {session?.user && (
         <>
-          <span>
-            <br />
-            <small>Signed in as</small>
+          <p>
+            <small>Signed in as :</small>
             <br />
             <strong>{session.user.email}</strong>
-          </span>
-          <br />
+          </p>
           <Link href="/admin">Administration du site</Link>
           <span className={s.separator}>-</span>
           <button
@@ -37,6 +35,8 @@ export default function AuthStatus() {
           >
             Admin out
           </button>
+          <span className={s.separator}>-</span>
+          <Link href="/">Home</Link>
         </>
       )}
     </div>
