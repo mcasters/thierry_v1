@@ -2,6 +2,8 @@ import Link from 'next/link';
 
 import AuthStatus from '@/components/auth/AuthStatus';
 import s from '@/styles/AdminNav.module.css';
+import { ADMIN_MENU } from '@/constants/routes';
+import { router } from 'next/client';
 
 export default function AdminNav() {
   const authStatus = AuthStatus();
@@ -9,18 +11,22 @@ export default function AdminNav() {
     <nav className={s.nav}>
       <span>Administration</span>
       <ul className={s.navItems}>
-        <li className={s.navItem}>
-          <Link href="/admin/actualites">Actualités</Link>
-        </li>
-        <li className={s.navItem}>
-          <Link href="/admin/peintures">Peinture</Link>
-        </li>
-        <li className={s.navItem}>
-          <Link href="/admin/sculptures">Sculpture</Link>
-        </li>
-        <li className={s.navItem}>
-          <Link href="/admin/home">Home</Link>
-        </li>
+        {ADMIN_MENU.map((item) => {
+          const isActive = router.pathname === item.PATH;
+
+          return (
+            <li key={item.NAME}>
+              <Link
+                href={item.PATH}
+                key={item.NAME}
+                className={isActive ? `${s.link} ${s.active}` : `${s.link}`}
+                legacyBehavior={false}
+              >
+                {item.NAME}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
       <div className={s.authStatus}>{authStatus}</div>
     </nav>

@@ -22,16 +22,27 @@ font-size: var(--font-size-plus);
     list-style: none;
 }
 
-.navItem {
+.nav li {
     display: inline-block;
-    margin: auto;
+    width: 100px;
+    margin: 0 auto;
 }
 
-.navItem a {
-    color: var(--color-blue-xxxlight);
-    display: block;
+.nav .link {
     padding: 1em;
+    color: var(--color-blue-xxxlight);
+    display: inline-block;
 }
+
+.nav .link:hover {
+    color: var(--color-blue-xxlight);
+}
+
+.nav .link.active {
+    color: var(--color-blue-xxlight);
+    border-bottom: 1px solid var(--color-blue-xxlight);
+}
+
 
 .authStatus {
     background-color: var(--color-light);

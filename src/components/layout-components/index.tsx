@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 
 import { ROUTES } from '@/constants/routes';
 import Header from './Header';
-import s from '@/styles/Layout.module.css';
 import Footer from '@/components/layout-components/Footer';
+import s from '@/styles/Layout.module.css';
 
 export default function Layout({ introduction, children }) {
   const router = useRouter();

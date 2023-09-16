@@ -3,7 +3,6 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 
 import type { Image as IImage } from '@/interfaces/index';
 import s from './Slider.module.css';
-import { TYPE } from '@/constants';
 
 type PostProps = {
   images: IImage[];
@@ -24,10 +23,10 @@ export default function Slider({ images, type, alt }: PostProps) {
     <ImageGallery
       additionalClass={s.gallery}
       items={imageTab}
-      showBullets
       autoPlay
       showNav={false}
       showPlayButton={false}
+      showFullscreenButton={false}
     />
   );
 }
