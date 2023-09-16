@@ -15,12 +15,12 @@
 }
 
 .light {
-    color: white;
+    color: var(--color-blue);
     background: linear-gradient(
             to bottom,
             transparent,
-            rgb(200, 200, 200)
-    ) rgb(243, 243, 243);
+            var(--color-light)
+    ) var(--color-xlight);
 }
 
 .wrapper {

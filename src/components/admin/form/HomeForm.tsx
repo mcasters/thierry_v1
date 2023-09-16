@@ -1,54 +1,44 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import useSWR, { useSWRConfig } from 'swr';
 import { Label } from '@prisma/client';
+import { useRouter } from 'next/router';
 
 import s from './form.module.css';
 import SingleImageForm from '@/components/admin/form/imageForm/SingleImageForm';
+import { Content } from '@/interfaces';
+import { useSWRConfig } from 'swr';
 
 interface Props {
+  content?: Content;
   label: Label;
+  toggleModal: () => void;
 }
-export default function HomeForm({ label }: Props) {
-  const api = `/api/home/${label}`;
-  const apiToUpdate = '/api/home/update';
-  const { data: content, error } = useSWR(api, (apiURL: string) =>
-    fetch(apiURL).then((res) => res.json()),
-  );
+export default function HomeForm({ content, label, toggleModal }: Props) {
   const formRef = useRef<HTMLFormElement>();
   const resetImageRef = useRef<number>(0);
+  const api = '/api/home/update';
+  const apiToUpdate = '/api/home';
   const { mutate } = useSWRConfig();
 
   const [title, setTitle] = useState<string>(content?.title || '');
   const [text, setText] = useState<string>(content?.text || '');
   const [hasImage, setHasImage] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (content) {
-      setTitle(content.title);
-      setText(content.text);
-    }
-  }, [content]);
-
-  const resetNewImage = () => {
-    resetImageRef.current = resetImageRef.current + 1;
-  };
-
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formRef.current && confirm('Tu confirmes ?')) {
       const formData = new FormData(formRef.current);
-      fetch(apiToUpdate, { method: 'POST', body: formData }).then((res) => {
+      fetch(api, { method: 'POST', body: formData }).then((res) => {
         if (res.ok) {
           toast('contenu modifié');
-          mutate(api);
-          resetNewImage();
+          toggleModal();
+          mutate(apiToUpdate);
         } else toast("Erreur à l'enregistrement");
       });
     }
   };
 
-  if (error) return <div>failed to load</div>;
+  const cancel = (e) => {};
 
   return (
     <div className={s.homeFormContainer}>
@@ -79,6 +69,7 @@ export default function HomeForm({ label }: Props) {
           reset={resetImageRef.current}
         />
         <div>
+          <div className={s.separate}></div>
           <input
             disabled={!text || !hasImage}
             type="submit"
@@ -87,8 +78,7 @@ export default function HomeForm({ label }: Props) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              resetNewImage();
-              mutate(api);
+              toggleModal();
             }}
             className="adminButton"
           >

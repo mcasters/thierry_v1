@@ -47,29 +47,3 @@
 .title, .name {
   font-weight: bold;
 }
-
-.iconButton {
-  width: initial;
-  text-align: center;
-  border: none;
-  background: none;
-  font-size: var(--font-size-plus);
-  padding: 0.3em;
-  margin: 0;
-  box-shadow: none;
-}
-
-.iconButton svg {
-color: var(--color-blue-light);
-transition: color 0.4s ease;
-}
-
-.iconButton:hover svg {
-  color: var(--color-blue-xlight);
-  transition: color 0.4s ease;
-}
-
-
-
-
-

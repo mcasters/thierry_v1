@@ -1,9 +1,9 @@
+import Image from 'next/image';
+
+import DeleteItemButton from '@/components/admin/form/DeleteItemButton';
+import UpdateItemButton from '@/components/admin/form/UpdateItemButton';
 import { Item } from '@/interfaces';
 import s from './ListComponent.module.css';
-import UpdateItemButton from '@/components/admin/item/UpdateItemButton';
-import DeleteItemButton from '@/components/admin/item/DeleteItemButton';
-import Image from 'next/image';
-import React from 'react';
 
 interface Props {
   item: Item;

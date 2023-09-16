@@ -17,6 +17,7 @@ export default function AddItemForm({ item, type, toggleModal }: Props) {
   const formRef = useRef<HTMLFormElement>();
   const resetImageRef = useRef<number>(0);
   const { mutate } = useSWRConfig();
+
   const [title, setTitle] = useState<string>(item?.title || '');
   const [date, setDate] = useState<Date>(
     item?.date ? new Date(item.date) : new Date(),
@@ -32,6 +33,7 @@ export default function AddItemForm({ item, type, toggleModal }: Props) {
   const [isToSell, setIsToSell] = useState<boolean>(item?.isToSell || false);
 
   const [hasImage, setHasImage] = useState<boolean>(false);
+
   const api = item ? `/api/${type}/update` : `/api/${type}/add`;
   const apiToUpdate = `/api/${type}`;
 
@@ -169,7 +171,7 @@ export default function AddItemForm({ item, type, toggleModal }: Props) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              reset();
+              toggleModal ? toggleModal() : reset();
             }}
             className="adminButton"
           >
