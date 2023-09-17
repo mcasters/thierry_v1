@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { join } from 'path';
 import { getServerSession } from 'next-auth/next';
 import formidable from 'formidable';
@@ -8,15 +7,12 @@ import {
   deleteFile,
   getMiscellaneousDir,
   resizeAndSaveImage,
-} from '@/utils/server';
-import prisma from '@/lib/prisma';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+} from '../../../../utils/server';
+import prisma from '../../../../lib/prisma';
+import { authOptions } from '../../auth/[...nextauth]';
 import { Label } from '@prisma/client';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
+export default async function handler(req, res) {
   // @ts-ignore
   const session = await getServerSession(req, res, authOptions);
 
@@ -41,15 +37,6 @@ export default async function handler(
       return res.status(400).send({ message: 'Error parsing form' });
     }
 
-    if (
-      !fields ||
-      !files ||
-      fields.label === undefined ||
-      fields.title === undefined ||
-      fields.text === undefined
-    )
-      return res.status(400).send({ message: 'Error parsing form' });
-
     let content;
     let fileInfo = undefined;
     const file = files.file?.[0];
@@ -58,7 +45,7 @@ export default async function handler(
     const label = fields.label[0];
 
     const BDContent = await prisma.content.findUnique({
-      where: { label: Label[label as keyof typeof Label] },
+      where: { label },
     });
 
     if (!BDContent) {
@@ -74,7 +61,7 @@ export default async function handler(
       }
       content = await prisma.content.create({
         data: {
-          label: Label[label as keyof typeof Label],
+          label,
           title,
           text: fields.text[0],
           filename,
@@ -97,7 +84,7 @@ export default async function handler(
 
       content = await prisma.content.update({
         where: {
-          label: Label[label as keyof typeof Label],
+          label,
         },
         data: {
           title,

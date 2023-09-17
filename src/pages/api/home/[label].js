@@ -7,10 +7,7 @@ import { deleteFile, getMiscellaneousDir } from '@/utils/server';
 import { join } from 'path';
 import { Label } from '@prisma/client';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
+export default async function handler(req, res) {
   // @ts-ignore
   const session = await getServerSession(req, res, authOptions);
 
@@ -22,14 +19,14 @@ export default async function handler(
     if (label !== Label.INTRO) {
       const dir = getMiscellaneousDir();
       const BDContent = await prisma.content.findUnique({
-        where: { label: Label[label as keyof typeof Label] },
+        where: { label },
       });
       if (!BDContent)
         return res.status(404).send({ message: 'Content not found' });
       deleteFile(join(`${dir}`, `${BDContent.filename}`));
     }
     const content = await prisma.content.delete({
-      where: { label: Label[label as keyof typeof Label] },
+      where: { label },
     });
 
     return content
@@ -38,7 +35,7 @@ export default async function handler(
   } else {
     const content = await prisma.content.findFirst({
       where: {
-        label: Label[label as keyof typeof Label],
+        label,
       },
     });
 
