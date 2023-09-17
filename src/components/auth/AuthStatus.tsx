@@ -2,6 +2,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 
 import s from './AuthStatus.module.css';
+import { ROUTES } from '@/constants/routes';
 
 export default function AuthStatus() {
   const { data: session } = useSession();
@@ -25,7 +26,7 @@ export default function AuthStatus() {
             <br />
             <strong>{session.user.email}</strong>
           </p>
-          <Link href="/admin">Administration du site</Link>
+          <Link href={ROUTES.ADMIN}>Administration du site</Link>
           <span className={s.separator}>-</span>
           <button
             className="buttonLink"

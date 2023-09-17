@@ -17,7 +17,7 @@ export const NAMES = {
   SCULPTURE: 'Sculptures',
   HOME: 'Home',
   PRIVACY_FRENCH: 'Politique de confidentialité',
-  ADMIN: 'Admin',
+  ADMIN: 'général',
   ARTICLE: 'Articles',
 };
 
@@ -41,6 +41,10 @@ export const MENU = [
 ];
 
 export const ADMIN_MENU = [
+  {
+    PATH: ROUTES.ADMIN,
+    NAME: NAMES.ADMIN,
+  },
   {
     PATH: ROUTES.A_HOME,
     NAME: NAMES.HOME,

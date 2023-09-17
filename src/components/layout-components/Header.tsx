@@ -6,7 +6,7 @@ import { useRef } from 'react';
 
 interface Props {
   isHome: boolean;
-  introduction: string;
+  introduction?: string;
 }
 export default function Header({ isHome, introduction }: Props) {
   const introRef = useRef<HTMLDivElement>(null);
@@ -14,7 +14,7 @@ export default function Header({ isHome, introduction }: Props) {
 
   return (
     <header className={s.container}>
-      {isHome && (
+      {isHome && introduction && (
         <div ref={introRef} className={s.intro}>
           <h1 className={s.title}>Thierry Casters</h1>
           <div className={s.text}>{introduction}</div>

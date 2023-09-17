@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 
 import s from '@/styles/Home.module.css';
-import Layout from '../components/layout-components';
+import Layout from '../components/layout-components/Layout';
 import HomePart from '@/components/home/HomePart';
 import HomeContactPart from '@/components/home/HomeContactPart';
 import prisma from '@/lib/prisma';
@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-export default function Home({ contents }: Props) {
+export default function Index({ contents }: Props) {
   let introduction = undefined;
   const res = contents.filter((content) => content.label === Label.INTRO);
   if (res.length) introduction = res[0].text;

@@ -1,4 +1,5 @@
 import { Painting } from '.prisma/client';
+import { Label } from '@prisma/client';
 
 export type User = {
   id: number;
@@ -47,7 +48,7 @@ export type Image = {
 
 export type Content = {
   id: number;
-  label: string;
+  label: Label;
   title: string;
   text: string;
   filename: string;

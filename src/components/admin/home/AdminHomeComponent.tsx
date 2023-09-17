@@ -5,13 +5,13 @@ import Image from 'next/image';
 import React from 'react';
 import UpdateHomeButton from '@/components/admin/form/UpdateHomeButton';
 import DeleteHomeButton from '@/components/admin/form/DeleteHomeButton';
-import s from './AdminHome.module.css';
+import s from './AdminHomeComponent.module.css';
 
 interface Props {
   content?: Content;
   label: Label;
 }
-export default function AdminHome({ content, label }: Props) {
+export default function AdminHomeComponent({ content, label }: Props) {
   return (
     <>
       <div className={s.adminHomeContainer}>

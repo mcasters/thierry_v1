@@ -1,14 +1,14 @@
 import { useSession } from 'next-auth/react';
 import { Label } from '@prisma/client';
 
-import Layout from '@/components/layout-components';
+import Layout from '@/components/layout-components/Layout';
 import AccessDenied from '@/components/auth/access-denied';
 import AdminNav from '@/components/layout-components/AdminNav';
 import React from 'react';
 import useSWR from 'swr';
-import AdminHome from '@/components/admin/home/AdminHome';
 import s from '../../styles/admin.module.css';
 import { Content } from '@/interfaces';
+import AdminHomeComponent from '@/components/admin/home/AdminHomeComponent';
 
 export default function Home() {
   const { data: session } = useSession();
@@ -46,7 +46,9 @@ export default function Home() {
           );
           if (res) contentForLabel = res[0];
         }
-        return <AdminHome key={i} content={contentForLabel} label={label} />;
+        return (
+          <AdminHomeComponent key={i} content={contentForLabel} label={label} />
+        );
       })}
     </Layout>
   );
