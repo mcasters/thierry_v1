@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { FiTrash2 } from 'react-icons/fi';
 
-import { Item, Post } from '@/interfaces';
-import { getPath } from '@/utils/common';
+import { Item } from '@/interfaces';
 import s from '@/components/admin/form/form.module.css';
 
 type Props = {

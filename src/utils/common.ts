@@ -17,8 +17,5 @@ export const getDirnameFromNameOrTitle = (name: string): string => {
     .replace(/ë/gi, 'e');
 };
 
-export const getPath = (item: Item): string => {
-  if (item.type === TYPE.PAINTING)
-    return `/images/painting/${getDirnameFromNameOrTitle(item.title)}`;
-  return `/images/sculpture/${getDirnameFromNameOrTitle(item.title)}`;
-};
+export const getSrc = (type: string, filename: string) =>
+  `/images/${type}/${filename}`;
