@@ -13,7 +13,7 @@ interface Props {
   toggleModal: () => void;
 }
 export default function HomeForm({ content, label, toggleModal }: Props) {
-  const formRef = useRef<HTMLFormElement>();
+  const formRef = useRef<HTMLFormElement>(null);
   const resetImageRef = useRef<number>(0);
   const api = '/api/home/update';
   const apiToUpdate = '/api/home';

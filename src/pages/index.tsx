@@ -117,7 +117,7 @@ export default function Home({ contents }: Props) {
           );
         }
       })}
-      <HomeContactPart title="Contact" imageSrc="assets/2.jpeg" />
+      <HomeContactPart title="Contact" imageSrc="2.jpeg" />
     </Layout>
   );
 }

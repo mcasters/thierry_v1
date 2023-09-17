@@ -1,0 +1,28 @@
+.adminHomeContainer {
+    text-align: left;
+    white-space: pre-line;
+    margin: 2em 0 4em;
+}
+
+.adminHomeContainer h2 {
+    text-align: center;
+}
+
+.adminHomeContainer h2, .adminHomeContainer h4 {
+    margin: 1em;
+}
+
+.imageContainer {
+    position: relative;
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 0.6em auto 1.8em;
+}
+
+.image {
+    object-fit: contain;
+    object-position: top;
+    box-sizing: border-box;
+    padding: 2px;
+}

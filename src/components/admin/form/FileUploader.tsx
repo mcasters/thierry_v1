@@ -7,16 +7,16 @@ interface Props {
 }
 
 export const FileUploader = ({ handleFile, isMultiple, name }: Props) => {
-  const hiddenFileInput = useRef<HTMLInputElement>();
+  const hiddenFileInput = useRef<HTMLInputElement>(null);
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     hiddenFileInput.current?.click();
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    handleFile(e.target.files);
+    if (e.target.files) handleFile(e.target.files);
   };
   return (
     <>

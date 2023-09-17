@@ -28,7 +28,7 @@ export default async function handler(
     let files;
 
     const form = formidable({
-      maxFile: 1,
+      maxFiles: 1,
       maxFileSize: 3072 * 3072,
       allowEmptyFiles: true,
       minFileSize: 0,
@@ -38,8 +38,17 @@ export default async function handler(
       [fields, files] = await form.parse(req);
     } catch (err) {
       console.log(err);
-      return res.status(400).send({ message: err.message });
+      return res.status(400).send({ message: 'Error parsing form' });
     }
+
+    if (
+      !fields ||
+      !files ||
+      fields.label === undefined ||
+      fields.title === undefined ||
+      fields.text === undefined
+    )
+      return res.status(400).send({ message: 'Error parsing form' });
 
     let content;
     let fileInfo = undefined;
@@ -47,13 +56,14 @@ export default async function handler(
     if (file && file.size !== 0) fileInfo = await resizeAndSaveImage(file, dir);
 
     const label = fields.label[0];
+
     const BDContent = await prisma.content.findUnique({
-      where: { label },
+      where: { label: Label[label as keyof typeof Label] },
     });
 
     if (!BDContent) {
       let filename, title;
-      if (fileInfo) {
+      if (fileInfo && file !== undefined) {
         filename = `${file.newFilename}.${fileInfo.format}`;
         title = fields.title[0];
       } else if (label === Label.INTRO) {
@@ -64,7 +74,7 @@ export default async function handler(
       }
       content = await prisma.content.create({
         data: {
-          label,
+          label: Label[label as keyof typeof Label],
           title,
           text: fields.text[0],
           filename,
@@ -73,7 +83,7 @@ export default async function handler(
     } else {
       let filename = undefined;
       let title;
-      if (fileInfo) {
+      if (fileInfo && file !== undefined) {
         filename = `${file.newFilename}.${fileInfo.format}`;
         deleteFile(join(`${dir}`, `${BDContent.filename}`));
       }
@@ -87,7 +97,7 @@ export default async function handler(
 
       content = await prisma.content.update({
         where: {
-          label,
+          label: Label[label as keyof typeof Label],
         },
         data: {
           title,

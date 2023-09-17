@@ -6,7 +6,7 @@ import { FileUploader } from '@/components/admin/form/FileUploader';
 
 type Props = {
   existantImageSrc?: string;
-  setHasImage: (boolean) => void;
+  setHasImage: (arg0: boolean) => void;
   reset: number;
 };
 
@@ -19,7 +19,7 @@ export default function SingleImageForm({
 
   useEffect(() => {
     setHasImage(existantImageSrc !== '' || newImage !== '');
-  }, [newImage]);
+  }, [newImage, existantImageSrc, setHasImage]);
 
   useEffect(() => {
     setNewImage('');

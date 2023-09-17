@@ -13,8 +13,9 @@ interface Props {
   type: string;
   toggleModal?: () => void;
 }
+
 export default function AddItemForm({ item, type, toggleModal }: Props) {
-  const formRef = useRef<HTMLFormElement>();
+  const formRef = useRef<HTMLFormElement>(null);
   const resetImageRef = useRef<number>(0);
   const { mutate } = useSWRConfig();
 

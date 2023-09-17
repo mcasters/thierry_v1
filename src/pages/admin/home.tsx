@@ -8,6 +8,7 @@ import React from 'react';
 import useSWR from 'swr';
 import AdminHome from '@/components/admin/home/AdminHome';
 import s from '../../styles/admin.module.css';
+import { Content } from '@/interfaces';
 
 export default function Home() {
   const { data: session } = useSession();
@@ -40,7 +41,9 @@ export default function Home() {
       {(Object.keys(Label) as Array<keyof typeof Label>).map((label, i) => {
         let contentForLabel = null;
         if (contents) {
-          const res = contents.filter((content) => content.label === label);
+          const res = contents.filter(
+            (content: Content) => content.label === label,
+          );
           if (res) contentForLabel = res[0];
         }
         return <AdminHome key={i} content={contentForLabel} label={label} />;

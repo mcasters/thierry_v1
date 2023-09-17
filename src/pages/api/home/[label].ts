@@ -22,12 +22,14 @@ export default async function handler(
     if (label !== Label.INTRO) {
       const dir = getMiscellaneousDir();
       const BDContent = await prisma.content.findUnique({
-        where: { label },
+        where: { label: Label[label as keyof typeof Label] },
       });
+      if (!BDContent)
+        return res.status(404).send({ message: 'Content not found' });
       deleteFile(join(`${dir}`, `${BDContent.filename}`));
     }
     const content = await prisma.content.delete({
-      where: { label },
+      where: { label: Label[label as keyof typeof Label] },
     });
 
     return content
@@ -36,7 +38,7 @@ export default async function handler(
   } else {
     const content = await prisma.content.findFirst({
       where: {
-        label,
+        label: Label[label as keyof typeof Label],
       },
     });
 

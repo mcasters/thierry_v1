@@ -1,13 +1,12 @@
 import { Item } from '@/interfaces';
-import SingleItemImageForm from '@/components/admin/form/imageForm/SingleItemImageForm';
 import { TYPE } from '@/constants';
-import MultipleItemImagesForm from '@/components/admin/form/imageForm/MultipleItemImagesForm';
+import MultipleImagesForm from '@/components/admin/form/imageForm/MultipleImagesForm';
 import SingleImageForm from '@/components/admin/form/imageForm/SingleImageForm';
 
 type Props = {
   item?: Item;
   type: string;
-  setHasImage: (boolean) => void;
+  setHasImage: (arg0: boolean) => void;
   reset: number;
 };
 
@@ -26,7 +25,7 @@ export default function ImageForm({ item, type, setHasImage, reset }: Props) {
         />
       )}
       {type === TYPE.SCULPTURE && (
-        <MultipleItemImagesForm
+        <MultipleImagesForm
           item={item}
           setHasImage={setHasImage}
           reset={reset}

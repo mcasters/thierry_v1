@@ -4,11 +4,14 @@ import { useRouter } from 'next/router';
 import { MENU } from '@/constants/routes';
 import s from '../../styles/Nav.module.css';
 
-export default function Nav({ navRef, isFix }) {
+interface Props {
+  isFix: boolean;
+}
+export default function Nav({ isFix }: Props) {
   const router = useRouter();
 
   return (
-    <nav ref={navRef} className={isFix ? `${s.nav} ${s.sticky}` : `${s.nav}`}>
+    <nav className={isFix ? `${s.nav} ${s.sticky}` : `${s.nav}`}>
       <ul>
         {MENU.map((item) => {
           const isSubPageActive = router.pathname === `${item.PATH}/[year]`;
