@@ -13,7 +13,7 @@ export default function AuthStatus() {
         <button
           className="buttonLink"
           onClick={() => {
-            signIn();
+            signIn(undefined, { callbackUrl: ROUTES.ADMIN });
           }}
         >
           Admin in
@@ -31,7 +31,7 @@ export default function AuthStatus() {
           <button
             className="buttonLink"
             onClick={() => {
-              signOut();
+              signOut({ callbackUrl: ROUTES.HOME });
             }}
           >
             Admin out

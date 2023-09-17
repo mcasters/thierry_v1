@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import prisma from '../../../lib/prisma';
-import { compare } from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export const authOptions = {
   providers: [
@@ -27,7 +27,7 @@ export const authOptions = {
         });
         if (!user) throw new Error('Invalid email');
 
-        compare(password, user.password, (err, res) => {
+        bcrypt.compare(password, user.password, (err, res) => {
           if (err || !res) throw new Error('Invalid password');
         });
 

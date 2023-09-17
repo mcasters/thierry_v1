@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.3.1",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "date-fns": "^2.30.0",
     "formidable": "^3.5.1",
     "http": "^0.0.1-security",
@@ -39,6 +39,7 @@
     "yet-another-react-lightbox": "^3.12.2"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.4",
     "@types/formidable": "^3.4.2",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
