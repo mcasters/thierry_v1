@@ -1,6 +1,6 @@
 .footer {
   text-align: center;
-  padding: 15rem;
+  padding: 8rem 15rem 15rem;
   background: linear-gradient(
           to bottom,
           rgba(var(--color-brown-dark-rgb), 0),
@@ -9,14 +9,17 @@
   );
 }
 
+.center {
+  width: 50%;
+  display: inline-block;
+    border-top: solid var(--color-blue-light) 1px;
+    padding-top: 4em;
+}
+
 .footer a {
   display: inline-block;
 }
 
-.center {
-  width: 50%;
-  display: inline-block;
-}
 
 /*
 .center::before {

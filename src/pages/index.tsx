@@ -15,7 +15,11 @@ export type Props = {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await prisma.content.findMany();
+  const res = await prisma.content.findMany({
+    orderBy: {
+      label: 'asc',
+    },
+  });
   const contents = JSON.parse(JSON.stringify(res));
   return {
     props: {
