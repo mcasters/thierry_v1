@@ -12,8 +12,22 @@ export const getPaintingImagePath = (painting) => {
   );
 };
 
+export const getSculptureImagePaths = (sculpture) => {
+  let paths = [];
+  sculpture.images.forEach((image) => {
+    paths.push(
+      join(`${serverLibraryPath}`, `${sculpture.type}`, `${image.filename}`),
+    );
+  });
+  return paths;
+};
+
 export const getPaintingDir = () => {
   return join(`${serverLibraryPath}`, 'peinture');
+};
+
+export const getSculptureDir = () => {
+  return join(`${serverLibraryPath}`, 'sculpture');
 };
 
 export const getMiscellaneousDir = () => {

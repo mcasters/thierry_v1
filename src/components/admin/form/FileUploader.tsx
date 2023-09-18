@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 
 interface Props {
-  handleFile: (filesUploaded: FileList) => void;
+  handleFiles: (filesUploaded: FileList) => void;
   name: string;
   isMultiple: boolean;
 }
 
-export const FileUploader = ({ handleFile, isMultiple, name }: Props) => {
+export const FileUploader = ({ handleFiles, isMultiple, name }: Props) => {
   const hiddenFileInput = useRef<HTMLInputElement>(null);
 
   const handleClick = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -16,7 +16,7 @@ export const FileUploader = ({ handleFile, isMultiple, name }: Props) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    if (e.target.files) handleFile(e.target.files);
+    if (e.target.files) handleFiles(e.target.files);
   };
   return (
     <>

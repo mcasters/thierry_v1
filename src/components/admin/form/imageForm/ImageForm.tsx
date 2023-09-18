@@ -11,18 +11,10 @@ type Props = {
 };
 
 export default function ImageForm({ item, type, setHasImage, reset }: Props) {
-  let existantImageSrc = undefined;
-  if (item && type === TYPE.PAINTING)
-    existantImageSrc = `/images/${type}/${item?.image.filename}`;
-
   return (
     <>
       {type === TYPE.PAINTING && (
-        <SingleImageForm
-          existantImageSrc={existantImageSrc}
-          setHasImage={setHasImage}
-          reset={reset}
-        />
+        <SingleImageForm item={item} setHasImage={setHasImage} reset={reset} />
       )}
       {type === TYPE.SCULPTURE && (
         <MultipleImagesForm

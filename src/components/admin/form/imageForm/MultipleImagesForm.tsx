@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { Item } from '@/interfaces';
 import s from '@/components/admin/form/form.module.css';
+import { FileUploader } from '@/components/admin/form/FileUploader';
 
 type Props = {
   item?: Item;
@@ -17,14 +18,12 @@ export default function MultipleImagesForm({
 }: Props) {
   const [newAlbum, setNewAlbum] = useState<string[]>([]);
   const [existantAlbum, setExistantAlbum] = useState<string[]>(() => {
-    return item && item.images
-      ? item.images.map((image) => image.filename)
-      : [];
+    return item ? item.images.map((image) => image.filename) : [];
   });
   const path = item !== null ? `/images/${item?.type}` : undefined;
 
   useEffect(() => {
-    setHasImage(newAlbum.length === 4 || existantAlbum.length === 4);
+    setHasImage(newAlbum.length > 0 || existantAlbum.length > 0);
   }, [newAlbum, existantAlbum, setHasImage]);
 
   useEffect(() => {
@@ -40,17 +39,15 @@ export default function MultipleImagesForm({
     setExistantAlbum(tab);
   };
 
-  const getAlbumPreview = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) {
-      const albumFiles = Array.from(e.target.files);
+  const getAlbumPreview = (filesUploaded: FileList) => {
+    if (filesUploaded?.length > 0) {
+      const albumFiles = Array.from(filesUploaded);
 
-      if (albumFiles.length) {
-        const newAlbumSrc: string[] = [];
-        albumFiles.forEach((file) => {
-          newAlbumSrc.push(URL.createObjectURL(file));
-        });
-        setNewAlbum(newAlbumSrc);
-      }
+      const newAlbumSrc: string[] = [];
+      albumFiles.forEach((file) => {
+        newAlbumSrc.push(URL.createObjectURL(file));
+      });
+      setNewAlbum(newAlbumSrc);
     }
   };
 
@@ -70,7 +67,11 @@ export default function MultipleImagesForm({
           </div>
         ))}
       <input type="hidden" name="existentFiles" value={existantAlbum} />
-      <input type="file" name="files" onChange={getAlbumPreview} multiple />
+      <FileUploader
+        name="files"
+        handleFiles={getAlbumPreview}
+        isMultiple={true}
+      />
       {newAlbum.length > 0 &&
         newAlbum.map((src) => (
           <div key={src} className={s.imageContainer}>

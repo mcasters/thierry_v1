@@ -3,6 +3,9 @@ import { useSession } from 'next-auth/react';
 import Layout from '@/components/layout-components/Layout';
 import AccessDenied from '@/components/auth/access-denied';
 import AdminNav from '@/components/layout-components/AdminNav';
+import { TYPE } from '@/constants';
+import ItemListComponent from '@/components/admin/item/ItemListComponent';
+import AddItemForm from '@/components/admin/form/AddItemForm';
 
 export default function Sculptures() {
   const { data: session } = useSession();
@@ -18,7 +21,8 @@ export default function Sculptures() {
   return (
     <Layout>
       <AdminNav />
-      <p>En construction...</p>
+      <ItemListComponent type={TYPE.SCULPTURE} />
+      <AddItemForm type={TYPE.SCULPTURE} />
     </Layout>
   );
 }

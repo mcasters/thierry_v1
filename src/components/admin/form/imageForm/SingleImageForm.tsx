@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-import s from '@/components/admin/form/form.module.css';
 import { FileUploader } from '@/components/admin/form/FileUploader';
+import { Item } from '@/interfaces';
+import s from '@/components/admin/form/form.module.css';
 
 type Props = {
-  existantImageSrc?: string;
+  item?: Item;
   setHasImage: (arg0: boolean) => void;
   reset: number;
 };
 
-export default function SingleImageForm({
-  existantImageSrc,
-  setHasImage,
-  reset,
-}: Props) {
+export default function SingleImageForm({ item, setHasImage, reset }: Props) {
   const [newImage, setNewImage] = useState<string>('');
+  let existantImageSrc = undefined;
+  if (item) existantImageSrc = `/images/${item.type}/${item.image.filename}`;
 
   useEffect(() => {
     setHasImage(existantImageSrc !== '' || newImage !== '');
@@ -26,7 +25,7 @@ export default function SingleImageForm({
   }, [reset]);
 
   const getPreview = (filesUploaded: FileList) => {
-    if (filesUploaded?.length) {
+    if (filesUploaded?.length > 0) {
       const file = filesUploaded[0];
       if (file) {
         setNewImage(URL.createObjectURL(file));
@@ -64,7 +63,7 @@ export default function SingleImageForm({
           </div>
         </>
       )}
-      <FileUploader name="file" handleFile={getPreview} isMultiple={false} />
+      <FileUploader name="file" handleFiles={getPreview} isMultiple={false} />
     </div>
   );
 }
