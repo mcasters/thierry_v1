@@ -29,7 +29,7 @@ export type Item = {
   description: string | null;
   height: number;
   width: number;
-  length: number;
+  length: number | null;
   createdAt: Date;
   updatedAt: Date;
   image: Image;

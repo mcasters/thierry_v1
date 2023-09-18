@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma, Painting } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { TYPE } from '@/constants';
 
 const prismaClientSingleton = () => {

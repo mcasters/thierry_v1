@@ -1,9 +1,7 @@
-import React from 'react';
-
 import { Item } from '@/interfaces';
 import { TYPE } from '@/constants';
 import s from './ItemComponent.module.css';
-import MyLightbox from '@/components/image/lightbox';
+import ImageWithLightbox from '@/components/image/image-lightbox';
 
 interface Props {
   item: Item;
@@ -26,7 +24,7 @@ export default function ItemComponent({ item }: Props) {
           {item.description !== '' && item.description}
         </p>
         <div>
-          <MyLightbox
+          <ImageWithLightbox
             images={isSculpture ? item.images : [item.image]}
             alt={`${item.title} - ${item.type} de Thierry Casters`}
             type={item.type}
