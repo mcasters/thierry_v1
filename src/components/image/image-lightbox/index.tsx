@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
-import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import Image from 'next/image';
 import { TYPE } from '@/constants';
 
@@ -37,40 +36,71 @@ export default function ImageWithLightbox({ images, type, alt }: Props) {
       })),
   }));
 
-  return (
-    <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className={s.imageButton}
-      >
-        <Image
-          src={`/images/${type}/${images[0].filename}`}
-          alt={alt}
-          layout="fill"
-          sizes="(min-width: 765px) 100vw,50vw"
-          className={s.image}
+  if (type === TYPE.PAINTING || images.length === 1) {
+    return (
+      <>
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className={s.imageButton}
+        >
+          <Image
+            src={`/images/${type}/${images[0].filename}`}
+            alt={alt}
+            layout="fill"
+            sizes="(min-width: 765px) 100vw,50vw"
+            className={s.image}
+          />
+        </button>
+        <Lightbox
+          open={open}
+          close={() => setOpen(false)}
+          slides={slides}
+          controller={{
+            closeOnPullDown: true,
+            closeOnBackdropClick: true,
+          }}
+          render={{
+            buttonPrev: () => null,
+            buttonNext: () => null,
+          }}
         />
-      </button>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className={s.buttonWrapper}>
+          {images.map((image) => {
+            return (
+              <button
+                key={image.filename}
+                type="button"
+                onClick={() => setOpen(true)}
+                className={s.imageButton}
+              >
+                <Image
+                  src={`/images/${type}/${image.filename}`}
+                  alt={alt}
+                  layout="fill"
+                  sizes="(min-width: 765px) 100vw,50vw"
+                  className={s.image}
+                />
+              </button>
+            );
+          })}
+        </div>
 
-      <Lightbox
-        open={open}
-        close={() => setOpen(false)}
-        slides={slides}
-        plugins={[Zoom]}
-        controller={{
-          closeOnPullDown: true,
-          closeOnBackdropClick: true,
-        }}
-        render={{
-          buttonPrev: () => {
-            if (type === TYPE.PAINTING) return null;
-          },
-          buttonNext: () => {
-            if (type === TYPE.PAINTING) return null;
-          },
-        }}
-      />
-    </>
-  );
+        <Lightbox
+          open={open}
+          close={() => setOpen(false)}
+          slides={slides}
+          controller={{
+            closeOnPullDown: true,
+            closeOnBackdropClick: true,
+          }}
+        />
+      </>
+    );
+  }
 }

@@ -30,25 +30,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-export default function Sculptures({ paintings: items }: Props) {
+export default function Sculptures({ sculptures: items }: Props) {
   return (
     <Layout>
       <div className={s.container}>
         <section className={s.itemListSection}>
-          <h1 className="hidden">Les peintures</h1>
-          {items &&
-            items.map((item) => (
-              <button
-                key={item.id}
-                onClick={() =>
-                  document
-                    .getElementById(`${item.id}`)
-                    ?.scrollIntoView({ behavior: 'smooth' })
-                }
-              >
-                {item.title}
-              </button>
-            ))}
+          <h1 className="hidden">Les sculptures</h1>
         </section>
         {items?.map((item) => <ItemComponent key={item.id} item={item} />)}
       </div>

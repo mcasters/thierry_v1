@@ -15,7 +15,7 @@ export default function ItemComponent({ item }: Props) {
         <h1>{item.title}</h1>
         <p className={s.info}>
           {item.height} cm x {item.width} cm{' '}
-          {isSculpture ? ` par ${item.length} cm` : ''}
+          {isSculpture ? ` x ${item.length} cm` : ''}
           <br />
           <time>{new Date(item.date).toLocaleDateString()}</time>
           <br />

@@ -1,8 +1,12 @@
+.buttonWrapper {
+    display: flex;
+}
+
 .imageButton {
     position: relative;
     display: block;
-    width: 30vw;
-    height: 50vh;
+    width: 50vw;
+    height: 70vh;
     margin: 0 auto;
     background-color: unset;
     border: none;

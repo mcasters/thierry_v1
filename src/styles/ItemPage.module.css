@@ -1,23 +1,9 @@
 .container {
     background-color: hsla(5, 15%, 5%, 0%);
     color: var(--color-brown1);
-}
-
-.itemListSection {
-    max-width: 55ch;
-    width: calc(100% - var(--space));
-    margin: calc(var(--line-height) + var(--nav-height)) auto 8rem;
-    padding: var(--space);
+    padding: 2em;
 }
 
 .itemListSection h1 {
     font-size: var(--font-size-xtitle);
-}
-
-.itemListSection button {
-    border: solid var(--color-blue) 1px;
-    padding: 10px;
-    margin: 10px;
-    background: none;
-    color: var(--color-brown1);
 }
