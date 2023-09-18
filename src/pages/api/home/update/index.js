@@ -13,7 +13,6 @@ import { authOptions } from '../../auth/[...nextauth]';
 import { Label } from '@prisma/client';
 
 export default async function handler(req, res) {
-  // @ts-ignore
   const session = await getServerSession(req, res, authOptions);
 
   if (session) {

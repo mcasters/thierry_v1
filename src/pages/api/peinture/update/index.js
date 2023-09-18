@@ -1,16 +1,17 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { join } from 'path';
 import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
 import formidable from 'formidable';
 
-import { deleteFile, resizeAndSaveImage } from '@/utils/server';
-import prisma from '@/lib/prisma';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { getPaintingDir } from '@/utils/server';
+import {
+  deleteFile,
+  resizeAndSaveImage,
+  getPaintingDir,
+} from '../../../../utils/server';
+import prisma from '../../../../lib/prisma';
+import { authOptions } from '../../auth/[...nextauth]';
 
 export default async function handler(req, res) {
-  // @ts-ignore
   const session = await getServerSession(req, res, authOptions);
 
   if (session) {

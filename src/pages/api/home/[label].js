@@ -1,14 +1,12 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
-
-import prisma from '@/lib/prisma';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { deleteFile, getMiscellaneousDir } from '@/utils/server';
 import { join } from 'path';
 import { Label } from '@prisma/client';
 
+import prisma from '../../../lib/prisma';
+import { authOptions } from '../auth/[...nextauth]';
+import { deleteFile, getMiscellaneousDir } from '../../../utils/server';
+
 export default async function handler(req, res) {
-  // @ts-ignore
   const session = await getServerSession(req, res, authOptions);
 
   if (!session) return res.status(401).send({ message: 'Unauthorized' });

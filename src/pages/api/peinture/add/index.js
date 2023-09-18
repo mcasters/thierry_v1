@@ -1,5 +1,4 @@
 import formidable from 'formidable';
-import { NextApiRequest, NextApiResponse } from 'next';
 import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
 
@@ -12,7 +11,6 @@ import {
 import { authOptions } from '../../auth/[...nextauth]';
 
 export default async function handler(req, res) {
-  // @ts-ignore
   const session = await getServerSession(req, res, authOptions);
 
   if (session) {

@@ -4,7 +4,6 @@ import { authOptions } from '../../auth/[...nextauth]';
 import { deleteAllFiles, getPaintingImagePath } from '../../../../utils/server';
 
 export default async function handler(req, res) {
-  // @ts-ignore
   const session = await getServerSession(req, res, authOptions);
   if (session) {
     const id = Number(req.query.id);

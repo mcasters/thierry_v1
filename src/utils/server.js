@@ -1,7 +1,6 @@
-import { mkdir, stat, rm, rename } from 'fs';
+import { mkdir, stat, rm } from 'fs';
 import sharp from 'sharp';
 import { join } from 'path';
-import { Item } from '@/interfaces';
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
 
@@ -30,12 +29,6 @@ export const createDirIfNecessary = (dir) => {
     else {
       throw err;
     }
-  });
-};
-
-export const renameDir = (oldPath, newPath) => {
-  rename(oldPath, newPath, (err) => {
-    throw err;
   });
 };
 
