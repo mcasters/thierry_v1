@@ -4,7 +4,7 @@
     width: 30vw;
     height: 50vh;
     margin: 0 auto;
-    background: none;
+    background-color: unset;
     border: none;
 }
 

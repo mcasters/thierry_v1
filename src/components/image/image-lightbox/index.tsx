@@ -3,6 +3,7 @@ import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import Image from 'next/image';
+import { TYPE } from '@/constants';
 
 import { Image as IImage } from '@/interfaces';
 import s from './lightbox.module.css';
@@ -20,7 +21,7 @@ const deviceSizes = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
 const nextImageUrl = (src: string, size: number) =>
   `/_next/image?url=${encodeURIComponent(src)}&w=${size}&q=75`;
 
-export default function MyLightbox({ images, type, alt }: Props) {
+export default function ImageWithLightbox({ images, type, alt }: Props) {
   const [open, setOpen] = useState(false);
   const slides = images.map(({ filename, width, height }) => ({
     width,
@@ -57,6 +58,18 @@ export default function MyLightbox({ images, type, alt }: Props) {
         close={() => setOpen(false)}
         slides={slides}
         plugins={[Zoom]}
+        controller={{
+          closeOnPullDown: true,
+          closeOnBackdropClick: true,
+        }}
+        render={{
+          buttonPrev: () => {
+            if (type === TYPE.PAINTING) return null;
+          },
+          buttonNext: () => {
+            if (type === TYPE.PAINTING) return null;
+          },
+        }}
       />
     </>
   );
