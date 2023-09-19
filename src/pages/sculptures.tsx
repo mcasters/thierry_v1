@@ -34,7 +34,7 @@ export default function Sculptures({ sculptures: items }: Props) {
   return (
     <Layout>
       <div className={s.container}>
-        <div className={s.inner}>
+        <div className={s.grid}>
           <h1 className="hidden">Les sculptures</h1>
           {items?.map((item) => <ItemComponent key={item.id} item={item} />)}
         </div>

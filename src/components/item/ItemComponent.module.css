@@ -7,23 +7,10 @@ Content
 }
 
 .article p {
-    text-align: center;
     padding-bottom: 1em;
     font-size: var(--font-size-min);
 }
 
 .info {
-    display: inline-block;
-    width: 50%;
-    text-align: left;
-    vertical-align: top;
-}
-
-.mainImage {
-    margin: auto;
-}
-
-.description {
-    text-align: center;
     white-space: pre-line;
 }

@@ -38,7 +38,7 @@ export default function ImageWithLightbox({ images, type, alt }: Props) {
 
   if (type === TYPE.PAINTING || images.length === 1) {
     return (
-      <>
+      <div className={s.buttonWrapper}>
         <button
           type="button"
           onClick={() => setOpen(true)}
@@ -65,7 +65,7 @@ export default function ImageWithLightbox({ images, type, alt }: Props) {
             buttonNext: () => null,
           }}
         />
-      </>
+      </div>
     );
   } else {
     return (

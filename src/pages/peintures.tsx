@@ -34,7 +34,7 @@ export default function Peintures({ paintings: items }: Props) {
   return (
     <Layout>
       <div className={s.container}>
-        <div className={s.inner}>
+        <div className={s.grid}>
           <h1 className="hidden">Les peintures</h1>
           {items.map((item) => (
             <ItemComponent key={item.id} item={item} />
