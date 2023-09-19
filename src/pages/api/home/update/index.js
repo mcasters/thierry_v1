@@ -19,11 +19,10 @@ export default async function handler(req, res) {
     const dir = getMiscellaneousDir();
     createDirIfNecessary(dir);
 
-    let fields;
-    let files;
+    let fields, files;
 
     const form = formidable({
-      maxFiles: 1,
+      maxFiles: 10,
       maxFileSize: 3072 * 3072,
       allowEmptyFiles: true,
       minFileSize: 0,
@@ -36,61 +35,68 @@ export default async function handler(req, res) {
       return res.status(400).send({ message: 'Error parsing form' });
     }
 
-    let content;
-    let fileInfo = undefined;
-    const file = files.file?.[0];
-    if (file && file.size !== 0) fileInfo = await resizeAndSaveImage(file, dir);
-
     const label = fields.label[0];
-
     const BDContent = await prisma.content.findUnique({
       where: { label },
     });
 
-    if (!BDContent) {
-      let filename, title;
-      if (fileInfo && file !== undefined) {
-        filename = `${file.newFilename}.${fileInfo.format}`;
-        title = fields.title[0];
-      } else if (label === Label.INTRO) {
-        filename = '';
-        title = '';
+    let content;
+    if (label === Label.INTRO) {
+      if (!BDContent) {
+        content = await prisma.content.create({
+          data: {
+            label,
+            title: '',
+            text: fields.text[0],
+          },
+        });
       } else {
-        return res.status(400).send({ message: 'Image is missing' });
+        content = await prisma.content.update({
+          data: {
+            label,
+            title: '',
+            text: fields.text[0],
+          },
+        });
       }
-      content = await prisma.content.create({
-        data: {
-          label,
-          title,
-          text: fields.text[0],
-          filename,
-        },
-      });
-    } else {
-      let filename = undefined;
-      let title;
-      if (fileInfo && file !== undefined) {
-        filename = `${file.newFilename}.${fileInfo.format}`;
-        deleteFile(join(`${dir}`, `${BDContent.filename}`));
+    } else if (label === Label.SLIDER) {
+      const filesTab = files.files;
+      let images = [];
+      for (const file of filesTab) {
+        const fileInfo = await resizeAndSaveImage(file, dir);
+        images.push({
+          filename: `${file.newFilename}.${fileInfo.format}`,
+          width: fileInfo.width,
+          height: fileInfo.height,
+        });
       }
 
-      if (label === Label.INTRO) {
-        filename = '';
-        title = '';
+      if (!BDContent) {
+        content = await prisma.content.create({
+          data: {
+            label,
+            title: '',
+            text: '',
+            images: {
+              create: images,
+            },
+          },
+        });
       } else {
-        title = fields.title[0];
+        BDContent.images.forEach((image) => {
+          deleteFile(join(`${dir}`, `${image.filename}`));
+        });
+        content = await prisma.content.update({
+          data: {
+            label,
+            title: '',
+            text: '',
+            images: {
+              create: images,
+            },
+          },
+        });
       }
-
-      content = await prisma.content.update({
-        where: {
-          label,
-        },
-        data: {
-          title,
-          text: fields.text[0],
-          filename,
-        },
-      });
     }
 
     return content

@@ -24,12 +24,14 @@ export default function Layout({ introduction, children }: Props) {
   return (
     <>
       <div className={s.line}></div>
-      <Header
-        handler={handler}
-        isHome={isHome}
-        introduction={introduction}
-        title="Thierry Casters"
-      />
+      {!isAdmin && (
+        <Header
+          handler={handler}
+          isHome={isHome}
+          introduction={introduction}
+          title="Thierry Casters"
+        />
+      )}
       <Main isHome={isHome} headerIsFix={headerIsFix}>
         {children}
       </Main>

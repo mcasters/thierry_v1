@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import { Item } from '@/interfaces';
 import s from '@/components/admin/form/form.module.css';
-import { FileUploader } from '@/components/admin/form/FileUploader';
+import { FileUploader } from '@/components/admin/form/imageForm/FileUploader';
 
 type Props = {
   item?: Item;

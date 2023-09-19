@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-import { FileUploader } from '@/components/admin/form/FileUploader';
+import { FileUploader } from '@/components/admin/form/imageForm/FileUploader';
 import { Item } from '@/interfaces';
 import s from '@/components/admin/form/form.module.css';
 
