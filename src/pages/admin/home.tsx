@@ -33,23 +33,29 @@ export default function Home() {
   return (
     <Layout>
       <AdminNav />
-      <h1 className={s.pageTitle}>
-        Contenus de la page d&apos;accueil
-        <br />
-        <small>(De haut en bas)</small>
-      </h1>
-      {(Object.keys(Label) as Array<keyof typeof Label>).map((label, i) => {
-        let contentForLabel = null;
-        if (contents) {
-          const res = contents.filter(
-            (content: Content) => content.label === label,
+      <div className={s.adminWrapper}>
+        <h1 className={s.pageTitle}>
+          Contenus de la page d&apos;accueil
+          <br />
+          <small>(De haut en bas)</small>
+        </h1>
+        {(Object.keys(Label) as Array<keyof typeof Label>).map((label, i) => {
+          let contentForLabel = null;
+          if (contents) {
+            const res = contents.filter(
+              (content: Content) => content.label === label,
+            );
+            if (res) contentForLabel = res[0];
+          }
+          return (
+            <AdminHomeComponent
+              key={i}
+              content={contentForLabel}
+              label={label}
+            />
           );
-          if (res) contentForLabel = res[0];
-        }
-        return (
-          <AdminHomeComponent key={i} content={contentForLabel} label={label} />
-        );
-      })}
+        })}
+      </div>
     </Layout>
   );
 }

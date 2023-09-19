@@ -104,7 +104,6 @@ body {
   overflow: visible;
   min-height: 100%;
   color: var(--color-blue-xxxlight);
-  background-color: var(--color-blue-dark);
   font-family: var(--font-base);
   font-size: var(--font-size);
   -webkit-font-smoothing: antialiased;

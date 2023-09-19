@@ -34,25 +34,12 @@ export default function Peintures({ paintings: items }: Props) {
   return (
     <Layout>
       <div className={s.container}>
-        <section className={s.itemListSection}>
+        <div className={s.inner}>
           <h1 className="hidden">Les peintures</h1>
-          {items &&
-            items.map((item) => (
-              <button
-                key={item.id}
-                onClick={() =>
-                  document
-                    .getElementById(`${item.id}`)
-                    ?.scrollIntoView({ behavior: 'smooth' })
-                }
-              >
-                {item.title}
-              </button>
-            ))}
-        </section>
-        {items.map((item) => (
-          <ItemComponent key={item.id} item={item} />
-        ))}
+          {items.map((item) => (
+            <ItemComponent key={item.id} item={item} />
+          ))}
+        </div>
       </div>
     </Layout>
   );

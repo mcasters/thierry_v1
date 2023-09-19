@@ -6,6 +6,7 @@ import AdminNav from '@/components/layout-components/AdminNav';
 import { TYPE } from '@/constants';
 import ItemListComponent from '@/components/admin/item/ItemListComponent';
 import AddItemForm from '@/components/admin/form/AddItemForm';
+import s from '@/styles/admin.module.css';
 
 export default function Peintures() {
   const { data: session } = useSession();
@@ -21,8 +22,10 @@ export default function Peintures() {
   return (
     <Layout>
       <AdminNav />
-      <ItemListComponent type={TYPE.PAINTING} />
-      <AddItemForm type={TYPE.PAINTING} />
+      <div className={s.adminWrapper}>
+        <ItemListComponent type={TYPE.PAINTING} />
+        <AddItemForm type={TYPE.PAINTING} />
+      </div>
     </Layout>
   );
 }

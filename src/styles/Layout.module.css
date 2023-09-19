@@ -9,22 +9,12 @@
 }
 
 .main {
-    text-align: center;
-    padding-top: calc(var(--line-height) + var(--nav-height) + var(--admin-nav-height));
-    padding-bottom: 3em;
-}
-
-.light {
     color: var(--color-blue);
     background: linear-gradient(
             to bottom,
             transparent,
             var(--color-light)
     ) var(--color-xlight);
+    text-align: center;
+    padding-bottom: 3em;
 }
-
-.wrapper {
-    max-width: 65ch;
-    margin:  2em auto;
-}
-

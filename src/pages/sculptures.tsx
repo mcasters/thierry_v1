@@ -34,10 +34,10 @@ export default function Sculptures({ sculptures: items }: Props) {
   return (
     <Layout>
       <div className={s.container}>
-        <section className={s.itemListSection}>
+        <div className={s.inner}>
           <h1 className="hidden">Les sculptures</h1>
-        </section>
-        {items?.map((item) => <ItemComponent key={item.id} item={item} />)}
+          {items?.map((item) => <ItemComponent key={item.id} item={item} />)}
+        </div>
       </div>
     </Layout>
   );

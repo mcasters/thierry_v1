@@ -21,12 +21,7 @@ export default function Layout({ introduction, children }: Props) {
     <>
       <div className={s.line}></div>
       {!isAdmin && <Header introduction={introduction} isHome={isHome} />}
-      {!isHome && (
-        <main className={isAdmin ? `${s.main} ${s.light}` : `${s.main}`}>
-          <div className={s.wrapper}>{children}</div>
-        </main>
-      )}
-      {isHome && <main>{children}</main>}
+      <main className={s.main}>{children}</main>
       <Footer />
     </>
   );

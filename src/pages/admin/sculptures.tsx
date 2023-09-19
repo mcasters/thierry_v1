@@ -6,6 +6,7 @@ import AdminNav from '@/components/layout-components/AdminNav';
 import { TYPE } from '@/constants';
 import ItemListComponent from '@/components/admin/item/ItemListComponent';
 import AddItemForm from '@/components/admin/form/AddItemForm';
+import s from '@/styles/admin.module.css';
 
 export default function Sculptures() {
   const { data: session } = useSession();
@@ -21,8 +22,10 @@ export default function Sculptures() {
   return (
     <Layout>
       <AdminNav />
-      <ItemListComponent type={TYPE.SCULPTURE} />
-      <AddItemForm type={TYPE.SCULPTURE} />
+      <div className={s.adminWrapper}>
+        <ItemListComponent type={TYPE.SCULPTURE} />
+        <AddItemForm type={TYPE.SCULPTURE} />
+      </div>
     </Layout>
   );
 }

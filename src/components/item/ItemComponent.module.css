@@ -3,7 +3,6 @@ Content
  */
 
 .article {
-    background: hsla(5, 15%, 5%, 0.3);
     padding: 3em 0;
 }
 
@@ -21,9 +20,6 @@ Content
 }
 
 .mainImage {
-    display: inline-block;
-    width: 50%;
-    height: auto;
     margin: auto;
 }
 
