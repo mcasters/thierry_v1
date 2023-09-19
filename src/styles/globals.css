@@ -3,7 +3,8 @@
    * Typography
    * ======================================================================== */
 
-  --font-base: "Montserrat", sans-serif;
+  --font-family-base: Georgia;
+  --font-family-sans: Tahoma, "Montserrat", sans-serif;
 
   /*
   * Font size
@@ -21,7 +22,8 @@
   --max-content-width: 540px;
   --max-content-half-width: 270px;
   --line-height: 4px;
-  --nav-height: 38px;
+  --nav-1-height: 36px;
+  --nav-2-height: 55px;
   --admin-nav-height: 62px;
 
   /*
@@ -104,7 +106,7 @@ body {
   overflow: visible;
   min-height: 100%;
   color: var(--color-blue-xxxlight);
-  font-family: var(--font-base);
+  font-family: var(--font-family-sans);
   font-size: var(--font-size);
   -webkit-font-smoothing: antialiased;
   line-height: 1.375;
@@ -140,7 +142,7 @@ a:hover, .buttonLink:hover, a:focus,
 }
 
 .buttonLink {
-  font-family: var(--font-base) !important;
+  font-family: var(--font-family-sans) !important;
   font-size: var(--font-size);
   padding: 2px 5px;
   display: inline;

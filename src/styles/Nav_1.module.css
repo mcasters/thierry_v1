@@ -1,6 +1,6 @@
 .nav {
-  height: var(--nav-height);
-  line-height: var(--nav-height);
+  height: var(--nav-1-height);
+  line-height: var(--nav-1-height);
   width: 100%;
   z-index: 2;
   font-size: var(--font-size);

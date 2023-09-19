@@ -1,19 +1,19 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { MENU } from '@/constants/routes';
-import s from '../../styles/Nav.module.css';
+import { MENU_1 } from '@/constants/routes';
+import s from '../../styles/Nav_1.module.css';
 
 interface Props {
   isFix: boolean;
 }
-export default function Nav({ isFix }: Props) {
+export default function Nav_1({ isFix }: Props) {
   const router = useRouter();
 
   return (
     <nav className={isFix ? `${s.nav} ${s.sticky}` : `${s.nav}`}>
       <ul>
-        {MENU.map((item) => {
+        {MENU_1.map((item) => {
           const isSubPageActive = router.pathname === `${item.PATH}/[year]`;
           const isActive = router.pathname === item.PATH || isSubPageActive;
 

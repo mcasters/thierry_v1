@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
-function useElementIsUpTo(yLimit: number, ref: any) {
+function useElementIsUpTo(yLimit: number) {
   const [isUpTo, setIsUpTo] = useState<boolean>(false);
+  const ref = useRef<HTMLElement>(null);
 
   const handleScroll = useCallback(() => {
     if (ref && ref.current) {

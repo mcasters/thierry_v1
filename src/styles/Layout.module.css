@@ -7,14 +7,3 @@
     background-color: var(--color-brown1);
     z-index: 9999;
 }
-
-.main {
-    color: var(--color-blue);
-    background: linear-gradient(
-            to bottom,
-            transparent,
-            var(--color-light)
-    ) var(--color-xlight);
-    text-align: center;
-    padding-bottom: 3em;
-}

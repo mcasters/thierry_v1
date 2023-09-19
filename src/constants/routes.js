@@ -1,6 +1,8 @@
 export const ROUTES = {
+  PRESENTATION: '/presentation',
   PAINTING: '/peintures',
   SCULPTURE: '/sculptures',
+  CONTACT: '/contact',
   HOME: '/',
   ARTICLE: '/articles',
   PRIVACY: '/politique-de-confidentialite',
@@ -19,13 +21,10 @@ export const NAMES = {
   PRIVACY_FRENCH: 'Politique de confidentialité',
   ADMIN: 'général',
   ARTICLE: 'Articles',
+  CONTACT: 'Contact',
 };
 
-export const MENU = [
-  {
-    PATH: ROUTES.HOME,
-    NAME: NAMES.HOME,
-  },
+export const MENU_1 = [
   {
     PATH: ROUTES.PAINTING,
     NAME: NAMES.PAINTING,
@@ -37,6 +36,21 @@ export const MENU = [
   {
     PATH: ROUTES.ARTICLE,
     NAME: NAMES.ARTICLE,
+  },
+];
+
+export const MENU_2 = [
+  {
+    PATH: ROUTES.PRESENTATION,
+    NAME: NAMES.PRESENTATION,
+  },
+  {
+    PATH: ROUTES.HOME,
+    NAME: NAMES.HOME,
+  },
+  {
+    PATH: ROUTES.CONTACT,
+    NAME: NAMES.CONTACT,
   },
 ];
 

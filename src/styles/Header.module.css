@@ -14,14 +14,22 @@
   font-variant: small-caps;
   font-weight: lighter;
   margin: 0;
-  height: 100px;
-  line-height: 100px;
+  height: 80px;
+  line-height: 80px;
 }
 
-.text {
+.spaceNav1 {
+  height: var(--nav-1-height);
+}
+
+.intro {
   padding: 5em 0;
   vertical-align: baseline;
   margin: 0 auto;
   white-space: pre-line;
+}
+
+.spaceNav2 {
+  height: var(--nav-2-height);
 }
 
