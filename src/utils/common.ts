@@ -17,5 +17,8 @@ export const getDirnameFromNameOrTitle = (name: string): string => {
     .replace(/ë/gi, 'e');
 };
 
-export const getSrc = (type: string, filename: string) =>
+export const getSrcItem = (type: string, filename: string) =>
   `/images/${type}/${filename}`;
+
+export const getSrcMisc = (filename: string) =>
+  `/images/miscellaneous/${filename}`;

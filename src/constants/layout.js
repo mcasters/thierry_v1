@@ -1,9 +1,6 @@
 const LAYOUT = {
   LINE_HEIGHT: 4,
   NAV_1_HEIGHT: 36,
-
-  MAIN_WIDTH_MOBILE_VW: 90,
-  MAIN_WIDTH_PX: 540,
 };
 
 export default LAYOUT;

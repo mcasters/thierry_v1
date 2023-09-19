@@ -21,10 +21,13 @@
 
   --max-content-width: 540px;
   --max-content-half-width: 270px;
+  --admin-nav-height: 62px;
+  --nav-2-height: 55px;
+  /*
+  WARNING before to change : These two are also in constants JS (Layout)
+   */
   --line-height: 4px;
   --nav-1-height: 36px;
-  --nav-2-height: 55px;
-  --admin-nav-height: 62px;
 
   /*
    * Colors

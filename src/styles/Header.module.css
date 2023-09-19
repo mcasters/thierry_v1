@@ -14,13 +14,60 @@
   font-variant: small-caps;
   font-weight: lighter;
   margin: 0;
-  height: 80px;
-  line-height: 80px;
+  height: 60px;
+  line-height: 60px;
 }
 
 .spaceNav1 {
   height: var(--nav-1-height);
 }
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0;
+}
+
+.center::before {
+  background: var(--secondary-glow);
+  border-radius: 50%;
+  width: 240px;
+  height: 160px;
+  margin-left: -180px;
+}
+
+.center::after {
+  background: conic-gradient(
+          from 180deg at 50% 50%,
+          #16abff33 0deg,
+          #0885ff33 55deg,
+          #54d6ff33 120deg,
+          #24445C 160deg,
+          transparent 360deg
+  );
+  width: 120px;
+  height: 80px;
+  z-index: -1;
+}
+
+.center::before,
+.center::after {
+  content: '';
+  left: 50%;
+  position: absolute;
+  filter: blur(45px);
+  transform: translateZ(0);
+}
+
 
 .intro {
   padding: 5em 0;

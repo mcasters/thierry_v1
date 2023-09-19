@@ -1,7 +1,7 @@
 .container {
     background-color: var(--color-blue-dark);
     color: var(--color-brown1);
-    padding: 6em;
+    padding: 10em 6em 6em;
 }
 
 .grid {

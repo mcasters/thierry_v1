@@ -6,7 +6,7 @@ import { TYPE } from '@/constants';
 
 import { Image as IImage } from '@/interfaces';
 import s from './lightbox.module.css';
-import { getSrc } from '@/utils/common';
+import { getSrcItem } from '@/utils/common';
 
 type Props = {
   images: IImage[];
@@ -25,12 +25,12 @@ export default function ImageWithLightbox({ images, type, alt }: Props) {
   const slides = images.map(({ filename, width, height }) => ({
     width,
     height,
-    src: nextImageUrl(getSrc(type, filename), width),
+    src: nextImageUrl(getSrcItem(type, filename), width),
     srcSet: imageSizes
       .concat(...deviceSizes)
       .filter((size) => size <= width)
       .map((size) => ({
-        src: nextImageUrl(getSrc(type, filename), size),
+        src: nextImageUrl(getSrcItem(type, filename), size),
         width: size,
         height: Math.round((height / width) * size),
       })),
