@@ -21,7 +21,7 @@
 
   --max-content-width: 540px;
   --max-content-half-width: 270px;
-  --admin-nav-height: 62px;
+  --admin-nav-height: 90px;
   --nav-2-height: 55px;
   /*
   WARNING before to change : These two are also in constants JS (Layout)
@@ -228,7 +228,7 @@ label {
 .adminButton,
 [type="submit"],
 [type="reset"] {
-  width: 48%;
+  width: 25%;
   margin: 2em 0.3em;
 }
 

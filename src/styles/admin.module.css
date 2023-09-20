@@ -1,5 +1,5 @@
 .adminWrapper {
-    padding: 10em 20em;
+    padding: var(--admin-nav-height) 5em 3em;
 }
 
 .button {
@@ -14,4 +14,12 @@
 
 .pageTitle {
 padding: 1em 0 2em;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .adminWrapper {
+        padding: var(--admin-nav-height) 2em 1em;
+    }
+
 }

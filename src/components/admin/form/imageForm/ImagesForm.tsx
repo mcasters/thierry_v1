@@ -6,6 +6,7 @@ import s from '@/components/admin/form/form.module.css';
 import { FileUploader } from '@/components/admin/form/imageForm/FileUploader';
 import toast from 'react-hot-toast';
 import { Label } from '@prisma/client';
+import { FiTrash2 } from 'react-icons/fi';
 
 type Props = {
   images?: IImage[];
@@ -19,13 +20,18 @@ export default function ImagesForm({ images, dir, isMultiple }: Props) {
     return images ? images.map((image) => image.filename) : [];
   });
 
-  const deleteAlbumFile = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const { filename } = e.currentTarget.dataset;
-    const tab = existantImages.filter((f) => {
-      return f !== filename;
-    });
-    setExistantImages(tab);
+  const handleDelete = (filename) => {
+    if (confirm('Sûr de vouloir supprimer ?')) {
+      fetch(`/api/home/delete-image-slider/${filename}`).then((res) => {
+        if (res.ok) {
+          const tab = existantImages.filter((f) => {
+            return f !== filename;
+          });
+          setExistantImages(tab);
+          toast('Image supprimée');
+        } else toast('Erreur à la suppression');
+      });
+    }
   };
 
   const getAlbumPreview = (filesUploaded: FileList) => {
@@ -41,39 +47,52 @@ export default function ImagesForm({ images, dir, isMultiple }: Props) {
   };
 
   return (
-    <div className={s.imageFormContainer}>
-      <h4>Images :</h4>
-      {existantImages.length > 0 &&
-        existantImages.map((filename) => (
-          <div key={filename} className={s.imageContainer}>
-            <Image
-              src={`${dir}/${filename}`}
-              alt="image"
-              layout="fill"
-              sizes="150px"
-              className={s.image}
-            />
-          </div>
-        ))}
-      <input type="hidden" name="existentFiles" value={existantImages} />
+    <>
+      <div className={s.imagesContainer}>
+        {existantImages.length > 0 &&
+          existantImages.map((filename) => (
+            <div key={filename} className={s.imageButtonWrapper}>
+              <div className={s.imageContainer}>
+                <Image
+                  src={`${dir}/${filename}`}
+                  alt="image"
+                  layout="fill"
+                  sizes="150px"
+                  className={s.image}
+                />
+              </div>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleDelete(filename);
+                }}
+                className={s.iconButton}
+                aria-label="Supprimer"
+              >
+                <FiTrash2 />
+              </button>
+            </div>
+          ))}
+      </div>
       <FileUploader
         name="files"
         handleFiles={getAlbumPreview}
         isMultiple={isMultiple}
       />
-      {newImages.length > 0 &&
-        newImages.map((src) => (
-          <div key={src} className={s.imageContainer}>
-            <Image
-              src={src}
-              alt="image"
-              layout="fill"
-              sizes="150px"
-              className={s.image}
-            />
-          </div>
-        ))}
-      <div className="separate"></div>
-    </div>
+      <div className={s.imagesContainer}>
+        {newImages.length > 0 &&
+          newImages.map((src) => (
+            <div key={src} className={s.newImagesContainer}>
+              <Image
+                src={src}
+                alt="image"
+                layout="fill"
+                sizes="150px"
+                className={s.image}
+              />
+            </div>
+          ))}
+      </div>
+    </>
   );
 }

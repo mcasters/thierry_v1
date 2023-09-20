@@ -4,6 +4,11 @@
     margin: 2em 0 4em;
 }
 
+.controls {
+    padding-top: 2em;
+    text-align: center;
+}
+
 .adminHomeContainer h2 {
     text-align: center;
 }
@@ -12,23 +17,15 @@
     margin: 1em;
 }
 
-.imagesContainer {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(20%, auto));
-    max-width: 100%;
-}
-
 .imageContainer {
     position: relative;
-    display: block;
+    display: inline-block;
     width: 200px;
     height: 200px;
-    margin: 0.6em auto 1.8em;
+    padding: 2em;
+    margin: 0.6em;
 }
 
 .image {
     object-fit: contain;
-    object-position: top;
-    box-sizing: border-box;
-    padding: 2px;
 }

@@ -1,6 +1,7 @@
 .nav {
     position: fixed;
     top: var(--line-height);
+    height: var(--admin-nav-height);
     left: 0;
     width: 100%;
     background-color: var(--color-blue-medium);

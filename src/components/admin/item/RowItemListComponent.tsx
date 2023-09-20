@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import DeleteItemButton from '@/components/admin/form/DeleteItemButton';
+import DeleteButton from '@/components/admin/form/DeleteButton';
 import UpdateItemButton from '@/components/admin/form/UpdateItemButton';
 import { Item } from '@/interfaces';
 import { TYPE } from '@/constants';
@@ -27,7 +27,10 @@ export default function RowItemListComponent({ item }: Props) {
         <UpdateItemButton item={item} />
       </li>
       <li className={s.itemIcon}>
-        <DeleteItemButton id={item.id} type={item.type} />
+        <DeleteButton
+          api={`/api/${item.type}/delete/${item.id}`}
+          apiToUpdate={`/api/${item.type}`}
+        />
       </li>
     </ul>
   );

@@ -38,24 +38,26 @@ export default function SingleItemImageForm({
   };
 
   return (
-    <div className={s.imageFormContainer}>
-      {existantImageSrc && (
-        <>
-          <h4>Image actuelle</h4>
-          <div className={s.imageContainer}>
-            <Image
-              src={`${existantImageSrc}`}
-              alt="image"
-              layout="fill"
-              sizes="150px"
-              className={s.image}
-            />
-          </div>
-        </>
-      )}
+    <>
+      <h4>Image :</h4>
+      <div className={s.imagesContainer}>
+        {existantImageSrc && (
+          <>
+            <div className={s.imageContainer}>
+              <Image
+                src={`${existantImageSrc}`}
+                alt="image"
+                layout="fill"
+                sizes="150px"
+                className={s.image}
+              />
+            </div>
+          </>
+        )}
+      </div>
+      <FileUploader name="file" handleFiles={getPreview} isMultiple={false} />
       {newImage !== '' && (
-        <>
-          <h4>Nouvelle image</h4>
+        <div className={s.imagesContainer}>
           <div className={s.imageContainer}>
             <Image
               src={newImage}
@@ -65,9 +67,8 @@ export default function SingleItemImageForm({
               className={s.image}
             />
           </div>
-        </>
+        </div>
       )}
-      <FileUploader name="file" handleFiles={getPreview} isMultiple={false} />
-    </div>
+    </>
   );
 }

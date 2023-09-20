@@ -28,13 +28,11 @@ export default function AdminHomeComponent({ content, label }: Props) {
             )}
             {label === Label.SLIDER && (
               <>
-                <h4>Images :</h4>
-                <div className={s.imagesContainer}>
+                <div>
                   {content.images.map((image) => {
                     return (
-                      <div className={s.imageContainer}>
+                      <div key={image.filename} className={s.imageContainer}>
                         <Image
-                          key={image.filename}
                           src={`/images/miscellaneous/${image.filename}`}
                           alt="image"
                           layout="fill"
@@ -49,12 +47,13 @@ export default function AdminHomeComponent({ content, label }: Props) {
             )}
           </>
         )}
-        <UpdateHomeButton
-          content={content}
-          label={label}
-          buttonText={content ? 'Modifier' : 'Ajouter'}
-        />
-        <DeleteHomeButton label={label} disabled={!content} />
+        <div className={s.controls}>
+          <UpdateHomeButton
+            content={content}
+            label={label}
+            buttonText={content ? 'Modifier' : 'Ajouter'}
+          />
+        </div>
       </div>
       <div className="separate"></div>
     </>

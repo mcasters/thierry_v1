@@ -20,8 +20,11 @@
     padding: 0 0.4em 0.4em;
 }
 
-.imageFormContainer {
-    margin-top: 2em;
+.imagesContainer {
+}
+
+.imageButtonWrapper {
+    display: inline-block;
 }
 
 .imageContainer {
@@ -29,14 +32,19 @@
     display: block;
     width: 150px;
     height: 150px;
-    margin: 0.6em auto 1.8em;
+    margin: 0 auto;
+}
+
+.newImagesContainer {
+    display: inline-block;
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
 }
 
 .image {
     object-fit: contain;
-    object-position: top;
-    box-sizing: border-box;
-    padding: 2px;
 }
 
 .iconButton {

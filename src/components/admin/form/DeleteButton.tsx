@@ -5,18 +5,17 @@ import { useSWRConfig } from 'swr';
 import s from './form.module.css';
 
 type Props = {
-  id: number;
-  type: string;
+  api: string;
+  apiToUpdate: string;
 };
-export default function DeleteItemButton({ id, type }: Props) {
+export default function DeleteButton({ api, apiToUpdate }: Props) {
   const { mutate } = useSWRConfig();
-  const api = `/api/${type}/delete`;
-  const apiToUpdate = `/api/${type}`;
-  const handleDelete = async () => {
+  const handleDelete = (e) => {
+    e.preventDefault();
     if (confirm('Sûr de vouloir supprimer ?')) {
-      fetch(`${api}/${id}`).then((res) => {
+      fetch(api).then((res) => {
         if (res.ok) {
-          toast(`${type} supprimée`);
+          toast('supprimé');
           mutate(apiToUpdate);
         } else toast('Erreur à la suppression');
       });

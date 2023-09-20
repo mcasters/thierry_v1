@@ -52,38 +52,42 @@ export default function MultipleItemImagesForm({
   };
 
   return (
-    <div className={s.imageFormContainer}>
+    <>
       <h4>Images :</h4>
-      {existantAlbum.length > 0 &&
-        existantAlbum.map((filename) => (
-          <div key={filename} className={s.imageContainer}>
-            <Image
-              src={`${path}/${filename}`}
-              alt="image"
-              layout="fill"
-              sizes="150px"
-              className={s.image}
-            />
-          </div>
-        ))}
-      <input type="hidden" name="existentFiles" value={existantAlbum} />
+      <div className={s.imagesContainer}>
+        {existantAlbum.length > 0 &&
+          existantAlbum.map((filename) => (
+            <div key={filename} className={s.imageContainer}>
+              <Image
+                src={`${path}/${filename}`}
+                alt="image"
+                layout="fill"
+                sizes="150px"
+                className={s.image}
+              />
+            </div>
+          ))}
+      </div>
       <FileUploader
         name="files"
         handleFiles={getAlbumPreview}
         isMultiple={true}
       />
-      {newAlbum.length > 0 &&
-        newAlbum.map((src) => (
-          <div key={src} className={s.imageContainer}>
-            <Image
-              src={src}
-              alt="image"
-              layout="fill"
-              sizes="150px"
-              className={s.image}
-            />
-          </div>
-        ))}
-    </div>
+      {newAlbum.length > 0 && (
+        <div className={s.imagesContainer}>
+          {newAlbum.map((src) => (
+            <div key={src} className={s.imageContainer}>
+              <Image
+                src={src}
+                alt="image"
+                layout="fill"
+                sizes="150px"
+                className={s.image}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+    </>
   );
 }
