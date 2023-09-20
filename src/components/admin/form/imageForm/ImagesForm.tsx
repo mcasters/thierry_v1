@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { FiTrash2 } from 'react-icons/fi';
+import toast from 'react-hot-toast';
 
 import { Image as IImage } from '@/interfaces';
-import s from '@/components/admin/form/form.module.css';
 import { FileUploader } from '@/components/admin/form/imageForm/FileUploader';
-import toast from 'react-hot-toast';
-import { mutate } from 'swr';
-import { FiTrash2 } from 'react-icons/fi';
+import s from '@/components/admin/form/form.module.css';
 
 type Props = {
-  Images?: IImage;
+  Images?: IImage[];
   setHasImages?: (arg0: boolean) => void;
   setHasNewImages?: (arg0: boolean) => void;
   reset?: number;
@@ -29,7 +28,7 @@ export default function ImagesForm({
 }: Props) {
   const [newImages, setNewImages] = useState<string[]>([]);
   const [existantImages, setExistantImages] = useState<string[]>(() => {
-    return images ? images.map((image) => image.filename) : [];
+    return images[0] !== undefined ? images.map((image) => image.filename) : [];
   });
 
   useEffect(() => {
@@ -70,7 +69,7 @@ export default function ImagesForm({
 
   return (
     <>
-      <h4 className={s.imageTitle}>Images :</h4>
+      <h4 className={s.imageTitle}>Image(s) :</h4>
       <div>
         {existantImages.length > 0 &&
           existantImages.map((filename) => (

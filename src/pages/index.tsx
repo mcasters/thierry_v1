@@ -37,7 +37,6 @@ export default function Index({ contents }: Props) {
     if (content.label === Label.INTRO) intro = content.text;
     if (content.label === Label.SLIDER) sliderImages = content.images;
   });
-  console.log(sliderImages);
   return (
     <Layout introduction={intro}>
       {sliderImages && <Slideshow images={sliderImages} />}

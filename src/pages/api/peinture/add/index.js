@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       return res.status(400).send({ message: 'Error parsing form' });
 
     try {
-      const file = files.file?.[0];
+      const file = files.files?.[0];
       if (!file) return res.status(404).send({ message: 'Image is missing' });
 
       const fileInfo = await resizeAndSaveImage(file, dir);
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
       newPainting = await prisma.painting.create({
         data: {
           title: fields.title[0],
-          date: parse(fields.date[0], 'dd/MM/yyyy', new Date()),
+          date: parse(fields.date[0], 'yyyy', new Date()),
           technique: fields.technique[0],
           description: fields.description[0],
           height: Number(fields.height),

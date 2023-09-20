@@ -49,7 +49,7 @@ export default async function handler(req, res) {
     if (oldPaint) {
       let fileInfo = null;
       let image = {};
-      const newFile = files.file?.[0];
+      const newFile = files.files?.[0];
       if (newFile.size !== 0) {
         const path = join(`${dir}`, `${oldPaint.image.filename}`);
         deleteFile(path);
@@ -67,7 +67,7 @@ export default async function handler(req, res) {
         where: { id: paintId },
         data: {
           title: fields.title[0],
-          date: parse(fields.date[0], 'dd/MM/yyyy', new Date()),
+          date: parse(fields.date[0], 'yyyy', new Date()),
           technique: fields.technique[0],
           description: fields.description[0],
           height: Number(fields.height),

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 
-import s from './HomeParts.module.css';
 import { SiInstagram } from 'react-icons/si';
 
 interface Props {
@@ -9,38 +8,33 @@ interface Props {
 }
 export default function HomeContactPart({ title, imageSrc }: Props) {
   return (
-    <section className={s.parallaxGroup}>
-      <figure className={s.figure}>
-        <img src={imageSrc} />
-      </figure>
-      <article className={s.article}>
-        <h1>{title}</h1>
-        <address>
-          <span>
-            <strong>Thierry Casters</strong>
-          </span>
+    <>
+      <h1>{title}</h1>
+      <address>
+        <span>
+          <strong>Thierry Casters</strong>
+        </span>
 
-          <br />
-          <span>46 rue de la Mare - 75020 PARIS</span>
-          <br />
-          <br />
-          <span>+33 (0)6 75 22 38 85</span>
-          <br />
-          <Link href="mailto:contact@thierrycasters.fr">
-            contact@thierrycasters.fr
-          </Link>
-        </address>
+        <br />
+        <span>46 rue de la Mare - 75020 PARIS</span>
         <br />
         <br />
-        <a
-          href="https://www.instagram.com/thierrycasters/"
-          className={s.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <SiInstagram />
-        </a>
-      </article>
-    </section>
+        <span>+33 (0)6 75 22 38 85</span>
+        <br />
+        <Link href="mailto:contact@thierrycasters.fr">
+          contact@thierrycasters.fr
+        </Link>
+      </address>
+      <br />
+      <br />
+      <a
+        href="https://www.instagram.com/thierrycasters/"
+        className={s.instagram}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <SiInstagram />
+      </a>
+    </>
   );
 }

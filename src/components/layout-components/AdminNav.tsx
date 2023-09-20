@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import AuthStatus from '@/components/auth/AuthStatus';
-import s from '@/styles/AdminNav.module.css';
 import { ADMIN_MENU } from '@/constants/routes';
+import s from '@/styles/AdminNav.module.css';
 
 export default function AdminNav() {
   const authStatus = AuthStatus();

@@ -1,13 +1,12 @@
 import React, { useRef, useState } from 'react';
-
-import { Item } from '@/interfaces';
-import { TYPE } from '@/constants';
-import DayPickerComponent from '@/components/admin/form/daypicker/DayPickerComponent';
-import ImageItemForm from '@/components/admin/form/imageForm/ImageItemForm';
-import s from './form.module.css';
+import { parse } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
+
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
+import { Item } from '@/interfaces';
+import { TYPE } from '@/constants';
+import s from './form.module.css';
 
 interface Props {
   item?: Item;
@@ -38,10 +37,6 @@ export default function AddItemForm({ item, type, toggleModal }: Props) {
 
   const api = item ? `/api/${type}/update` : `/api/${type}/add`;
   const apiToUpdate = `/api/${type}`;
-
-  const handleDayChange = (date: any) => {
-    setDate(date);
-  };
 
   const reset = () => {
     setTitle('');
@@ -85,10 +80,16 @@ export default function AddItemForm({ item, type, toggleModal }: Props) {
           value={title}
           required
         />
-        <DayPickerComponent
-          handleDayChange={handleDayChange}
-          alreadyDay={date}
-          fieldName="date"
+        <input
+          onChange={(e) => {
+            const date = parse(e.currentTarget.value, 'yyyy', new Date());
+            setDate(date);
+          }}
+          placeholder="Année"
+          name="date"
+          type="number"
+          value={date.getFullYear()}
+          required
         />
         <input
           onChange={(e) => setTechnique(e.target.value)}
@@ -149,7 +150,7 @@ export default function AddItemForm({ item, type, toggleModal }: Props) {
           />
         )}
         <ImagesForm
-          images={item?.images}
+          images={type === TYPE.SCULPTURE ? item?.images : [item?.image]}
           setHasImages={setHasImage}
           reset={resetImageRef.current}
           pathImage={`/images/${type}`}

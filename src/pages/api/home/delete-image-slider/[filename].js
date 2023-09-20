@@ -7,11 +7,8 @@ import { join } from 'path';
 
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions);
-  console.log('///// coucou');
   if (session) {
     const { filename } = req.query;
-    console.log('///// filename');
-    console.log(filename);
 
     let imageDBDeleted = null;
     const dir = getMiscellaneousDir();

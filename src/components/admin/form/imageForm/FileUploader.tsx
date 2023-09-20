@@ -21,7 +21,7 @@ export const FileUploader = ({ handleFiles, isMultiple, name }: Props) => {
   return (
     <>
       <button className="adminButton" onClick={handleClick}>
-        {isMultiple ? 'Ajouter des fichiers' : 'Ajouter un fichier'}
+        {isMultiple ? 'Choisir des fichiers' : 'Choisir un fichier'}
       </button>
       <input
         type="file"

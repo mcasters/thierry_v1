@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import s from '@/styles/Footer.module.css';
 import AuthStatus from '@/components/auth/AuthStatus';
+import s from '@/styles/Footer.module.css';
 
 export default function Footer() {
   const authStatus = AuthStatus();

@@ -1,11 +1,8 @@
-import { RxUpdate } from 'react-icons/rx';
-
 import useModal from '@/components/admin/form/modal/useModal';
 import Modal from '@/components/admin/form/modal/Modal';
-import { Content, Item } from '@/interfaces';
+import { Content } from '@/interfaces';
 import HomeForm from '@/components/admin/form/HomeForm';
 import { Label } from '@prisma/client';
-import s from './form.module.css';
 
 type Props = {
   content?: Content;

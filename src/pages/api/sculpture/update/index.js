@@ -76,7 +76,7 @@ export default async function handler(req, res) {
         where: { id: sculpId },
         data: {
           title: fields.title[0],
-          date: parse(fields.date[0], 'dd/MM/yyyy', new Date()),
+          date: parse(fields.date[0], 'yyyy', new Date()),
           technique: fields.technique[0],
           description: fields.description[0],
           height: Number(fields.height),

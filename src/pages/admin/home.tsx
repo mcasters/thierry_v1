@@ -13,11 +13,9 @@ import AdminHomeComponent from '@/components/admin/home/AdminHomeComponent';
 export default function Home() {
   const { data: session } = useSession();
   const api = '/api/home';
-  const {
-    data: contents,
-    error,
-    isLoading,
-  } = useSWR(api, (apiURL: string) => fetch(apiURL).then((res) => res.json()));
+  const { data: contents } = useSWR(api, (apiURL: string) =>
+    fetch(apiURL).then((res) => res.json()),
+  );
 
   if (!session) {
     return (
@@ -26,9 +24,6 @@ export default function Home() {
       </Layout>
     );
   }
-
-  if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
 
   return (
     <Layout>

@@ -4,7 +4,6 @@ import { Content } from '@/interfaces';
 import Image from 'next/image';
 import React from 'react';
 import UpdateHomeButton from '@/components/admin/form/UpdateHomeButton';
-import DeleteHomeButton from '@/components/admin/form/DeleteHomeButton';
 import s from './AdminHomeComponent.module.css';
 
 interface Props {
