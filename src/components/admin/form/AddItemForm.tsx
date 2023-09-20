@@ -7,6 +7,7 @@ import ImageItemForm from '@/components/admin/form/imageForm/ImageItemForm';
 import s from './form.module.css';
 import toast from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
+import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
 
 interface Props {
   item?: Item;
@@ -147,11 +148,12 @@ export default function AddItemForm({ item, type, toggleModal }: Props) {
             value={price}
           />
         )}
-        <ImageItemForm
-          item={item ? item : undefined}
-          type={type}
-          setHasImage={setHasImage}
+        <ImagesForm
+          images={item?.images}
+          setHasImages={setHasImage}
           reset={resetImageRef.current}
+          pathImage={`/images/${type}`}
+          isMultiple={type === TYPE.SCULPTURE}
         />
         <div>
           <div className="separate"></div>

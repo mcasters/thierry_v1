@@ -10,20 +10,22 @@ import { FiTrash2 } from 'react-icons/fi';
 
 type Props = {
   Images?: IImage;
-  setHasImage?: (arg0: boolean) => void;
+  setHasImages?: (arg0: boolean) => void;
+  setHasNewImages?: (arg0: boolean) => void;
   reset?: number;
   pathImage: string;
   apiForDelete?: string;
-  apiToUpdate?: string;
+  isMultiple: boolean;
 };
 
-export default function MultipleImagesForm({
+export default function ImagesForm({
   images,
-  setHasImage,
+  setHasImages,
+  setHasNewImages,
   reset,
   pathImage,
   apiForDelete,
-  apiToUpdate,
+  isMultiple,
 }: Props) {
   const [newImages, setNewImages] = useState<string[]>([]);
   const [existantImages, setExistantImages] = useState<string[]>(() => {
@@ -31,12 +33,13 @@ export default function MultipleImagesForm({
   });
 
   useEffect(() => {
-    if (setHasImage)
-      setHasImage(newImages.length > 0 || existantImages.length > 0);
-  }, [newImages, existantImages, setHasImage]);
+    if (setHasImages !== undefined)
+      setHasImages(newImages.length > 0 || existantImages.length > 0);
+    if (setHasNewImages !== undefined) setHasNewImages(newImages.length > 0);
+  }, [newImages, existantImages, setHasImages, setHasNewImages]);
 
   useEffect(() => {
-    if (reset) setNewImages([]);
+    if (reset !== undefined) setNewImages([]);
   }, [reset]);
 
   const handleDelete = (filename) => {
@@ -48,7 +51,6 @@ export default function MultipleImagesForm({
           });
           setExistantImages(tab);
           toast('Image supprimée');
-          mutate(apiToUpdate);
         } else toast('Erreur à la suppression');
       });
     }
@@ -56,24 +58,24 @@ export default function MultipleImagesForm({
 
   const getAlbumPreview = (filesUploaded: FileList) => {
     if (filesUploaded?.length > 0) {
-      const albumFiles = Array.from(filesUploaded);
+      const files = Array.from(filesUploaded);
 
-      const newAlbumSrc: string[] = [];
-      albumFiles.forEach((file) => {
-        newAlbumSrc.push(URL.createObjectURL(file));
+      const newFiles: string[] = [];
+      files.forEach((file) => {
+        newFiles.push(URL.createObjectURL(file));
       });
-      setNewImages(newAlbumSrc);
+      setNewImages(newFiles);
     }
   };
 
   return (
     <>
-      <h4>Images :</h4>
+      <h4 className={s.imageTitle}>Images :</h4>
       <div>
         {existantImages.length > 0 &&
           existantImages.map((filename) => (
-            <div className={s.wrapper}>
-              <div key={filename} className={s.imageContainer}>
+            <div key={filename} className={s.wrapper}>
+              <div className={s.imageContainer}>
                 <Image
                   src={`${pathImage}/${filename}`}
                   alt="image"
@@ -100,7 +102,7 @@ export default function MultipleImagesForm({
       <FileUploader
         name="files"
         handleFiles={getAlbumPreview}
-        isMultiple={true}
+        isMultiple={isMultiple}
       />
       <div>
         {newImages.length > 0 &&

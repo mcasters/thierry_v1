@@ -38,8 +38,8 @@ export default async function handler(req, res) {
     const label = fields.label[0];
 
     if (
-      files.files.length === 1 &&
       files.files?.[0].size === 0 &&
+      files.files.length === 1 &&
       label === Label.SLIDER
     )
       return;

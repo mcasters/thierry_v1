@@ -4,7 +4,7 @@ import { Label } from '@prisma/client';
 import { useSWRConfig } from 'swr';
 
 import { Content } from '@/interfaces';
-import MultipleImagesForm from '@/components/admin/form/imageForm/MultipleImagesForm';
+import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
 import s from './form.module.css';
 
 interface Props {
@@ -13,6 +13,7 @@ interface Props {
   toggleModal: () => void;
 }
 export default function HomeForm({ content, label, toggleModal }: Props) {
+  const [hasNewImages, setHasNewImages] = useState<boolean>(false);
   const formRef = useRef<HTMLFormElement>(null);
   const { mutate } = useSWRConfig();
   const [text, setText] = useState<string>(content?.text || '');
@@ -50,14 +51,29 @@ export default function HomeForm({ content, label, toggleModal }: Props) {
           />
         )}
         {label === Label.SLIDER && (
-          <MultipleImagesForm
+          <ImagesForm
             images={content?.images}
             pathImage="/images/miscellaneous"
             apiForDelete="/api/home/delete-image-slider"
-            apiToUpdate="/api/form"
+            setHasNewImages={setHasNewImages}
+            isMultiple={true}
           />
         )}
-        <input type="submit" value="Enregistrer" />
+        {(hasNewImages || label === Label.INTRO) && (
+          <input type="submit" value="Enregistrer" />
+        )}
+        {!hasNewImages && label === Label.SLIDER && (
+          <button
+            className="adminButton"
+            onClick={(e) => {
+              e.preventDefault();
+              mutate(apiToUpdate);
+              toggleModal();
+            }}
+          >
+            OK
+          </button>
+        )}
         <button
           onClick={(e) => {
             e.preventDefault();
