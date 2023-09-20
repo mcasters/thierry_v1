@@ -10,10 +10,6 @@ interface Props {
 }
 
 export default function Nav_2({ isHome, isFix }: Props) {
-  const style = {
-    backgroundImage: "url('/shadow.png')",
-  };
-
   return (
     <nav
       className={isFix ? `${s.secondaryNav} ${s.sticky}` : `${s.secondaryNav}`}
@@ -31,8 +27,8 @@ export default function Nav_2({ isHome, isFix }: Props) {
                   <Image
                     src="/2.jpeg"
                     alt="Signature de Thierry Casters"
-                    width="70px"
-                    height="70px"
+                    width="60px"
+                    height="60px"
                     quality={100}
                     unoptimized={true}
                     className={s.logo}
@@ -54,7 +50,6 @@ export default function Nav_2({ isHome, isFix }: Props) {
           );
         })}
       </ul>
-      {!isHome && <div className={s.shadow} style={style} />}
     </nav>
   );
 }

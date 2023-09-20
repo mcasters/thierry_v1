@@ -46,23 +46,41 @@ export const createDirIfNecessary = (dir) => {
   });
 };
 
-export const resizeAndSaveImage = async (file, dir) => {
-  const px = 2000;
+export const resizeAndSaveImage = async (file, dir, largeWidth) => {
   const image = sharp(file.filepath);
 
-  return image
-    .resize(px, px, {
-      fit: sharp.fit.inside,
-      withoutEnlargement: true,
-    })
-    .withMetadata({
-      exif: {
-        IFD0: {
-          Copyright: 'Thierry Casters',
+  if (largeWidth !== undefined) {
+    return image
+      .resize(largeWidth, null, {
+        fit: sharp.fit.inside,
+        withoutEnlargement: true,
+      })
+      .withMetadata({
+        exif: {
+          IFD0: {
+            Copyright: 'Thierry Casters',
+          },
         },
-      },
-    })
-    .toFile(`${dir}/${file.newFilename}.webp`);
+      })
+      .webp({ quality: 80 })
+      .toFile(`${dir}/${file.newFilename}.webp`);
+  } else {
+    const px = 2000;
+    return image
+      .resize(px, px, {
+        fit: sharp.fit.inside,
+        withoutEnlargement: true,
+      })
+      .withMetadata({
+        exif: {
+          IFD0: {
+            Copyright: 'Thierry Casters',
+          },
+        },
+      })
+      .webp()
+      .toFile(`${dir}/${file.newFilename}.webp`);
+  }
 };
 
 export const deleteAllFiles = (dir) => {

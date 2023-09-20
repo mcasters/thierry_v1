@@ -1,7 +1,17 @@
 .formContainer form {
-    margin-top: 2em;
     text-align: center;
+    max-width: 40vw;
+    margin: 2em auto 0;
 }
+
+/* Mobile */
+@media (max-width: 700px) {
+    .formContainer form {
+        max-width: unset;
+        margin: 2em 0 0;
+    }
+}
+
 
 .formContainer h2 {
     font-size: var(--font-size-title);
@@ -20,10 +30,7 @@
     padding: 0 0.4em 0.4em;
 }
 
-.imagesContainer {
-}
-
-.imageButtonWrapper {
+.wrapper {
     display: inline-block;
 }
 
@@ -45,6 +52,11 @@
 
 .image {
     object-fit: contain;
+}
+
+.message {
+    font-size: small;
+    padding-bottom: 2em;
 }
 
 .iconButton {

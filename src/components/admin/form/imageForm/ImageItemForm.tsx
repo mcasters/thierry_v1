@@ -1,7 +1,7 @@
 import { Item } from '@/interfaces';
 import { TYPE } from '@/constants';
-import MultipleItemImagesForm from '@/components/admin/form/imageForm/MultipleItemImagesForm';
-import SingleItemImageForm from '@/components/admin/form/imageForm/SingleItemImageForm';
+import MultipleImagesForm from '@/components/admin/form/imageForm/MultipleImagesForm';
+import SingleImageForm from '@/components/admin/form/imageForm/SingleImageForm';
 
 type Props = {
   item?: Item;
@@ -19,17 +19,14 @@ export default function ImageItemForm({
   return (
     <>
       {type === TYPE.PAINTING && (
-        <SingleItemImageForm
-          item={item}
-          setHasImage={setHasImage}
-          reset={reset}
-        />
+        <SingleImageForm item={item} setHasImage={setHasImage} reset={reset} />
       )}
       {type === TYPE.SCULPTURE && (
-        <MultipleItemImagesForm
+        <MultipleImagesForm
           item={item}
           setHasImage={setHasImage}
           reset={reset}
+          pathImage="/images/type/"
         />
       )}
     </>

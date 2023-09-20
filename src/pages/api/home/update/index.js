@@ -36,6 +36,14 @@ export default async function handler(req, res) {
     }
 
     const label = fields.label[0];
+
+    if (
+      files.files.length === 1 &&
+      files.files?.[0].size === 0 &&
+      label === Label.SLIDER
+    )
+      return;
+
     const BDContent = await prisma.content.findUnique({
       where: {
         label: label,
@@ -73,7 +81,7 @@ export default async function handler(req, res) {
       const filesTab = files.files;
       let images = [];
       for (const file of filesTab) {
-        const fileInfo = await resizeAndSaveImage(file, dir);
+        const fileInfo = await resizeAndSaveImage(file, dir, 2000);
         images.push({
           filename: `${file.newFilename}.${fileInfo.format}`,
           width: fileInfo.width,

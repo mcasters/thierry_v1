@@ -1,12 +1,11 @@
 import React, { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Label } from '@prisma/client';
-
-import SingleItemImageForm from '@/components/admin/form/imageForm/SingleItemImageForm';
-import { Content } from '@/interfaces';
 import { useSWRConfig } from 'swr';
+
+import { Content } from '@/interfaces';
+import MultipleImagesForm from '@/components/admin/form/imageForm/MultipleImagesForm';
 import s from './form.module.css';
-import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
 
 interface Props {
   content?: Content;
@@ -51,13 +50,13 @@ export default function HomeForm({ content, label, toggleModal }: Props) {
           />
         )}
         {label === Label.SLIDER && (
-          <ImagesForm
+          <MultipleImagesForm
             images={content?.images}
-            isMultiple={true}
-            dir="/images/miscellaneous"
+            pathImage="/images/miscellaneous"
+            apiForDelete="/api/home/delete-image-slider"
+            apiToUpdate="/api/form"
           />
         )}
-        {label !== Label.INTRO && <div className="separate"></div>}
         <input type="submit" value="Enregistrer" />
         <button
           onClick={(e) => {

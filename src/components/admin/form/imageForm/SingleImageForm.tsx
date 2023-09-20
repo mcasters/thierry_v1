@@ -11,11 +11,7 @@ type Props = {
   reset: number;
 };
 
-export default function SingleItemImageForm({
-  item,
-  setHasImage,
-  reset,
-}: Props) {
+export default function SingleImageForm({ item, setHasImage, reset }: Props) {
   const [newImage, setNewImage] = useState<string>('');
   let existantImageSrc = undefined;
   if (item) existantImageSrc = `/images/${item.type}/${item.image.filename}`;

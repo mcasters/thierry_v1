@@ -1,5 +1,5 @@
 .adminWrapper {
-    padding: var(--admin-nav-height) 5em 3em;
+    padding: calc(var(--admin-nav-height) + 3em) 5em 3em;
 }
 
 .button {

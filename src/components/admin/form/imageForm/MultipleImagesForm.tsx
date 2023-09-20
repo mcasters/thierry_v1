@@ -1,34 +1,54 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import { Image as IImage } from '@/interfaces';
 import s from '@/components/admin/form/form.module.css';
 import { FileUploader } from '@/components/admin/form/imageForm/FileUploader';
 import toast from 'react-hot-toast';
-import { Label } from '@prisma/client';
+import { mutate } from 'swr';
 import { FiTrash2 } from 'react-icons/fi';
 
 type Props = {
-  images?: IImage[];
-  dir: string;
-  isMultiple: boolean;
+  Images?: IImage;
+  setHasImage?: (arg0: boolean) => void;
+  reset?: number;
+  pathImage: string;
+  apiForDelete?: string;
+  apiToUpdate?: string;
 };
 
-export default function ImagesForm({ images, dir, isMultiple }: Props) {
+export default function MultipleImagesForm({
+  images,
+  setHasImage,
+  reset,
+  pathImage,
+  apiForDelete,
+  apiToUpdate,
+}: Props) {
   const [newImages, setNewImages] = useState<string[]>([]);
   const [existantImages, setExistantImages] = useState<string[]>(() => {
     return images ? images.map((image) => image.filename) : [];
   });
 
+  useEffect(() => {
+    if (setHasImage)
+      setHasImage(newImages.length > 0 || existantImages.length > 0);
+  }, [newImages, existantImages, setHasImage]);
+
+  useEffect(() => {
+    if (reset) setNewImages([]);
+  }, [reset]);
+
   const handleDelete = (filename) => {
-    if (confirm('Sûr de vouloir supprimer ?')) {
-      fetch(`/api/home/delete-image-slider/${filename}`).then((res) => {
+    if (apiForDelete && confirm('Sûr de vouloir supprimer ?')) {
+      fetch(`${apiForDelete}/${filename}`).then((res) => {
         if (res.ok) {
           const tab = existantImages.filter((f) => {
             return f !== filename;
           });
           setExistantImages(tab);
           toast('Image supprimée');
+          mutate(apiToUpdate);
         } else toast('Erreur à la suppression');
       });
     }
@@ -48,48 +68,53 @@ export default function ImagesForm({ images, dir, isMultiple }: Props) {
 
   return (
     <>
-      <div className={s.imagesContainer}>
+      <h4>Images :</h4>
+      <div>
         {existantImages.length > 0 &&
           existantImages.map((filename) => (
-            <div key={filename} className={s.imageButtonWrapper}>
-              <div className={s.imageContainer}>
+            <div className={s.wrapper}>
+              <div key={filename} className={s.imageContainer}>
                 <Image
-                  src={`${dir}/${filename}`}
+                  src={`${pathImage}/${filename}`}
                   alt="image"
                   layout="fill"
                   sizes="150px"
                   className={s.image}
                 />
               </div>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleDelete(filename);
-                }}
-                className={s.iconButton}
-                aria-label="Supprimer"
-              >
-                <FiTrash2 />
-              </button>
+              {apiForDelete && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleDelete(filename);
+                  }}
+                  className={s.iconButton}
+                  aria-label="Supprimer"
+                >
+                  <FiTrash2 />
+                </button>
+              )}
             </div>
           ))}
       </div>
       <FileUploader
         name="files"
         handleFiles={getAlbumPreview}
-        isMultiple={isMultiple}
+        isMultiple={true}
       />
-      <div className={s.imagesContainer}>
+      <div>
         {newImages.length > 0 &&
           newImages.map((src) => (
-            <div key={src} className={s.newImagesContainer}>
-              <Image
-                src={src}
-                alt="image"
-                layout="fill"
-                sizes="150px"
-                className={s.image}
-              />
+            <div key={src} className={s.wrapper}>
+              <div key={src} className={s.imageContainer}>
+                <Image
+                  src={src}
+                  alt="image"
+                  layout="fill"
+                  sizes="150px"
+                  className={s.image}
+                />
+              </div>
             </div>
           ))}
       </div>

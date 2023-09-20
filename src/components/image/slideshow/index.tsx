@@ -35,6 +35,7 @@ export default function Slideshow({ images }: Props) {
       slides={slides}
       plugins={[Inline]}
       inline={{
+        autoPlay: true,
         style: {
           width: '100%',
           maxWidth: '2000px',
