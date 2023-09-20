@@ -51,7 +51,7 @@ export type Content = {
   label: Label;
   title: string;
   text: string;
-  filename: string;
+  images: Image[];
 };
 
 export type ResponseError = {

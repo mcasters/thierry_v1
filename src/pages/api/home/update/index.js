@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 
     const form = formidable({
       maxFiles: 10,
-      maxFileSize: 3072 * 3072,
+      maxFileSize: 4096 * 4096,
       allowEmptyFiles: true,
       minFileSize: 0,
     });
@@ -37,7 +37,16 @@ export default async function handler(req, res) {
 
     const label = fields.label[0];
     const BDContent = await prisma.content.findUnique({
-      where: { label },
+      where: {
+        label: label,
+      },
+      include: {
+        images: {
+          select: {
+            filename: true,
+          },
+        },
+      },
     });
 
     let content;
@@ -52,9 +61,10 @@ export default async function handler(req, res) {
         });
       } else {
         content = await prisma.content.update({
+          where: {
+            id: BDContent.id,
+          },
           data: {
-            label,
-            title: '',
             text: fields.text[0],
           },
         });
@@ -83,14 +93,11 @@ export default async function handler(req, res) {
           },
         });
       } else {
-        BDContent.images.forEach((image) => {
-          deleteFile(join(`${dir}`, `${image.filename}`));
-        });
         content = await prisma.content.update({
+          where: {
+            id: BDContent.id,
+          },
           data: {
-            label,
-            title: '',
-            text: '',
             images: {
               create: images,
             },

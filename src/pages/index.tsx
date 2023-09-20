@@ -8,31 +8,39 @@ import { Label } from '@prisma/client';
 import Slideshow from '@/components/image/slideshow';
 
 export type Props = {
-  images: Image[];
-  content?: Content;
+  content?: Content[];
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const resImages = await prisma.image.findMany();
-  const resContent = await prisma.content.findFirst({
-    where: {
-      label: Label.INTRO,
+  const res = await prisma.content.findMany({
+    include: {
+      images: {
+        select: {
+          filename: true,
+          height: true,
+          width: true,
+        },
+      },
     },
   });
-  const images = JSON.parse(JSON.stringify(resImages));
-  const content = JSON.parse(JSON.stringify(resContent));
+  const contents = JSON.parse(JSON.stringify(res));
   return {
     props: {
-      images,
-      content,
+      contents,
     },
   };
 };
 
-export default function Index({ images, content }: Props) {
+export default function Index({ contents }: Props) {
+  let intro, sliderImages;
+  contents?.forEach((content) => {
+    if (content.label === Label.INTRO) intro = content.text;
+    if (content.label === Label.SLIDER) sliderImages = content.images;
+  });
+  console.log(sliderImages);
   return (
-    <Layout introduction={content?.text}>
-      <Slideshow images={images} />
+    <Layout introduction={intro}>
+      {sliderImages && <Slideshow images={sliderImages} />}
     </Layout>
   );
 }

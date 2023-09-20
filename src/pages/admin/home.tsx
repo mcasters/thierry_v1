@@ -40,17 +40,13 @@ export default function Home() {
           <small>(De haut en bas)</small>
         </h1>
         {(Object.keys(Label) as Array<keyof typeof Label>).map((label, i) => {
-          let contentForLabel = null;
-          if (contents) {
-            const res = contents.filter(
-              (content: Content) => content.label === label,
-            );
-            if (res) contentForLabel = res[0];
-          }
+          const content = contents?.filter(
+            (content: Content) => content.label === label,
+          );
           return (
             <AdminHomeComponent
-              key={i}
-              content={contentForLabel}
+              key={content.label}
+              content={content[0]}
               label={label}
             />
           );

@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { Item } from '@/interfaces';
 import { TYPE } from '@/constants';
 import DayPickerComponent from '@/components/admin/form/daypicker/DayPickerComponent';
-import ImageForm from '@/components/admin/form/imageForm/ImageForm';
+import ImageItemForm from '@/components/admin/form/imageForm/ImageItemForm';
 import s from './form.module.css';
 import toast from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
@@ -147,7 +147,7 @@ export default function AddItemForm({ item, type, toggleModal }: Props) {
             value={price}
           />
         )}
-        <ImageForm
+        <ImageItemForm
           item={item ? item : undefined}
           type={type}
           setHasImage={setHasImage}

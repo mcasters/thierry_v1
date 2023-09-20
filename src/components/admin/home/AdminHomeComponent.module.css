@@ -12,6 +12,12 @@
     margin: 1em;
 }
 
+.imagesContainer {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(20%, auto));
+    max-width: 100%;
+}
+
 .imageContainer {
     position: relative;
     display: block;

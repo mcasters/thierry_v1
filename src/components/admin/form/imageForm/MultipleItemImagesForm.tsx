@@ -11,7 +11,7 @@ type Props = {
   reset: number;
 };
 
-export default function MultipleImagesForm({
+export default function MultipleItemImagesForm({
   item,
   setHasImage,
   reset,

@@ -30,5 +30,23 @@ export default function Slideshow({ images }: Props) {
       })),
   }));
 
-  return <Lightbox slides={slides} plugins={[Inline]} />;
+  return (
+    <Lightbox
+      slides={slides}
+      plugins={[Inline]}
+      inline={{
+        style: {
+          width: '100%',
+          maxWidth: '2000px',
+          aspectRatio: '3 / 2',
+          margin: '0 auto',
+        },
+      }}
+      carousel={{
+        spacing: 0,
+        padding: 0,
+        imageFit: 'cover',
+      }}
+    />
+  );
 }
