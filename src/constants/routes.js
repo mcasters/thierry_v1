@@ -11,6 +11,7 @@ export const ROUTES = {
   A_SCULPTURE: '/admin/sculptures',
   A_HOME: '/admin/home',
   A_ARTICLE: '/admin/articles',
+  A_CONTACT: '/admin/contact',
 };
 
 export const NAMES = {
@@ -74,5 +75,9 @@ export const ADMIN_MENU = [
   {
     PATH: ROUTES.A_ARTICLE,
     NAME: NAMES.ARTICLE,
+  },
+  {
+    PATH: ROUTES.A_CONTACT,
+    NAME: NAMES.CONTACT,
   },
 ];

@@ -55,6 +55,7 @@ enum Label {
   ADDRESS
   PHONE
   EMAIL
+  TEXT_CONTACT
 }
 
 model Painting {

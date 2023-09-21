@@ -9,7 +9,7 @@ type Props = {
   label: Label;
   buttonText: string;
 };
-export default function UpdateHomeButton({
+export default function UpdateContentButton({
   content,
   label,
   buttonText,

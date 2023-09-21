@@ -83,3 +83,10 @@
     color: var(--color-blue-xlight);
     transition: color 0.4s ease;
 }
+
+.formContainer label {
+    font-size: small;
+    font-weight: bold;
+    letter-spacing: 4px;
+    color: var(--color-dark);
+}

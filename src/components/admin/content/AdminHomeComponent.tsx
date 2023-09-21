@@ -3,7 +3,7 @@ import { Label } from '@prisma/client';
 import { Content } from '@/interfaces';
 import Image from 'next/image';
 import React from 'react';
-import UpdateHomeButton from '@/components/admin/form/UpdateHomeButton';
+import UpdateContentButton from '@/components/admin/form/UpdateContentButton';
 import s from './AdminHomeComponent.module.css';
 
 interface Props {
@@ -47,7 +47,7 @@ export default function AdminHomeComponent({ content, label }: Props) {
           </>
         )}
         <div className={s.controls}>
-          <UpdateHomeButton
+          <UpdateContentButton
             content={content}
             label={label}
             buttonText={content ? 'Modifier' : 'Ajouter'}

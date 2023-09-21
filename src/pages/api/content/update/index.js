@@ -48,7 +48,13 @@ export default async function handler(req, res) {
     });
 
     let content;
-    if (label === Label.INTRO) {
+    if (
+      label === Label.INTRO ||
+      label === Label.ADDRESS ||
+      label === Label.PHONE ||
+      label === Label.EMAIL ||
+      label === Label.TEXT_CONTACT
+    ) {
       if (!BDContent) {
         content = await prisma.content.create({
           data: {
