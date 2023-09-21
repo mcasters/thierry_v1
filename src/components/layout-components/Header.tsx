@@ -5,6 +5,7 @@ import LAYOUT from '@/constants/layout';
 import Nav_1 from './Nav_1';
 import Nav_2 from '@/components/layout-components/Nav_2';
 import s from '../../styles/Header.module.css';
+import { is } from 'date-fns/locale';
 
 interface Props {
   isHome: boolean;
@@ -34,7 +35,7 @@ export default function Header({
           {title}
         </h1>
       )}
-      <Nav_1 isFix={isHome ? titleDisappear : true} />
+      <Nav_1 isHome={isHome} isFix={isHome ? titleDisappear : true} />
       <div
         className={s.spaceNav1}
         style={{

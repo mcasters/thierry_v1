@@ -1,10 +1,8 @@
-import { join } from 'path';
 import { getServerSession } from 'next-auth/next';
 import formidable from 'formidable';
 
 import {
   createDirIfNecessary,
-  deleteFile,
   getMiscellaneousDir,
   resizeAndSaveImage,
 } from '../../../../utils/server';

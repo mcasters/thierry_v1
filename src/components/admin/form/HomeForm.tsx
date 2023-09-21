@@ -17,8 +17,8 @@ export default function HomeForm({ content, label, toggleModal }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const { mutate } = useSWRConfig();
   const [text, setText] = useState<string>(content?.text || '');
-  const api = '/api/home/update';
-  const apiToUpdate = '/api/home';
+  const api = '/api/content/update';
+  const apiToUpdate = '/api/content';
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,7 +54,7 @@ export default function HomeForm({ content, label, toggleModal }: Props) {
           <ImagesForm
             images={content?.images}
             pathImage="/images/miscellaneous"
-            apiForDelete="/api/home/delete-image-slider"
+            apiForDelete="/api/content/delete-image-slider"
             setHasNewImages={setHasNewImages}
             isMultiple={true}
           />

@@ -52,6 +52,9 @@ model Content {
 enum Label {
   INTRO
   SLIDER
+  ADDRESS
+  PHONE
+  EMAIL
 }
 
 model Painting {

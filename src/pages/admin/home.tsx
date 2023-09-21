@@ -12,7 +12,7 @@ import AdminHomeComponent from '@/components/admin/home/AdminHomeComponent';
 
 export default function Home() {
   const { data: session } = useSession();
-  const api = '/api/home';
+  const api = '/api/content';
   const { data: contents } = useSWR(api, (apiURL: string) =>
     fetch(apiURL).then((res) => res.json()),
   );
