@@ -12,9 +12,11 @@ import s from '@/styles/admin.module.css';
 export default function Presentation() {
   const { data: session } = useSession();
   const api = '/api/content';
-  const { data: contents } = useSWR(api, (apiURL: string) =>
-    fetch(apiURL).then((res) => res.json()),
-  );
+  const {
+    data: contents,
+    error,
+    isLoading,
+  } = useSWR(api, (apiURL: string) => fetch(apiURL).then((res) => res.json()));
   let presentationContent;
   let demarcheContent;
   let inspirationContent;
@@ -33,6 +35,9 @@ export default function Presentation() {
       </Layout>
     );
   }
+
+  if (error) return <p>Failed to load</p>;
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <Layout>

@@ -61,7 +61,7 @@
   home
    */
   --color-background-menu1-home-fix: var(--color-light);
-  --color-background-menu2-home-fix: var(--color-xlight);
+  --color-background-menu2-home-fix: var(--color-xlight-rgb);
 
   --color-menu1-home: var(--color-prussian-blue);
   --color-menu1-home-hover: var(--color-blue-xlight);

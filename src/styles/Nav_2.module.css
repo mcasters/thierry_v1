@@ -7,17 +7,24 @@
   height: var(--nav-2-height);
   line-height: var(--nav-2-height);
   z-index: 1;
-  background-color: var(--color-background-menu2);
-  border-bottom: 1px solid transparent;
-  transition: all ease-in-out 0.2s;
 }
 
 .homeNav {
   background-color: unset;
-  transition: background-color ease-in-out 0.2s;
+  border-bottom: 1px solid transparent;
+  transition: all ease-in-out 0.2s;
 }
 
-.sticky, .nav {
+.sticky {
+  position: fixed;
+  top: calc(var(--line-height) + var(--nav-1-height));
+  border-bottom: 1px solid var(--color-border-menu2);
+  background-color: rgba(var(--color-background-menu2-home-fix), 0.4);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  transition: all ease-in-out 0.2s;
+}
+
+.nav {
   position: fixed;
   top: calc(var(--line-height) + var(--nav-1-height));
   border-bottom: 1px solid var(--color-border-menu2);

@@ -1,8 +1,6 @@
 import { Label } from '@prisma/client';
 
 import { Content } from '@/interfaces';
-import Image from 'next/image';
-import s from './AdminHomeComponent.module.css';
 import ContentForm from '@/components/admin/form/ContentForm';
 
 interface Props {
@@ -23,18 +21,21 @@ export default function AdminPresentationComponent({
           label={Label.PRESENTATION}
           isTextArea={true}
           textLabel="Présentation"
+          withImage={true}
         />
         <ContentForm
           content={demarcheContent}
           label={Label.DEMARCHE}
           isTextArea={true}
           textLabel="Démarche artistique"
+          withImage={false}
         />
         <ContentForm
           content={inspirationContent}
           label={Label.INSPIRATION}
           isTextArea={true}
           textLabel="Inspirations"
+          withImage={false}
         />
       </div>
     </>

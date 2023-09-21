@@ -1,14 +1,29 @@
 .presentationContainer {
   white-space: pre-line;
-  padding: 10em;
+  padding: 3em 10em;
 }
 
 .title {
   display: none;
 }
 
-.demarche {
+.presentationContainer h2 {
+  padding: 2em;
 }
 
-.inspiration {
+.contentWrapper {
+  padding: 4em 0;
+}
+
+.imageContainer {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  padding: 2em;
+  margin: 0.6em;
+}
+
+.image {
+  object-fit: contain;
 }

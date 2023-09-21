@@ -3,6 +3,8 @@ import { Label } from '@prisma/client';
 
 import Layout from '@/components/layout-components/Layout';
 import { Content } from '@/interfaces';
+import Image from 'next/image';
+import React from 'react';
 import s from '@/styles/presentation.module.css';
 
 interface Props {
@@ -15,6 +17,15 @@ export async function getServerSideProps() {
   const resPresentation = await prisma.content.findFirst({
     where: {
       label: Label.PRESENTATION,
+    },
+    include: {
+      images: {
+        select: {
+          filename: true,
+          width: true,
+          height: true,
+        },
+      },
     },
   });
   const resDemarche = await prisma.content.findFirst({
@@ -36,9 +47,9 @@ export async function getServerSideProps() {
     inspiration = JSON.parse(JSON.stringify(resInspiration));
   return {
     props: {
-      address: presentation,
-      phone: demarche,
-      email: inspiration,
+      presentation: presentation,
+      demarche: demarche,
+      inspiration: inspiration,
     },
   };
 }
@@ -51,15 +62,28 @@ export default function Presentation({
     <Layout>
       <div className={s.presentationContainer}>
         <h1 className={s.title}>Présentation</h1>
-        {presentation && <p>{presentation.text}</p>}
+        {presentation && (
+          <div className={s.contentWrapper}>
+            <div key={presentation.id} className={s.imageContainer}>
+              <Image
+                src={`/images/miscellaneous/${presentation.images[0].filename}`}
+                alt="image"
+                layout="fill"
+                sizes="200px"
+                className={s.image}
+              />
+            </div>
+            <p>{presentation.text}</p>
+          </div>
+        )}
         {demarche && (
-          <div className={s.demarche}>
+          <div className={s.contentWrapper}>
             <h2>Démarche artistique</h2>
             <p>{demarche.text}</p>
           </div>
         )}
         {inspiration && (
-          <div className={s.inspiration}>
+          <div className={s.contentWrapper}>
             <h2>Inspirations</h2>
             <p>{inspiration.text}</p>
           </div>

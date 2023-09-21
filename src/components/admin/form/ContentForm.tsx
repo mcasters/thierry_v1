@@ -5,18 +5,21 @@ import { useSWRConfig } from 'swr';
 import { Label } from '@prisma/client';
 import { Content } from '@/interfaces';
 import s from './form.module.css';
+import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
 
 interface Props {
   content: Content;
   isTextArea: boolean;
   label: Label;
   textLabel: string;
+  withImage: boolean;
 }
 export default function ContentForm({
   content,
   isTextArea,
   label,
   textLabel,
+  withImage,
 }: Props) {
   const [text, setText] = useState<string>(content?.text || '');
   const [isChanged, setIsChanged] = useState(false);
@@ -72,6 +75,14 @@ export default function ContentForm({
               }}
             />
           </label>
+        )}
+        {withImage && (
+          <ImagesForm
+            images={content?.images}
+            pathImage="/images/miscellaneous"
+            apiForDelete="/api/content/delete-image-slider"
+            isMultiple={false}
+          />
         )}
         {isChanged && (
           <>
