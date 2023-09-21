@@ -1,26 +1,22 @@
+.mainHome {
+    position: absolute;
+    width: 100%;
+    top: var(--nav-1-height);
+    left: 0;
+    z-index: 0;
+}
+
+.wrapper {
+    height: 80vh;
+}
+
 .main {
-    color: var(--color-blue);
+    color: var(--color-prussian-blue);
     background: linear-gradient(
             to bottom,
             transparent,
             var(--color-light)
     ) var(--color-xlight);
     text-align: center;
-    margin: auto;
-}
-
-.wrapper {
-    height: 90vh;
-}
-
-.mainHome {
-    position: absolute;
-    width: 100%;
-    top: 100px;
-    left: 0;
-    z-index: 0;
-}
-
-.sticky {
-    margin-top: 55px;
+    margin-top: calc(var(--line-height) + var(--nav-1-height) + var(--nav-2-height));
 }

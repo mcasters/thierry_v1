@@ -5,13 +5,22 @@ import { MENU_1 } from '@/constants/routes';
 import s from '../../styles/Nav_1.module.css';
 
 interface Props {
+  isHome: boolean;
   isFix: boolean;
 }
-export default function Nav_1({ isFix }: Props) {
+export default function Nav_1({ isFix, isHome }: Props) {
   const router = useRouter();
 
   return (
-    <nav className={isFix ? `${s.nav} ${s.sticky}` : `${s.nav}`}>
+    <nav
+      className={
+        !isHome
+          ? `${s.nav}`
+          : isFix
+          ? `${s.homeNav} ${s.sticky}`
+          : `${s.homeNav}`
+      }
+    >
       <ul>
         {MENU_1.map((item) => {
           const isSubPageActive = router.pathname === `${item.PATH}/[year]`;

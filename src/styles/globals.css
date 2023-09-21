@@ -4,7 +4,7 @@
    * ======================================================================== */
 
   --font-family-base: Georgia;
-  --font-family-sans: Tahoma, "Montserrat", sans-serif;
+  --font-family-sans: Tahoma;
 
   /*
   * Font size
@@ -35,7 +35,7 @@
 
   --color-xlight: #f8f8f8;
   --color-xlight-rgb: 248, 248, 248;
-  --color-light: #d7d7d7;
+  --color-light: #e3e3e3;
   --color-dark: #a1a1a1;
   --color-xdark: #333;
 
@@ -45,23 +45,43 @@
   --color-blue-dark-rgb: 21, 42, 54;
   --color-blue-medium: #1c3949;
   --color-blue-medium-rgb: 28, 54, 73;
-  /*
-  Original prussian blue
-   */
-  --color-blue: #24445C;
+  --color-prussian-blue: #24445C;
   --color-blue-rgb: 36, 68, 92;
   --color-blue-light: #2e6177;
   --color-blue-xlight: #4289a6;
   --color-blue-xxlight: #66c3d3;
   --color-blue-xxxlight: #b5d1d5;
 
-  --color-brown-dark: #462e1b;
-  --color-brown-dark-rgb: 70, 46, 27;
+
   --color-brown1: #a4874f;
   --color-brown2: #72402b;
-  --color-brown2-rgb: 107, 61, 42;
   --color-brown: #5c3524;
-  --color-brown-rgb: 92, 53, 36;
+
+  /*
+  home
+   */
+  --color-background-menu1-home-fix: var(--color-light);
+  --color-background-menu2-home-fix: var(--color-xlight);
+
+  --color-menu1-home: var(--color-blue-light);
+  --color-menu1-home-hover: var(--color-blue-xlight);
+
+  --color-menu2-home: var(--color-prussian-blue);
+  --color-menu2-home-hover: var(--color-blue-xlight);
+
+  /*
+  Other pages
+   */
+  --color-background-menu1: var(--color-light);
+  --color-background-menu2: var(--color-xlight);
+
+  --color-menu1: var(--color-blue-light);
+  --color-menu1-hover: var(--color-blue-xlight);
+  --color-border-menu1: var(--color-prussian-blue);
+
+  --color-menu2: var(--color-blue-light);
+  --color-menu2-hover: var(--color-blue-xlight);
+  --color-border-menu2: var(--color-dark);
 
 
   --max-width: 1100px;
@@ -161,7 +181,7 @@ a:hover, .buttonLink:hover, a:focus,
 }
 
 ::selection {
-  background: var(--color-blue);
+  background: var(--color-prussian-blue);
   text-shadow: none;
 }
 

@@ -12,9 +12,15 @@ interface Props {
 export default function Nav_2({ isHome, isFix }: Props) {
   return (
     <nav
-      className={isFix ? `${s.secondaryNav} ${s.sticky}` : `${s.secondaryNav}`}
+      className={
+        !isHome
+          ? `${s.nav}`
+          : isFix
+          ? `${s.homeNav} ${s.sticky}`
+          : `${s.homeNav}`
+      }
     >
-      <ul className={isHome ? `${s.menu} ${s.home}` : `${s.menu}`}>
+      <ul className={s.menu}>
         {MENU_2.map((menuItem) => {
           if (menuItem.NAME === 'Home')
             return (

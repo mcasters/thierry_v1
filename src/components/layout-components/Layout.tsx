@@ -6,6 +6,7 @@ import Header from './Header';
 import Footer from '@/components/layout-components/Footer';
 import Main from '@/components/layout-components/Main';
 import s from '@/styles/Layout.module.css';
+import { is } from 'date-fns/locale';
 
 interface Props {
   introduction?: string;
@@ -22,8 +23,9 @@ export default function Layout({ introduction, children }: Props) {
   const handler = (isFix) => setHeaderIsFix(isFix);
 
   return (
-    <>
+    <div className={s.wrapper}>
       <div className={s.line}></div>
+      {isHome && <div className={s.gradient}></div>}
       {!isAdmin && (
         <Header
           handler={handler}
@@ -36,6 +38,6 @@ export default function Layout({ introduction, children }: Props) {
         {children}
       </Main>
       <Footer />
-    </>
+    </div>
   );
 }

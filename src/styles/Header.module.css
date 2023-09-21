@@ -5,14 +5,16 @@
 }
 
 .title {
-  background-color: var(--color-xlight);
   font-size: 2.5em;
   font-variant: small-caps;
   font-weight: lighter;
+  font-family: var(--font-family-base);
+  letter-spacing: 4px;
   margin: 0;
   height: 80px;
   line-height: 80px;
 }
+
 
 .spaceNav1 {
   height: var(--nav-1-height);

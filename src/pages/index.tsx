@@ -1,11 +1,11 @@
 import { GetServerSideProps } from 'next';
+import { Label } from '@prisma/client';
 
-import s from '@/styles/Home.module.css';
-import Layout from '../components/layout-components/Layout';
+import Layout from '@/components/layout-components/Layout';
 import prisma from '@/lib/prisma';
 import { Image, Content } from '@/interfaces';
-import { Label } from '@prisma/client';
 import Slideshow from '@/components/image/slideshow';
+import s from '@/styles/Home.module.css';
 
 export type Props = {
   content?: Content[];
