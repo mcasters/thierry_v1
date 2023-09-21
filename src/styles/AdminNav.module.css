@@ -41,7 +41,6 @@ font-size: var(--font-size-plus);
 
 .nav .link.active {
     color: var(--color-blue-xxlight);
-    border-bottom: 1px solid var(--color-blue-xxlight);
 }
 
 

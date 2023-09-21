@@ -7,15 +7,16 @@ import AccessDenied from '@/components/auth/access-denied';
 import AdminNav from '@/components/layout-components/AdminNav';
 import { Content } from '@/interfaces';
 import AdminContactComponent from '@/components/admin/content/AdminContactComponent';
-import s from '../../styles/admin.module.css';
-import { useEffect } from 'react';
+import s from '@/styles/admin.module.css';
 
 export default function Contact() {
   const { data: session } = useSession();
   const api = '/api/content';
-  const { data: contents } = useSWR(api, (apiURL: string) =>
-    fetch(apiURL).then((res) => res.json()),
-  );
+  const {
+    data: contents,
+    error,
+    isLoading,
+  } = useSWR(api, (apiURL: string) => fetch(apiURL).then((res) => res.json()));
   let addressContent;
   let phoneContent;
   let emailContent;
@@ -36,6 +37,9 @@ export default function Contact() {
       </Layout>
     );
   }
+
+  if (error) return <p>Failed to load</p>;
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <Layout>

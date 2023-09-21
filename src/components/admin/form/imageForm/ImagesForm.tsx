@@ -28,7 +28,9 @@ export default function ImagesForm({
 }: Props) {
   const [newImages, setNewImages] = useState<string[]>([]);
   const [existantImages, setExistantImages] = useState<string[]>(() => {
-    return images[0] !== undefined ? images.map((image) => image.filename) : [];
+    return images && images[0] !== undefined
+      ? images.map((image) => image.filename)
+      : [];
   });
 
   useEffect(() => {
