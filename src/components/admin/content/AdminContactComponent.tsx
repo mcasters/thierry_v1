@@ -23,7 +23,7 @@ export default function AdminContactComponent({
         <ContentForm
           content={addressContent}
           label={Label.ADDRESS}
-          isTextArea={false}
+          isTextArea={true}
           textLabel="Adresse"
         />
         <ContentForm

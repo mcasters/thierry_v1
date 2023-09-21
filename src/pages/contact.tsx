@@ -7,8 +7,8 @@ import { Content } from '@/interfaces';
 import s from '@/styles/contact.module.css';
 
 interface Props {
-  address: Content;
-  phone: Content;
+  presentation: Content;
+  demarche: Content;
   email: Content;
   textContact: Content;
 }
@@ -50,19 +50,26 @@ export async function getServerSideProps() {
     },
   };
 }
-export default function contact({ address, phone, email, textContact }: Props) {
+export default function Contact({
+  presentation,
+  demarche,
+  email,
+  textContact,
+}: Props) {
   return (
     <Layout>
       <div className={s.contactContainer}>
         <address>
           <h1 className={s.title}>Contact</h1>
           <p>Thierry Casters</p>
-          {address && <p>{address.text}</p>}
-          {phone && <p>{phone.text}</p>}
+          {presentation && <p className={s.preLine}>{presentation.text}</p>}
+          {demarche && <p>{demarche.text}</p>}
 
           {email && <Link href={`mailto:${email.text}`}>{email.text}</Link>}
         </address>
-        <div>{textContact && <p>{textContact.text}</p>}</div>
+        <div>
+          {textContact && <p className={s.preLine}>{textContact.text}</p>}
+        </div>
       </div>
     </Layout>
   );

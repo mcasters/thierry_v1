@@ -56,6 +56,9 @@ enum Label {
   PHONE
   EMAIL
   TEXT_CONTACT
+  PRESENTATION
+  DEMARCHE
+  INSPIRATION
 }
 
 model Painting {

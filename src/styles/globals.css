@@ -3,7 +3,7 @@
    * Typography
    * ======================================================================== */
 
-  --font-family-base: Georgia;
+  --font-family-serif: Georgia;
   --font-family-sans: Tahoma;
 
   /*
@@ -11,8 +11,8 @@
   * ======================================================================== */
   --font-size-xtitle: 2.4rem;
   --font-size-title: 1.8rem;
-  --font-size-plus: 1.2rem;
-  --font-size: 1rem;
+  --font-size-plus: 1rem;
+  --font-size: 0.9rem;
   --font-size-min: 0.8rem;
 
   /*
@@ -35,7 +35,7 @@
 
   --color-xlight: #f8f8f8;
   --color-xlight-rgb: 248, 248, 248;
-  --color-light: #e3e3e3;
+  --color-light: #e7e7e7;
   --color-dark: #a1a1a1;
   --color-xdark: #333;
 
@@ -63,7 +63,7 @@
   --color-background-menu1-home-fix: var(--color-light);
   --color-background-menu2-home-fix: var(--color-xlight);
 
-  --color-menu1-home: var(--color-blue-light);
+  --color-menu1-home: var(--color-prussian-blue);
   --color-menu1-home-hover: var(--color-blue-xlight);
 
   --color-menu2-home: var(--color-prussian-blue);
@@ -75,11 +75,11 @@
   --color-background-menu1: var(--color-light);
   --color-background-menu2: var(--color-xlight);
 
-  --color-menu1: var(--color-blue-light);
+  --color-menu1: var(--color-prussian-blue);
   --color-menu1-hover: var(--color-blue-xlight);
   --color-border-menu1: var(--color-prussian-blue);
 
-  --color-menu2: var(--color-blue-light);
+  --color-menu2: var(--color-prussian-blue);
   --color-menu2-hover: var(--color-blue-xlight);
   --color-border-menu2: var(--color-dark);
 
@@ -130,7 +130,7 @@ body {
   overflow: visible;
   min-height: 100%;
   color: var(--color-blue-light);
-  font-family: var(--font-family-sans);
+  font-family: var(--font-family-serif);
   font-size: var(--font-size);
   -webkit-font-smoothing: antialiased;
   line-height: 1.375;
@@ -156,7 +156,7 @@ button {
 
 a, .buttonLink {
   text-decoration: none;
-  color: var(--color-blue-light);
+  color: var(--color-blue-xlight);
   transition: color 0.4s;
 }
 
@@ -167,7 +167,7 @@ a:hover, .buttonLink:hover, a:focus,
 }
 
 .buttonLink {
-  font-family: var(--font-family-sans) !important;
+  font-family: var(--font-family-serif) !important;
   font-size: var(--font-size);
   padding: 2px 5px;
   display: inline;

@@ -1,5 +1,5 @@
 .contactContainer {
-  padding: 5em;
+  padding: 10em;
 }
 
 .title {
@@ -12,7 +12,11 @@
 }
 
 .contactContainer p {
-  padding: 0.2em 0;
+  padding: 0.6em 0;
+}
+
+.preLine {
+  white-space: pre-line;
 }
 
 
