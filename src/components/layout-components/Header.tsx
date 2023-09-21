@@ -42,12 +42,8 @@ export default function Header({
         }}
       />
       {isHome && introduction && (
-        <div className={s.main}>
-          <div className={s.center}>
-            <div ref={introRef} className={s.intro}>
-              <p>{introduction}</p>
-            </div>
-          </div>
+        <div ref={introRef} className={s.intro}>
+          <p>{introduction}</p>
         </div>
       )}
       <Nav_2 isHome={isHome} isFix={isHome ? introDisappear : true} />

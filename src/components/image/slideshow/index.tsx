@@ -35,7 +35,6 @@ export default function Slideshow({ images }: Props) {
       slides={slides}
       plugins={[Inline]}
       inline={{
-        autoPlay: true,
         style: {
           width: '100%',
           maxWidth: '2000px',
@@ -44,6 +43,7 @@ export default function Slideshow({ images }: Props) {
         },
       }}
       carousel={{
+        autoPlay: true,
         spacing: 0,
         padding: 0,
         imageFit: 'cover',

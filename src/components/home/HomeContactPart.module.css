@@ -1,0 +1,20 @@
+.instagram {
+    width: initial;
+    text-align: center;
+    border: none;
+    background: none;
+    font-size: 20px;
+    padding: 0.3em;
+    margin: 0;
+    box-shadow: none;
+}
+
+.instagram svg {
+    color: var(--color-blue-xlight);
+    transition: color 0.4s;
+}
+
+.instagram svg:hover {
+    color: var(--color-blue-xxlight);
+    transition: color 0.4s;
+}

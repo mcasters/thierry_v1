@@ -26,7 +26,7 @@
   /*
   WARNING before to change : These two are also in constants JS (Layout)
    */
-  --line-height: 4px;
+  --line-height: 6px;
   --nav-1-height: 36px;
 
   /*
@@ -58,7 +58,7 @@
   --color-brown-dark: #462e1b;
   --color-brown-dark-rgb: 70, 46, 27;
   --color-brown1: #a4874f;
-  --color-brown2: #6b3d2a;
+  --color-brown2: #72402b;
   --color-brown2-rgb: 107, 61, 42;
   --color-brown: #5c3524;
   --color-brown-rgb: 92, 53, 36;
@@ -109,7 +109,7 @@
 body {
   overflow: visible;
   min-height: 100%;
-  color: var(--color-blue-xlight);
+  color: var(--color-blue-light);
   font-family: var(--font-family-sans);
   font-size: var(--font-size);
   -webkit-font-smoothing: antialiased;
@@ -136,7 +136,7 @@ button {
 
 a, .buttonLink {
   text-decoration: none;
-  color: var(--color-blue-xlight);
+  color: var(--color-blue-light);
   transition: color 0.4s;
 }
 
@@ -161,7 +161,7 @@ a:hover, .buttonLink:hover, a:focus,
 }
 
 ::selection {
-  background: var(--color-brown);
+  background: var(--color-blue);
   text-shadow: none;
 }
 

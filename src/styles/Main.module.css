@@ -9,11 +9,16 @@
     margin: auto;
 }
 
+.wrapper {
+    height: 90vh;
+}
+
 .mainHome {
-    text-align: center;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-size: cover;
+    position: absolute;
+    width: 100%;
+    top: 100px;
+    left: 0;
+    z-index: 0;
 }
 
 .sticky {
