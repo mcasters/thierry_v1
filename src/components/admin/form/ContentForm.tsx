@@ -10,8 +10,14 @@ interface Props {
   content: Content;
   isTextArea: boolean;
   label: Label;
+  textLabel: string;
 }
-export default function ContentForm({ content, isTextArea, label }: Props) {
+export default function ContentForm({
+  content,
+  isTextArea,
+  label,
+  textLabel,
+}: Props) {
   const [text, setText] = useState<string>(content?.text || '');
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -40,7 +46,7 @@ export default function ContentForm({ content, isTextArea, label }: Props) {
         <input type="hidden" name="label" value={label} />
         {!isTextArea && (
           <label>
-            {label}
+            {textLabel}
             <input
               placeholder={label}
               name="text"
@@ -55,7 +61,7 @@ export default function ContentForm({ content, isTextArea, label }: Props) {
         )}
         {isTextArea && (
           <label>
-            {label}
+            {textLabel}
             <textarea
               placeholder={label}
               name="text"

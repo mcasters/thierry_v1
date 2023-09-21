@@ -1,19 +1,19 @@
-.contactContent {
-  font-size: var(--font-size-plus);
+.contactContainer {
+  padding: 5em;
 }
 
-.contactContent:first-of-type {
-  margin-top: 4em;
-  margin-bottom: 6em;
+.title {
+  display: none;
 }
 
-.contactContent:last-of-type {
-  margin-top: 6em;
-  margin-bottom: 6em;
+.contactContainer a {
+  display: block;
+  padding: 4em 0;
 }
 
-@media (--md) {
-  .title {
-    display: none;
-  }
+.contactContainer p {
+  padding: 0.2em 0;
 }
+
+
+

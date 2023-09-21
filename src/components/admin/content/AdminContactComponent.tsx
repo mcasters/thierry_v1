@@ -24,21 +24,25 @@ export default function AdminContactComponent({
           content={addressContent}
           label={Label.ADDRESS}
           isTextArea={false}
+          textLabel="Adresse"
         />
         <ContentForm
           content={phoneContent}
           label={Label.PHONE}
           isTextArea={false}
+          textLabel="Téléphone"
         />
         <ContentForm
           content={emailContent}
           label={Label.EMAIL}
           isTextArea={false}
+          textLabel="E-mail"
         />
         <ContentForm
           content={textContactContent}
           label={Label.TEXT_CONTACT}
           isTextArea={true}
+          textLabel="texte d'accompagnement"
         />
       </div>
     </>
