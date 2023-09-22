@@ -1,27 +1,16 @@
 import { GetServerSideProps } from 'next';
 
-import prisma from '@/lib/prisma';
 import Layout from '@/components/layout-components/Layout';
 import ItemComponent from '@/components/item/ItemComponent';
-import { Item } from '@/interfaces';
+import { getPaintingFull, PaintingFull } from '@/interfaces';
 import s from '@/styles/ItemPage.module.css';
 
 export type Props = {
-  paintings: [Item];
+  paintings: PaintingFull[];
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await prisma.painting.findMany({
-    include: {
-      image: {
-        select: {
-          filename: true,
-          height: true,
-          width: true,
-        },
-      },
-    },
-  });
+  const res = await getPaintingFull();
   const paintings = JSON.parse(JSON.stringify(res));
   return {
     props: {
@@ -30,14 +19,14 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-export default function Peintures({ paintings: items }: Props) {
+export default function Peintures({ paintings }: Props) {
   return (
     <Layout>
       <div className={s.container}>
         <div className={s.grid}>
           <h1 className="hidden">Les peintures</h1>
-          {items.map((item) => (
-            <ItemComponent key={item.id} item={item} />
+          {paintings.map((painting) => (
+            <ItemComponent key={painting.id} item={painting} />
           ))}
         </div>
       </div>

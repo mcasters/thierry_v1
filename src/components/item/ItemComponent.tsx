@@ -1,10 +1,10 @@
-import { Item } from '@/interfaces';
+import { PaintingFull, SculptureFull } from '@/interfaces';
 import { TYPE } from '@/constants';
 import s from './ItemComponent.module.css';
 import ImageWithLightbox from '@/components/image/image-lightbox';
 
 interface Props {
-  item: Item;
+  item: SculptureFull | PaintingFull;
 }
 export default function ItemComponent({ item }: Props) {
   const isSculpture = item.type === TYPE.SCULPTURE;

@@ -1,23 +1,13 @@
 import { getServerSession } from 'next-auth/next';
 
-import prisma from '../../../lib/prisma';
 import { authOptions } from '../auth/[...nextauth]';
+import { getPaintingFull } from '../../../interfaces';
 
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions);
 
   if (session) {
-    const paintings = await prisma.painting.findMany({
-      include: {
-        image: {
-          select: {
-            filename: true,
-            height: true,
-            width: true,
-          },
-        },
-      },
-    });
+    const paintings = await getPaintingFull();
     return paintings
       ? res.status(200).json(paintings)
       : res.status(404).json({ message: `No painting found.` });

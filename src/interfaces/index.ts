@@ -8,6 +8,10 @@ export type User = {
   isAdmin: boolean;
 };
 
+export type ResponseError = {
+  message: string;
+};
+
 export type Post = {
   id: number;
   title: string;
@@ -52,6 +56,16 @@ export async function getContentFull() {
 }
 export type ContentFull = Prisma.PromiseReturnType<typeof getContentFull>;
 
-export type ResponseError = {
-  message: string;
-};
+export async function getPaintingFull() {
+  return await prisma.painting.findMany({
+    include: { image: true, category: true },
+  });
+}
+export type PaintingFull = Prisma.PromiseReturnType<typeof getPaintingFull>;
+
+export async function getSculptureFull() {
+  return await prisma.sculpture.findMany({
+    include: { images: true, category: true },
+  });
+}
+export type SculptureFull = Prisma.PromiseReturnType<typeof getSculptureFull>;
