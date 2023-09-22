@@ -7,24 +7,24 @@ export default async function handler(req, res) {
   if (session) {
     const id = Number(req.query.id);
 
-    let paintingDeleted = null;
-    const category = await prisma.categoryPainting.findUnique({
+    let sculptureDeleted = null;
+    const category = await prisma.categorySculpture.findUnique({
       where: { id },
       include: {
-        paintings: true,
+        sculptures: true,
       },
     });
 
     if (category) {
-      if (category.paintings.length > 0)
+      if (category.sculptures.length > 0)
         return res
           .status(404)
           .send({ error: "Impossible d'effacer, Catégorie utilisée" });
-      paintingDeleted = await prisma.categoryPainting.delete({
+      sculptureDeleted = await prisma.categorySculpture.delete({
         where: { id },
       });
     }
-    return paintingDeleted
+    return sculptureDeleted
       ? res.status(200).send({ message: 'ok' })
       : res.status(404).send({ error: 'Delete error' });
   } else {

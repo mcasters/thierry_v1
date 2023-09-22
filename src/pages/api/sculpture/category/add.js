@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       return res.status(400).send({ message: 'error parsing form' });
     }
 
-    const newCategory = await prisma.categoryPainting.create({
+    const newCategory = await prisma.categorySculpture.create({
       data: {
         value: fields.text[0],
       },

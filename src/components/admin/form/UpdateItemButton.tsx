@@ -5,7 +5,6 @@ import useModal from '@/components/admin/form/modal/useModal';
 import Modal from '@/components/admin/form/modal/Modal';
 import { PaintingFull, SculptureFull } from '@/interfaces';
 import ItemForm from '@/components/admin/form/ItemForm';
-import s from './form.module.css';
 import CategoryForm from '@/components/admin/form/CategoryForm';
 
 type Props = {

@@ -1,10 +1,9 @@
 import useSWR from 'swr';
 
-import { CategoryPainting, CategorySculpture } from '@prisma/client';
+import { CategoryPaintingFull, CategorySculptureFull } from '@/interfaces';
 import RowCategoryListComponent from './RowCategoryListComponent';
 import React from 'react';
 import s from '../ListComponent.module.css';
-import { CategoryPaintingFull } from '@/interfaces';
 
 interface Props {
   type: string;
@@ -22,7 +21,7 @@ export default function CategoryListComponent({ type }: Props) {
       <div className={s.list}>
         {categories &&
           categories.map(
-            (category: CategorySculpture | CategoryPaintingFull) => {
+            (category: CategorySculptureFull | CategoryPaintingFull) => {
               return (
                 <RowCategoryListComponent
                   key={category.id}

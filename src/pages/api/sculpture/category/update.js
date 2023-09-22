@@ -1,6 +1,5 @@
-import formidable from 'formidable';
 import { getServerSession } from 'next-auth/next';
-
+import formidable from 'formidable';
 import prisma from '../../../../lib/prisma';
 import { authOptions } from '../../auth/[...nextauth]';
 
@@ -10,21 +9,25 @@ export default async function handler(req, res) {
   if (session) {
     let fields;
     const form = formidable();
+
     try {
       [fields] = await form.parse(req);
     } catch (err) {
-      return res.status(400).send({ message: 'error parsing form' });
+      console.log(err);
+      return res.status(400).send({ message: 'error' });
     }
 
-    const newCategory = await prisma.categoryPainting.create({
+    const id = Number(fields.id);
+    const updatedSculpture = await prisma.categorySculpture.update({
+      where: { id },
       data: {
         value: fields.text[0],
       },
     });
 
-    return newCategory
+    return updatedSculpture
       ? res.status(200).send({ message: 'ok' })
-      : res.status(404).send({ message: 'Error' });
+      : res.status(404).send({ message: 'Update error' });
   } else {
     return res.status(401).send({ message: 'Unauthorized' });
   }

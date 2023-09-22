@@ -1,12 +1,11 @@
-import { CategoryPainting, CategorySculpture } from '@prisma/client';
+import { CategoryPaintingFull, CategorySculptureFull } from '@/interfaces';
 import DeleteButton from '@/components/admin/form/DeleteButton';
 import UpdateItemButton from '@/components/admin/form/UpdateItemButton';
 import { TYPE } from '@/constants';
 import s from '../ListComponent.module.css';
-import { CategoryPaintingFull } from '@/interfaces';
 
 interface Props {
-  category: CategorySculpture | CategoryPaintingFull;
+  category: CategorySculptureFull | CategoryPaintingFull;
   type: string;
 }
 

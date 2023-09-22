@@ -1,5 +1,4 @@
-import { Painting } from '.prisma/client';
-import { Label, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import prisma from '@/lib/prisma';
 
 export type User = {
@@ -64,17 +63,27 @@ export async function getPaintingFull() {
 export type PaintingFull = Prisma.PromiseReturnType<typeof getPaintingFull>;
 
 export async function getSculptureFull() {
-  return await prisma.sculpture.findMany({
+  const sculpture = await prisma.sculpture.findMany({
     include: { images: true, category: true },
   });
+  return sculpture;
 }
 export type SculptureFull = Prisma.PromiseReturnType<typeof getSculptureFull>;
 
 export async function getCategoryPaintingFull() {
-  return prisma.categoryPainting.findMany({
+  return await prisma.categoryPainting.findMany({
     include: { paintings: true },
   });
 }
 export type CategoryPaintingFull = Prisma.PromiseReturnType<
   typeof getCategoryPaintingFull
+>;
+
+export async function getCategorySculptureFull() {
+  return await prisma.categorySculpture.findMany({
+    select: { include: { sculptures: true } },
+  });
+}
+export type CategorySculptureFull = Prisma.PromiseReturnType<
+  typeof getCategorySculptureFull
 >;
