@@ -24,7 +24,7 @@ export default function RowItemListComponent({ item }: Props) {
         <Image src={src} alt="image" height={50} width={50} />
       </li>
       <li className={s.itemIcon}>
-        <UpdateItemButton item={item} />
+        <UpdateItemButton item={item} type={item.type} isCategory={false} />
       </li>
       <li className={s.itemIcon}>
         <DeleteButton
