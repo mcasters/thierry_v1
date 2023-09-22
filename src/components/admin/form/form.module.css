@@ -5,7 +5,7 @@
 
 /* Mobile */
 @media (max-width: 700px) {
-    .formContainer form {
+    .formContainer {
         max-width: unset;
         margin: 2em 0 0;
     }
@@ -24,15 +24,6 @@
 .formContainer textarea {
     border-color: #c5c5c5;
     height: 150px
-}
-
-.trash {
-    width: 100%;
-    text-align: center;
-    border: none;
-    background: none;
-    font-size: 1.4em;
-    padding: 0 0.4em 0.4em;
 }
 
 .wrapper {
@@ -66,27 +57,6 @@
 .message {
     font-size: small;
     padding-bottom: 2em;
-}
-
-.iconButton {
-    width: initial;
-    text-align: center;
-    border: none;
-    background: none;
-    font-size: var(--font-size-plus);
-    padding: 0.3em;
-    margin: 0;
-    box-shadow: none;
-}
-
-.iconButton svg {
-    color: var(--color-blue-light);
-    transition: color 0.4s ease;
-}
-
-.iconButton:hover svg {
-    color: var(--color-blue-xlight);
-    transition: color 0.4s ease;
 }
 
 .formContainer label, .sliderLabel {

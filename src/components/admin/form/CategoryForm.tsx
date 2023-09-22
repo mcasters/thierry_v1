@@ -6,7 +6,7 @@ import s from './form.module.css';
 import { CategoryPainting, CategorySculpture } from '@prisma/client';
 
 interface Props {
-  category?: CategoryPainting | CategorySculpture | null;
+  category?: CategoryPainting | CategorySculpture;
   type: string;
   toggleModal?: () => void;
 }
@@ -18,6 +18,7 @@ export default function CategoryForm({ category, type, toggleModal }: Props) {
     ? `/api/${type}/category/update`
     : `/api/${type}/category/add`;
   const apiToUpdate = `/api/${type}/category`;
+  const title = category ? 'Modifier une catégorie' : 'Ajouter une catégorie';
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,21 +27,18 @@ export default function CategoryForm({ category, type, toggleModal }: Props) {
       fetch(api, { method: 'POST', body: formData }).then((res) => {
         if (res.ok) {
           toast(category ? 'Catégorie modifiée' : 'Catégorie ajoutée');
-          toggleModal ? toggleModal() : reset();
+          toggleModal ? toggleModal() : setText('');
           mutate(apiToUpdate);
         } else toast("Erreur à l'enregistrement");
       });
     }
   };
 
-  const reset = () => {
-    setText('');
-  };
-
   return (
     <div className={s.formContainer}>
-      <h4>Ajouter une catégorie</h4>
+      <h4>{title}</h4>
       <form ref={formRef} onSubmit={submit}>
+        {category && <input type="hidden" name="id" value={category.id} />}
         <input
           placeholder="catégorie"
           name="text"
@@ -57,7 +55,7 @@ export default function CategoryForm({ category, type, toggleModal }: Props) {
           className="adminButton"
           onClick={(e) => {
             e.preventDefault();
-            toggleModal ? toggleModal() : reset();
+            toggleModal ? toggleModal() : setText('');
           }}
         >
           Annuler

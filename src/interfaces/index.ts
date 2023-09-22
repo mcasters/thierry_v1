@@ -69,3 +69,12 @@ export async function getSculptureFull() {
   });
 }
 export type SculptureFull = Prisma.PromiseReturnType<typeof getSculptureFull>;
+
+export async function getCategoryPaintingFull() {
+  return prisma.categoryPainting.findMany({
+    include: { paintings: true },
+  });
+}
+export type CategoryPaintingFull = Prisma.PromiseReturnType<
+  typeof getCategoryPaintingFull
+>;

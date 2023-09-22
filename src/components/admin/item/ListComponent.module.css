@@ -46,7 +46,7 @@
   flex:  250px;
 }
 
-.itemImage {
+.itemImage, .itemInfo {
   flex: auto;
 }
 

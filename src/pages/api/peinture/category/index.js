@@ -1,13 +1,14 @@
 import { getServerSession } from 'next-auth/next';
 
-import prisma from '../../../lib/prisma';
-import { authOptions } from '../auth/[...nextauth]';
+import { authOptions } from '../../auth/[...nextauth]';
+import { getCategoryPaintingFull } from '../../../../interfaces';
 
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions);
 
   if (session) {
-    const categories = await prisma.categorySculpture.findMany();
+    const categories = await getCategoryPaintingFull();
+
     return categories
       ? res.status(200).json(categories)
       : res.status(404).json({ message: `No painting found.` });

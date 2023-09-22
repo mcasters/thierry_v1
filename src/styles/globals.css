@@ -154,16 +154,27 @@ button {
   cursor: pointer;
 }
 
-a, .buttonLink {
+a, .buttonLink, .iconButton svg {
   text-decoration: none;
-  color: var(--color-blue-xlight);
-  transition: color 0.4s;
+  color: var(--color-blue-light);
+  transition: color 0.4s ease;
 }
 
 a:hover, .buttonLink:hover, a:focus,
-.buttonLink:focus {
+.buttonLink:focus, .iconButton:hover svg {
   color: var(--color-blue-xxlight);
-  transition: color 0.4s;
+  transition: color 0.4s ease;
+}
+
+.iconButton {
+  width: initial;
+  text-align: center;
+  border: none;
+  background: none;
+  font-size: var(--font-size-plus);
+  padding: 0.3em;
+  margin: 0;
+  box-shadow: none;
 }
 
 .buttonLink {
@@ -234,11 +245,18 @@ textarea {
 }
 
 .adminButton,
-input {
+input,
+select {
   padding: 0.5em;
   width: 100%;
   line-height: 2.3;
   margin-bottom: 1em;
+}
+
+select {
+  height: 40px;
+  border-radius: unset;
+  border: none;
 }
 
 label {

@@ -23,14 +23,14 @@ export default function UpdateItemButton({ item, type, isCategory }: Props) {
           e.preventDefault();
           toggle();
         }}
-        className={s.iconButton}
+        className="iconButton"
         aria-label="Mise à jour"
       >
         <RxUpdate />
       </button>
       <Modal isOpen={isOpen} toggle={toggle}>
         {isCategory ? (
-          <CategoryForm item={item} type={type} toggleModal={toggle} />
+          <CategoryForm category={item} type={type} toggleModal={toggle} />
         ) : (
           <ItemForm item={item} type={type} toggleModal={toggle} />
         )}

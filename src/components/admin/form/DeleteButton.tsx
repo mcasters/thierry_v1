@@ -25,7 +25,7 @@ export default function DeleteButton({ api, apiToUpdate }: Props) {
   return (
     <button
       onClick={handleDelete}
-      className={s.iconButton}
+      className="iconButton"
       aria-label="Supprimer"
     >
       <FiTrash2 />
