@@ -1,11 +1,11 @@
 import useModal from '@/components/admin/form/modal/useModal';
 import Modal from '@/components/admin/form/modal/Modal';
-import { Content } from '@/interfaces';
+import { ContentFull } from '@/interfaces';
 import HomeForm from '@/components/admin/form/HomeForm';
 import { Label } from '@prisma/client';
 
 type Props = {
-  content?: Content;
+  content?: ContentFull;
   label: Label;
   buttonText: string;
 };

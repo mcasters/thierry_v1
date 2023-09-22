@@ -3,12 +3,12 @@ import toast from 'react-hot-toast';
 import { Label } from '@prisma/client';
 import { useSWRConfig } from 'swr';
 
-import { Content } from '@/interfaces';
+import { ContentFull } from '@/interfaces';
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
 import s from './form.module.css';
 
 interface Props {
-  content?: Content;
+  content?: ContentFull;
   label: Label;
   toggleModal: () => void;
 }

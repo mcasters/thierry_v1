@@ -3,9 +3,9 @@ import toast from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
 
 import { Label } from '@prisma/client';
-import s from './form.module.css';
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
 import { ContentFull } from '@/interfaces';
+import s from './form.module.css';
 
 interface Props {
   label: Label;

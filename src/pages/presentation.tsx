@@ -2,54 +2,28 @@ import prisma from '@/lib/prisma';
 import { Label } from '@prisma/client';
 
 import Layout from '@/components/layout-components/Layout';
-import { Content } from '@/interfaces';
+import { ContentFull, getContentFull } from '@/interfaces';
 import Image from 'next/image';
 import React from 'react';
 import s from '@/styles/presentation.module.css';
+import { getPresentationContent } from '@/utils/common';
 
 interface Props {
-  presentation: Content;
-  demarche: Content;
-  inspiration: Content;
+  presentation: ContentFull;
+  demarche: ContentFull;
+  inspiration: ContentFull;
 }
 
 export async function getServerSideProps() {
-  const resPresentation = await prisma.content.findFirst({
-    where: {
-      label: Label.PRESENTATION,
-    },
-    include: {
-      images: {
-        select: {
-          filename: true,
-          width: true,
-          height: true,
-        },
-      },
-    },
-  });
-  const resDemarche = await prisma.content.findFirst({
-    where: {
-      label: Label.DEMARCHE,
-    },
-  });
-  const resInspiration = await prisma.content.findFirst({
-    where: {
-      label: Label.INSPIRATION,
-    },
-  });
-  let presentation, demarche, inspiration;
-  if (resPresentation !== undefined)
-    presentation = JSON.parse(JSON.stringify(resPresentation));
-  if (resDemarche !== undefined)
-    demarche = JSON.parse(JSON.stringify(resDemarche));
-  if (resInspiration !== undefined)
-    inspiration = JSON.parse(JSON.stringify(resInspiration));
+  const contents = await getContentFull();
+  const { presentationContent, demarcheContent, inspirationContent } =
+    getPresentationContent(contents);
+
   return {
     props: {
-      presentation: presentation,
-      demarche: demarche,
-      inspiration: inspiration,
+      presentation: presentationContent,
+      demarche: demarcheContent,
+      inspiration: inspirationContent,
     },
   };
 }

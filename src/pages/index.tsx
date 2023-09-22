@@ -3,24 +3,18 @@ import { Label } from '@prisma/client';
 
 import Layout from '@/components/layout-components/Layout';
 import prisma from '@/lib/prisma';
-import { Image, Content } from '@/interfaces';
+import { ContentFull } from '@/interfaces';
 import Slideshow from '@/components/image/slideshow';
 import s from '@/styles/Home.module.css';
 
 export type Props = {
-  content?: Content[];
+  content?: ContentFull[];
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const res = await prisma.content.findMany({
     include: {
-      images: {
-        select: {
-          filename: true,
-          height: true,
-          width: true,
-        },
-      },
+      images: true,
     },
   });
   const contents = JSON.parse(JSON.stringify(res));

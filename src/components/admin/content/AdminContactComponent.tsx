@@ -1,8 +1,5 @@
-import { Label } from '@prisma/client';
+import { Label, Content } from '@prisma/client';
 
-import { Content } from '@/interfaces';
-import Image from 'next/image';
-import s from './AdminHomeComponent.module.css';
 import ContentForm from '@/components/admin/form/ContentForm';
 
 interface Props {

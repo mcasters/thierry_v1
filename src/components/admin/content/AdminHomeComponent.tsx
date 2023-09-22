@@ -1,13 +1,13 @@
 import { Label } from '@prisma/client';
 
-import { Content } from '@/interfaces';
 import Image from 'next/image';
 import React from 'react';
 import UpdateContentButton from '@/components/admin/form/UpdateContentButton';
 import s from './AdminHomeComponent.module.css';
+import { ContentFull } from '@/interfaces';
 
 interface Props {
-  content?: Content;
+  content?: ContentFull;
   label: Label;
 }
 export default function AdminHomeComponent({ content, label }: Props) {

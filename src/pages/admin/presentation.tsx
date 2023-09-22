@@ -1,5 +1,4 @@
 import { useSession } from 'next-auth/react';
-import { Label } from '@prisma/client';
 import useSWR from 'swr';
 
 import Layout from '@/components/layout-components/Layout';
@@ -7,7 +6,7 @@ import AccessDenied from '@/components/auth/access-denied';
 import AdminNav from '@/components/layout-components/AdminNav';
 import AdminPresentationComponent from '@/components/admin/content/AdminPresentationComponent';
 import s from '@/styles/admin.module.css';
-import { getContent } from '@/utils/common';
+import { getPresentationContent } from '@/utils/common';
 
 export default function Presentation() {
   const { data: session } = useSession();
@@ -24,9 +23,8 @@ export default function Presentation() {
   }
 
   if (contents) {
-    const presentationContent = getContent(Label.PRESENTATION, contents);
-    const demarcheContent = getContent(Label.DEMARCHE, contents);
-    const inspirationContent = getContent(Label.INSPIRATION, contents);
+    const { presentationContent, demarcheContent, inspirationContent } =
+      getPresentationContent(contents);
 
     return (
       <Layout>

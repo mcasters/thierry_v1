@@ -23,10 +23,16 @@ export const getSrcItem = (type: string, filename: string) =>
 export const getSrcMisc = (filename: string) =>
   `/images/miscellaneous/${filename}`;
 
-export const getContent = (
-  label: Label,
-  contents: ContentFull[],
-): ContentFull | undefined => {
+export const getPresentationContent = (contents: ContentFull[]) => {
   if (!contents || contents.length === 0) return undefined;
-  return contents.filter((c) => c.label === label)[0];
+
+  let presentationContent = undefined;
+  let demarcheContent = undefined;
+  let inspirationContent = undefined;
+  contents.forEach((c) => {
+    if (c.label === Label.PRESENTATION) presentationContent = c;
+    if (c.label === Label.DEMARCHE) demarcheContent = c;
+    if (c.label === Label.INSPIRATION) inspirationContent = c;
+  });
+  return { presentationContent, demarcheContent, inspirationContent };
 };

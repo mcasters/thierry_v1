@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
-import { Label } from '@prisma/client';
+import { Label, Content } from '@prisma/client';
 
 import Layout from '@/components/layout-components/Layout';
-import { Content } from '@/interfaces';
 import s from '@/styles/contact.module.css';
 
 interface Props {

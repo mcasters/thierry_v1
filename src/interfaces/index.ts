@@ -1,5 +1,6 @@
 import { Painting } from '.prisma/client';
 import { Label, Prisma } from '@prisma/client';
+import prisma from '@/lib/prisma';
 
 export type User = {
   id: number;
@@ -46,18 +47,10 @@ export type Image = {
   height: number;
 };
 
-export type Content = {
-  id: number;
-  label: Label;
-  title: string;
-  text: string;
-  images: Image[];
-};
-
-const contentWithImages = Prisma.validator<Prisma.ContentDefaultArgs>()({
-  include: { images: true },
-});
-export type ContentFull = Prisma.ContentGetPayload<typeof contentWithImages>;
+export async function getContentFull() {
+  return await prisma.content.findMany({ include: { images: true } });
+}
+export type ContentFull = Prisma.PromiseReturnType<typeof getContentFull>;
 
 export type ResponseError = {
   message: string;

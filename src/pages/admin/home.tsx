@@ -1,11 +1,10 @@
 import { useSession } from 'next-auth/react';
-import { Label } from '@prisma/client';
+import { Label, Content } from '@prisma/client';
 import useSWR from 'swr';
 
 import Layout from '@/components/layout-components/Layout';
 import AccessDenied from '@/components/auth/access-denied';
 import AdminNav from '@/components/layout-components/AdminNav';
-import { Content } from '@/interfaces';
 import AdminHomeComponent from '@/components/admin/content/AdminHomeComponent';
 import s from '../../styles/admin.module.css';
 
@@ -39,7 +38,6 @@ export default function Home() {
             const content = contents.filter(
               (content: Content) => content.label === label,
             );
-            console.log(content);
             return (
               <AdminHomeComponent
                 key={label}
