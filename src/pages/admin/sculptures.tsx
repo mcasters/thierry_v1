@@ -5,7 +5,7 @@ import AccessDenied from '@/components/auth/access-denied';
 import AdminNav from '@/components/layout-components/AdminNav';
 import { TYPE } from '@/constants';
 import ItemListComponent from '@/components/admin/item/ItemListComponent';
-import AddItemForm from '@/components/admin/form/AddItemForm';
+import ItemForm from '@/components/admin/form/ItemForm';
 import s from '@/styles/admin.module.css';
 
 export default function Sculptures() {
@@ -24,7 +24,7 @@ export default function Sculptures() {
       <AdminNav />
       <div className={s.adminWrapper}>
         <ItemListComponent type={TYPE.SCULPTURE} />
-        <AddItemForm type={TYPE.SCULPTURE} />
+        <ItemForm type={TYPE.SCULPTURE} />
       </div>
     </Layout>
   );

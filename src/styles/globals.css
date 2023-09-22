@@ -358,7 +358,8 @@ label {
 }
 
 .separate {
-  padding-top: 1em;
-  border-bottom: 1px solid var(--color-light);
-  margin-bottom: 1em;
+  width: 300px;
+  padding-top: 3em;
+  border-bottom: 1px solid var(--color-dark);
+  margin: 0 auto 1em;
 }

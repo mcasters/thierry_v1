@@ -1,5 +1,5 @@
-import { ContentFull, Item } from '@/interfaces';
-import { Label } from '@prisma/client';
+import { ContentFull } from '@/interfaces';
+import { Content, Label } from '@prisma/client';
 
 export const getDirnameFromNameOrTitle = (name: string): string => {
   return name
@@ -26,13 +26,43 @@ export const getSrcMisc = (filename: string) =>
 export const getPresentationContent = (contents: ContentFull[]) => {
   if (!contents || contents.length === 0) return undefined;
 
-  let presentationContent = undefined;
-  let demarcheContent = undefined;
-  let inspirationContent = undefined;
+  let presentationContent;
+  let demarcheContent;
+  let inspirationContent;
   contents.forEach((c) => {
     if (c.label === Label.PRESENTATION) presentationContent = c;
     if (c.label === Label.DEMARCHE) demarcheContent = c;
     if (c.label === Label.INSPIRATION) inspirationContent = c;
   });
   return { presentationContent, demarcheContent, inspirationContent };
+};
+
+export const getHomeContent = (contents: ContentFull[]) => {
+  if (!contents || contents.length === 0) return undefined;
+
+  let introContent;
+  let sliderContent;
+
+  contents.forEach((c) => {
+    if (c.label === Label.INTRO) introContent = c;
+    if (c.label === Label.SLIDER) sliderContent = c;
+  });
+  return { introContent, sliderContent };
+};
+
+export const getContactContent = (contents: Content[]) => {
+  if (!contents || contents.length === 0) return undefined;
+
+  let addressContent;
+  let phoneContent;
+  let emailContent;
+  let textContactContent;
+
+  contents.forEach((c) => {
+    if (c.label === Label.ADDRESS) addressContent = c;
+    if (c.label === Label.PHONE) phoneContent = c;
+    if (c.label === Label.EMAIL) emailContent = c;
+    if (c.label === Label.TEXT_CONTACT) textContactContent = c;
+  });
+  return { addressContent, phoneContent, emailContent, textContactContent };
 };

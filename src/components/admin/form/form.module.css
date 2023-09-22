@@ -1,6 +1,7 @@
 .formContainer form {
     text-align: center;
     max-width: 40vw;
+    padding: 1em 0;
     margin: 2em auto 0;
 }
 
@@ -89,9 +90,10 @@
     transition: color 0.4s ease;
 }
 
-.formContainer label {
+.formContainer label, .sliderLabel {
     font-variant-caps: small-caps;
     font-weight: bold;
     letter-spacing: 4px;
     color: var(--color-dark);
+    text-align: left;
 }

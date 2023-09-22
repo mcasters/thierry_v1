@@ -14,7 +14,7 @@ interface Props {
   toggleModal?: () => void;
 }
 
-export default function AddItemForm({ item, type, toggleModal }: Props) {
+export default function ItemForm({ item, type, toggleModal }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const resetImageRef = useRef<number>(0);
   const { mutate } = useSWRConfig();
@@ -157,7 +157,6 @@ export default function AddItemForm({ item, type, toggleModal }: Props) {
           isMultiple={type === TYPE.SCULPTURE}
         />
         <div>
-          <div className="separate"></div>
           <input
             disabled={
               !title ||

@@ -25,6 +25,7 @@ export default function ContentForm({
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const { mutate } = useSWRConfig();
+  const withoutText = label === Label.SLIDER;
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,7 +47,8 @@ export default function ContentForm({
     <div className={s.formContainer}>
       <form ref={formRef} onSubmit={submit}>
         <input type="hidden" name="label" value={label} />
-        {!isTextArea && (
+        {withoutText && <p className={s.sliderLabel}>Slider</p>}
+        {!isTextArea && !withoutText && (
           <label>
             {textLabel}
             <input
@@ -61,7 +63,7 @@ export default function ContentForm({
             />
           </label>
         )}
-        {isTextArea && (
+        {isTextArea && !withoutText && (
           <label>
             {textLabel}
             <textarea

@@ -3,7 +3,7 @@ import { RxUpdate } from 'react-icons/rx';
 import useModal from '@/components/admin/form/modal/useModal';
 import Modal from '@/components/admin/form/modal/Modal';
 import { Item } from '@/interfaces';
-import AddItemForm from '@/components/admin/form/AddItemForm';
+import ItemForm from '@/components/admin/form/ItemForm';
 import s from './form.module.css';
 
 type Props = {
@@ -25,7 +25,7 @@ export default function UpdateItemButton({ item }: Props) {
         <RxUpdate />
       </button>
       <Modal isOpen={isOpen} toggle={toggle}>
-        <AddItemForm toggleModal={toggle} item={item} type={item.type} />
+        <ItemForm toggleModal={toggle} item={item} type={item.type} />
       </Modal>
     </>
   );
