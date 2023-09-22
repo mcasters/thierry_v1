@@ -1,5 +1,5 @@
-import { Item } from '@/interfaces';
-import { TYPE } from '@/constants';
+import { ContentFull, Item } from '@/interfaces';
+import { Label } from '@prisma/client';
 
 export const getDirnameFromNameOrTitle = (name: string): string => {
   return name
@@ -22,3 +22,11 @@ export const getSrcItem = (type: string, filename: string) =>
 
 export const getSrcMisc = (filename: string) =>
   `/images/miscellaneous/${filename}`;
+
+export const getContent = (
+  label: Label,
+  contents: ContentFull[],
+): ContentFull | undefined => {
+  if (!contents || contents.length === 0) return undefined;
+  return contents.filter((c) => c.label === label)[0];
+};

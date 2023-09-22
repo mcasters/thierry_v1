@@ -1,12 +1,12 @@
 import { Label } from '@prisma/client';
+import { ContentFull } from '@/interfaces';
 
-import { Content } from '@/interfaces';
 import ContentForm from '@/components/admin/form/ContentForm';
 
 interface Props {
-  presentationContent: Content;
-  demarcheContent: Content;
-  inspirationContent: Content;
+  presentationContent?: ContentFull;
+  demarcheContent?: ContentFull;
+  inspirationContent?: ContentFull;
 }
 export default function AdminPresentationComponent({
   presentationContent,

@@ -3,21 +3,21 @@ import toast from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
 
 import { Label } from '@prisma/client';
-import { Content } from '@/interfaces';
 import s from './form.module.css';
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
+import { ContentFull } from '@/interfaces';
 
 interface Props {
-  content: Content;
-  isTextArea: boolean;
   label: Label;
+  content?: ContentFull;
+  isTextArea: boolean;
   textLabel: string;
   withImage: boolean;
 }
 export default function ContentForm({
+  label,
   content,
   isTextArea,
-  label,
   textLabel,
   withImage,
 }: Props) {
@@ -26,20 +26,19 @@ export default function ContentForm({
   const formRef = useRef<HTMLFormElement>(null);
   const { mutate } = useSWRConfig();
 
-  const api = '/api/content/update';
-  const apiToUpdate = '/api/content';
-
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formRef.current && confirm('Tu confirmes ?')) {
       const formData = new FormData(formRef.current);
-      fetch(api, { method: 'POST', body: formData }).then((res) => {
-        if (res.ok) {
-          toast('Contenu modifié');
-          setIsChanged(false);
-          mutate(apiToUpdate);
-        } else toast("Erreur à l'enregistrement");
-      });
+      fetch('/api/content/update', { method: 'POST', body: formData }).then(
+        (res) => {
+          if (res.ok) {
+            toast('Contenu modifié');
+            setIsChanged(false);
+            mutate('/api/content');
+          } else toast("Erreur à l'enregistrement");
+        },
+      );
     }
   };
 
@@ -80,8 +79,9 @@ export default function ContentForm({
           <ImagesForm
             images={content?.images}
             pathImage="/images/miscellaneous"
-            apiForDelete="/api/content/delete-image-slider"
+            apiForDelete="/api/content/delete-content-image"
             isMultiple={false}
+            setHasNewImages={setIsChanged}
           />
         )}
         {isChanged && (
@@ -93,7 +93,7 @@ export default function ContentForm({
               className="adminButton"
               onClick={(e) => {
                 e.preventDefault();
-                mutate(apiToUpdate);
+                mutate('/api/content');
                 setIsChanged(false);
               }}
             >

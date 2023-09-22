@@ -54,7 +54,7 @@ export default function HomeForm({ content, label, toggleModal }: Props) {
           <ImagesForm
             images={content?.images}
             pathImage="/images/miscellaneous"
-            apiForDelete="/api/content/delete-image-slider"
+            apiForDelete="/api/content/delete-content-image"
             setHasNewImages={setHasNewImages}
             isMultiple={true}
           />

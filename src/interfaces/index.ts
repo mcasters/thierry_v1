@@ -1,5 +1,5 @@
 import { Painting } from '.prisma/client';
-import { Label } from '@prisma/client';
+import { Label, Prisma } from '@prisma/client';
 
 export type User = {
   id: number;
@@ -53,6 +53,11 @@ export type Content = {
   text: string;
   images: Image[];
 };
+
+const contentWithImages = Prisma.validator<Prisma.ContentDefaultArgs>()({
+  include: { images: true },
+});
+export type ContentFull = Prisma.ContentGetPayload<typeof contentWithImages>;
 
 export type ResponseError = {
   message: string;

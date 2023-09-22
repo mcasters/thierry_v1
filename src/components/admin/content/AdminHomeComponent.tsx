@@ -19,16 +19,11 @@ export default function AdminHomeComponent({ content, label }: Props) {
           <p>Aucun contenu</p>
         ) : (
           <>
-            {label === Label.INTRO && (
-              <>
-                <h4>Texte :</h4>
-                <p>{content.text}</p>
-              </>
-            )}
+            {label === Label.INTRO && <p>{content.text}</p>}
             {label === Label.SLIDER && (
               <>
                 <div>
-                  {content.images.map((image) => {
+                  {content.images?.map((image) => {
                     return (
                       <div key={image.filename} className={s.imageContainer}>
                         <Image

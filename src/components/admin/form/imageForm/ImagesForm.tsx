@@ -3,12 +3,12 @@ import Image from 'next/image';
 import { FiTrash2 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
-import { Image as IImage } from '@/interfaces';
 import { FileUploader } from '@/components/admin/form/imageForm/FileUploader';
 import s from '@/components/admin/form/form.module.css';
+import { ContentImage } from '.prisma/client';
 
 type Props = {
-  Images?: IImage[];
+  Images?: ContentImage[];
   setHasImages?: (arg0: boolean) => void;
   setHasNewImages?: (arg0: boolean) => void;
   reset?: number;
@@ -71,7 +71,7 @@ export default function ImagesForm({
 
   return (
     <>
-      <h4 className={s.imageTitle}>Image(s) :</h4>
+      <h4 className={s.imageTitle}>{isMultiple ? 'Images :' : 'Image :'}</h4>
       <div>
         {existantImages.length > 0 &&
           existantImages.map((filename) => (

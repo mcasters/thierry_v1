@@ -104,8 +104,6 @@ export default async function handler(req, res) {
         });
       } else {
         if (file.size !== 0) {
-          const path = join(`${dir}`, `${BDContent.image.filename}`);
-          deleteFile(path);
           fileInfo = await resizeAndSaveImage(file, dir);
           images.push({
             filename: `${file.newFilename}.${fileInfo.format}`,
@@ -113,11 +111,15 @@ export default async function handler(req, res) {
             height: fileInfo.height,
           });
 
-          await prisma.image.delete({
-            where: {
-              contentId: BDContent.id,
-            },
-          });
+          if (BDContent.images.length > 0) {
+            const filename = BDContent.images[0].filename;
+            deleteFile(join(`${dir}`, `${filename}`));
+            await prisma.contentImage.delete({
+              where: {
+                filename,
+              },
+            });
+          }
         }
 
         content = await prisma.content.update({

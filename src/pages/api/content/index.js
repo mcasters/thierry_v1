@@ -9,13 +9,7 @@ export default async function handler(req, res) {
   if (session) {
     const contents = await prisma.content.findMany({
       include: {
-        images: {
-          select: {
-            filename: true,
-            height: true,
-            width: true,
-          },
-        },
+        images: true,
       },
     });
     return contents

@@ -1,5 +1,5 @@
 .adminWrapper {
-    padding: 1em 5em 3em;
+    padding: 1em 10em 3em;
 }
 
 .button {
@@ -19,7 +19,7 @@ padding: 1em 0 2em;
 /* Mobile */
 @media (max-width: 700px) {
     .adminWrapper {
-        padding: var(--admin-nav-height) 2em 1em;
+        padding: 1em 2em 1em;
     }
 
 }

@@ -46,7 +46,16 @@ model Content {
   label  Label   @unique
   title  String?
   text   String  @db.LongText
-  images Image[]
+  images ContentImage[]
+}
+
+model ContentImage {
+  id          Int        @id @default(autoincrement())
+  filename    String     @unique
+  width       Int
+  height      Int
+  Content     Content?   @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  contentId   Int?
 }
 
 enum Label {
@@ -107,6 +116,4 @@ model Image {
   // One-to-many relation
   sculpture   Sculpture? @relation(fields: [sculptureId], references: [id], onDelete: Cascade)
   sculptureId Int?
-  Content     Content?   @relation(fields: [contentId], references: [id], onDelete: Cascade)
-  contentId   Int?
 }
