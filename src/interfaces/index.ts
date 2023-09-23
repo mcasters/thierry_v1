@@ -81,7 +81,7 @@ export type CategoryPaintingFull = Prisma.PromiseReturnType<
 
 export async function getCategorySculptureFull() {
   return await prisma.categorySculpture.findMany({
-    select: { include: { sculptures: true } },
+    include: { sculptures: true },
   });
 }
 export type CategorySculptureFull = Prisma.PromiseReturnType<

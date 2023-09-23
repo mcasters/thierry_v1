@@ -10,7 +10,6 @@ interface Props {
 }
 
 export default function RowCategoryListComponent({ category, type }: Props) {
-  console.log(category);
   return (
     <ul className={s.item}>
       <li className={s.itemTitle}>
@@ -18,11 +17,10 @@ export default function RowCategoryListComponent({ category, type }: Props) {
       </li>
       <li className={s.itemInfo}>
         <span>
-          (
           {type === TYPE.SCULPTURE
             ? category.sculptures.length
             : category.paintings.length}{' '}
-          items)
+          {type}(s)
         </span>
       </li>
       <li className={s.itemIcon}>

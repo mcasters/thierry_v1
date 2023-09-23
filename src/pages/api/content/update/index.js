@@ -35,7 +35,6 @@ export default async function handler(req, res) {
       return res.status(400).send({ message: 'Error parsing form' });
     }
 
-    console.log(fields);
     const label = fields.label[0];
     const BDContent = await prisma.content.findUnique({
       where: {

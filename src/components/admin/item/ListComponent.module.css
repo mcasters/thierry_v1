@@ -57,3 +57,7 @@
 .title, .name {
   font-weight: bold;
 }
+
+.listContainer p {
+  font-size: var(--font-size-min);
+}

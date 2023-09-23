@@ -1,16 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { parse } from 'date-fns';
 import toast from 'react-hot-toast';
 import useSWR, { useSWRConfig } from 'swr';
 
 import { CategoryPainting } from '@prisma/client';
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
-import { Item } from '@/interfaces';
+import { PaintingFull, SculptureFull } from '@/interfaces';
 import { TYPE } from '@/constants';
 import s from './form.module.css';
 
 interface Props {
-  item?: Item;
+  item?: SculptureFull | PaintingFull;
   type: string;
   toggleModal?: () => void;
 }
@@ -32,8 +32,8 @@ export default function ItemForm({ item, type, toggleModal }: Props) {
   const [width, setWidth] = useState<string>(item?.width.toString() || '');
   const [length, setLength] = useState<string>(item?.length?.toString() || '');
   const [price, setPrice] = useState<string>(item?.price?.toString() || '');
+  const [categoryId, setCategoryId] = useState<string>(item?.categoryId || '');
   const [isToSell, setIsToSell] = useState<boolean>(item?.isToSell || false);
-
   const [hasImage, setHasImage] = useState<boolean>(false);
 
   const api = item ? `/api/${type}/update` : `/api/${type}/add`;
@@ -65,6 +65,7 @@ export default function ItemForm({ item, type, toggleModal }: Props) {
           toast(item ? `${type} modifiée` : `${type} ajoutée`);
           toggleModal ? toggleModal() : reset();
           mutate(apiToUpdate);
+          mutate(categoryApi);
         } else toast("Erreur à l'enregistrement");
       });
     }
@@ -85,11 +86,15 @@ export default function ItemForm({ item, type, toggleModal }: Props) {
           value={title}
           required
         />
-        <select name="category" id="category">
-          <option value="">--Choisir une catégorie (facultatif)--</option>
+        <select
+          name="categoryId"
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}
+        >
+          <option value="">-- Catégorie (facultatif) --</option>
           {categories &&
             categories.map((cat: CategoryPainting) => (
-              <option key={cat.id} value={cat.value}>
+              <option key={cat.id} value={cat.id}>
                 {cat.value}
               </option>
             ))}

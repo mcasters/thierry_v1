@@ -14,6 +14,7 @@ export default function CategoryListComponent({ type }: Props) {
   const { data: categories } = useSWR(api, (apiURL: string) =>
     fetch(apiURL).then((res) => res.json()),
   );
+  const message = `Une catégorie ne peut être supprimée que lorsqu'il n'y a pas ou plus de ${type} qui y est classée.`;
 
   return (
     <div className={s.listContainer}>
@@ -32,6 +33,7 @@ export default function CategoryListComponent({ type }: Props) {
             },
           )}
       </div>
+      <p>{message}</p>
     </div>
   );
 }

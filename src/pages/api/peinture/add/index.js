@@ -34,6 +34,14 @@ export default async function handler(req, res) {
 
       const fileInfo = await resizeAndSaveImage(file, dir);
 
+      const category =
+        fields.categoryId[0] === ''
+          ? {}
+          : {
+              connect: {
+                id: Number(fields.categoryId),
+              },
+            };
       newPainting = await prisma.painting.create({
         data: {
           title: fields.title[0],
@@ -44,6 +52,7 @@ export default async function handler(req, res) {
           width: Number(fields.width),
           isToSell: fields.isToSell[0] === 'true',
           price: Number(fields.price),
+          category,
           image: {
             create: {
               filename: `${file.newFilename}.${fileInfo.format}`,
