@@ -63,6 +63,19 @@ export default async function handler(req, res) {
         };
       }
 
+      const category =
+        fields.categoryId[0] === ''
+          ? {
+              disconnect: {
+                id: oldPaint.categoryId,
+              },
+            }
+          : {
+              connect: {
+                id: Number(fields.categoryId),
+              },
+            };
+
       const updatedPaint = await prisma.painting.update({
         where: { id: paintId },
         data: {
@@ -74,6 +87,7 @@ export default async function handler(req, res) {
           width: Number(fields.width),
           isToSell: fields.isToSell[0] === 'true',
           price: Number(fields.price),
+          category,
           image,
         },
       });

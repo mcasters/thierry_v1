@@ -72,6 +72,19 @@ export default async function handler(req, res) {
         }
       }
 
+      const category =
+        fields.categoryId[0] === ''
+          ? {
+              disconnect: {
+                id: oldSculpt.categoryId,
+              },
+            }
+          : {
+              connect: {
+                id: Number(fields.categoryId),
+              },
+            };
+
       const updatedSculpt = await prisma.sculpture.update({
         where: { id: sculpId },
         data: {
@@ -84,6 +97,7 @@ export default async function handler(req, res) {
           length: Number(fields.length),
           isToSell: fields.isToSell[0] === 'true',
           price: Number(fields.price),
+          category,
           images: {
             create: images,
           },
