@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 import DeleteButton from '@/components/admin/form/DeleteButton';
 import UpdateItemButton from '@/components/admin/form/UpdateItemButton';

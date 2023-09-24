@@ -1,5 +1,7 @@
+'use client';
+
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 import { MENU_2 } from '@/constants/routes';
 import s from '@/styles/Nav_2.module.css';
@@ -33,8 +35,8 @@ export default function Nav_2({ isHome, isFix }: Props) {
                   <Image
                     src="/2.jpeg"
                     alt="Signature de Thierry Casters"
-                    width="60px"
-                    height="60px"
+                    width={60}
+                    height={60}
                     quality={100}
                     unoptimized={true}
                     className={s.logo}

@@ -1,12 +1,13 @@
+'use client';
+
 import { ReactNode, useState } from 'react';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 import { ROUTES } from '@/constants/routes';
 import Header from './Header';
 import Footer from '@/components/layout-components/Footer';
 import Main from '@/components/layout-components/Main';
 import s from '@/styles/Layout.module.css';
-import { is } from 'date-fns/locale';
 
 interface Props {
   introduction?: string;
@@ -15,10 +16,9 @@ interface Props {
 
 export default function Layout({ introduction, children }: Props) {
   const [headerIsFix, setHeaderIsFix] = useState(false);
-  const router = useRouter();
-  const path = router.pathname;
-  const isHome = path === ROUTES.HOME;
-  const isAdmin = path.split('/')[1] === 'admin';
+  const pathname = usePathname();
+  const isHome = pathname === ROUTES.HOME;
+  const isAdmin = pathname.split('/')[1] === 'admin';
 
   const handler = (isFix) => setHeaderIsFix(isFix);
 

@@ -2,11 +2,11 @@ import Lightbox from 'yet-another-react-lightbox';
 import Inline from 'yet-another-react-lightbox/plugins/inline';
 import 'yet-another-react-lightbox/styles.css';
 
-import { Image as IImage } from '@/interfaces';
+import { Image } from '@/interfaces';
 import { getSrcMisc } from '@/utils/common';
 
 type Props = {
-  images: IImage[];
+  images: Image[];
 };
 
 const imageSizes = [16, 32, 48, 64, 96, 128, 256, 384];

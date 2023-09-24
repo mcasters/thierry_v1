@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import AuthStatus from '@/components/auth/AuthStatus';

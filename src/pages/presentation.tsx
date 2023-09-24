@@ -3,7 +3,7 @@ import { Label } from '@prisma/client';
 
 import Layout from '@/components/layout-components/Layout';
 import { ContentFull, getContentFull } from '@/interfaces';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import React from 'react';
 import s from '@/styles/presentation.module.css';
 import { getPresentationContent } from '@/utils/common';

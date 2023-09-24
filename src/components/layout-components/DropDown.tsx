@@ -6,10 +6,11 @@ import { MENU_1 } from '@/constants/routes';
 import s from '@/styles/DropDown.module.css';
 
 interface Props {
-  trigger: boolean;
-  menu: boolean;
+  menuItems: [{ name: string; path: string }];
+  name: string;
+  isActive: boolean;
 }
-export default function Dropdown({ trigger, menu }) {
+export default function Dropdown({ menuItems, name, isActive }: Props) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -18,19 +19,25 @@ export default function Dropdown({ trigger, menu }) {
 
   return (
     <li className={s.dropdown}>
-      {cloneElement(trigger, {
-        onClick: handleOpen,
-      })}
+      <button
+        onClick={handleOpen}
+        className={
+          isActive ? `${s.link} ${s.active} buttonLink` : `${s.link} buttonLink`
+        }
+      >
+        {name}
+      </button>
       {open ? (
         <ul className={s.menu}>
-          {menu.map((menuItem, index) => (
+          {menuItems.map((menuItem, index) => (
             <li key={index}>
-              {cloneElement(menuItem, {
-                onClick: () => {
-                  menuItem.props.onClick();
-                  setOpen(false);
-                },
-              })}
+              <Link
+                href={`${menuItem.path}`}
+                className={s.link}
+                legacyBehavior={false}
+              >
+                {menuItem.name}
+              </Link>
             </li>
           ))}
         </ul>

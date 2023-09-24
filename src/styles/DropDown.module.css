@@ -38,3 +38,31 @@
     font: inherit;
     cursor: pointer;
 }
+
+.link {
+    padding: 0;
+}
+
+.homNav .link {
+    color: var(--color-menu1-home);
+    display: inline-block;
+}
+
+.nav .link {
+    color: var(--color-menu1);
+    display: inline-block;
+    height: var(--nav-1-height);
+}
+
+.homeNav .link:hover {
+    color: var(--color-menu1-home-hover);
+}
+
+.nav .link:hover {
+    color: var(--color-menu1-hover);
+}
+
+.nav .link.active {
+    color: var(--color-menu1-hover);
+    border-bottom: 3px solid var(--color-menu1-hover);
+}
