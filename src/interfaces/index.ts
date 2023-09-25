@@ -54,36 +54,3 @@ export async function getContentFull() {
   return await prisma.content.findMany({ include: { images: true } });
 }
 export type ContentFull = Prisma.PromiseReturnType<typeof getContentFull>;
-
-export async function getPaintingFull() {
-  return await prisma.painting.findMany({
-    include: { image: true, category: true },
-  });
-}
-export type PaintingFull = Prisma.PromiseReturnType<typeof getPaintingFull>;
-
-export async function getSculptureFull() {
-  const sculpture = await prisma.sculpture.findMany({
-    include: { images: true, category: true },
-  });
-  return sculpture;
-}
-export type SculptureFull = Prisma.PromiseReturnType<typeof getSculptureFull>;
-
-export async function getCategoryPaintingFull() {
-  return await prisma.categoryPainting.findMany({
-    include: { paintings: true },
-  });
-}
-export type CategoryPaintingFull = Prisma.PromiseReturnType<
-  typeof getCategoryPaintingFull
->;
-
-export async function getCategorySculptureFull() {
-  return await prisma.categorySculpture.findMany({
-    include: { sculptures: true },
-  });
-}
-export type CategorySculptureFull = Prisma.PromiseReturnType<
-  typeof getCategorySculptureFull
->;

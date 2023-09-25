@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -15,7 +13,8 @@ interface Props {
 export default function Dropdown({ menuItems, path, name, isActive }: Props) {
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
+  const handleOpen = (e) => {
+    e.preventDefault();
     setOpen(!open);
   };
 
@@ -33,7 +32,13 @@ export default function Dropdown({ menuItems, path, name, isActive }: Props) {
         <ul className={s.menu}>
           {menuItems.map((menuItem, index) => (
             <li key={index}>
-              <Link href={`${path}/${menuItem.key}`} legacyBehavior={false}>
+              <Link
+                href={`${path}/${menuItem.key}`}
+                legacyBehavior={false}
+                onClick={(e) => {
+                  setOpen(false);
+                }}
+              >
                 {menuItem.value}
               </Link>
             </li>

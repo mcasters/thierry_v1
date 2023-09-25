@@ -92,7 +92,7 @@ model Painting {
 
 model PaintingCategory {
   id        Int     @id @default(autoincrement())
-  key       String
+  key       String  @unique
   value     String
   paintings Painting[]
 }
@@ -119,7 +119,7 @@ model Sculpture {
 
 model SculptureCategory {
   id         Int     @id @default(autoincrement())
-  key        String
+  key        String  @unique
   value      String
   sculptures Sculpture[]
 }

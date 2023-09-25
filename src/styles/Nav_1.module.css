@@ -1,7 +1,7 @@
 .nav, .homeNav {
     height: var(--nav-1-height);
   width: 100%;
-  z-index: 1;
+  z-index: 2;
   font-size: var(--font-size-plus);
   font-variant: small-caps;
   font-family: var(--font-family-serif);
@@ -83,7 +83,6 @@ DropDown
     border-right: 1px solid grey;
     width: 150px;
     text-align: left;
-    z-index: 15;
     height: unset;
 }
 

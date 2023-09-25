@@ -1,20 +1,20 @@
 import s from '@/styles/ItemPage.module.css';
 import ItemComponent from '@/components/item/ItemComponent';
-import { getPaintingsFullByCategory } from '@/app/api/peinture/route';
+import { getSculpturesFullByCategory } from '@/app/api/sculpture/getSculptures';
 
 export default async function Page({
   params,
 }: {
   params: { category: string };
 }) {
-  const paintings = await getPaintingsFullByCategory(params.category);
+  const sculptures = await getSculpturesFullByCategory(params.category);
 
   return (
     <div className={s.container}>
       <div className={s.grid}>
-        <h1 className="hidden">Les peintures</h1>
-        {paintings.map((painting) => (
-          <ItemComponent key={painting.id} item={painting} />
+        <h1 className="hidden">Les sculptures</h1>
+        {sculptures.map((sculpture) => (
+          <ItemComponent key={sculpture.id} item={sculpture} />
         ))}
       </div>
     </div>

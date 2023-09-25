@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { MENU_1, ROUTES } from '@/constants/routes';
-import s from '@/styles/Nav_1.module.css';
-import Dropdown from '@/components/layout-components/DropDown';
 import { PaintingCategory, SculptureCategory } from '@prisma/client';
+import { MENU_1, ROUTES } from '@/constants/routes';
+import Dropdown from '@/components/layout-components/DropDown';
+import s from '@/styles/Nav_1.module.css';
 
 interface Props {
   isHome: boolean;
@@ -22,8 +22,6 @@ export default function Nav_1({
   sculptureCategories,
 }: Props) {
   const pathname = usePathname();
-
-  console.log(paintingCategories);
 
   return (
     <nav

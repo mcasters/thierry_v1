@@ -1,3 +1,5 @@
+'use client';
+
 import { PaintingFull, SculptureFull } from '@/interfaces';
 import { TYPE } from '@/constants';
 import s from './ItemComponent.module.css';
