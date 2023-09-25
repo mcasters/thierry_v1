@@ -1,3 +1,5 @@
+'use client';
+
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 
@@ -6,16 +8,14 @@ export default function AccessDenied() {
     <>
       <h1>Access Denied</h1>
       <p>
-        <Link
-          href="/api/auth/signin"
+        <button
           onClick={(e) => {
             e.preventDefault();
             signIn();
           }}
-          legacyBehavior={false}
         >
           You must be signed in to view this page
-        </Link>
+        </button>
       </p>
     </>
   );

@@ -1,9 +1,9 @@
-import NextAuth from 'next-auth';
+import NextAuth, { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 
-const handler = NextAuth({
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -16,34 +16,33 @@ const handler = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
-        const { email, password } = credentials;
-        if (!email || !password) {
-          throw new Error('Missing email or password');
+        if (typeof credentials !== 'undefined') {
+          const { email, password } = credentials;
+
+          const user = await prisma.user.findUnique({
+            where: {
+              email,
+            },
+          });
+          if (!user) return null;
+
+          bcrypt.compare(password, user.password, (err, res) => {
+            if (err || !res) return null;
+          });
+
+          return user;
+        } else {
+          return null;
         }
-        const user = await prisma.user.findUnique({
-          where: {
-            email,
-          },
-        });
-        if (!user) throw new Error('Invalid email');
-
-        bcrypt.compare(password, user.password, (err, res) => {
-          if (err || !res) throw new Error('Invalid password');
-        });
-
-        return user;
       },
     }),
   ],
   session: {
     strategy: 'jwt',
-    maxAge: 24 * 60 * 60,
   },
-  jwt: {
-    maxAge: 24 * 60 * 60,
-    secret: process.env.JWT_SECRET,
-  },
-  debug: false,
-});
+  debug: true,
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
