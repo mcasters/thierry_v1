@@ -1,12 +1,7 @@
-import { useSession } from 'next-auth/react';
-
-import Layout from '@/components/layout-components/Layout';
-import AccessDenied from '@/components/auth/access-denied';
 import AdminNav from '@/components/layout-components/AdminNav';
 import s from '@/styles/admin.module.css';
 
-export default function Index() {
-  const { data: session } = useSession();
+export default async function AdminIndex() {
   const string1 =
     "Ici, je pourrais mettre de quoi gérer les couleurs générales du site. Cela alourdirait pas mal le site, mais si on n'arrive pas à trouver ce qui te plait, ça sera une solution.";
   const string2 =
@@ -14,16 +9,8 @@ export default function Index() {
   const string3 =
     'Pour la partie contact (en bas de la page home), je vais le rendre modifiable aussi, cela figurera sur la page home de l’administration.';
 
-  if (!session) {
-    return (
-      <Layout>
-        <AccessDenied />
-      </Layout>
-    );
-  }
-
   return (
-    <Layout>
+    <>
       <AdminNav />
       <div className={s.adminWrapper}>
         <h1>Administration</h1>
@@ -37,6 +24,6 @@ export default function Index() {
         <br />
         {string3}
       </div>
-    </Layout>
+    </>
   );
 }

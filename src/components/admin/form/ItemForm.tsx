@@ -1,13 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+'use client';
+
+import React, { useRef, useState } from 'react';
 import { parse } from 'date-fns';
 import toast from 'react-hot-toast';
 import useSWR, { useSWRConfig } from 'swr';
 
-import { CategoryPainting } from '@prisma/client';
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
-import { PaintingFull, SculptureFull } from '@/interfaces';
 import { TYPE } from '@/constants';
 import s from './form.module.css';
+import { SculptureFull } from '@/app/api/sculpture/sculpture';
+import { PaintingFull } from '@/app/api/peinture/painting';
+import { PaintingCategory } from '@prisma/client';
 
 interface Props {
   item?: SculptureFull | PaintingFull;
@@ -93,7 +96,7 @@ export default function ItemForm({ item, type, toggleModal }: Props) {
         >
           <option value="">-- Catégorie (facultatif) --</option>
           {categories &&
-            categories.map((cat: CategoryPainting) => (
+            categories.map((cat: PaintingCategory) => (
               <option key={cat.id} value={cat.id}>
                 {cat.value}
               </option>

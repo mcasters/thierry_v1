@@ -1,12 +1,14 @@
 import { Metadata } from 'next';
+import { getServerSession } from 'next-auth/next';
 
-import Layout from '@/components/layout-components/Layout';
-import { Providers } from './providers';
-import '@/styles/globals.css';
 import { Label, PaintingCategory } from '@prisma/client';
+import Layout from '@/components/layout-components/Layout';
+import { Providers } from './context/providers';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import prisma from '@/lib/prisma';
 import { getPaintingCategories } from '@/app/api/peinture/categories/getCategories';
 import { getSculptureCategories } from '@/app/api/sculpture/categories/getCategories';
+import '@/styles/globals.css';
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -30,6 +32,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
   const introContent = await getHomeContents(Label.INTRO);
   const paintingCategories = await getPaintingCategories();
   const sculptureCategories = await getSculptureCategories();
@@ -44,7 +47,7 @@ export default async function RootLayout({
   return (
     <html lang="fr">
       <body>
-        <Providers>
+        <Providers session={session}>
           <Layout
             introduction={introContent.text}
             paintingCategories={paintingCategories}

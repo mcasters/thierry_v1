@@ -1,9 +1,6 @@
 import prisma from '@/lib/prisma';
-import { Prisma } from '@prisma/client';
 import 'server-only';
-import { PaintingFull } from '@/app/api/peinture/getPaintings';
-
-export type SculptureFull = Prisma.PromiseReturnType<typeof getSculpturesFull>;
+import { SculptureFull } from '@/app/api/sculpture/sculpture';
 
 export async function getSculpturesFull() {
   const res = await prisma.sculpture.findMany({

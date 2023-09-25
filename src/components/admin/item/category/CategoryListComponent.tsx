@@ -1,9 +1,10 @@
 import useSWR from 'swr';
 
-import { CategoryPaintingFull, CategorySculptureFull } from '@/interfaces';
 import RowCategoryListComponent from './RowCategoryListComponent';
 import React from 'react';
 import s from '../ListComponent.module.css';
+import { SculptureCategoryFull } from '@/app/api/sculpture/categories/category';
+import { PaintingCategoryFull } from '@/app/api/peinture/categories/category';
 
 interface Props {
   type: string;
@@ -22,7 +23,7 @@ export default function CategoryListComponent({ type }: Props) {
       <div className={s.list}>
         {categories &&
           categories.map(
-            (category: CategorySculptureFull | CategoryPaintingFull) => {
+            (category: SculptureCategoryFull | PaintingCategoryFull) => {
               return (
                 <RowCategoryListComponent
                   key={category.id}

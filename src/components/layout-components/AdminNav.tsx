@@ -1,5 +1,7 @@
+'use client';
+
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 import AuthStatus from '@/components/auth/AuthStatus';
 import { ADMIN_MENU } from '@/constants/routes';
@@ -7,14 +9,14 @@ import s from '@/styles/AdminNav.module.css';
 
 export default function AdminNav() {
   const authStatus = AuthStatus();
-  const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <nav className={s.nav}>
       <span>Administration</span>
       <ul className={s.navItems}>
         {ADMIN_MENU.map((item) => {
-          const isActive = router.pathname === item.PATH;
+          const isActive = pathname === item.PATH;
 
           return (
             <li key={item.NAME}>

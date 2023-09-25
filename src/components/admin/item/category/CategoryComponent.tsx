@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+'use client';
 
 import CategoryListComponent from '@/components/admin/item/category/CategoryListComponent';
 import CategoryForm from '@/components/admin/form/CategoryForm';
