@@ -86,12 +86,13 @@ model Painting {
   // One-to-one relation
   image       Image    @relation(fields: [imageId], references: [id], onDelete: Cascade)
   imageId     Int      @unique
-  category    CategoryPainting? @relation(fields: [categoryId], references: [id])
+  category    PaintingCategory? @relation(fields: [categoryId], references: [id])
   categoryId  Int?
 }
 
-model CategoryPainting {
+model PaintingCategory {
   id        Int     @id @default(autoincrement())
+  key       String
   value     String
   paintings Painting[]
 }
@@ -112,12 +113,13 @@ model Sculpture {
   sold        Boolean  @default(false)
   // One-to-many relation
   images      Image[]
-  category    CategorySculpture? @relation(fields: [categoryId], references: [id])
+  category    SculptureCategory? @relation(fields: [categoryId], references: [id])
   categoryId  Int?
 }
 
-model CategorySculpture {
+model SculptureCategory {
   id         Int     @id @default(autoincrement())
+  key        String
   value      String
   sculptures Sculpture[]
 }

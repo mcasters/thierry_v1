@@ -2,30 +2,28 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 
 import { MENU_1, ROUTES } from '@/constants/routes';
 import s from '@/styles/Nav_1.module.css';
 import Dropdown from '@/components/layout-components/DropDown';
+import { PaintingCategory, SculptureCategory } from '@prisma/client';
 
 interface Props {
   isHome: boolean;
   isFix: boolean;
+  paintingCategories: PaintingCategory[];
+  sculptureCategories: SculptureCategory[];
 }
 
-const categories = [
-  { name: 'catégorie 1', path: '/peinture/categorie_1' },
-  { name: 'catégorie 2', path: '/peinture/categorie_2' },
-  { name: 'catégorie 3', path: '/peinture/categorie_3' },
-];
-export default function Nav_1({ isFix, isHome }: Props) {
+export default function Nav_1({
+  isFix,
+  isHome,
+  paintingCategories,
+  sculptureCategories,
+}: Props) {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
 
-  const handleOpen = (e) => {
-    e.preventDefault();
-    setOpen(!open);
-  };
+  console.log(paintingCategories);
 
   return (
     <nav
@@ -38,32 +36,49 @@ export default function Nav_1({ isFix, isHome }: Props) {
       }
     >
       <ul>
-        {MENU_1.map((item) => {
-          const isSubPageActive = pathname === `${item.PATH}/[category]`;
-          const isActive = pathname === item.PATH || isSubPageActive;
-          if (item.PATH === ROUTES.SCULPTURE || item.PATH === ROUTES.PAINTING) {
+        {MENU_1.map((menuItem) => {
+          let isActive = pathname === menuItem.PATH;
+          if (
+            menuItem.PATH === ROUTES.PAINTING &&
+            paintingCategories.length > 0
+          ) {
+            isActive = pathname.split('/')[1] === 'peintures';
             return (
               <Dropdown
-                key={item.PATH}
-                menuItems={categories}
-                type="painting"
+                key={menuItem.NAME}
+                menuItems={paintingCategories}
+                path={menuItem.PATH}
+                name={menuItem.NAME}
                 isActive={isActive}
               />
             );
-          } else {
+          } else if (
+            menuItem.PATH === ROUTES.SCULPTURE &&
+            sculptureCategories.length > 0
+          ) {
+            isActive = pathname.split('/')[1] === 'sculptures';
             return (
-              <li key={item.NAME}>
-                <Link
-                  href={item.PATH}
-                  key={item.NAME}
-                  className={isActive ? `${s.link} ${s.active}` : `${s.link}`}
-                  legacyBehavior={false}
-                >
-                  {item.NAME}
-                </Link>
-              </li>
+              <Dropdown
+                key={menuItem.NAME}
+                menuItems={sculptureCategories}
+                path={menuItem.PATH}
+                name={menuItem.NAME}
+                isActive={isActive}
+              />
             );
           }
+          return (
+            <li key={menuItem.NAME}>
+              <Link
+                href={menuItem.PATH}
+                key={menuItem.NAME}
+                className={isActive ? `${s.link} ${s.active}` : `${s.link}`}
+                legacyBehavior={false}
+              >
+                {menuItem.NAME}
+              </Link>
+            </li>
+          );
         })}
       </ul>
     </nav>

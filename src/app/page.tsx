@@ -1,19 +1,21 @@
 import HomePage from './home-page';
 import prisma from '@/lib/prisma';
+import { Label } from '@prisma/client';
 
-async function getHomeContents() {
+async function getHomeContents(label: Label) {
   const res = await prisma.content.findMany({
+    where: {
+      label,
+    },
     include: {
       images: true,
     },
   });
-  const contents = JSON.parse(JSON.stringify(res));
-
-  return contents;
+  return JSON.parse(JSON.stringify(res[0]));
 }
 
 export default async function Page() {
-  const contents = await getHomeContents();
+  const contentSlider = await getHomeContents(Label.SLIDER);
   // This request should be cached until manually invalidated.
   // Similar to `getStaticProps`.
   // `force-cache` is the default and can be omitted.
@@ -29,5 +31,5 @@ export default async function Page() {
   //   next: { revalidate: 10 },
   // });
 
-  return <HomePage contents={contents} />;
+  return <HomePage images={contentSlider.images} />;
 }

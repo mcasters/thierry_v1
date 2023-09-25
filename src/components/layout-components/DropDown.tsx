@@ -1,16 +1,18 @@
-import { cloneElement, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+'use client';
 
-import { MENU_1 } from '@/constants/routes';
-import s from '@/styles/DropDown.module.css';
+import { useState } from 'react';
+import Link from 'next/link';
+
+import s from '@/styles/Nav_1.module.css';
+import { PaintingCategory, SculptureCategory } from '@prisma/client';
 
 interface Props {
-  menuItems: [{ name: string; path: string }];
+  menuItems: PaintingCategory[] | SculptureCategory[];
+  path: string;
   name: string;
   isActive: boolean;
 }
-export default function Dropdown({ menuItems, name, isActive }: Props) {
+export default function Dropdown({ menuItems, path, name, isActive }: Props) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -31,12 +33,8 @@ export default function Dropdown({ menuItems, name, isActive }: Props) {
         <ul className={s.menu}>
           {menuItems.map((menuItem, index) => (
             <li key={index}>
-              <Link
-                href={`${menuItem.path}`}
-                className={s.link}
-                legacyBehavior={false}
-              >
-                {menuItem.name}
+              <Link href={`${path}/${menuItem.key}`} legacyBehavior={false}>
+                {menuItem.value}
               </Link>
             </li>
           ))}

@@ -8,13 +8,21 @@ import Header from './Header';
 import Footer from '@/components/layout-components/Footer';
 import Main from '@/components/layout-components/Main';
 import s from '@/styles/Layout.module.css';
+import { PaintingCategory, SculptureCategory } from '@prisma/client';
 
 interface Props {
   introduction?: string;
+  paintingCategories: PaintingCategory[];
+  sculptureCategories: SculptureCategory[];
   children: ReactNode;
 }
 
-export default function Layout({ introduction, children }: Props) {
+export default function Layout({
+  introduction,
+  paintingCategories,
+  sculptureCategories,
+  children,
+}: Props) {
   const [headerIsFix, setHeaderIsFix] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === ROUTES.HOME;
@@ -32,6 +40,8 @@ export default function Layout({ introduction, children }: Props) {
           isHome={isHome}
           introduction={introduction}
           title="Thierry Casters"
+          paintingCategories={paintingCategories}
+          sculptureCategories={sculptureCategories}
         />
       )}
       <Main isHome={isHome} headerIsFix={headerIsFix}>

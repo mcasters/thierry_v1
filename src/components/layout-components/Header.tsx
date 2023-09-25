@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 
+import { PaintingCategory, SculptureCategory } from '@prisma/client';
 import useElementIsUpTo from '@/components/hooks/useElementIsUpTo';
 import LAYOUT from '@/constants/layout';
 import Nav_1 from './Nav_1';
@@ -13,12 +14,16 @@ interface Props {
   introduction?: string;
   handler: (arg0: boolean) => void;
   title: string;
+  paintingCategories: PaintingCategory[];
+  sculptureCategories: SculptureCategory[];
 }
 export default function Header({
   isHome,
   introduction,
   handler,
   title,
+  paintingCategories,
+  sculptureCategories,
 }: Props) {
   const [titleDisappear, titleRef] = useElementIsUpTo(LAYOUT.LINE_HEIGHT);
   const [introDisappear, introRef] = useElementIsUpTo(
@@ -36,7 +41,12 @@ export default function Header({
           {title}
         </h1>
       )}
-      <Nav_1 isHome={isHome} isFix={isHome ? titleDisappear : true} />
+      <Nav_1
+        isHome={isHome}
+        isFix={isHome ? titleDisappear : true}
+        paintingCategories={paintingCategories}
+        sculptureCategories={sculptureCategories}
+      />
       <div
         className={s.spaceNav1}
         style={{
