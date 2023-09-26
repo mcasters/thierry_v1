@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useSWRConfig } from 'swr';
+import { useRouter } from 'next/navigation';
 
 import { Label } from '@prisma/client';
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
@@ -24,8 +24,8 @@ export default function ContentForm({
   const [text, setText] = useState<string>(content?.text || '');
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
-  const { mutate } = useSWRConfig();
   const withoutText = label === Label.SLIDER;
+  const router = useRouter();
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,7 +36,7 @@ export default function ContentForm({
           if (res.ok) {
             toast('Contenu modifié');
             setIsChanged(false);
-            mutate('/api/content');
+            router.refresh();
           } else toast("Erreur à l'enregistrement");
         },
       );

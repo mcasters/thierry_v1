@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useSWRConfig } from 'swr';
+import { useRouter } from 'next/navigation';
 
 import s from './form.module.css';
 import { PaintingCategory, SculptureCategory } from '@prisma/client';
@@ -13,6 +13,7 @@ interface Props {
 export default function CategoryForm({ category, type, toggleModal }: Props) {
   const [text, setText] = useState<string>(category?.value || '');
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
   const api = category
     ? `api/${type}/category/update`
     : `api/${type}/category/add`;
@@ -26,7 +27,7 @@ export default function CategoryForm({ category, type, toggleModal }: Props) {
         if (res.ok) {
           toast(category ? 'Catégorie modifiée' : 'Catégorie ajoutée');
           toggleModal ? toggleModal() : setText('');
-          fetch(`api/${type}/category`);
+          router.refresh();
         } else toast("Erreur à l'enregistrement");
       });
     }

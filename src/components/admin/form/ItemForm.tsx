@@ -3,6 +3,7 @@
 import React, { useRef, useState } from 'react';
 import { parse } from 'date-fns';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
 import { TYPE } from '@/constants';
@@ -43,6 +44,7 @@ export default function ItemForm({
   const [categoryId, setCategoryId] = useState<string>(item?.categoryId || '');
   const [isToSell, setIsToSell] = useState<boolean>(item?.isToSell || false);
   const [hasImage, setHasImage] = useState<boolean>(false);
+  const router = useRouter();
 
   const api = item ? `api/${type}/update` : `api/${type}/add`;
 
@@ -67,6 +69,7 @@ export default function ItemForm({
         if (res.ok) {
           toast(item ? `${type} modifiée` : `${type} ajoutée`);
           toggleModal ? toggleModal() : reset();
+          router.refresh();
         } else toast("Erreur à l'enregistrement");
       });
     }
