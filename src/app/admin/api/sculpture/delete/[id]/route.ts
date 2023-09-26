@@ -1,11 +1,6 @@
 import { getServerSession } from 'next-auth/next';
 import prisma from '@/lib/prisma';
-import {
-  deleteFile,
-  getPaintingDir,
-  getPaintingImagePath,
-  getSculptureDir,
-} from '@/utils/server';
+import { deleteFile, getSculptureDir } from '@/utils/server';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { NextResponse } from 'next/server';
 
@@ -15,28 +10,31 @@ export async function GET(
 ) {
   const session = await getServerSession(authOptions);
   if (session) {
-    const dir = getPaintingDir();
+    const dir = getSculptureDir();
     try {
       const id = Number(params.id);
-      const painting = await prisma.painting.findUnique({
+      const sculpture = await prisma.sculpture.findUnique({
         where: { id },
         include: {
-          image: {
+          images: {
             select: {
               filename: true,
             },
           },
         },
       });
-      const filename = painting.image.filename;
-      deleteFile(`${dir}/${filename}`);
-      await prisma.painting.delete({
+      for (const image of sculpture.images) {
+        deleteFile(`${dir}/${image.filename}`);
+        await prisma.image.delete({
+          where: {
+            filename: image.filename,
+          },
+        });
+      }
+      await prisma.sculpture.delete({
         where: {
           id,
         },
-      });
-      await prisma.image.delete({
-        where: { filename },
       });
 
       return NextResponse.json({ message: 'ok' });

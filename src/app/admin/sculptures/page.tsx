@@ -15,8 +15,12 @@ export default async function Sculptures() {
     <>
       <AdminNav />
       <div className={s.adminWrapper}>
-        <ItemListComponent type={TYPE.SCULPTURE} items={sculptures} />
-        <ItemForm type={TYPE.SCULPTURE} />
+        <ItemListComponent
+          type={TYPE.SCULPTURE}
+          items={sculptures}
+          categories={categories}
+        />
+        <ItemForm type={TYPE.SCULPTURE} categories={categories} />
         <CategoryComponent type={TYPE.SCULPTURE} categories={categories} />
       </div>
     </>

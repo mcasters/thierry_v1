@@ -94,13 +94,6 @@ export const resizeAndSaveImage = async (file, dir, largeWidth) => {
   }
 };
 
-export const deleteAllFiles = (dir) => {
-  rm(dir, { recursive: true }, (err) => {
-    if (err) return false;
-  });
-  return true;
-};
-
 export const deleteFile = (path) => {
   rm(path, (err) => {
     if (err) return false;

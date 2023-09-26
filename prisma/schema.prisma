@@ -54,7 +54,7 @@ model ContentImage {
   filename    String     @unique
   width       Int
   height      Int
-  Content     Content?   @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  Content     Content?   @relation(fields: [contentId], references: [id])
   contentId   Int?
 }
 
@@ -84,7 +84,7 @@ model Painting {
   price       Int?
   sold        Boolean  @default(false)
   // One-to-one relation
-  image       Image    @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  image       Image    @relation(fields: [imageId], references: [id])
   imageId     Int      @unique
   category    PaintingCategory? @relation(fields: [categoryId], references: [id])
   categoryId  Int?
@@ -132,6 +132,6 @@ model Image {
   // One-to-one relation
   painting    Painting?
   // One-to-many relation
-  sculpture   Sculpture? @relation(fields: [sculptureId], references: [id], onDelete: Cascade)
+  sculpture   Sculpture? @relation(fields: [sculptureId], references: [id])
   sculptureId Int?
 }

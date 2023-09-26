@@ -1,25 +1,29 @@
 import { join } from 'path';
 import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
-
-import { deleteFile, resizeAndSaveImage, getPaintingDir } from '@/utils/server';
-import prisma from '../../../../../lib/prisma';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { NextResponse } from 'next/server';
+
+import {
+  deleteFile,
+  resizeAndSaveImage,
+  getSculptureDir,
+} from '@/utils/server';
+import prisma from '@/lib/prisma';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (session) {
     try {
-      const dir = getPaintingDir();
+      const dir = getSculptureDir();
 
       const formData = await req.formData();
-      const paintId = Number(formData.get('id'));
-      const oldPaint = await prisma.painting.findUnique({
-        where: { id: paintId },
+      const sculptId = Number(formData.get('id'));
+      const oldSculpt = await prisma.sculpture.findUnique({
+        where: { id: sculptId },
         include: {
-          image: {
+          images: {
             select: {
               filename: true,
             },
@@ -27,20 +31,33 @@ export async function POST(req: Request) {
         },
       });
 
-      let fileInfo = null;
-      let image = {};
-      const newFile = formData.get('files') as File;
-      if (newFile.size !== 0) {
-        const path = join(`${dir}`, `${oldPaint.image.filename}`);
-        deleteFile(path);
-        fileInfo = await resizeAndSaveImage(newFile, dir, undefined);
-        image = {
-          create: {
+      const files = [];
+      const values = Array.from(formData.values());
+      for (const value of values) {
+        if (typeof value === 'object' && 'arrayBuffer' in value) {
+          if (value.size !== 0) files.push(value);
+        }
+      }
+
+      let images = [];
+      if (files.length > 0) {
+        for (const file of files) {
+          const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+          images.push({
             filename: `${fileInfo.filename}`,
             width: fileInfo.width,
             height: fileInfo.height,
-          },
-        };
+          });
+        }
+        for (const image of oldSculpt.images) {
+          const path = join(`${dir}`, `${image.filename}`);
+          deleteFile(path);
+          await prisma.image.delete({
+            where: {
+              filename: image.filename,
+            },
+          });
+        }
       }
 
       const category =
@@ -50,16 +67,16 @@ export async function POST(req: Request) {
                 id: Number(formData.get('categoryId')),
               },
             }
-          : oldPaint.categoryId !== null
+          : oldSculpt.categoryId !== null
           ? {
               disconnect: {
-                id: oldPaint.categoryId,
+                id: oldSculpt.categoryId,
               },
             }
           : {};
 
-      const updatedPaint = await prisma.painting.update({
-        where: { id: paintId },
+      const updatedSculpt = await prisma.sculpture.update({
+        where: { id: sculptId },
         data: {
           title: formData.get('title'),
           date: parse(formData.get('date') as string, 'yyyy', new Date()),
@@ -67,10 +84,13 @@ export async function POST(req: Request) {
           description: formData.get('description'),
           height: Number(formData.get('height')),
           width: Number(formData.get('width')),
+          length: Number(formData.get('length')),
           isToSell: formData.get('isToSell') === 'true',
           price: Number(formData.get('price')),
           category,
-          image,
+          images: {
+            create: images,
+          },
         },
       });
 

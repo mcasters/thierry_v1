@@ -1,27 +1,44 @@
+import formidable from 'formidable';
 import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
-import { NextResponse } from 'next/server';
 
+import prisma from '@/lib/prisma';
 import {
   resizeAndSaveImage,
   createDirIfNecessary,
-  getPaintingDir,
+  getSculptureDir,
 } from '@/utils/server';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import prisma from '@/lib/prisma';
+import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (session) {
     try {
-      const dir = getPaintingDir();
+      const dir = getSculptureDir();
       createDirIfNecessary(dir);
 
       const formData = await req.formData();
 
-      const file = formData.get('files');
-      const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+      const files = [];
+      const values = Array.from(formData.values());
+      for (const value of values) {
+        if (typeof value === 'object' && 'arrayBuffer' in value) {
+          files.push(value);
+        }
+      }
+
+      let images = [];
+      for (const file of files) {
+        const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+        images.push({
+          filename: `${fileInfo.filename}`,
+          width: fileInfo.width,
+          height: fileInfo.height,
+        });
+      }
+
       const categoryId = formData.get('categoryId');
       const category =
         categoryId === ''
@@ -32,7 +49,7 @@ export async function POST(req: Request) {
               },
             };
 
-      const newPainting = await prisma.painting.create({
+      const newSculpture = await prisma.sculpture.create({
         data: {
           title: formData.get('title'),
           date: parse(formData.get('date') as string, 'yyyy', new Date()),
@@ -40,15 +57,12 @@ export async function POST(req: Request) {
           description: formData.get('description'),
           height: Number(formData.get('height')),
           width: Number(formData.get('width')),
+          length: Number(formData.get('length')),
           isToSell: formData.get('isToSell') === 'true',
           price: Number(formData.get('price')),
           category,
-          image: {
-            create: {
-              filename: `${fileInfo.filename}`,
-              width: fileInfo.width,
-              height: fileInfo.height,
-            },
+          images: {
+            create: images,
           },
         },
       });
