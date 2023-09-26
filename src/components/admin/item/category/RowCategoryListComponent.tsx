@@ -1,11 +1,12 @@
-import { CategoryPaintingFull, CategorySculptureFull } from '@/interfaces';
 import DeleteButton from '@/components/admin/form/DeleteButton';
 import UpdateItemButton from '@/components/admin/form/UpdateItemButton';
 import { TYPE } from '@/constants';
 import s from '../ListComponent.module.css';
+import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
+import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
 
 interface Props {
-  category: CategorySculptureFull | CategoryPaintingFull;
+  category: SculptureCategoryFull | PaintingCategoryFull;
   type: string;
 }
 

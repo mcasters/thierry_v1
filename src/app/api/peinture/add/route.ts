@@ -3,53 +3,43 @@ import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
 import { NextResponse } from 'next/server';
 
-import prisma from '../../../../lib/prisma';
 import {
   resizeAndSaveImage,
   createDirIfNecessary,
   getPaintingDir,
-} from '../../../../utils/server';
+} from '@/utils/server';
 import { authOptions } from '../../auth/[...nextauth]/route';
+import prisma from '@/lib/prisma';
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (session) {
-    const dir = getPaintingDir();
-    createDirIfNecessary(dir);
+    try {
+      const dir = getPaintingDir();
+      createDirIfNecessary(dir);
 
-    let fields, files, newPainting;
-    const form = formidable({maxFiles: 1, maxFileSize: 3072 * 3072});
+      let fields, files, newPainting;
+      const form = formidable({ maxFiles: 1, maxFileSize: 3072 * 3072 });
 
-    /*
+      /*
     const formData = await request.formData()
     const name = formData.get('name')
     const email = formData.get('email')
      */
 
-    try {
       [fields, files] = await form.parse(req);
-    } catch (err) {
-      return NextResponse.status(400).send({message: 'error parsing form'});
-    }
 
-    if (!fields || !files)
-      return NextResponse.status(400).send({message: 'Error parsing form'});
-
-    try {
       const file = files.files?.[0];
-      if (!file) return NextResponse.status(404).send({message: 'Image is missing'});
-
       const fileInfo = await resizeAndSaveImage(file, dir);
-
       const category =
-          fields.categoryId[0] === ''
-              ? {}
-              : {
-                connect: {
-                  id: Number(fields.categoryId),
-                },
-              };
+        fields.categoryId[0] === ''
+          ? {}
+          : {
+              connect: {
+                id: Number(fields.categoryId),
+              },
+            };
       newPainting = await prisma.painting.create({
         data: {
           title: fields.title[0],
@@ -70,14 +60,12 @@ export async function POST(req: Request) {
           },
         },
       });
+      return NextResponse.json({ message: 'ok' }, { status: 200 });
     } catch (e) {
-      return NextResponse.status(404).send({message: 'error'});
+      console.log(e);
+      return NextResponse.json({ error: 'Error' }, { status: 404 });
     }
-
-    return newPainting
-        ? NextResponse.status(200).send({message: 'ok'})
-        : NextResponse.status(404).send({message: 'Add error'});
   } else {
-    return NextResponse.status(401).send({message: 'Unauthorized'});
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 }

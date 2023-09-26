@@ -1,14 +1,15 @@
 import { RxUpdate } from 'react-icons/rx';
 
-import { CategoryPainting, CategorySculpture } from '@prisma/client';
+import { PaintingCategory, SculptureCategory } from '@prisma/client';
 import useModal from '@/components/admin/form/modal/useModal';
 import Modal from '@/components/admin/form/modal/Modal';
-import { PaintingFull, SculptureFull } from '@/interfaces';
 import ItemForm from '@/components/admin/form/ItemForm';
 import CategoryForm from '@/components/admin/form/CategoryForm';
+import { SculptureFull } from '@/app/api/sculpture/sculpture';
+import { PaintingFull } from '@/app/api/peinture/painting';
 
 type Props = {
-  item: PaintingFull | SculptureFull | CategoryPainting | CategorySculpture;
+  item: PaintingFull | SculptureFull | PaintingCategory | SculptureCategory;
   type: string;
   isCategory: boolean;
 };

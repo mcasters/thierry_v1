@@ -6,8 +6,8 @@ import Layout from '@/components/layout-components/Layout';
 import { Providers } from './context/providers';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import prisma from '@/lib/prisma';
-import { getPaintingCategories } from '@/app/api/peinture/categories/getCategories';
-import { getSculptureCategories } from '@/app/api/sculpture/categories/getCategories';
+import { getPaintingCategories } from '@/app/api/peinture/category/getCategories';
+import { getSculptureCategories } from '@/app/api/sculpture/category/getCategories';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {

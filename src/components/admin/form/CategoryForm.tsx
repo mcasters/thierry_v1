@@ -3,10 +3,10 @@ import toast from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
 
 import s from './form.module.css';
-import { CategoryPainting, CategorySculpture } from '@prisma/client';
+import { PaintingCategory, SculptureCategory } from '@prisma/client';
 
 interface Props {
-  category?: CategoryPainting | CategorySculpture;
+  category?: PaintingCategory | SculptureCategory;
   type: string;
   toggleModal?: () => void;
 }

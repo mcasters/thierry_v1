@@ -6,8 +6,8 @@ import { Toaster } from 'react-hot-toast';
 export function Providers({ children, session }) {
   return (
     <SessionProvider session={session}>
-      {children}
       <Toaster />
+      {children}
     </SessionProvider>
   );
 }

@@ -6,18 +6,15 @@ import { Item } from '@/interfaces';
 import RowItemListComponent from './RowItemListComponent';
 import React from 'react';
 import s from './ListComponent.module.css';
+import { PaintingFull } from '@/app/api/peinture/painting';
+import { SculptureFull } from '@/app/api/sculpture/sculpture';
 
 interface Props {
   type: string;
+  items: PaintingFull[] | SculptureFull[];
 }
-export default function ItemListComponent({ type }: Props) {
-  const api = `/api/${type}`;
+export default function ItemListComponent({ type, items }: Props) {
   const title = `Liste des ${type}s`;
-  const { data: items, error } = useSWR(api, (apiURL: string) =>
-    fetch(apiURL).then((res) => res.json()),
-  );
-
-  if (error) return <div>failed to load</div>;
 
   return (
     <div className={s.listContainer}>

@@ -10,15 +10,22 @@ import { TYPE } from '@/constants';
 import s from './form.module.css';
 import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import { PaintingFull } from '@/app/api/peinture/painting';
-import { PaintingCategory } from '@prisma/client';
+import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
+import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
 
 interface Props {
   item?: SculptureFull | PaintingFull;
   type: string;
   toggleModal?: () => void;
+  categories: PaintingCategoryFull[] | SculptureCategoryFull[];
 }
 
-export default function ItemForm({ item, type, toggleModal }: Props) {
+export default function ItemForm({
+  item,
+  type,
+  toggleModal,
+  categories,
+}: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const resetImageRef = useRef<number>(0);
   const { mutate } = useSWRConfig();
@@ -42,9 +49,9 @@ export default function ItemForm({ item, type, toggleModal }: Props) {
   const api = item ? `/api/${type}/update` : `/api/${type}/add`;
   const apiToUpdate = `/api/${type}`;
   const categoryApi = `/api/${type}/category`;
-  const { data: categories } = useSWR(categoryApi, (apiURL: string) =>
-    fetch(apiURL).then((res) => res.json()),
-  );
+
+  console.log('/// categories in itemform');
+  console.log(categories);
 
   const reset = () => {
     setTitle('');
@@ -95,12 +102,11 @@ export default function ItemForm({ item, type, toggleModal }: Props) {
           onChange={(e) => setCategoryId(e.target.value)}
         >
           <option value="">-- Catégorie (facultatif) --</option>
-          {categories &&
-            categories.map((cat: PaintingCategory) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.value}
-              </option>
-            ))}
+          {categories.map((cat: PaintingCategoryFull) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.value}
+            </option>
+          ))}
         </select>
         <input
           onChange={(e) => {

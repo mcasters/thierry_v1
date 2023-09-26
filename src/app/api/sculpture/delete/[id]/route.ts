@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth/next';
 import prisma from '../../../../../lib/prisma';
-import { deleteAllFiles, getPaintingImagePath } from '@/utils/server';
+import { deleteAllFiles, getSculptureImagePaths } from '@/utils/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 import { NextResponse } from 'next/server';
 
@@ -13,10 +13,7 @@ export async function POST(
   if (session) {
     try {
       const id = params.id;
-
-      let paintingDeleted = null;
-      let imageDBDeleted = null;
-      const painting = await prisma.painting.findUnique({
+      const sculpture = await prisma.sculpture.findUnique({
         where: { id },
         include: {
           image: {
@@ -26,14 +23,13 @@ export async function POST(
           },
         },
       });
-
-      if (painting) {
-        const imageToDelete = getPaintingImagePath(painting);
+      if (sculpture) {
+        const imageToDelete = getSculptureImagePaths(sculpture);
         if (deleteAllFiles(imageToDelete)) {
-          await prisma.painting.delete({
+          await prisma.sculpture.delete({
             where: { id },
           });
-          const filename = painting.image.filename;
+          const filename = sculpture.image.filename;
           await prisma.image.delete({
             where: { filename },
           });

@@ -2,8 +2,6 @@ import { FiTrash2 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
 
-import s from './form.module.css';
-
 type Props = {
   api: string;
   apiToUpdate: string;
