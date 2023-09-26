@@ -1,17 +1,20 @@
 import { getServerSession } from 'next-auth/next';
-import prisma from '../../../../../lib/prisma';
+import prisma from '@/lib/prisma';
 import { deleteAllFiles, getPaintingImagePath } from '@/utils/server';
-import { authOptions } from '../../../auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { NextResponse } from 'next/server';
 
-export async function POST(
+export async function GET(
   request: Request,
   { params }: { params: { id: string } },
 ) {
+  console.log('/// enter');
   const session = await getServerSession(authOptions);
   if (session) {
     try {
-      const id = params.id;
+      const id = Number(params.id);
+      console.log('/// id');
+      console.log(id);
 
       const painting = await prisma.painting.findUnique({
         where: { id },

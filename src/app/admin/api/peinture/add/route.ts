@@ -8,7 +8,7 @@ import {
   createDirIfNecessary,
   getPaintingDir,
 } from '@/utils/server';
-import { authOptions } from '../../auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import prisma from '@/lib/prisma';
 
 export async function POST(req: Request) {
@@ -19,41 +19,34 @@ export async function POST(req: Request) {
       const dir = getPaintingDir();
       createDirIfNecessary(dir);
 
-      let fields, files, newPainting;
-      const form = formidable({ maxFiles: 1, maxFileSize: 3072 * 3072 });
+      const formData = await req.formData();
 
-      /*
-    const formData = await request.formData()
-    const name = formData.get('name')
-    const email = formData.get('email')
-     */
-
-      [fields, files] = await form.parse(req);
-
-      const file = files.files?.[0];
-      const fileInfo = await resizeAndSaveImage(file, dir);
+      const file = formData.get('files');
+      const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+      const categoryId = formData.get('categoryId');
       const category =
-        fields.categoryId[0] === ''
+        categoryId === ''
           ? {}
           : {
               connect: {
-                id: Number(fields.categoryId),
+                id: Number(categoryId),
               },
             };
-      newPainting = await prisma.painting.create({
+
+      const newPainting = await prisma.painting.create({
         data: {
-          title: fields.title[0],
-          date: parse(fields.date[0], 'yyyy', new Date()),
-          technique: fields.technique[0],
-          description: fields.description[0],
-          height: Number(fields.height),
-          width: Number(fields.width),
-          isToSell: fields.isToSell[0] === 'true',
-          price: Number(fields.price),
+          title: formData.get('title'),
+          date: parse(formData.get('date') as string, 'yyyy', new Date()),
+          technique: formData.get('technique'),
+          description: formData.get('description'),
+          height: Number(formData.get('height')),
+          width: Number(formData.get('width')),
+          isToSell: formData.get('isToSell') === 'true',
+          price: Number(formData.get('price')),
           category,
           image: {
             create: {
-              filename: `${file.newFilename}.${fileInfo.format}`,
+              filename: `${fileInfo.filename}`,
               width: fileInfo.width,
               height: fileInfo.height,
             },

@@ -28,8 +28,8 @@ export default function RowItemListComponent({ item }: Props) {
       </li>
       <li className={s.itemIcon}>
         <DeleteButton
-          api={`/api/${item.type}/delete/${item.id}`}
-          apiToUpdate={`/api/${item.type}`}
+          api={`api/${item.type}/delete/${item.id}`}
+          apiToUpdate={`api/${item.type}`}
         />
       </li>
     </ul>

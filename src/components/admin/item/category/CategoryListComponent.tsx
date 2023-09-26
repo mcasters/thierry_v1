@@ -12,8 +12,6 @@ export default function CategoryListComponent({ type, categories }: Props) {
   const title = 'Liste des catégories';
   const message = `Une catégorie ne peut être supprimée que lorsqu'il n'y a pas ou plus de ${type} qui y est classée.`;
 
-  console.log('/// categories in categorie list');
-  console.log(categories);
   return (
     <div className={s.listContainer}>
       <h4>{title}</h4>

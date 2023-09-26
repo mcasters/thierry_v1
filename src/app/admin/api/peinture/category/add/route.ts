@@ -2,7 +2,7 @@ import formidable from 'formidable';
 import { getServerSession } from 'next-auth/next';
 import { NextResponse } from 'next/server';
 
-import { authOptions } from '../../../auth/[...nextauth]/route';
+import { authOptions } from '../../../../../api/auth/[...nextauth]/route';
 import prisma from '@/lib/prisma';
 
 export async function POST(req: Request) {

@@ -7,14 +7,12 @@ type Props = {
   apiToUpdate: string;
 };
 export default function DeleteButton({ api, apiToUpdate }: Props) {
-  const { mutate } = useSWRConfig();
   const handleDelete = (e) => {
     e.preventDefault();
     if (confirm('Sûr de vouloir supprimer ?')) {
       fetch(api).then((res) => {
         if (res.ok) {
           toast('supprimé');
-          mutate(apiToUpdate);
         } else toast('Erreur à la suppression');
       });
     }

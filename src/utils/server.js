@@ -1,6 +1,6 @@
-import { mkdir, stat, rm } from 'fs';
+import { mkdir, rm, stat } from 'fs';
 import sharp from 'sharp';
-import { join } from 'path';
+import { join, parse } from 'path';
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
 
@@ -47,7 +47,11 @@ export const createDirIfNecessary = (dir) => {
 };
 
 export const resizeAndSaveImage = async (file, dir, largeWidth) => {
-  const image = sharp(file.filepath);
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+  const image = sharp(buffer);
+
+  const filename = `${parse(file.name).name}-${Date.now()}.webp`;
 
   if (largeWidth !== undefined) {
     return image
@@ -63,7 +67,11 @@ export const resizeAndSaveImage = async (file, dir, largeWidth) => {
         },
       })
       .webp({ quality: 80 })
-      .toFile(`${dir}/${file.newFilename}.webp`);
+      .toFile(`${dir}/${filename}`)
+      .then((info) => {
+        return { filename, width: info.width, height: info.height };
+      })
+      .catch((err) => console.log(err));
   } else {
     const px = 2000;
     return image
@@ -79,7 +87,11 @@ export const resizeAndSaveImage = async (file, dir, largeWidth) => {
         },
       })
       .webp()
-      .toFile(`${dir}/${file.newFilename}.webp`);
+      .toFile(`${dir}/${filename}`)
+      .then((info) => {
+        return { filename, width: info.width, height: info.height };
+      })
+      .catch((err) => console.log(err));
   }
 };
 

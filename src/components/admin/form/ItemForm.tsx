@@ -46,12 +46,7 @@ export default function ItemForm({
   const [isToSell, setIsToSell] = useState<boolean>(item?.isToSell || false);
   const [hasImage, setHasImage] = useState<boolean>(false);
 
-  const api = item ? `/api/${type}/update` : `/api/${type}/add`;
-  const apiToUpdate = `/api/${type}`;
-  const categoryApi = `/api/${type}/category`;
-
-  console.log('/// categories in itemform');
-  console.log(categories);
+  const api = item ? `api/${type}/update` : `api/${type}/add`;
 
   const reset = () => {
     setTitle('');
@@ -74,8 +69,6 @@ export default function ItemForm({
         if (res.ok) {
           toast(item ? `${type} modifiée` : `${type} ajoutée`);
           toggleModal ? toggleModal() : reset();
-          mutate(apiToUpdate);
-          mutate(categoryApi);
         } else toast("Erreur à l'enregistrement");
       });
     }
