@@ -26,6 +26,7 @@ export default function CategoryForm({ category, type, toggleModal }: Props) {
         if (res.ok) {
           toast(category ? 'Catégorie modifiée' : 'Catégorie ajoutée');
           toggleModal ? toggleModal() : setText('');
+          fetch(`api/${type}/category`);
         } else toast("Erreur à l'enregistrement");
       });
     }
