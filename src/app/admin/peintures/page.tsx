@@ -14,7 +14,11 @@ export default async function Peintures() {
     <>
       <AdminNav />
       <div className={s.adminWrapper}>
-        <ItemListComponent type={TYPE.PAINTING} items={paintings} />
+        <ItemListComponent
+          type={TYPE.PAINTING}
+          items={paintings}
+          categories={categories}
+        />
         <ItemForm type={TYPE.PAINTING} categories={categories} />
         <CategoryComponent type={TYPE.PAINTING} categories={categories} />
       </div>

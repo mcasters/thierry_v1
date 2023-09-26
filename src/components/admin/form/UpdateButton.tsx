@@ -7,13 +7,16 @@ import ItemForm from '@/components/admin/form/ItemForm';
 import CategoryForm from '@/components/admin/form/CategoryForm';
 import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import { PaintingFull } from '@/app/api/peinture/painting';
+import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
+import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
+import { ca } from 'date-fns/locale';
 
 type Props = {
   item: PaintingFull | SculptureFull | PaintingCategory | SculptureCategory;
   type: string;
-  isCategory: boolean;
+  categories?: PaintingCategoryFull[] | SculptureCategoryFull[];
 };
-export default function UpdateItemButton({ item, type, isCategory }: Props) {
+export default function UpdateButton({ item, type, categories }: Props) {
   const { isOpen, toggle } = useModal();
 
   return (
@@ -29,10 +32,15 @@ export default function UpdateItemButton({ item, type, isCategory }: Props) {
         <RxUpdate />
       </button>
       <Modal isOpen={isOpen} toggle={toggle}>
-        {isCategory ? (
-          <CategoryForm category={item} type={type} toggleModal={toggle} />
+        {categories ? (
+          <ItemForm
+            item={item}
+            type={type}
+            toggleModal={toggle}
+            categories={categories}
+          />
         ) : (
-          <ItemForm item={item} type={type} toggleModal={toggle} />
+          <CategoryForm category={item} type={type} toggleModal={toggle} />
         )}
       </Modal>
     </>

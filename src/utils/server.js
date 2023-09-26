@@ -50,7 +50,6 @@ export const resizeAndSaveImage = async (file, dir, largeWidth) => {
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
   const image = sharp(buffer);
-
   const filename = `${parse(file.name).name}-${Date.now()}.webp`;
 
   if (largeWidth !== undefined) {

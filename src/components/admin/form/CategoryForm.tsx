@@ -13,11 +13,9 @@ interface Props {
 export default function CategoryForm({ category, type, toggleModal }: Props) {
   const [text, setText] = useState<string>(category?.value || '');
   const formRef = useRef<HTMLFormElement>(null);
-  const { mutate } = useSWRConfig();
   const api = category
-    ? `/api/${type}/category/update`
-    : `/api/${type}/category/add`;
-  const apiToUpdate = `/api/${type}/category`;
+    ? `api/${type}/category/update`
+    : `api/${type}/category/add`;
   const title = category ? 'Modifier une catégorie' : 'Ajouter une catégorie';
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,7 +26,6 @@ export default function CategoryForm({ category, type, toggleModal }: Props) {
         if (res.ok) {
           toast(category ? 'Catégorie modifiée' : 'Catégorie ajoutée');
           toggleModal ? toggleModal() : setText('');
-          mutate(apiToUpdate);
         } else toast("Erreur à l'enregistrement");
       });
     }

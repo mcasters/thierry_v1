@@ -30,9 +30,7 @@ export async function GET(
       if (painting) {
         const imageToDelete = getPaintingImagePath(painting);
         if (deleteAllFiles(imageToDelete)) {
-          await prisma.painting.delete({
-            where: { id },
-          });
+          // painting also deleted as it is cascade mode
           const filename = painting.image.filename;
           await prisma.image.delete({
             where: { filename },

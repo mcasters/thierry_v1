@@ -1,9 +1,8 @@
 import { getServerSession } from 'next-auth/next';
-import { NextResponse } from 'next/server';
-
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import prisma from '@/lib/prisma';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { transformValueToKey } from '@/utils/common';
+import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -11,10 +10,12 @@ export async function POST(req: Request) {
   if (session) {
     try {
       const formData = await req.formData();
+      const id = Number(formData.get('id'));
       const value = formData.get('text') as string;
       const key = transformValueToKey(value);
 
-      const newCategory = await prisma.PaintingCategory.create({
+      const updatedPaint = await prisma.PaintingCategory.update({
+        where: { id },
         data: {
           key,
           value,

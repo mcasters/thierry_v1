@@ -3,7 +3,6 @@
 import React, { useRef, useState } from 'react';
 import { parse } from 'date-fns';
 import toast from 'react-hot-toast';
-import useSWR, { useSWRConfig } from 'swr';
 
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
 import { TYPE } from '@/constants';
@@ -28,7 +27,6 @@ export default function ItemForm({
 }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const resetImageRef = useRef<number>(0);
-  const { mutate } = useSWRConfig();
 
   const [title, setTitle] = useState<string>(item?.title || '');
   const [date, setDate] = useState<Date>(

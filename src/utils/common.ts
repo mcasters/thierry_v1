@@ -1,8 +1,8 @@
 import { ContentFull } from '@/interfaces';
 import { Content, Label } from '@prisma/client';
 
-export const getDirnameFromNameOrTitle = (name: string): string => {
-  return name
+export const transformValueToKey = (value: string): string => {
+  return value
     .toLowerCase()
     .split(' ' || "'")
     .join('_')
