@@ -1,10 +1,12 @@
+'use client';
+
 import React, { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
+import { ContentFull } from '@/app/api/content/content';
 import { Label } from '@prisma/client';
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
-import { ContentFull } from '@/interfaces';
 import s from './form.module.css';
 
 interface Props {
@@ -31,7 +33,7 @@ export default function ContentForm({
     e.preventDefault();
     if (formRef.current && confirm('Tu confirmes ?')) {
       const formData = new FormData(formRef.current);
-      fetch('/api/content/update', { method: 'POST', body: formData }).then(
+      fetch('api/content/update', { method: 'POST', body: formData }).then(
         (res) => {
           if (res.ok) {
             toast('Contenu modifié');
@@ -81,7 +83,7 @@ export default function ContentForm({
           <ImagesForm
             images={content?.images}
             pathImage="/images/miscellaneous"
-            apiForDelete="/api/content/delete-content-image"
+            apiForDelete="api/content/delete-content-image"
             isMultiple={false}
             setHasNewImages={setIsChanged}
           />
@@ -95,7 +97,7 @@ export default function ContentForm({
               className="adminButton"
               onClick={(e) => {
                 e.preventDefault();
-                mutate('/api/content');
+                router.refresh();
                 setIsChanged(false);
               }}
             >

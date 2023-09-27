@@ -1,37 +1,36 @@
 import { Label } from '@prisma/client';
-import { ContentFull } from '@/interfaces';
 
 import ContentForm from '@/components/admin/form/ContentForm';
-import React from 'react';
+import { ContentFull } from '@/app/api/content/content';
 
 interface Props {
-  presentationContent?: ContentFull;
-  demarcheContent?: ContentFull;
-  inspirationContent?: ContentFull;
+  presentation?: ContentFull;
+  demarche?: ContentFull;
+  inspiration?: ContentFull;
 }
 export default function AdminPresentationComponent({
-  presentationContent,
-  demarcheContent,
-  inspirationContent,
+  presentation,
+  demarche,
+  inspiration,
 }: Props) {
   return (
     <>
       <ContentForm
-        content={presentationContent}
+        content={presentation}
         label={Label.PRESENTATION}
         isTextArea={true}
         textLabel="Présentation"
         withImage={true}
       />
       <ContentForm
-        content={demarcheContent}
+        content={demarche}
         label={Label.DEMARCHE}
         isTextArea={true}
         textLabel="Démarche artistique"
         withImage={false}
       />
       <ContentForm
-        content={inspirationContent}
+        content={inspiration}
         label={Label.INSPIRATION}
         isTextArea={true}
         textLabel="Inspirations"
