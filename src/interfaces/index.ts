@@ -49,8 +49,3 @@ export type Image = {
   width: number;
   height: number;
 };
-
-export async function getContentFull() {
-  return await prisma.content.findMany({ include: { images: true } });
-}
-export type ContentFull = Prisma.PromiseReturnType<typeof getContentFull>;

@@ -1,3 +1,4 @@
+'use client';
 import { Label, Content } from '@prisma/client';
 
 import ContentForm from '@/components/admin/form/ContentForm';
