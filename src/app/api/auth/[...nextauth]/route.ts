@@ -13,34 +13,23 @@ export const authOptions: AuthOptions = {
           type: 'email',
           placeholder: 'coucou@ouhou.fr',
         },
-        password: { label: 'Password', type: 'password' },
+        password: { label: 'Mot de passe', type: 'password' },
       },
       async authorize(credentials, req) {
-        if (typeof credentials !== 'undefined') {
-          const { email, password } = credentials;
-
-          const user = await prisma.user.findUnique({
-            where: {
-              email,
-            },
-          });
-          if (!user) return null;
-
-          bcrypt.compare(password, user.password, (err, res) => {
-            if (err || !res) return null;
-          });
-
-          return user;
-        } else {
-          return null;
-        }
+        const { email, password } = credentials;
+        const user = await prisma.user.findUnique({
+          where: {
+            email,
+          },
+        });
+        if (!user) return null;
+        bcrypt.compare(password, user.password, (err, res) => {
+          if (err || !res) return null;
+        });
+        return user;
       },
     }),
   ],
-  session: {
-    strategy: 'jwt',
-  },
-  debug: true,
 };
 
 const handler = NextAuth(authOptions);

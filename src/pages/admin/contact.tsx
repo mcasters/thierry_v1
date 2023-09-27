@@ -1,5 +1,4 @@
 import { useSession } from 'next-auth/react';
-import useSWR from 'swr';
 
 import Layout from '@/components/layout-components/Layout';
 import AccessDenied from '@/components/auth/access-denied';
