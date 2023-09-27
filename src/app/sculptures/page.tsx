@@ -7,8 +7,8 @@ export default async function Page() {
 
   return (
     <div className={s.container}>
+      <h1 className="hidden">Les sculptures</h1>
       <div className={s.grid}>
-        <h1 className="hidden">Les sculptures</h1>
         {sculptures.map((sculpture) => (
           <ItemComponent key={sculpture.id} item={sculpture} />
         ))}

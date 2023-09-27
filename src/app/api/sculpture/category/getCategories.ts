@@ -10,15 +10,20 @@ export async function getSculptureCategoriesFull() {
 }
 
 export async function getSculptureCategoriesForMenu() {
-  const res =
+  const categories =
     (await prisma.SculptureCategory.findMany()) as SculptureCategory[];
-  if (res.length > 0)
-    res.push({
+  const sculptureWithoutCategory = await prisma.Painting.findFirst({
+    where: {
+      category: null,
+    },
+  });
+  if (categories.length > 0 && sculptureWithoutCategory)
+    categories.push({
       key: 'no-category',
       value: 'Sans catégorie',
       id: undefined,
     } as SculptureCategory);
-  return JSON.parse(JSON.stringify(res));
+  return JSON.parse(JSON.stringify(categories));
 }
 
 export async function getSculptureCategories() {
