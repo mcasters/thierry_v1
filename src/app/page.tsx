@@ -1,21 +1,11 @@
-import HomePage from './home-page';
-import prisma from '@/lib/prisma';
+import HomePage from '../components/home/HomePage';
 import { Label } from '@prisma/client';
-
-async function getHomeContents(label: Label) {
-  const res = await prisma.content.findMany({
-    where: {
-      label,
-    },
-    include: {
-      images: true,
-    },
-  });
-  return JSON.parse(JSON.stringify(res[0]));
-}
+import { getContentFullByLabel } from '@/app/api/content/getContents';
+import { getPaintingCategoriesForMenu } from '@/app/api/peinture/category/getCategories';
+import { getSculptureCategoriesForMenu } from '@/app/api/sculpture/category/getCategories';
+import Layout from '@/components/layout-components/Layout';
 
 export default async function Page() {
-  const contentSlider = await getHomeContents(Label.SLIDER);
   // This request should be cached until manually invalidated.
   // Similar to `getStaticProps`.
   // `force-cache` is the default and can be omitted.
@@ -30,6 +20,18 @@ export default async function Page() {
   // const revalidatedData = await fetch(`https://...`, {
   //   next: { revalidate: 10 },
   // });
+  const contentSlider = await getContentFullByLabel(Label.SLIDER);
+  const introContent = await getContentFullByLabel(Label.INTRO);
+  const paintingCategories = await getPaintingCategoriesForMenu();
+  const sculptureCategories = await getSculptureCategoriesForMenu();
 
-  return <HomePage images={contentSlider.images} />;
+  return (
+    <Layout
+      introduction={introContent.text}
+      paintingCategories={paintingCategories}
+      sculptureCategories={sculptureCategories}
+    >
+      <HomePage images={contentSlider.images} />
+    </Layout>
+  );
 }
