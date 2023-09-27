@@ -1,9 +1,13 @@
 import HomePage from '../components/home/HomePage';
 import { Label } from '@prisma/client';
-import { getContentFullByLabel } from '@/app/api/content/getContents';
+import {
+  getContentFullByLabel,
+  getContentsFull,
+} from '@/app/api/content/getContents';
 import { getPaintingCategoriesForMenu } from '@/app/api/peinture/category/getCategories';
 import { getSculptureCategoriesForMenu } from '@/app/api/sculpture/category/getCategories';
 import Layout from '@/components/layout-components/Layout';
+import { getHomeContent, getPresentationContent } from '@/utils/common';
 
 export default async function Page() {
   // This request should be cached until manually invalidated.
@@ -20,8 +24,8 @@ export default async function Page() {
   // const revalidatedData = await fetch(`https://...`, {
   //   next: { revalidate: 10 },
   // });
-  const contentSlider = await getContentFullByLabel(Label.SLIDER);
-  const introContent = await getContentFullByLabel(Label.INTRO);
+  const contents = await getContentsFull();
+  const { introContent, sliderContent } = getHomeContent(contents);
   const paintingCategories = await getPaintingCategoriesForMenu();
   const sculptureCategories = await getSculptureCategoriesForMenu();
 
@@ -31,7 +35,7 @@ export default async function Page() {
       paintingCategories={paintingCategories}
       sculptureCategories={sculptureCategories}
     >
-      <HomePage images={contentSlider.images} />
+      <HomePage images={sliderContent.images} />
     </Layout>
   );
 }

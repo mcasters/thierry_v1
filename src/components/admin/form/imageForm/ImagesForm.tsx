@@ -91,7 +91,7 @@ export default function ImagesForm({
                     e.preventDefault();
                     handleDelete(filename);
                   }}
-                  className={s.iconButton}
+                  className="iconButton"
                   aria-label="Supprimer"
                 >
                   <FiTrash2 />

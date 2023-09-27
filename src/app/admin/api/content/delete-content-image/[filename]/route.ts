@@ -6,7 +6,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { deleteFile, getMiscellaneousDir } from '@/utils/server';
 import { NextResponse } from 'next/server';
 
-export async function POST(
+export async function GET(
   req: Request,
   { params }: { params: { filename: string } },
 ) {

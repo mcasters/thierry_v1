@@ -1,27 +1,25 @@
 import Link from 'next/link';
-import { Label } from '@prisma/client';
 
-import { getContentFullByLabel } from '@/app/api/content/getContents';
+import { getContents } from '@/app/api/content/getContents';
+import { getContactContent } from '@/utils/common';
 import s from '@/styles/contact.module.css';
 
 export default async function Contact() {
-  const address = await getContentFullByLabel(Label.ADDRESS);
-  const email = await getContentFullByLabel(Label.EMAIL);
-  const phone = await getContentFullByLabel(Label.PHONE);
-  const textContact = await getContentFullByLabel(Label.TEXT_CONTACT);
+  const contents = await getContents();
+  const { addressContent, phoneContent, emailContent, textContactContent } =
+    getContactContent(contents);
 
   return (
     <div className={s.contactContainer}>
       <address>
         <h1 className={s.title}>Contact</h1>
         <p>Thierry Casters</p>
-        {address && <p className={s.preLine}>{address.text}</p>}
-        {phone && <p>{phone.text}</p>}
-
-        {email && <Link href={`mailto:${email.text}`}>{email.text}</Link>}
+        <p className={s.preLine}>{addressContent.text}</p>
+        <p>{phoneContent.text}</p>
+        <Link href={`mailto:${emailContent.text}`}>{emailContent.text}</Link>
       </address>
       <div>
-        {textContact && <p className={s.preLine}>{textContact.text}</p>}
+        <p className={s.preLine}>{textContactContent.text}</p>
       </div>
     </div>
   );
