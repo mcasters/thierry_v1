@@ -4,33 +4,33 @@ import ContentForm from '@/components/admin/form/ContentForm';
 import { ContentFull } from '@/app/api/content/content';
 
 interface Props {
-  presentation?: ContentFull;
-  demarche?: ContentFull;
-  inspiration?: ContentFull;
+  presentationContent?: ContentFull;
+  demarcheContent?: ContentFull;
+  inspirationContent?: ContentFull;
 }
 export default function AdminPresentationComponent({
-  presentation,
-  demarche,
-  inspiration,
+  presentationContent,
+  demarcheContent,
+  inspirationContent,
 }: Props) {
   return (
     <>
       <ContentForm
-        content={presentation}
+        content={presentationContent}
         label={Label.PRESENTATION}
         isTextArea={true}
         textLabel="Présentation"
         withImage={true}
       />
       <ContentForm
-        content={demarche}
+        content={demarcheContent}
         label={Label.DEMARCHE}
         isTextArea={true}
         textLabel="Démarche artistique"
         withImage={false}
       />
       <ContentForm
-        content={inspiration}
+        content={inspirationContent}
         label={Label.INSPIRATION}
         isTextArea={true}
         textLabel="Inspirations"

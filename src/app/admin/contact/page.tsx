@@ -1,11 +1,10 @@
 import AdminContactComponent from '@/components/admin/content/AdminContactComponent';
 import { getContactContent } from '@/utils/common';
-import { getContentFull } from '@/app/api/content/getContents';
+import { getContents } from '@/app/api/content/getContents';
 import s from '@/styles/admin.module.css';
 
 export default async function Contact() {
-  const contents = await getContentFull();
-
+  const contents = await getContents();
   const { addressContent, phoneContent, emailContent, textContactContent } =
     getContactContent(contents);
 

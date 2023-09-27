@@ -1,6 +1,6 @@
-import s from '@/styles/ItemPage.module.css';
 import ItemComponent from '@/components/item/ItemComponent';
 import { getPaintingsFull } from '@/app/api/peinture/getPaintings';
+import s from '@/styles/ItemPage.module.css';
 
 export default async function Page() {
   const paintings = await getPaintingsFull();

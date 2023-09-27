@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { Label } from '@prisma/client';
 
-import s from '@/styles/contact.module.css';
 import { getContentFullByLabel } from '@/app/api/content/getContents';
+import s from '@/styles/contact.module.css';
 
 export default async function Contact() {
   const address = await getContentFullByLabel(Label.ADDRESS);

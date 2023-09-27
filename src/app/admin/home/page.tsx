@@ -1,11 +1,10 @@
 import AdminHomeComponent from '@/components/admin/content/AdminHomeComponent';
+import { getContentsFull } from '@/app/api/content/getContents';
 import { getHomeContent } from '@/utils/common';
-import { getContentFull } from '@/app/api/content/getContents';
 import s from '@/styles/admin.module.css';
 
 export default async function Home() {
-  const contents = await getContentFull();
-
+  const contents = await getContentsFull();
   const { introContent, sliderContent } = getHomeContent(contents);
 
   return (

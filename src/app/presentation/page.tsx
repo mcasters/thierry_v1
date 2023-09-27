@@ -8,7 +8,7 @@ import { getContentFullByLabel } from '@/app/api/content/getContents';
 export default async function Presentation() {
   const presentation = await getContentFullByLabel(Label.PRESENTATION);
   const demarche = await getContentFullByLabel(Label.DEMARCHE);
-  const inspiration = await await getContentFullByLabel(Label.INSPIRATION);
+  const inspiration = await getContentFullByLabel(Label.INSPIRATION);
 
   return (
     <div className={s.presentationContainer}>

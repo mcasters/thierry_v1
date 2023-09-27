@@ -29,7 +29,7 @@ export const getPresentationContent = (contents: ContentFull[]) => {
   let presentationContent;
   let demarcheContent;
   let inspirationContent;
-  contents.forEach((c) => {
+  contents.forEach((c: ContentFull) => {
     if (c.label === Label.PRESENTATION) presentationContent = c;
     if (c.label === Label.DEMARCHE) demarcheContent = c;
     if (c.label === Label.INSPIRATION) inspirationContent = c;
@@ -43,7 +43,7 @@ export const getHomeContent = (contents: ContentFull[]) => {
   let introContent;
   let sliderContent;
 
-  contents.forEach((c: Content | ContentFull) => {
+  contents.forEach((c: ContentFull) => {
     if (c.label === Label.INTRO) introContent = c;
     if (c.label === Label.SLIDER) sliderContent = c;
   });
@@ -58,7 +58,7 @@ export const getContactContent = (contents: Content[]) => {
   let emailContent;
   let textContactContent;
 
-  contents.forEach((c) => {
+  contents.forEach((c: Content) => {
     if (c.label === Label.ADDRESS) addressContent = c;
     if (c.label === Label.PHONE) phoneContent = c;
     if (c.label === Label.EMAIL) emailContent = c;

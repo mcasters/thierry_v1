@@ -1,4 +1,4 @@
 import { Prisma } from '@prisma/client';
-import { getContentFull } from '@/app/api/content/getContents';
+import { getContentsFull } from '@/app/api/content/getContents';
 
-export type ContentFull = Prisma.PromiseReturnType<typeof getContentFull>;
+export type ContentFull = Prisma.PromiseReturnType<typeof getContentsFull>;

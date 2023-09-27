@@ -1,6 +1,6 @@
-import s from '@/styles/ItemPage.module.css';
 import ItemComponent from '@/components/item/ItemComponent';
 import { getSculpturesFull } from '@/app/api/sculpture/getSculptures';
+import s from '@/styles/ItemPage.module.css';
 
 export default async function Page() {
   const sculptures = await getSculpturesFull();
