@@ -70,7 +70,7 @@ export default function ImageWithLightbox({ images, type, alt }: Props) {
   } else {
     return (
       <>
-        <div className={s.buttonWrapper}>
+        <div className={s.sculptureButtonWrapper}>
           {images.map((image) => {
             return (
               <button

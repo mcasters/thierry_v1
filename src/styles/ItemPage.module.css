@@ -13,6 +13,12 @@
     margin: 0 auto;
 }
 
+.sculptureGrid {
+    width: var(--max-width);
+    background: hsla(5, 15%, 5%, 0.3);
+    margin: 0 auto;
+}
+
 .categoryTitle {
 padding-bottom: 2em;
 }

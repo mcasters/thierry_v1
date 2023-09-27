@@ -1,9 +1,10 @@
 'use client';
 
-import { PaintingFull, SculptureFull } from '@/interfaces';
 import { TYPE } from '@/constants';
-import s from './ItemComponent.module.css';
 import ImageWithLightbox from '@/components/image/image-lightbox';
+import { SculptureFull } from '@/app/api/sculpture/sculpture';
+import { PaintingFull } from '@/app/api/peinture/painting';
+import s from './ItemComponent.module.css';
 
 interface Props {
   item: SculptureFull | PaintingFull;
@@ -24,7 +25,7 @@ export default function ItemComponent({ item }: Props) {
           {item.height} cm x {item.width} cm{' '}
           {isSculpture ? ` x ${item.length} cm` : ''}
           {' - '}
-          <time>{new Date(item.date).toLocaleDateString()}</time>
+          <time>{new Date(item.date).getFullYear()}</time>
           <br />
           {item.technique}
           <br />

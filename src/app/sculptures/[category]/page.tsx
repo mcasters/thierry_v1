@@ -1,6 +1,6 @@
-import s from '@/styles/ItemPage.module.css';
 import ItemComponent from '@/components/item/ItemComponent';
 import { getSculpturesFullByCategory } from '@/app/api/sculpture/getSculptures';
+import s from '@/styles/ItemPage.module.css';
 
 export default async function Page({
   params,
@@ -17,7 +17,7 @@ export default async function Page({
     <div className={s.container}>
       <h1 className="hidden">Les sculptures</h1>
       <h2 className={s.categoryTitle}>{categoryTitle}</h2>
-      <div className={s.grid}>
+      <div className={s.sculptureGrid}>
         {sculptures.map((sculpture) => (
           <ItemComponent key={sculpture.id} item={sculpture} />
         ))}
