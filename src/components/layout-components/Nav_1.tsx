@@ -33,7 +33,7 @@ export default function Nav_1({
           : `${s.homeNav}`
       }
     >
-      <ul>
+      <ul className={s.menu}>
         {MENU_1.map((menuItem) => {
           let isActive = pathname === menuItem.PATH;
           if (

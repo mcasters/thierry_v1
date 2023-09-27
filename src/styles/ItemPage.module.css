@@ -13,8 +13,8 @@
     margin: 0 auto;
 }
 
-.container h1 {
-    font-size: var(--font-size-plus);
+.categoryTitle {
+padding-bottom: 2em;
 }
 
 /* Mobile */

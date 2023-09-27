@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-import s from '@/styles/Nav_1.module.css';
 import { PaintingCategory, SculptureCategory } from '@prisma/client';
+import s from '@/styles/Nav_1.module.css';
 
 interface Props {
   menuItems: PaintingCategory[] | SculptureCategory[];
@@ -13,15 +13,27 @@ interface Props {
 export default function Dropdown({ menuItems, path, name, isActive }: Props) {
   const [open, setOpen] = useState(false);
 
-  const handleOpen = (e) => {
-    e.preventDefault();
+  const toggle = (e) => {
+    e.stopPropagation();
     setOpen(!open);
+  };
+
+  const openMenu = (e) => {
+    e.stopPropagation();
+    setOpen(true);
+  };
+
+  const closeMenu = (e) => {
+    e.stopPropagation();
+    setOpen(false);
   };
 
   return (
     <li className={s.dropdown}>
       <button
-        onClick={handleOpen}
+        onClick={toggle}
+        onMouseEnter={openMenu}
+        onMouseLeave={closeMenu}
         className={
           isActive ? `${s.link} ${s.active} buttonLink` : `${s.link} buttonLink`
         }
@@ -29,7 +41,11 @@ export default function Dropdown({ menuItems, path, name, isActive }: Props) {
         {name}
       </button>
       {open ? (
-        <ul className={s.menu}>
+        <ul
+          className={s.subMenu}
+          onMouseEnter={openMenu}
+          onMouseLeave={closeMenu}
+        >
           {menuItems.map((menuItem, index) => (
             <li key={index}>
               <Link
@@ -38,6 +54,7 @@ export default function Dropdown({ menuItems, path, name, isActive }: Props) {
                 onClick={(e) => {
                   setOpen(false);
                 }}
+                className={s.subLink}
               >
                 {menuItem.value}
               </Link>

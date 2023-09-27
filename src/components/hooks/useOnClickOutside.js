@@ -1,19 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-export default function useOnClickOutside(ref, handler) {
+export default function useOnClickOutside(handler) {
+  const ref = useRef(null);
+
   useEffect(() => {
+    const element = ref.current;
+
+    if (!element) return;
+
     const listener = (e) => {
-      if (ref && !ref.contains(e.target)) {
-        handler();
+      if (!element || element.contains(e.target)) {
+        return;
       }
-      return undefined;
+      handler(e);
     };
 
-    if (typeof document === 'undefined') return;
-    document.addEventListener('mousedown', listener);
-
-    return function cleanup() {
-      document.removeEventListener('mousedown', listener);
+    window.addEventListener('mousedown', listener);
+    window.addEventListener('touchstart', listener);
+    return function () {
+      window.removeEventListener('mousedown', listener);
+      window.removeEventListener('touchstart', listener);
     };
-  }, [ref, handler]);
+  }, [handler, ref]);
+  return ref;
 }
