@@ -1,6 +1,3 @@
-import AdminNav from '@/components/layout-components/AdminNav';
-import s from '@/styles/admin.module.css';
-
 export default async function AdminIndex() {
   const string1 =
     "Ici, je pourrais mettre de quoi gérer les couleurs générales du site. Cela alourdirait pas mal le site, mais si on n'arrive pas à trouver ce qui te plait, ça sera une solution.";
@@ -11,19 +8,16 @@ export default async function AdminIndex() {
 
   return (
     <>
-      <AdminNav />
-      <div className={s.adminWrapper}>
-        <h1>Administration</h1>
-        <br />
-        <br />
-        {string1}
-        <br />
-        <br />
-        {string2}
-        <br />
-        <br />
-        {string3}
-      </div>
+      <h1>Administration</h1>
+      <br />
+      <br />
+      {string1}
+      <br />
+      <br />
+      {string2}
+      <br />
+      <br />
+      {string3}
     </>
   );
 }

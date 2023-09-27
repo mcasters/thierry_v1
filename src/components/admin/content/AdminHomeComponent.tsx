@@ -1,8 +1,7 @@
 import { Label } from '@prisma/client';
 
-import React from 'react';
-import { ContentFull } from '@/interfaces';
 import ContentForm from '@/components/admin/form/ContentForm';
+import { ContentFull } from '@/app/api/content/content';
 
 interface Props {
   introContent: ContentFull;
