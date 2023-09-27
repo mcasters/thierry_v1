@@ -9,7 +9,13 @@ export async function getPaintingCategoriesFull() {
   return JSON.parse(JSON.stringify(res));
 }
 
-export async function getPaintingCategories() {
+export async function getPaintingCategoriesForMenu() {
   const res = (await prisma.PaintingCategory.findMany()) as PaintingCategory[];
+  if (res.length > 0)
+    res.push({
+      key: 'no-category',
+      value: 'Sans catégorie',
+      id: undefined,
+    } as PaintingCategory);
   return JSON.parse(JSON.stringify(res));
 }
