@@ -1,5 +1,5 @@
-import { ContentFull } from '@/interfaces';
 import { Content, Label } from '@prisma/client';
+import { ContentFull } from '@/app/api/content/content';
 
 export const transformValueToKey = (value: string): string => {
   return value
@@ -43,7 +43,7 @@ export const getHomeContent = (contents: ContentFull[]) => {
   let introContent;
   let sliderContent;
 
-  contents.forEach((c) => {
+  contents.forEach((c: Content | ContentFull) => {
     if (c.label === Label.INTRO) introContent = c;
     if (c.label === Label.SLIDER) sliderContent = c;
   });

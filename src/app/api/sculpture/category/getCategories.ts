@@ -9,6 +9,18 @@ export async function getSculptureCategoriesFull() {
   return JSON.parse(JSON.stringify(res));
 }
 
+export async function getSculptureCategoriesForMenu() {
+  const res =
+    (await prisma.SculptureCategory.findMany()) as SculptureCategory[];
+  if (res.length > 0)
+    res.push({
+      key: 'no-category',
+      value: 'Sans catégorie',
+      id: undefined,
+    } as SculptureCategory);
+  return JSON.parse(JSON.stringify(res));
+}
+
 export async function getSculptureCategories() {
   return (await prisma.SculptureCategory.findMany()) as SculptureCategory[];
 }
