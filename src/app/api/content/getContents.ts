@@ -1,14 +1,14 @@
 import prisma from '@/lib/prisma';
-import 'server-only';
 import { Label } from '@prisma/client';
+import 'server-only';
 
 export async function getContentFull() {
-  const res = await prisma.content.findMany({ include: { images: true } });
-  return JSON.parse(JSON.stringify(res));
+  return await prisma.Content.findMany({ include: { images: true } });
+  // return JSON.parse(JSON.stringify(res));
 }
 
 export async function getContentFullByLabel(label: Label) {
-  const res = await prisma.content.findMany({
+  return await prisma.Content.findUnique({
     where: {
       label,
     },
@@ -16,5 +16,5 @@ export async function getContentFullByLabel(label: Label) {
       images: true,
     },
   });
-  return JSON.parse(JSON.stringify(res[0]));
+  //return JSON.parse(JSON.stringify(res));
 }
