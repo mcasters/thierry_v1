@@ -35,6 +35,8 @@ export default function ImagesForm({
       : [];
   });
 
+  console.log(images);
+
   useEffect(() => {
     if (setHasImages !== undefined)
       setHasImages(newImages.length > 0 || existantImages.length > 0);

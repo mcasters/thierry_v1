@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
       const formData = await req.formData();
       const paintId = Number(formData.get('id'));
-      const oldPaint = await prisma.painting.findUnique({
+      const oldPaint = await prisma.Painting.findUnique({
         where: { id: paintId },
         include: {
           image: {
@@ -58,7 +58,7 @@ export async function POST(req: Request) {
             }
           : {};
 
-      const updatedPaint = await prisma.painting.update({
+      const updatedPaint = await prisma.Painting.update({
         where: { id: paintId },
         data: {
           title: formData.get('title'),

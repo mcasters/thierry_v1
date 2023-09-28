@@ -32,7 +32,7 @@ export async function POST(req: Request) {
               },
             };
 
-      const newPainting = await prisma.painting.create({
+      const newPainting = await prisma.Painting.create({
         data: {
           title: formData.get('title'),
           date: parse(formData.get('date') as string, 'yyyy', new Date()),

@@ -17,15 +17,13 @@ interface Props {
 export default function PostForm({ post, toggleModal }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const resetMainImageRef = useRef<number>(0);
-  const resetImageRef = useRef<number>(0);
+  const resetImagesRef = useRef<number>(0);
 
   const [title, setTitle] = useState<string>(post?.title || '');
   const [date, setDate] = useState<Date>(
     post?.date ? new Date(post.date) : new Date(),
   );
   const [content, setContent] = useState<string>(post?.content || '');
-  const [hasMainImage, setHasMainImage] = useState<boolean>(false);
-  const [hasImage, setHasImage] = useState<boolean>(false);
   const router = useRouter();
 
   const api = post ? `api/post/update` : `api/post/add`;
@@ -84,8 +82,7 @@ export default function PostForm({ post, toggleModal }: Props) {
           value={content}
         />
         <ImagesForm
-          images={[post?.image]}
-          setHasImages={setHasMainImage}
+          images={[post?.mainImage]}
           reset={resetMainImageRef.current}
           pathImage={`/images/post`}
           isMultiple={false}
@@ -94,8 +91,7 @@ export default function PostForm({ post, toggleModal }: Props) {
         />
         <ImagesForm
           images={post?.images}
-          setHasImages={setHasImage}
-          reset={resetImageRef.current}
+          reset={resetImagesRef.current}
           pathImage={`/images/post`}
           isMultiple={true}
           apiForDelete={'api/post/delete-image'}

@@ -24,10 +24,10 @@ export async function POST(req: Request) {
       const mainFile = formData.get('file') as File;
       const files = formData.getAll('files') as File[];
 
-      let image = {};
+      let mainImage = {};
       if (mainFile.size > 0) {
         const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
-        image = {
+        mainImage = {
           filename: `${fileInfo.filename}`,
           width: fileInfo.width,
           height: fileInfo.height,
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
           date: parse(formData.get('date') as string, 'yyyy', new Date()),
           content: formData.get('content'),
           mainImage: {
-            create: image,
+            create: mainImage,
           },
           images: {
             create: images,

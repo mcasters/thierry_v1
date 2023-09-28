@@ -7,6 +7,7 @@ import {
   deleteFile,
   resizeAndSaveImage,
   getSculptureDir,
+  getPostDir,
 } from '@/utils/server';
 import prisma from '@/lib/prisma';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
@@ -16,13 +17,18 @@ export async function POST(req: Request) {
 
   if (session) {
     try {
-      const dir = getSculptureDir();
+      const dir = getPostDir();
 
       const formData = await req.formData();
-      const sculptId = Number(formData.get('id'));
-      const oldSculpt = await prisma.Sculpture.findUnique({
-        where: { id: sculptId },
+      const postId = Number(formData.get('id'));
+      const oldPost = await prisma.Post.findUnique({
+        where: { id: postId },
         include: {
+          mainImage: {
+            select: {
+              filename: true,
+            },
+          },
           images: {
             select: {
               filename: true,
@@ -31,7 +37,30 @@ export async function POST(req: Request) {
         },
       });
 
+      const mainFile = formData.get('file') as File;
       const files = formData.getAll('files') as File[];
+
+      let mainImage = {};
+      if (mainFile.size > 0) {
+        const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
+        mainImage = {
+          create: {
+            filename: `${fileInfo.filename}`,
+            width: fileInfo.width,
+            height: fileInfo.height,
+          },
+        };
+        const pathOldMainImage = join(
+          `${dir}`,
+          `${oldPost.mainImage.filename}`,
+        );
+        deleteFile(pathOldMainImage);
+        await prisma.PostImage.delete({
+          where: {
+            filename: oldPost.mainImage.filename,
+          },
+        });
+      }
 
       let images = [];
       for (const file of files) {
@@ -45,34 +74,13 @@ export async function POST(req: Request) {
         }
       }
 
-      const category =
-        formData.get('categoryId') !== ''
-          ? {
-              connect: {
-                id: Number(formData.get('categoryId')),
-              },
-            }
-          : oldSculpt.categoryId !== null
-          ? {
-              disconnect: {
-                id: oldSculpt.categoryId,
-              },
-            }
-          : {};
-
-      const updatedSculpt = await prisma.Sculpture.update({
-        where: { id: sculptId },
+      const updatedPost = await prisma.Post.update({
+        where: { id: postId },
         data: {
           title: formData.get('title'),
           date: parse(formData.get('date') as string, 'yyyy', new Date()),
-          technique: formData.get('technique'),
-          description: formData.get('description'),
-          height: Number(formData.get('height')),
-          width: Number(formData.get('width')),
-          length: Number(formData.get('length')),
-          isToSell: formData.get('isToSell') === 'true',
-          price: Number(formData.get('price')),
-          category,
+          content: formData.get('content'),
+          mainImage,
           images: {
             create: images,
           },

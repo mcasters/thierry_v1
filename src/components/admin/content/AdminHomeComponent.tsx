@@ -18,7 +18,6 @@ export default function AdminHomeComponent({
         label={Label.INTRO}
         isTextArea={true}
         textLabel="Introduction"
-        withImage={false}
       />
       <div className="separate"></div>
       <ContentForm
@@ -26,7 +25,6 @@ export default function AdminHomeComponent({
         label={Label.SLIDER}
         isTextArea={false}
         textLabel="Slider"
-        withImage={true}
       />
     </>
   );

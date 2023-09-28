@@ -69,10 +69,10 @@ export async function POST(req: Request) {
       } else if (label === Label.PRESENTATION) {
         let fileInfo = null;
         let images = [];
-        const file = formData.get('files') as File;
+        const file = formData.get('file') as File;
 
         if (!BDContent) {
-          if (file.size !== 0) {
+          if (file.size > 0) {
             const fileInfo = await resizeAndSaveImage(file, dir, undefined);
             images.push({
               filename: `${fileInfo.filename}`,
@@ -91,7 +91,7 @@ export async function POST(req: Request) {
             },
           });
         } else {
-          if (file.size !== 0) {
+          if (file.size > 0) {
             fileInfo = await resizeAndSaveImage(file, dir, undefined);
             images.push({
               filename: `${fileInfo.filename}`,
@@ -123,16 +123,11 @@ export async function POST(req: Request) {
         }
         // Content with only images (Label.SLIDER)
       } else if (label === Label.SLIDER) {
-        const files = [];
-        const values = Array.from(formData.values());
-        for (const value of values) {
-          if (typeof value === 'object' && 'arrayBuffer' in value) {
-            if (value.size !== 0) files.push(value);
-          }
-        }
+        const files = formData.getAll('files') as File[];
+
         let images = [];
-        if (files.length > 0) {
-          for (const file of files) {
+        for (const file of files) {
+          if (file.size > 0) {
             const fileInfo = await resizeAndSaveImage(file, dir, undefined);
             images.push({
               filename: `${fileInfo.filename}`,

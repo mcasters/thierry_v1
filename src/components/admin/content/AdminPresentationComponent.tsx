@@ -20,21 +20,18 @@ export default function AdminPresentationComponent({
         label={Label.PRESENTATION}
         isTextArea={true}
         textLabel="Présentation"
-        withImage={true}
       />
       <ContentForm
         content={demarcheContent}
         label={Label.DEMARCHE}
         isTextArea={true}
         textLabel="Démarche artistique"
-        withImage={false}
       />
       <ContentForm
         content={inspirationContent}
         label={Label.INSPIRATION}
         isTextArea={true}
         textLabel="Inspirations"
-        withImage={false}
       />
     </>
   );

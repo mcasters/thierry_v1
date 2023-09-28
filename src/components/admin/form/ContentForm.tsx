@@ -14,19 +14,16 @@ interface Props {
   content?: ContentFull;
   isTextArea: boolean;
   textLabel: string;
-  withImage: boolean;
 }
 export default function ContentForm({
   label,
   content,
   isTextArea,
   textLabel,
-  withImage,
 }: Props) {
   const [text, setText] = useState<string>(content?.text || '');
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
-  const withoutText = label === Label.SLIDER;
   const router = useRouter();
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,8 +46,8 @@ export default function ContentForm({
     <div className={s.formContainer}>
       <form ref={formRef} onSubmit={submit}>
         <input type="hidden" name="label" value={label} />
-        {withoutText && <p className={s.sliderLabel}>Slider</p>}
-        {!isTextArea && !withoutText && (
+        {label === Label.SLIDER && <p className={s.sliderLabel}>Slider</p>}
+        {!isTextArea && label !== Label.SLIDER && (
           <label>
             {textLabel}
             <input
@@ -65,7 +62,7 @@ export default function ContentForm({
             />
           </label>
         )}
-        {isTextArea && !withoutText && (
+        {isTextArea && label !== Label.SLIDER && (
           <label>
             {textLabel}
             <textarea
@@ -79,11 +76,20 @@ export default function ContentForm({
             />
           </label>
         )}
-        {withImage && (
+        {label === Label.SLIDER && (
           <ImagesForm
             images={content?.images}
             pathImage="/images/miscellaneous"
-            apiForDelete="api/content/delete-content-image"
+            apiForDelete="api/content/delete-image"
+            isMultiple={true}
+            setHasNewImages={setIsChanged}
+          />
+        )}
+        {label === Label.PRESENTATION && (
+          <ImagesForm
+            images={content?.images}
+            pathImage="/images/miscellaneous"
+            apiForDelete="api/content/delete-image"
             isMultiple={false}
             setHasNewImages={setIsChanged}
           />

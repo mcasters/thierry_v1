@@ -22,28 +22,24 @@ export default function AdminContactComponent({
         label={Label.ADDRESS}
         isTextArea={true}
         textLabel="Adresse"
-        withImage={false}
       />
       <ContentForm
         content={phoneContent}
         label={Label.PHONE}
         isTextArea={false}
         textLabel="Téléphone"
-        withImage={false}
       />
       <ContentForm
         content={emailContent}
         label={Label.EMAIL}
         isTextArea={false}
         textLabel="E-mail"
-        withImage={false}
       />
       <ContentForm
         content={textContactContent}
         label={Label.TEXT_CONTACT}
         isTextArea={true}
         textLabel="texte d'accompagnement"
-        withImage={false}
       />
     </>
   );
