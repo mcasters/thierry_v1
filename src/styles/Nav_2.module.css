@@ -19,7 +19,7 @@
   position: fixed;
   top: calc(var(--line-height) + var(--nav-1-height));
   border-bottom: 1px solid var(--color-border-menu2);
-  background-color: rgba(var(--color-background-menu2-home-fix), 0.4);
+  background-color: rgba(var(--color-background-menu2-home-fix), 0.5);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   transition: all ease-in-out 0.2s;
 }
@@ -58,29 +58,28 @@
 /*
 color link
  */
-
 .homeNav .link {
-  color: var(--color-menu2-home);
-}
-
-.itemNav .link {
-  color: var(--color-menu2-item);
-}
-
-.nav .link {
-  color: var(--color-menu2);
+  color: var(--color-link-menu2-home);
 }
 
 .homeNav .link:hover {
-  color: var(--color-menu2-home-hover);
+  color: var(--color-link-menu2-home-hover);
 }
 
-.itemNav .link:hover {
-  color: var(--color-menu2-item-hover);
+.nav .link {
+  color: var(--color-link-menu2);
 }
 
 .nav .link:hover {
-  color: var(--color-menu2-hover);
+  color: var(--color-link-menu2-hover);
+}
+
+.itemNav .link {
+  color: var(--color-link-menu2-item);
+}
+
+.itemNav .link:hover {
+  color: var(--color-link-menu2-item-hover);
 }
 
 /*

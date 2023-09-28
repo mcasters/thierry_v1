@@ -54,42 +54,33 @@
 color link
  */
 
-.homNav .link {
-    color: var(--color-menu1-home);
+.homNav .link, .nav .link {
+    color: var(--color-link-menu1);
     display: inline-block;
-}
-
-.itemNav .link {
-    color: var(--color-menu1-item);
-    display: inline-block;
-}
-
-.nav .link {
-  color: var(--color-menu1);
-  display: inline-block;
     height: var(--nav-1-height);
 }
 
-.homeNav .link:hover {
-    color: var(--color-menu1-home-hover);
+.itemNav .link {
+    color: var(--color-link-menu1-item);
+    display: inline-block;
+}
+
+.homeNav .link:hover, .nav .link:hover {
+    color: var(--color-link-menu1-hover);
 }
 
 .itemNav .link:hover {
-    color: var(--color-menu1-item-hover);
-}
-
-.nav .link:hover {
-  color: var(--color-menu1-hover);
+    color: var(--color-link-menu1-item-hover);
 }
 
 .itemNav .link.active {
-    color: var(--color-menu1-item);
-    border-bottom: 2px solid var(--color-menu1-item);
+    color: var(--color-link-menu1-item-hover);
+    border-bottom: 2px solid var(--color-link-menu1-item-hover);
 }
 
 .nav .link.active {
-  color: var(--color-menu1-hover);
-    border-bottom: 2px solid var(--color-menu1-hover);
+    color: var(--color-link-menu1-hover);
+    border-bottom: 2px solid var(--color-link-menu1-hover);
 }
 
 /*
