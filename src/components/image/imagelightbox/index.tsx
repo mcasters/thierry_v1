@@ -4,18 +4,17 @@ import 'yet-another-react-lightbox/styles.css';
 import Image from 'next/legacy/image';
 import { TYPE } from '@/constants';
 
-import { Image as IImage } from '@/interfaces';
 import s from './lightbox.module.css';
 import { getSrcItem } from '@/utils/common';
+import { PostImage, Image as IImage } from '.prisma/client';
 
 type Props = {
-  images: IImage[];
+  images: IImage[] | PostImage[];
   type: string;
   alt: string;
 };
 
-const imageSizes = [16, 32, 48, 64, 96, 128, 256, 384];
-const deviceSizes = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
+const deviceSizes = [3840, 2048, 1920, 1200, 1080, 750, 640];
 
 const nextImageUrl = (src: string, size: number) =>
   `/_next/image?url=${encodeURIComponent(src)}&w=${size}&q=75`;
@@ -25,12 +24,11 @@ export default function ImageWithLightbox({ images, type, alt }: Props) {
   const slides = images.map(({ filename, width, height }) => ({
     width,
     height,
-    src: nextImageUrl(getSrcItem(type, filename), width),
-    srcSet: imageSizes
-      .concat(...deviceSizes)
+    src: nextImageUrl(`/images/${type}/${filename}`, width),
+    srcSet: deviceSizes
       .filter((size) => size <= width)
       .map((size) => ({
-        src: nextImageUrl(getSrcItem(type, filename), size),
+        src: nextImageUrl(`/images/${type}/${filename}`, size),
         width: size,
         height: Math.round((height / width) * size),
       })),

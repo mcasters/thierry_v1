@@ -23,6 +23,8 @@ export const getSrcItem = (type: string, filename: string) =>
 export const getSrcMisc = (filename: string) =>
   `/images/miscellaneous/${filename}`;
 
+export const getSrcPost = (filename: string) => `/images/post/${filename}`;
+
 export const getPresentationContent = (contents: ContentFull[]) => {
   if (!contents || contents.length === 0) return undefined;
 

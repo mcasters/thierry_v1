@@ -1,7 +1,7 @@
 'use client';
 
 import { TYPE } from '@/constants';
-import ImageWithLightbox from '@/components/image/image-lightbox';
+import ImageWithLightbox from '@/components/image/imagelightbox';
 import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import { PaintingFull } from '@/app/api/peinture/painting';
 import s from './ItemComponent.module.css';

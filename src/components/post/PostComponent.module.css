@@ -1,0 +1,20 @@
+.info {
+    padding-top: 2em;
+}
+
+.info h2 {
+    font-size: var(--font-size-title);
+}
+
+.info p {
+    padding-bottom: 1em;
+    font-size: var(--font-size);
+    white-space: pre-line;
+}
+
+.mainImage {
+}
+
+.gallery {
+    margin-top: 5em;
+}
