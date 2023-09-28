@@ -20,7 +20,7 @@ export async function POST(req: Request) {
 
       const formData = await req.formData();
       const sculptId = Number(formData.get('id'));
-      const oldSculpt = await prisma.sculpture.findUnique({
+      const oldSculpt = await prisma.Sculpture.findUnique({
         where: { id: sculptId },
         include: {
           images: {
@@ -75,7 +75,7 @@ export async function POST(req: Request) {
             }
           : {};
 
-      const updatedSculpt = await prisma.sculpture.update({
+      const updatedSculpt = await prisma.Sculpture.update({
         where: { id: sculptId },
         data: {
           title: formData.get('title'),

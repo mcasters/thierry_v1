@@ -15,6 +15,7 @@ type Props = {
   pathImage: string;
   apiForDelete?: string;
   isMultiple: boolean;
+  title?: string;
 };
 
 export default function ImagesForm({
@@ -25,6 +26,7 @@ export default function ImagesForm({
   pathImage,
   apiForDelete,
   isMultiple,
+  title,
 }: Props) {
   const [newImages, setNewImages] = useState<string[]>([]);
   const [existantImages, setExistantImages] = useState<string[]>(() => {
@@ -70,8 +72,10 @@ export default function ImagesForm({
   };
 
   return (
-    <>
-      <h4 className={s.imageTitle}>{isMultiple ? 'Images :' : 'Image :'}</h4>
+    <div className={s.imageFormContainer}>
+      <h4 className={s.imageTitle}>
+        {title ? title : isMultiple ? 'Images :' : 'Image :'}
+      </h4>
       <div>
         {existantImages.length > 0 &&
           existantImages.map((filename) => (
@@ -101,7 +105,7 @@ export default function ImagesForm({
           ))}
       </div>
       <FileUploader
-        name="files"
+        name={isMultiple ? 'files' : 'file'}
         handleFiles={getAlbumPreview}
         isMultiple={isMultiple}
       />
@@ -121,6 +125,6 @@ export default function ImagesForm({
             </div>
           ))}
       </div>
-    </>
+    </div>
   );
 }

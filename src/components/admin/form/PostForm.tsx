@@ -89,6 +89,8 @@ export default function PostForm({ post, toggleModal }: Props) {
           reset={resetMainImageRef.current}
           pathImage={`/images/post`}
           isMultiple={false}
+          apiForDelete={'api/post/delete-image'}
+          title="Image principale"
         />
         <ImagesForm
           images={post?.images}
@@ -97,6 +99,7 @@ export default function PostForm({ post, toggleModal }: Props) {
           pathImage={`/images/post`}
           isMultiple={true}
           apiForDelete={'api/post/delete-image'}
+          title="Album d'images"
         />
         <div>
           <input disabled={!title || !date} type="submit" value="Enregistrer" />

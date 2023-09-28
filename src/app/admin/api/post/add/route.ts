@@ -6,6 +6,7 @@ import {
   resizeAndSaveImage,
   createDirIfNecessary,
   getSculptureDir,
+  getPostDir,
 } from '@/utils/server';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { NextResponse } from 'next/server';
@@ -15,51 +16,44 @@ export async function POST(req: Request) {
 
   if (session) {
     try {
-      const dir = getSculptureDir();
+      const dir = getPostDir();
       createDirIfNecessary(dir);
 
       const formData = await req.formData();
 
-      const files = [];
-      const values = Array.from(formData.values());
-      for (const value of values) {
-        if (typeof value === 'object' && 'arrayBuffer' in value) {
-          files.push(value);
-        }
+      const mainFile = formData.get('file') as File;
+      const files = formData.getAll('files') as File[];
+
+      let image = {};
+      if (mainFile.size > 0) {
+        const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
+        image = {
+          filename: `${fileInfo.filename}`,
+          width: fileInfo.width,
+          height: fileInfo.height,
+        };
       }
 
       let images = [];
       for (const file of files) {
-        const fileInfo = await resizeAndSaveImage(file, dir, undefined);
-        images.push({
-          filename: `${fileInfo.filename}`,
-          width: fileInfo.width,
-          height: fileInfo.height,
-        });
+        if (file.size > 0) {
+          const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+          images.push({
+            filename: `${fileInfo.filename}`,
+            width: fileInfo.width,
+            height: fileInfo.height,
+          });
+        }
       }
 
-      const categoryId = formData.get('categoryId');
-      const category =
-        categoryId === ''
-          ? {}
-          : {
-              connect: {
-                id: Number(categoryId),
-              },
-            };
-
-      const newSculpture = await prisma.Sculpture.create({
+      const newPost = await prisma.Post.create({
         data: {
           title: formData.get('title'),
           date: parse(formData.get('date') as string, 'yyyy', new Date()),
-          technique: formData.get('technique'),
-          description: formData.get('description'),
-          height: Number(formData.get('height')),
-          width: Number(formData.get('width')),
-          length: Number(formData.get('length')),
-          isToSell: formData.get('isToSell') === 'true',
-          price: Number(formData.get('price')),
-          category,
+          content: formData.get('content'),
+          mainImage: {
+            create: image,
+          },
           images: {
             create: images,
           },

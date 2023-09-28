@@ -34,6 +34,10 @@ export const getMiscellaneousDir = () => {
   return join(`${serverLibraryPath}`, 'miscellaneous');
 };
 
+export const getPostDir = () => {
+  return join(`${serverLibraryPath}`, 'post');
+};
+
 export const createDirIfNecessary = (dir) => {
   stat(dir, (err) => {
     if (err?.code === 'ENOENT')

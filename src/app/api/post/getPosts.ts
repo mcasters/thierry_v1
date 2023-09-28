@@ -5,5 +5,4 @@ export async function getPostsFull() {
   return await prisma.Post.findMany({
     include: { mainImage: true, images: true },
   });
-  // return JSON.parse(JSON.stringify(res));
 }
