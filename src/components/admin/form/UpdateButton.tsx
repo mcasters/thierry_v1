@@ -9,10 +9,17 @@ import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import { PaintingFull } from '@/app/api/peinture/painting';
 import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
 import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
-import { ca } from 'date-fns/locale';
+import { TYPE } from '@/constants';
+import PostForm from '@/components/admin/form/PostForm';
+import { PostFull } from '@/app/api/post/post';
 
 type Props = {
-  item: PaintingFull | SculptureFull | PaintingCategory | SculptureCategory;
+  item:
+    | PaintingFull
+    | SculptureFull
+    | PaintingCategory
+    | SculptureCategory
+    | PostFull;
   type: string;
   categories?: PaintingCategoryFull[] | SculptureCategoryFull[];
 };
@@ -39,6 +46,8 @@ export default function UpdateButton({ item, type, categories }: Props) {
             toggleModal={toggle}
             categories={categories}
           />
+        ) : type === TYPE.POST ? (
+          <PostForm post={item} toggleModal={toggle} />
         ) : (
           <CategoryForm category={item} type={type} toggleModal={toggle} />
         )}

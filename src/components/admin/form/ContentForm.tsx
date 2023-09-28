@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { ContentFull } from '@/app/api/content/content';
 import { Label } from '@prisma/client';
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
-import s from './form.module.css';
+import s from '../form.module.css';
 
 interface Props {
   label: Label;

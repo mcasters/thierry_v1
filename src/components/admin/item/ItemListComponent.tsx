@@ -1,11 +1,8 @@
 'use client';
 
-import useSWR from 'swr';
-
-import { Item } from '@/interfaces';
 import RowItemListComponent from './RowItemListComponent';
 import React from 'react';
-import s from './ListComponent.module.css';
+import s from '../ListComponent.module.css';
 import { PaintingFull } from '@/app/api/peinture/painting';
 import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
@@ -24,7 +21,7 @@ export default function ItemListComponent({ type, items, categories }: Props) {
       <h2>{title}</h2>
       <div className={s.list}>
         {items &&
-          items.map((item: Item) => {
+          items.map((item: PaintingFull | SculptureFull) => {
             return (
               <RowItemListComponent
                 key={item.id}

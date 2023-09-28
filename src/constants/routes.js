@@ -4,13 +4,12 @@ export const ROUTES = {
   SCULPTURE: '/sculptures',
   CONTACT: '/contact',
   HOME: '/',
-  ARTICLE: '/articles',
-  PRIVACY: '/politique-de-confidentialite',
+  POST: '/posts',
   ADMIN: '/admin',
   A_PAINTING: '/admin/peintures',
   A_SCULPTURE: '/admin/sculptures',
   A_HOME: '/admin/home',
-  A_ARTICLE: '/admin/articles',
+  A_POST: '/admin/posts',
   A_CONTACT: '/admin/contact',
   A_PRESENTATION: '/admin/presentation',
 };
@@ -22,7 +21,7 @@ export const NAMES = {
   HOME: 'Home',
   PRIVACY_FRENCH: 'Politique de confidentialité',
   ADMIN: 'général',
-  ARTICLE: 'Articles',
+  POST: 'Posts',
   CONTACT: 'Contact',
 };
 
@@ -36,8 +35,8 @@ export const MENU_1 = [
     NAME: NAMES.SCULPTURE,
   },
   {
-    PATH: ROUTES.ARTICLE,
-    NAME: NAMES.ARTICLE,
+    PATH: ROUTES.POST,
+    NAME: NAMES.POST,
   },
 ];
 
@@ -74,8 +73,8 @@ export const ADMIN_MENU = [
     NAME: NAMES.SCULPTURE,
   },
   {
-    PATH: ROUTES.A_ARTICLE,
-    NAME: NAMES.ARTICLE,
+    PATH: ROUTES.A_POST,
+    NAME: NAMES.POST,
   },
   {
     PATH: ROUTES.A_CONTACT,

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-import s from './form.module.css';
+import s from '../form.module.css';
 import { PaintingCategory, SculptureCategory } from '@prisma/client';
 
 interface Props {

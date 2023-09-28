@@ -1,6 +1,6 @@
 import RowCategoryListComponent from './RowCategoryListComponent';
 import React from 'react';
-import s from '../ListComponent.module.css';
+import s from '../../ListComponent.module.css';
 import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
 import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
 

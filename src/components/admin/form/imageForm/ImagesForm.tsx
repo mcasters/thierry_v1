@@ -4,11 +4,11 @@ import { FiTrash2 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
 import { FileUploader } from '@/components/admin/form/imageForm/FileUploader';
-import s from '@/components/admin/form/form.module.css';
-import { ContentImage } from '.prisma/client';
+import s from '@/components/admin/form.module.css';
+import { ContentImage, PostImage, Image as IImage } from '.prisma/client';
 
 type Props = {
-  Images?: ContentImage[];
+  Images?: ContentImage[] | PostImage[] | IImage[];
   setHasImages?: (arg0: boolean) => void;
   setHasNewImages?: (arg0: boolean) => void;
   reset?: number;

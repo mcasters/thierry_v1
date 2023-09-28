@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
 import { TYPE } from '@/constants';
-import s from './form.module.css';
+import s from '../form.module.css';
 import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import { PaintingFull } from '@/app/api/peinture/painting';
 import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
@@ -29,20 +29,20 @@ export default function ItemForm({
   const formRef = useRef<HTMLFormElement>(null);
   const resetImageRef = useRef<number>(0);
 
-  const [title, setTitle] = useState<string>(item.title || '');
+  const [title, setTitle] = useState<string>(item?.title || '');
   const [date, setDate] = useState<Date>(
-    item.date ? new Date(item.date) : new Date(),
+    item?.date ? new Date(item?.date) : new Date(),
   );
-  const [technique, setTechnique] = useState<string>(item.technique || '');
+  const [technique, setTechnique] = useState<string>(item?.technique || '');
   const [description, setDescription] = useState<string>(
-    item.description || '',
+    item?.description || '',
   );
-  const [height, setHeight] = useState<string>(item.height.toString() || '');
-  const [width, setWidth] = useState<string>(item.width.toString() || '');
-  const [length, setLength] = useState<string>(item.length?.toString() || '');
-  const [price, setPrice] = useState<string>(item.price?.toString() || '');
-  const [categoryId, setCategoryId] = useState<string>(item.categoryId || '');
-  const [isToSell, setIsToSell] = useState<boolean>(item.isToSell || false);
+  const [height, setHeight] = useState<string>(item?.height.toString() || '');
+  const [width, setWidth] = useState<string>(item?.width.toString() || '');
+  const [length, setLength] = useState<string>(item?.length?.toString() || '');
+  const [price, setPrice] = useState<string>(item?.price?.toString() || '');
+  const [categoryId, setCategoryId] = useState<string>(item?.categoryId || '');
+  const [isToSell, setIsToSell] = useState<boolean>(item?.isToSell || false);
   const [hasImage, setHasImage] = useState<boolean>(false);
   const router = useRouter();
 
@@ -172,7 +172,7 @@ export default function ItemForm({
           />
         )}
         <ImagesForm
-          images={type === TYPE.SCULPTURE ? item.images : [item.image]}
+          images={type === TYPE.SCULPTURE ? item?.images : [item?.image]}
           setHasImages={setHasImage}
           reset={resetImageRef.current}
           pathImage={`/images/${type}`}

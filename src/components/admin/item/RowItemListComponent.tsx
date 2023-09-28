@@ -2,14 +2,15 @@ import Image from 'next/legacy/image';
 
 import DeleteButton from '@/components/admin/form/DeleteButton';
 import UpdateButton from '@/components/admin/form/UpdateButton';
-import { Item } from '@/interfaces';
 import { TYPE } from '@/constants';
-import s from './ListComponent.module.css';
+import s from '../ListComponent.module.css';
 import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
 import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
+import { PaintingFull } from '@/app/api/peinture/painting';
+import { SculptureFull } from '@/app/api/sculpture/sculpture';
 
 interface Props {
-  item: Item;
+  item: PaintingFull | SculptureFull;
   categories: PaintingCategoryFull[] | SculptureCategoryFull[];
 }
 
@@ -30,10 +31,7 @@ export default function RowItemListComponent({ item, categories }: Props) {
         <UpdateButton item={item} type={item.type} categories={categories} />
       </li>
       <li className={s.itemIcon}>
-        <DeleteButton
-          api={`api/${item.type}/delete/${item.id}`}
-          apiToUpdate={`api/${item.type}`}
-        />
+        <DeleteButton api={`api/${item.type}/delete/${item.id}`} />
       </li>
     </ul>
   );
