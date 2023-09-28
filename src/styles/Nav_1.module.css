@@ -82,9 +82,14 @@ color link
   color: var(--color-menu1-hover);
 }
 
+.itemNav .link.active {
+    color: var(--color-menu1-item);
+    border-bottom: 2px solid var(--color-menu1-item);
+}
+
 .nav .link.active {
   color: var(--color-menu1-hover);
-    border-bottom: 3px solid var(--color-menu1-hover);
+    border-bottom: 2px solid var(--color-menu1-hover);
 }
 
 /*

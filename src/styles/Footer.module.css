@@ -8,9 +8,13 @@
 }
 
 .center {
-  width: 50%;
-  display: inline-block;
+    width: 50%;
+    display: inline-block;
     padding-top: 4em;
+}
+
+.center p {
+    font-size: var(--font-size-min);
 }
 
 .footer a {

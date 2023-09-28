@@ -58,6 +58,7 @@
   --color-brown2: #72402b;
   --color-brown: #5c3524;
 
+  --color-line: var(--color-brown1);
   /*
   home
    */
