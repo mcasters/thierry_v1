@@ -20,22 +20,18 @@ export async function POST(req: Request) {
 
       const formData = await req.formData();
 
-      const files = [];
-      const values = Array.from(formData.values());
-      for (const value of values) {
-        if (typeof value === 'object' && 'arrayBuffer' in value) {
-          files.push(value);
-        }
-      }
+      const files = formData.getAll('files') as File[];
 
       let images = [];
       for (const file of files) {
-        const fileInfo = await resizeAndSaveImage(file, dir, undefined);
-        images.push({
-          filename: `${fileInfo.filename}`,
-          width: fileInfo.width,
-          height: fileInfo.height,
-        });
+        if (file.size > 0) {
+          const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+          images.push({
+            filename: `${fileInfo.filename}`,
+            width: fileInfo.width,
+            height: fileInfo.height,
+          });
+        }
       }
 
       const categoryId = formData.get('categoryId');

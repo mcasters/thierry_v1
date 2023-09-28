@@ -31,17 +31,11 @@ export async function POST(req: Request) {
         },
       });
 
-      const files = [];
-      const values = Array.from(formData.values());
-      for (const value of values) {
-        if (typeof value === 'object' && 'arrayBuffer' in value) {
-          if (value.size !== 0) files.push(value);
-        }
-      }
+      const files = formData.getAll('files');
 
       let images = [];
-      if (files.length > 0) {
-        for (const file of files) {
+      for (const file of files) {
+        if (file.size > 0) {
           const fileInfo = await resizeAndSaveImage(file, dir, undefined);
           images.push({
             filename: `${fileInfo.filename}`,
@@ -49,15 +43,15 @@ export async function POST(req: Request) {
             height: fileInfo.height,
           });
         }
-        for (const image of oldSculpt.images) {
-          const path = join(`${dir}`, `${image.filename}`);
-          deleteFile(path);
-          await prisma.image.delete({
-            where: {
-              filename: image.filename,
-            },
-          });
-        }
+      }
+      for (const image of oldSculpt.images) {
+        const path = join(`${dir}`, `${image.filename}`);
+        deleteFile(path);
+        await prisma.image.delete({
+          where: {
+            filename: image.filename,
+          },
+        });
       }
 
       const category =

@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
       let fileInfo = null;
       let image = {};
-      const newFile = formData.get('files') as File;
+      const newFile = formData.get('file') as File;
       if (newFile.size !== 0) {
         const path = join(`${dir}`, `${oldPaint.image.filename}`);
         deleteFile(path);
