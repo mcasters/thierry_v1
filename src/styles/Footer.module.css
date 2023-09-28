@@ -1,7 +1,10 @@
 .footer {
   text-align: center;
   padding: 3rem;
+}
 
+.dark {
+    background-color: var(--color-blue-xdark);
 }
 
 .center {

@@ -1,17 +1,28 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import AuthStatus from '@/components/auth/AuthStatus';
 import s from '@/styles/Footer.module.css';
 
 export default function Footer() {
   const authStatus = AuthStatus();
+  const pathname = usePathname();
+  const isPainting = pathname.split('/')[1] === 'peintures';
+  const isSculpture = pathname.split('/')[1] === 'sculptures';
+  const text =
+    'Images and site content copyright © 2023 Thierry Casters. All rights reserved';
+
   return (
     <>
-      <footer className={s.footer}>
+      <footer
+        className={
+          isPainting || isSculpture ? `${s.footer} ${s.dark}` : s.footer
+        }
+      >
         <div className={s.center}>
-          <Link href="/policy">Politique de confidentialité</Link>
+          <p>{text}</p>
           <br />
           <br />
           {authStatus}

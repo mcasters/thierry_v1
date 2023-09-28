@@ -63,29 +63,30 @@
    */
   --color-background-menu1-home-fix: var(--color-light);
   --color-background-menu2-home-fix: var(--color-xlight-rgb);
-
   --color-menu1-home: var(--color-prussian-blue);
   --color-menu1-home-hover: var(--color-blue-xlight);
-
   --color-menu2-home: var(--color-prussian-blue);
   --color-menu2-home-hover: var(--color-blue-xlight);
 
   /*
 Item pages
  */
-  --color-background-menu1Item: var(--color-blue-dark);
-  --color-background-menu2Item: var(--color-blue-xdark);
+  --color-background-menu1-item: var(--color-blue-dark);
+  --color-background-menu2-item: var(--color-blue-xdark);
+  --color-menu1-item: var(--color-blue-xxlight);
+  --color-menu1-item-hover: var(--color-blue-xxxlight);
+  --color-menu2-item: var(--color-blue-xxlight);
+  --color-menu2-item-hover: var(--color-blue-xxxlight);
+
 
   /*
   Other pages
    */
   --color-background-menu1: var(--color-light);
   --color-background-menu2: var(--color-xlight);
-
   --color-menu1: var(--color-prussian-blue);
   --color-menu1-hover: var(--color-blue-xlight);
   --color-border-menu1: var(--color-medium);
-
   --color-menu2: var(--color-prussian-blue);
   --color-menu2-hover: var(--color-blue-xlight);
   --color-border-menu2: var(--color-medium);

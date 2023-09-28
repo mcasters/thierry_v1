@@ -41,7 +41,7 @@
 }
 
 .itemNav {
-    background-color: var(--color-background-menu1Item);
+    background-color: var(--color-background-menu1-item);
 }
 
 .homeNav li, .nav li, .itemNav li {
@@ -50,8 +50,17 @@
   margin: 0 auto;
 }
 
+/*
+color link
+ */
+
 .homNav .link {
     color: var(--color-menu1-home);
+    display: inline-block;
+}
+
+.itemNav .link {
+    color: var(--color-menu1-item);
     display: inline-block;
 }
 
@@ -63,6 +72,10 @@
 
 .homeNav .link:hover {
     color: var(--color-menu1-home-hover);
+}
+
+.itemNav .link:hover {
+    color: var(--color-menu1-item-hover);
 }
 
 .nav .link:hover {
