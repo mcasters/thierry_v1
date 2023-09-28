@@ -3,10 +3,10 @@ import { PaintingFull } from '@/app/api/peinture/painting';
 import 'server-only';
 
 export async function getPaintingsFull() {
-  const res = await prisma.Painting.findMany({
+  return await prisma.Painting.findMany({
     include: { image: true, category: true },
   });
-  return JSON.parse(JSON.stringify(res));
+  // return JSON.parse(JSON.stringify(res));
 }
 
 export async function getPaintingsFullByCategory(categoryKey: string) {

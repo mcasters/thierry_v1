@@ -3,10 +3,10 @@ import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import 'server-only';
 
 export async function getSculpturesFull() {
-  const res = await prisma.Sculpture.findMany({
+  return await prisma.Sculpture.findMany({
     include: { images: true, category: true },
   });
-  return JSON.parse(JSON.stringify(res));
+  // return JSON.parse(JSON.stringify(res));
 }
 
 export async function getSculpturesFullByCategory(categoryKey: string) {
