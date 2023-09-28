@@ -1,7 +1,7 @@
 .container {
-    background-color: var(--color-blue-dark);
+    background-color: var(--color-prussian-blue);
     color: var(--color-brown1);
-    padding: 5em 0;
+    padding: 5em;
 }
 
 .grid {
@@ -10,12 +10,14 @@
     width: var(--max-width);
     max-width: 100%;
     background: hsla(5, 15%, 5%, 0.3);
+    padding: 5em;
     margin: 0 auto;
 }
 
 .sculptureGrid {
     width: var(--max-width);
     background: hsla(5, 15%, 5%, 0.3);
+    padding: 5em;
     margin: 0 auto;
 }
 

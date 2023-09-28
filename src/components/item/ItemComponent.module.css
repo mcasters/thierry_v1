@@ -1,9 +1,5 @@
-/*
-Content
- */
-
-.article {
-    padding: 3em;
+.article h2 {
+    font-size: var(--font-size-plus);
 }
 
 .article p {
@@ -12,5 +8,6 @@ Content
 }
 
 .info {
+    padding-top: 1em;
     white-space: pre-line;
 }

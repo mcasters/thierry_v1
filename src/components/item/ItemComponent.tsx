@@ -20,7 +20,7 @@ export default function ItemComponent({ item }: Props) {
         type={item.type}
       />
       <div className={s.info}>
-        <h1>{item.title}</h1>
+        <h2>{item.title}</h2>
         <p>
           {item.height} cm x {item.width} cm{' '}
           {isSculpture ? ` x ${item.length} cm` : ''}

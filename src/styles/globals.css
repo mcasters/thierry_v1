@@ -36,6 +36,7 @@
   --color-xlight: #f8f8f8;
   --color-xlight-rgb: 248, 248, 248;
   --color-light: #e7e7e7;
+  --color-medium: #cccccc;
   --color-dark: #a1a1a1;
   --color-xdark: #333;
 
@@ -70,6 +71,12 @@
   --color-menu2-home-hover: var(--color-blue-xlight);
 
   /*
+Item pages
+ */
+  --color-background-menu1Item: var(--color-blue-dark);
+  --color-background-menu2Item: var(--color-blue-xdark);
+
+  /*
   Other pages
    */
   --color-background-menu1: var(--color-light);
@@ -77,11 +84,11 @@
 
   --color-menu1: var(--color-prussian-blue);
   --color-menu1-hover: var(--color-blue-xlight);
-  --color-border-menu1: var(--color-prussian-blue);
+  --color-border-menu1: var(--color-medium);
 
   --color-menu2: var(--color-prussian-blue);
   --color-menu2-hover: var(--color-blue-xlight);
-  --color-border-menu2: var(--color-dark);
+  --color-border-menu2: var(--color-medium);
 
 
   --max-width: 85vw;

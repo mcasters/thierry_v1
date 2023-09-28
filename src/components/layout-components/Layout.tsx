@@ -24,6 +24,7 @@ export default function Layout({
   const [headerIsFix, setHeaderIsFix] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === ROUTES.HOME;
+  const isItem = pathname === '/peintures/:path*';
 
   const handler = (isFix) => setHeaderIsFix(isFix);
 

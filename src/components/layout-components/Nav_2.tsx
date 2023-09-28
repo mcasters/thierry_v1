@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/legacy/image';
 
 import { MENU_2 } from '@/constants/routes';
+import { usePathname } from 'next/navigation';
 import s from '@/styles/Nav_2.module.css';
 
 interface Props {
@@ -12,14 +13,20 @@ interface Props {
 }
 
 export default function Nav_2({ isHome, isFix }: Props) {
+  const pathname = usePathname();
+  const isPainting = pathname.split('/')[1] === 'peintures';
+  const isSculpture = pathname.split('/')[1] === 'sculptures';
+
   return (
     <nav
       className={
-        !isHome
-          ? `${s.nav}`
+        isPainting || isSculpture
+          ? s.itemNav
+          : !isHome
+          ? s.nav
           : isFix
           ? `${s.homeNav} ${s.sticky}`
-          : `${s.homeNav}`
+          : s.homeNav
       }
     >
       <ul className={s.menu}>

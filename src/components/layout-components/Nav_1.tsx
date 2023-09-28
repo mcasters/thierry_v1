@@ -22,15 +22,19 @@ export default function Nav_1({
   sculptureCategories,
 }: Props) {
   const pathname = usePathname();
+  const isPainting = pathname.split('/')[1] === 'peintures';
+  const isSculpture = pathname.split('/')[1] === 'sculptures';
 
   return (
     <nav
       className={
-        !isHome
-          ? `${s.nav}`
+        isPainting || isSculpture
+          ? s.itemNav
+          : !isHome
+          ? s.nav
           : isFix
           ? `${s.homeNav} ${s.sticky}`
-          : `${s.homeNav}`
+          : s.homeNav
       }
     >
       <ul className={s.menu}>
@@ -40,7 +44,7 @@ export default function Nav_1({
             menuItem.PATH === ROUTES.PAINTING &&
             paintingCategories.length > 0
           ) {
-            isActive = pathname.split('/')[1] === 'peintures';
+            isActive = isPainting;
             return (
               <Dropdown
                 key={menuItem.NAME}
@@ -54,7 +58,7 @@ export default function Nav_1({
             menuItem.PATH === ROUTES.SCULPTURE &&
             sculptureCategories.length > 0
           ) {
-            isActive = pathname.split('/')[1] === 'sculptures';
+            isActive = isSculpture;
             return (
               <Dropdown
                 key={menuItem.NAME}

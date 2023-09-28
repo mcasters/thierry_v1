@@ -1,4 +1,4 @@
-.nav, .homeNav, .dropdown .link  {
+.nav, .itemNav, .homeNav, .dropdown .link  {
     height: var(--nav-1-height);
     width: 100%;
     z-index: 2;
@@ -14,27 +14,37 @@
     height: var(--nav-1-height);
     line-height: var(--nav-1-height);
     width: 40vw;
-    border-bottom: 1px solid var(--color-blue-light);
+    border-bottom: 1px solid var(--color-border-menu1);
     margin: auto;
 }
 
-.sticky, .nav {
+.itemNav .menu {
+    border-bottom: none;
+}
+
+.sticky, .nav, .itemNav {
   position: fixed;
   top: var(--line-height);
-  border-bottom: 1px solid var(--color-border-menu1);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
   transition: all ease-in-out 0.2s;
 }
 
 .sticky {
     background-color: var(--color-background-menu1-home-fix);
+    border-bottom: 1px solid var(--color-border-menu1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .nav {
     background-color: var(--color-background-menu1);
+    border-bottom: 1px solid var(--color-border-menu1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
-.homeNav li, .nav li {
+.itemNav {
+    background-color: var(--color-background-menu1Item);
+}
+
+.homeNav li, .nav li, .itemNav li {
   display: inline-block;
   width: 100px;
   margin: 0 auto;
