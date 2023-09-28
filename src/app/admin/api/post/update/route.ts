@@ -50,16 +50,18 @@ export async function POST(req: Request) {
             height: fileInfo.height,
           },
         };
-        const pathOldMainImage = join(
-          `${dir}`,
-          `${oldPost.mainImage.filename}`,
-        );
-        deleteFile(pathOldMainImage);
-        await prisma.PostImage.delete({
-          where: {
-            filename: oldPost.mainImage.filename,
-          },
-        });
+        if (oldPost.mainImage !== null) {
+          const pathOldMainImage = join(
+            `${dir}`,
+            `${oldPost.mainImage.filename}`,
+          );
+          deleteFile(pathOldMainImage);
+          await prisma.PostImage.delete({
+            where: {
+              filename: oldPost.mainImage.filename,
+            },
+          });
+        }
       }
 
       let images = [];

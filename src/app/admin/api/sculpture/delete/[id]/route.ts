@@ -13,7 +13,7 @@ export async function GET(
     const dir = getSculptureDir();
     try {
       const id = Number(params.id);
-      const sculpture = await prisma.sculpture.findUnique({
+      const sculpture = await prisma.Sculpture.findUnique({
         where: { id },
         include: {
           images: {
@@ -31,7 +31,7 @@ export async function GET(
           },
         });
       }
-      await prisma.sculpture.delete({
+      await prisma.Sculpture.delete({
         where: {
           id,
         },

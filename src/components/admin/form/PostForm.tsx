@@ -32,7 +32,8 @@ export default function PostForm({ post, toggleModal }: Props) {
     setTitle('');
     setDate(new Date());
     setContent('');
-    resetImageRef.current = resetImageRef.current + 1;
+    resetMainImageRef.current = resetMainImageRef.current + 1;
+    resetImagesRef.current = resetImagesRef.current + 1;
   };
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {

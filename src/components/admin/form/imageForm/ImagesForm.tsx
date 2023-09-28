@@ -30,12 +30,13 @@ export default function ImagesForm({
 }: Props) {
   const [newImages, setNewImages] = useState<string[]>([]);
   const [existantImages, setExistantImages] = useState<string[]>(() => {
-    return images && images[0] !== undefined
-      ? images.map((image) => image.filename)
-      : [];
+    return !images ||
+      images.length === 0 ||
+      images[0] === undefined ||
+      images[0] === null
+      ? []
+      : images.map((image) => image.filename);
   });
-
-  console.log(images);
 
   useEffect(() => {
     if (setHasImages !== undefined)

@@ -177,6 +177,9 @@ export default function ItemForm({
           reset={resetImageRef.current}
           pathImage={`/images/${type}`}
           isMultiple={type === TYPE.SCULPTURE}
+          apiForDelete={
+            type === TYPE.SCULPTURE ? `api/${type}/delete-image` : undefined
+          }
         />
         <div>
           <input

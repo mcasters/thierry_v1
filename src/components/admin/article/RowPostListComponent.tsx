@@ -11,7 +11,11 @@ interface Props {
 }
 
 export default function RowPostListComponent({ post }: Props) {
-  const src = `/images/post/${post.mainImage.filename}`;
+  const src = post.mainImage?.filename
+    ? `/images/post/${post.mainImage?.filename}`
+    : post.images[0].filename
+    ? `/images/post/${post.images[0].filename}`
+    : null;
 
   return (
     <ul className={s.item}>
@@ -19,7 +23,7 @@ export default function RowPostListComponent({ post }: Props) {
         <span className={s.name}>{post.title}</span>
       </li>
       <li className={s.itemImage}>
-        <Image src={src} alt="image" height={50} width={50} />
+        {src !== null && <Image src={src} alt="image" height={50} width={50} />}
       </li>
       <li className={s.itemIcon}>
         <UpdateButton item={post} type={TYPE.POST} />
