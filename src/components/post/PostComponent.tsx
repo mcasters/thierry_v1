@@ -1,9 +1,9 @@
 'use client';
 
-import ImageWithLightbox from '@/components/image/imagelightbox';
+import ImageWithLightbox from '@/components/image/ImageWithLightbox';
 import s from './PostComponent.module.css';
 import { PostFull } from '@/app/api/post/post';
-import Gallery from '@/components/image/gallery';
+import Gallery from '@/components/image/Gallery';
 import { TYPE } from '@/constants';
 
 interface Props {
@@ -13,11 +13,13 @@ export default function PostComponent({ post }: Props) {
   return (
     <article>
       <div className={s.mainImage}>
-        <ImageWithLightbox
-          images={[post.mainImage]}
-          alt={`${post.title} - Photo de Thierry Casters`}
-          type={TYPE.POST}
-        />
+        {post.mainImage && (
+          <ImageWithLightbox
+            images={[post.mainImage]}
+            alt={`${post.title} - Photo de Thierry Casters`}
+            type={TYPE.POST}
+          />
+        )}
       </div>
       <div className={s.info}>
         <h2>{post.title}</h2>
@@ -28,7 +30,7 @@ export default function PostComponent({ post }: Props) {
         </p>
       </div>
       <div className={s.gallery}>
-        <Gallery images={post.images} />
+        <Gallery images={post.images} type={TYPE.POST} />
       </div>
     </article>
   );

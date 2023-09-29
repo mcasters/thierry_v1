@@ -1,10 +1,11 @@
 'use client';
 
 import { TYPE } from '@/constants';
-import ImageWithLightbox from '@/components/image/imagelightbox';
+import ImageWithLightbox from '@/components/image/ImageWithLightbox';
 import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import { PaintingFull } from '@/app/api/peinture/painting';
 import s from './ItemComponent.module.css';
+import Gallery from '@/components/image/Gallery';
 
 interface Props {
   item: SculptureFull | PaintingFull;

@@ -5,7 +5,6 @@ import Image from 'next/legacy/image';
 import { TYPE } from '@/constants';
 
 import s from './lightbox.module.css';
-import { getSrcItem } from '@/utils/common';
 import { PostImage, Image as IImage } from '.prisma/client';
 
 type Props = {
@@ -21,16 +20,16 @@ const nextImageUrl = (src: string, size: number) =>
 
 export default function ImageWithLightbox({ images, type, alt }: Props) {
   const [open, setOpen] = useState(false);
-  const slides = images.map(({ filename, width, height }) => ({
-    width,
-    height,
-    src: nextImageUrl(`/images/${type}/${filename}`, width),
+  const slides = images.map((image) => ({
+    width: image.width,
+    height: image.height,
+    src: nextImageUrl(`/images/${type}/${image.filename}`, image.width),
     srcSet: deviceSizes
-      .filter((size) => size <= width)
+      .filter((size) => size <= image.width)
       .map((size) => ({
-        src: nextImageUrl(`/images/${type}/${filename}`, size),
+        src: nextImageUrl(`/images/${type}/${image.filename}`, size),
         width: size,
-        height: Math.round((height / width) * size),
+        height: Math.round((image.height / image.width) * size),
       })),
   }));
 
