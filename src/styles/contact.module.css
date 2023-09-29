@@ -6,9 +6,9 @@
   display: none;
 }
 
-.contactContainer a {
+.email {
   display: block;
-  padding: 4em 0;
+  padding: 4em 0 2em;
 }
 
 .contactContainer p {
@@ -19,5 +19,28 @@
   white-space: pre-line;
 }
 
+.instagram {
+  width: initial;
+  text-align: center;
+  border: none;
+  background: none;
+  font-size: 20px;
+  padding: 0.3em;
+  margin: 0;
+  box-shadow: none;
+}
 
+.instagram svg {
+  color: var(--color-blue-xlight);
+  transition: color 0.4s;
+}
+
+.instagram svg:hover {
+  color: var(--color-blue-xxlight);
+  transition: color 0.4s;
+}
+
+.text {
+  padding-top: 8em;
+}
 

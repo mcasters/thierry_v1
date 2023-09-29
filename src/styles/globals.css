@@ -70,8 +70,9 @@
   /*
   common home and other pages
    */
-  --color-link-menu1: var(--color-prussian-blue);
-  --color-link-menu1-hover: var(--color-blue-xlight);
+  --color-link-menu1: var(--color-blue-xlight);
+  --color-link-menu1-hover: var(--color-brown1);
+
   --color-border-menu1: var(--color-medium);
   --color-border-menu2: var(--color-medium);
 
@@ -80,8 +81,8 @@
    */
   --color-background-menu1: var(--color-light);
   --color-background-menu2: var(--color-xlight);
-  --color-link-menu2: var(--color-blue-xlight);
-  --color-link-menu2-hover: var(--color-blue-xxlight);
+  --color-link-menu2: var(--color-brown1);
+  --color-link-menu2-hover: var(--color-brown1);
 
   /*
   Item pages

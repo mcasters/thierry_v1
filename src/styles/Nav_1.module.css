@@ -79,7 +79,6 @@ color link
 }
 
 .nav .link.active {
-    color: var(--color-link-menu1-hover);
     border-bottom: 2px solid var(--color-link-menu1-hover);
 }
 

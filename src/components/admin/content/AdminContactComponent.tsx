@@ -39,7 +39,7 @@ export default function AdminContactComponent({
         content={textContactContent}
         label={Label.TEXT_CONTACT}
         isTextArea={true}
-        textLabel="texte d'accompagnement"
+        textLabel="texte d'accompagnement (facultatif)"
       />
     </>
   );
