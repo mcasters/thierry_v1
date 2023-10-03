@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 
 function useElementIsUpTo(yLimit: number) {
   const [isUpTo, setIsUpTo] = useState<boolean>(false);
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleScroll = useCallback(() => {
     if (ref && ref.current) {
@@ -23,7 +23,7 @@ function useElementIsUpTo(yLimit: number) {
     };
   }, [handleScroll]);
 
-  return [isUpTo, ref];
+  return { isUpTo, ref };
 }
 
 export default useElementIsUpTo;

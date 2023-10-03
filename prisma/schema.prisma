@@ -54,7 +54,7 @@ model ContentImage {
   filename    String     @unique
   width       Int
   height      Int
-  Content     Content?   @relation(fields: [contentId], references: [id])
+  content     Content?   @relation(fields: [contentId], references: [id])
   contentId   Int?
 }
 

@@ -1,5 +1,6 @@
 import { Content, Label } from '@prisma/client';
 import { ContentFull } from '@/app/api/content/content';
+import { ContentImage } from '.prisma/client';
 
 export const transformValueToKey = (value: string): string => {
   return value
@@ -39,17 +40,12 @@ export const getPresentationContent = (contents: ContentFull[]) => {
   return { presentationContent, demarcheContent, inspirationContent };
 };
 
-export const getHomeContent = (contents: ContentFull[]) => {
-  if (!contents || contents.length === 0) return undefined;
+export const getIntro = (contents) => {
+  return contents?.filter((c) => c.label === Label.INTRO)[0].text || '';
+};
 
-  let introContent;
-  let sliderContent;
-
-  contents.forEach((c: ContentFull) => {
-    if (c.label === Label.INTRO) introContent = c;
-    if (c.label === Label.SLIDER) sliderContent = c;
-  });
-  return { introContent, sliderContent };
+export const getSliders = (contents) => {
+  return contents?.filter((c) => c.label === Label.SLIDER)[0].images || [];
 };
 
 export const getContactContent = (contents: Content[]) => {

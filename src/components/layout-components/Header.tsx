@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import { PaintingCategory, SculptureCategory } from '@prisma/client';
 import useElementIsUpTo from '@/components/hooks/useElementIsUpTo';
 import LAYOUT from '@/constants/layout';
@@ -12,7 +10,6 @@ import s from '../../styles/Header.module.css';
 interface Props {
   isHome: boolean;
   introduction?: string;
-  handler: (arg0: boolean) => void;
   title: string;
   paintingCategories: PaintingCategory[];
   sculptureCategories: SculptureCategory[];
@@ -20,26 +17,23 @@ interface Props {
 export default function Header({
   isHome,
   introduction,
-  handler,
   title,
   paintingCategories,
   sculptureCategories,
 }: Props) {
-  const [titleDisappear, titleRef] = useElementIsUpTo(LAYOUT.LINE_HEIGHT);
-  const [introDisappear, introRef] = useElementIsUpTo(
+  const { isUpTo: titleDisappear, ref: titleRef } = useElementIsUpTo(
+    LAYOUT.LINE_HEIGHT,
+  );
+  const { isUpTo: introDisappear, ref: introRef } = useElementIsUpTo(
     LAYOUT.NAV_1_HEIGHT + LAYOUT.LINE_HEIGHT,
   );
-
-  useEffect(() => {
-    handler(introDisappear);
-  }, [introDisappear, handler]);
 
   return (
     <header className={s.container}>
       {isHome && (
-        <h1 ref={titleRef} className={s.title}>
-          {title}
-        </h1>
+        <div ref={titleRef}>
+          <h1 className={s.title}>{title}</h1>
+        </div>
       )}
       <Nav_1
         isHome={isHome}
