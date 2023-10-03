@@ -3,7 +3,7 @@ import { SculptureCategory } from '@prisma/client';
 import 'server-only';
 
 export async function getSculptureCategoriesFull() {
-  const res = await prisma.SculptureCategory.findMany({
+  const res = await prisma.sculptureCategory.findMany({
     include: { sculptures: true },
   });
   return JSON.parse(JSON.stringify(res));
@@ -11,8 +11,8 @@ export async function getSculptureCategoriesFull() {
 
 export async function getSculptureCategoriesForMenu() {
   const categories =
-    (await prisma.SculptureCategory.findMany()) as SculptureCategory[];
-  const sculptureWithoutCategory = await prisma.Painting.findFirst({
+    (await prisma.sculptureCategory.findMany()) as SculptureCategory[];
+  const sculptureWithoutCategory = await prisma.painting.findFirst({
     where: {
       category: null,
     },
@@ -27,5 +27,5 @@ export async function getSculptureCategoriesForMenu() {
 }
 
 export async function getSculptureCategories() {
-  return (await prisma.SculptureCategory.findMany()) as SculptureCategory[];
+  return (await prisma.sculptureCategory.findMany()) as SculptureCategory[];
 }

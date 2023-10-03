@@ -3,7 +3,7 @@ import { PaintingCategory } from '@prisma/client';
 import 'server-only';
 
 export async function getPaintingCategoriesFull() {
-  const res = await prisma.PaintingCategory.findMany({
+  const res = await prisma.paintingCategory.findMany({
     include: { paintings: true },
   });
   return JSON.parse(JSON.stringify(res));
@@ -11,8 +11,8 @@ export async function getPaintingCategoriesFull() {
 
 export async function getPaintingCategoriesForMenu() {
   const categories =
-    (await prisma.PaintingCategory.findMany()) as PaintingCategory[];
-  const paintingWithoutCategory = await prisma.Painting.findFirst({
+    (await prisma.paintingCategory.findMany()) as PaintingCategory[];
+  const paintingWithoutCategory = await prisma.painting.findFirst({
     where: {
       category: null,
     },
