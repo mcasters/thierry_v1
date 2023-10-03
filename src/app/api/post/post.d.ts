@@ -1,4 +1,10 @@
 import { Prisma } from '@prisma/client';
 import { getPostsFull } from '@/app/api/post/getPosts';
 
-export type PostFull = Prisma.PromiseReturnType<typeof getPostsFull>;
+const PostFull = Prisma.validator<Prisma.PostDefaultArgs>()({
+  include: { mainImage: true, images: true },
+});
+
+export type PostFull = Prisma.PostGetPayload<typeof PostFull>;
+
+export type PostsFull = Prisma.PromiseReturnType<typeof getPostsFull>;
