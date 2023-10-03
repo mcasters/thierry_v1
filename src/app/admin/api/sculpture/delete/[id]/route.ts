@@ -23,19 +23,21 @@ export async function GET(
           },
         },
       });
-      for (const image of sculpture.images) {
-        deleteFile(`${dir}/${image.filename}`);
-        await prisma.image.delete({
+      if (sculpture) {
+        for (const image of sculpture.images) {
+          deleteFile(`${dir}/${image.filename}`);
+          await prisma.image.delete({
+            where: {
+              filename: image.filename,
+            },
+          });
+        }
+        await prisma.sculpture.delete({
           where: {
-            filename: image.filename,
+            id,
           },
         });
       }
-      await prisma.sculpture.delete({
-        where: {
-          id,
-        },
-      });
 
       return NextResponse.json({ message: 'ok' });
     } catch (e) {

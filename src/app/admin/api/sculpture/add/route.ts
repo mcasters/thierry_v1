@@ -17,45 +17,40 @@ export async function POST(req: Request) {
     try {
       const dir = getSculptureDir();
       createDirIfNecessary(dir);
-
       const formData = await req.formData();
-
       const files = formData.getAll('files') as File[];
 
       let images = [];
       for (const file of files) {
         if (file.size > 0) {
           const fileInfo = await resizeAndSaveImage(file, dir, undefined);
-          images.push({
-            filename: fileInfo.filename,
-            width: fileInfo.width,
-            height: fileInfo.height,
-          });
+          if (fileInfo)
+            images.push({
+              filename: fileInfo.filename,
+              width: fileInfo.width,
+              height: fileInfo.height,
+            });
         }
       }
-
-      const categoryId = formData.get('categoryId');
-      const category =
-        categoryId === ''
-          ? {}
-          : {
-              connect: {
-                id: Number(categoryId),
-              },
-            };
-
-      const newSculpture = await prisma.sculpture.create({
+      await prisma.sculpture.create({
         data: {
-          title: formData.get('title'),
+          title: formData.get('title') as string,
           date: parse(formData.get('date') as string, 'yyyy', new Date()),
-          technique: formData.get('technique'),
-          description: formData.get('description'),
+          technique: formData.get('technique') as string,
+          description: formData.get('description') as string,
           height: Number(formData.get('height')),
           width: Number(formData.get('width')),
           length: Number(formData.get('length')),
           isToSell: formData.get('isToSell') === 'true',
           price: Number(formData.get('price')),
-          category,
+          category:
+            formData.get('categoryId') === ''
+              ? {}
+              : {
+                  connect: {
+                    id: Number(formData.get('categoryId')),
+                  },
+                },
           images: {
             create: images,
           },

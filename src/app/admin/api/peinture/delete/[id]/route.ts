@@ -26,13 +26,13 @@ export async function GET(
       if (painting) {
         const filename = painting.image.filename;
         deleteFile(`${dir}/${filename}`);
+        await prisma.image.delete({
+          where: { filename },
+        });
         await prisma.painting.delete({
           where: {
             id,
           },
-        });
-        await prisma.image.delete({
-          where: { filename },
         });
       }
       return NextResponse.json({ message: 'ok' });

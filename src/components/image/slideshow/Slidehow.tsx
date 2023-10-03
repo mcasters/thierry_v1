@@ -4,8 +4,8 @@ import Lightbox from 'yet-another-react-lightbox';
 import Inline from 'yet-another-react-lightbox/plugins/inline';
 import 'yet-another-react-lightbox/styles.css';
 
-import { Image } from '@/interfaces';
 import { getSrcMisc } from '@/utils/common';
+import { Image } from '.prisma/client';
 
 type Props = {
   images: Image[];
@@ -18,7 +18,6 @@ const nextImageUrl = (src: string, size: number) =>
   `/_next/image?url=${encodeURIComponent(src)}&w=${size}&q=75`;
 
 export default function Slideshow({ images }: Props) {
-  // const { next } = useController();
   const slides = images.map(({ filename, width, height }) => ({
     width,
     height,

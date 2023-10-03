@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import PhotoAlbum from 'react-photo-album';
 import Lightbox from 'yet-another-react-lightbox';
-import { PostFull } from '@/app/api/post/post';
+import { PostImage } from '.prisma/client';
 
 interface Props {
-  images: PostFull[];
+  images: PostImage[];
   type: string;
 }
 

@@ -3,11 +3,7 @@ import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
 import { NextResponse } from 'next/server';
 
-import {
-  deleteFile,
-  resizeAndSaveImage,
-  getSculptureDir,
-} from '@/utils/server';
+import { resizeAndSaveImage, getSculptureDir } from '@/utils/server';
 import prisma from '@/lib/prisma';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
@@ -19,66 +15,60 @@ export async function POST(req: Request) {
       const dir = getSculptureDir();
 
       const formData = await req.formData();
-      const sculptId = Number(formData.get('id'));
+      const id = Number(formData.get('id'));
       const oldSculpt = await prisma.sculpture.findUnique({
-        where: { id: sculptId },
-        include: {
-          images: {
-            select: {
-              filename: true,
+        where: { id },
+      });
+
+      if (oldSculpt) {
+        const files = formData.getAll('files') as File[];
+        let images = [];
+        for (const file of files) {
+          if (file.size > 0) {
+            const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+            if (fileInfo)
+              images.push({
+                filename: fileInfo.filename,
+                width: fileInfo.width,
+                height: fileInfo.height,
+              });
+          }
+        }
+
+        const category =
+          formData.get('categoryId') !== ''
+            ? {
+                connect: {
+                  id: Number(formData.get('categoryId')),
+                },
+              }
+            : oldSculpt.categoryId !== null
+            ? {
+                disconnect: {
+                  id: oldSculpt.categoryId,
+                },
+              }
+            : {};
+
+        await prisma.sculpture.update({
+          where: { id: id },
+          data: {
+            title: formData.get('title') as string,
+            date: parse(formData.get('date') as string, 'yyyy', new Date()),
+            technique: formData.get('technique') as string,
+            description: formData.get('description') as string,
+            height: Number(formData.get('height')),
+            width: Number(formData.get('width')),
+            length: Number(formData.get('length')),
+            isToSell: formData.get('isToSell') === 'true',
+            price: Number(formData.get('price')),
+            category,
+            images: {
+              create: images,
             },
           },
-        },
-      });
-
-      const files = formData.getAll('files') as File[];
-
-      let images = [];
-      for (const file of files) {
-        if (file.size > 0) {
-          const fileInfo = await resizeAndSaveImage(file, dir, undefined);
-          images.push({
-            filename: fileInfo.filename,
-            width: fileInfo.width,
-            height: fileInfo.height,
-          });
-        }
+        });
       }
-
-      const category =
-        formData.get('categoryId') !== ''
-          ? {
-              connect: {
-                id: Number(formData.get('categoryId')),
-              },
-            }
-          : oldSculpt.categoryId !== null
-          ? {
-              disconnect: {
-                id: oldSculpt.categoryId,
-              },
-            }
-          : {};
-
-      const updatedSculpt = await prisma.sculpture.update({
-        where: { id: sculptId },
-        data: {
-          title: formData.get('title'),
-          date: parse(formData.get('date') as string, 'yyyy', new Date()),
-          technique: formData.get('technique'),
-          description: formData.get('description'),
-          height: Number(formData.get('height')),
-          width: Number(formData.get('width')),
-          length: Number(formData.get('length')),
-          isToSell: formData.get('isToSell') === 'true',
-          price: Number(formData.get('price')),
-          category,
-          images: {
-            create: images,
-          },
-        },
-      });
-
       return NextResponse.json({ message: 'ok' }, { status: 200 });
     } catch (e) {
       console.log(e);
