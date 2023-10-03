@@ -17,41 +17,38 @@ export async function POST(req: Request) {
     try {
       const dir = getPaintingDir();
       createDirIfNecessary(dir);
-
       const formData = await req.formData();
-
       const file = formData.get('file');
       const fileInfo = await resizeAndSaveImage(file, dir, undefined);
-      const categoryId = formData.get('categoryId');
-      const category =
-        categoryId === ''
-          ? {}
-          : {
-              connect: {
-                id: Number(categoryId),
+      if (fileInfo) {
+        const newPainting = await prisma.painting.create({
+          data: {
+            title: formData.get('title') as string,
+            date: parse(formData.get('date') as string, 'yyyy', new Date()),
+            technique: formData.get('technique') as string,
+            description: formData.get('description') as string,
+            height: Number(formData.get('height')),
+            width: Number(formData.get('width')),
+            isToSell: formData.get('isToSell') === 'true',
+            price: Number(formData.get('price')),
+            category:
+              formData.get('categoryId') === ''
+                ? {}
+                : {
+                    connect: {
+                      id: Number(formData.get('categoryId')),
+                    },
+                  },
+            image: {
+              create: {
+                filename: fileInfo.filename,
+                width: fileInfo.width,
+                height: fileInfo.height,
               },
-            };
-
-      const newPainting = await prisma.Painting.create({
-        data: {
-          title: formData.get('title'),
-          date: parse(formData.get('date') as string, 'yyyy', new Date()),
-          technique: formData.get('technique'),
-          description: formData.get('description'),
-          height: Number(formData.get('height')),
-          width: Number(formData.get('width')),
-          isToSell: formData.get('isToSell') === 'true',
-          price: Number(formData.get('price')),
-          category,
-          image: {
-            create: {
-              filename: `${fileInfo.filename}`,
-              width: fileInfo.width,
-              height: fileInfo.height,
             },
           },
-        },
-      });
+        });
+      }
 
       return NextResponse.json({ message: 'ok' }, { status: 200 });
     } catch (e) {

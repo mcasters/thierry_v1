@@ -13,7 +13,7 @@ export async function GET(
     const dir = getPaintingDir();
     try {
       const id = Number(params.id);
-      const painting = await prisma.Painting.findUnique({
+      const painting = await prisma.painting.findUnique({
         where: { id },
         include: {
           image: {
@@ -23,17 +23,18 @@ export async function GET(
           },
         },
       });
-      const filename = painting.image.filename;
-      deleteFile(`${dir}/${filename}`);
-      await prisma.Painting.delete({
-        where: {
-          id,
-        },
-      });
-      await prisma.Image.delete({
-        where: { filename },
-      });
-
+      if (painting) {
+        const filename = painting.image.filename;
+        deleteFile(`${dir}/${filename}`);
+        await prisma.painting.delete({
+          where: {
+            id,
+          },
+        });
+        await prisma.image.delete({
+          where: { filename },
+        });
+      }
       return NextResponse.json({ message: 'ok' });
     } catch (e) {
       console.log(e);

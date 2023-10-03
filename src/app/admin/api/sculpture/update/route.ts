@@ -20,7 +20,7 @@ export async function POST(req: Request) {
 
       const formData = await req.formData();
       const sculptId = Number(formData.get('id'));
-      const oldSculpt = await prisma.Sculpture.findUnique({
+      const oldSculpt = await prisma.sculpture.findUnique({
         where: { id: sculptId },
         include: {
           images: {
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
         if (file.size > 0) {
           const fileInfo = await resizeAndSaveImage(file, dir, undefined);
           images.push({
-            filename: `${fileInfo.filename}`,
+            filename: fileInfo.filename,
             width: fileInfo.width,
             height: fileInfo.height,
           });
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
             }
           : {};
 
-      const updatedSculpt = await prisma.Sculpture.update({
+      const updatedSculpt = await prisma.sculpture.update({
         where: { id: sculptId },
         data: {
           title: formData.get('title'),

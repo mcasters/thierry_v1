@@ -21,7 +21,7 @@ export async function POST(req: Request) {
 
       const formData = await req.formData();
       const postId = Number(formData.get('id'));
-      const oldPost = await prisma.Post.findUnique({
+      const oldPost = await prisma.post.findUnique({
         where: { id: postId },
         include: {
           mainImage: {
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
         const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
         mainImage = {
           create: {
-            filename: `${fileInfo.filename}`,
+            filename: fileInfo.filename,
             width: fileInfo.width,
             height: fileInfo.height,
           },
@@ -56,7 +56,7 @@ export async function POST(req: Request) {
             `${oldPost.mainImage.filename}`,
           );
           deleteFile(pathOldMainImage);
-          await prisma.PostImage.delete({
+          await prisma.postImage.delete({
             where: {
               filename: oldPost.mainImage.filename,
             },
@@ -69,14 +69,14 @@ export async function POST(req: Request) {
         if (file.size > 0) {
           const fileInfo = await resizeAndSaveImage(file, dir, undefined);
           images.push({
-            filename: `${fileInfo.filename}`,
+            filename: fileInfo.filename,
             width: fileInfo.width,
             height: fileInfo.height,
           });
         }
       }
 
-      const updatedPost = await prisma.Post.update({
+      const updatedPost = await prisma.post.update({
         where: { id: postId },
         data: {
           title: formData.get('title'),

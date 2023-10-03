@@ -12,7 +12,7 @@ export async function GET(
     try {
       const id = Number(params.id);
 
-      await prisma.SculptureCategory.delete({
+      await prisma.sculptureCategory.delete({
         where: { id },
       });
 

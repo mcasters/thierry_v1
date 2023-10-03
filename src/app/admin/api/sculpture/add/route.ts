@@ -27,7 +27,7 @@ export async function POST(req: Request) {
         if (file.size > 0) {
           const fileInfo = await resizeAndSaveImage(file, dir, undefined);
           images.push({
-            filename: `${fileInfo.filename}`,
+            filename: fileInfo.filename,
             width: fileInfo.width,
             height: fileInfo.height,
           });
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
               },
             };
 
-      const newSculpture = await prisma.Sculpture.create({
+      const newSculpture = await prisma.sculpture.create({
         data: {
           title: formData.get('title'),
           date: parse(formData.get('date') as string, 'yyyy', new Date()),

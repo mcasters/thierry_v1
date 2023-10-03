@@ -6,13 +6,13 @@ import {
   deleteFile,
   getMiscellaneousDir,
   resizeAndSaveImage,
-} from '../../../../../utils/server';
-import prisma from '../../../../../lib/prisma';
-import { authOptions } from '../../../../api/auth/[...nextauth]/route';
+} from '@/utils/server';
+import prisma from '@/lib/prisma';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { Label } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
-export async function POST(req) {
+export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (session) {
@@ -21,7 +21,7 @@ export async function POST(req) {
       createDirIfNecessary(dir);
 
       const formData = await req.formData();
-      const label = formData.get('label');
+      const label = formData.get('label') as Label;
       const BDContent = await prisma.content.findUnique({
         where: {
           label: label,
@@ -35,84 +35,102 @@ export async function POST(req) {
         },
       });
 
+      let content;
       // Content with only images (Label.SLIDER)
       if (label === Label.SLIDER) {
         if (!BDContent) {
-          await prisma.content.create({
+          content = await prisma.content.create({
             data: {
               label: label,
               title: '',
               text: '',
             },
           });
-        }
-        const files = formData.getAll('files');
+        } else content = BDContent;
+
+        const files = formData.getAll('files') as File[];
         for (const file of files) {
           if (file.size > 0) {
             const fileInfo = await resizeAndSaveImage(file, dir, undefined);
-            await prisma.contentImage.create({
-              data: {
-                filename: fileInfo.filename,
-                width: fileInfo.width,
-                height: fileInfo.height,
-                content: {
-                  connect: { label },
+            if (fileInfo) {
+              await prisma.content.update({
+                where: { id: content.id },
+                data: {
+                  images: {
+                    create: {
+                      filename: fileInfo.filename,
+                      width: fileInfo.width,
+                      height: fileInfo.height,
+                    },
+                  },
                 },
-              },
-            });
+              });
+            }
           }
         }
       } else {
         if (!BDContent) {
-          await prisma.content.create({
+          content = await prisma.content.create({
             data: {
               label,
               title: '',
-              text: formData.get('text'),
+              text: formData.get('text') as string,
+              images: {},
             },
+            include: { images: true },
           });
         } else {
-          await prisma.content.update({
+          content = await prisma.content.update({
             where: {
               id: BDContent.id,
             },
             data: {
-              text: formData.get('text'),
+              text: formData.get('text') as string,
             },
+            include: { images: true },
           });
         }
 
         // Contents with one image (PRESENTATION)
         if (label === Label.PRESENTATION) {
-          const file = formData.get('file');
+          const file = formData.get('file') as File;
           if (file.size > 0) {
-            if (BDContent.images.length > 0) {
-              const oldFilename = BDContent.images[0].filename;
+            if (content.images.length > 0) {
+              const oldFilename = content.images[0].filename;
               deleteFile(join(`${dir}`, `${oldFilename}`));
-              await prisma.contentImage.delete({
-                where: { oldFilename },
+              await prisma.content.update({
+                where: { id: content.id },
+                data: {
+                  images: {
+                    delete: { filename: oldFilename },
+                  },
+                },
               });
             }
             const fileInfo = await resizeAndSaveImage(file, dir, undefined);
-            await prisma.contentImage.create({
-              data: {
-                filename: fileInfo.filename,
-                width: fileInfo.width,
-                height: fileInfo.height,
-                content: {
-                  connect: { label },
+            if (fileInfo) {
+              await prisma.content.update({
+                where: { id: content.id },
+                data: {
+                  images: {
+                    create: {
+                      filename: fileInfo.filename,
+                      width: fileInfo.width,
+                      height: fileInfo.height,
+                    },
+                  },
                 },
-              },
-            });
+              });
+            }
           }
         }
       }
-      return NextResponse.json({ message: 'ok' });
+      return NextResponse.json({ message: 'ok' }, { status: 200 });
     } catch (e) {
       console.log(e);
-      return NextResponse.json({ error: 'Error' });
+      return NextResponse.json({ error: 'Error' }, { status: 404 });
     }
   } else {
-    return NextResponse.json({ message: 'Unauthorized' });
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 }

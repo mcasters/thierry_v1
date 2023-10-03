@@ -20,7 +20,7 @@ export async function GET(
       const dir = getSculptureDir();
 
       if (deleteFile(join(`${dir}`, `${filename}`))) {
-        imageDBDeleted = await prisma.Image.delete({
+        imageDBDeleted = await prisma.image.delete({
           where: { filename },
         });
       }

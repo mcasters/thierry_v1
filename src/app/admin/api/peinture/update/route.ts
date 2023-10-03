@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
       const formData = await req.formData();
       const paintId = Number(formData.get('id'));
-      const oldPaint = await prisma.Painting.findUnique({
+      const oldPaint = await prisma.painting.findUnique({
         where: { id: paintId },
         include: {
           image: {
@@ -27,53 +27,56 @@ export async function POST(req: Request) {
         },
       });
 
-      let fileInfo = null;
-      let image = {};
-      const newFile = formData.get('file') as File;
-      if (newFile.size !== 0) {
-        const path = join(`${dir}`, `${oldPaint.image.filename}`);
-        deleteFile(path);
-        fileInfo = await resizeAndSaveImage(newFile, dir, undefined);
-        image = {
-          create: {
-            filename: `${fileInfo.filename}`,
-            width: fileInfo.width,
-            height: fileInfo.height,
+      if (oldPaint) {
+        let fileInfo = null;
+        let image = {};
+        const newFile = formData.get('file') as File;
+        if (newFile.size !== 0) {
+          const path = join(`${dir}`, `${oldPaint.image.filename}`);
+          deleteFile(path);
+          fileInfo = await resizeAndSaveImage(newFile, dir, undefined);
+          if (fileInfo) {
+            image = {
+              create: {
+                filename: fileInfo.filename,
+                width: fileInfo.width,
+                height: fileInfo.height,
+              },
+            };
+          }
+        }
+
+        const category =
+          formData.get('categoryId') !== ''
+            ? {
+                connect: {
+                  id: Number(formData.get('categoryId')),
+                },
+              }
+            : oldPaint.categoryId !== null
+            ? {
+                disconnect: {
+                  id: oldPaint.categoryId,
+                },
+              }
+            : {};
+
+        const updatedPaint = await prisma.painting.update({
+          where: { id: paintId },
+          data: {
+            title: formData.get('title') as string,
+            date: parse(formData.get('date') as string, 'yyyy', new Date()),
+            technique: formData.get('technique') as string,
+            description: formData.get('description') as string,
+            height: Number(formData.get('height')),
+            width: Number(formData.get('width')),
+            isToSell: formData.get('isToSell') === 'true',
+            price: Number(formData.get('price')),
+            category,
+            image,
           },
-        };
+        });
       }
-
-      const category =
-        formData.get('categoryId') !== ''
-          ? {
-              connect: {
-                id: Number(formData.get('categoryId')),
-              },
-            }
-          : oldPaint.categoryId !== null
-          ? {
-              disconnect: {
-                id: oldPaint.categoryId,
-              },
-            }
-          : {};
-
-      const updatedPaint = await prisma.Painting.update({
-        where: { id: paintId },
-        data: {
-          title: formData.get('title'),
-          date: parse(formData.get('date') as string, 'yyyy', new Date()),
-          technique: formData.get('technique'),
-          description: formData.get('description'),
-          height: Number(formData.get('height')),
-          width: Number(formData.get('width')),
-          isToSell: formData.get('isToSell') === 'true',
-          price: Number(formData.get('price')),
-          category,
-          image,
-        },
-      });
-
       return NextResponse.json({ message: 'ok' }, { status: 200 });
     } catch (e) {
       console.log(e);

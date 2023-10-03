@@ -19,9 +19,28 @@ export async function GET(
       let imageDBDeleted = null;
       const dir = getMiscellaneousDir();
 
-      if (deleteFile(join(`${dir}`, `${filename}`))) {
-        imageDBDeleted = await prisma.ContentImage.delete({
-          where: { filename },
+      const content = await prisma.content.findFirst({
+        where: {
+          images: {
+            some: {
+              filename,
+            },
+          },
+        },
+      });
+
+      console.log('/// content');
+      console.log(content);
+
+      if (content) {
+        deleteFile(join(`${dir}`, `${filename}`));
+        await prisma.content.update({
+          where: { id: content.id },
+          data: {
+            images: {
+              delete: { filename },
+            },
+          },
         });
       }
       return NextResponse.json({ message: 'ok' }, { status: 200 });

@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       const value = formData.get('text') as string;
       const key = transformValueToKey(value);
 
-      const updatedPaint = await prisma.SculptureCategory.update({
+      const updatedPaint = await prisma.sculptureCategory.update({
         where: { id },
         data: {
           key,

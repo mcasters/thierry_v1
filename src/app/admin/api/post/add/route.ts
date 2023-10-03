@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       if (mainFile.size > 0) {
         const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
         mainImage = {
-          filename: `${fileInfo.filename}`,
+          filename: fileInfo.filename,
           width: fileInfo.width,
           height: fileInfo.height,
         };
@@ -39,14 +39,14 @@ export async function POST(req: Request) {
         if (file.size > 0) {
           const fileInfo = await resizeAndSaveImage(file, dir, undefined);
           images.push({
-            filename: `${fileInfo.filename}`,
+            filename: fileInfo.filename,
             width: fileInfo.width,
             height: fileInfo.height,
           });
         }
       }
 
-      const newPost = await prisma.Post.create({
+      const newPost = await prisma.post.create({
         data: {
           title: formData.get('title'),
           date: parse(formData.get('date') as string, 'yyyy', new Date()),

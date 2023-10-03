@@ -13,7 +13,7 @@ export async function GET(
     const dir = getPostDir();
     try {
       const id = Number(params.id);
-      const post = await prisma.Post.findUnique({
+      const post = await prisma.post.findUnique({
         where: { id },
         include: {
           mainImage: {
@@ -29,20 +29,20 @@ export async function GET(
         },
       });
       deleteFile(`${dir}/${post.mainImage.filename}`);
-      await prisma.PostImage.delete({
+      await prisma.postImage.delete({
         where: {
           filename: post.mainImage.filename,
         },
       });
       for (const image of post.images) {
         deleteFile(`${dir}/${image.filename}`);
-        await prisma.PostImage.delete({
+        await prisma.postImage.delete({
           where: {
             filename: image.filename,
           },
         });
       }
-      await prisma.Post.delete({
+      await prisma.post.delete({
         where: {
           id,
         },

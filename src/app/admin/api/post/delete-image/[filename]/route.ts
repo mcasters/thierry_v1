@@ -20,7 +20,7 @@ export async function GET(
       const dir = getPostDir();
 
       if (deleteFile(join(`${dir}`, `${filename}`))) {
-        imageDBDeleted = await prisma.PostImage.delete({
+        imageDBDeleted = await prisma.postImage.delete({
           where: { filename },
         });
       }
