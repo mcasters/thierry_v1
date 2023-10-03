@@ -9,7 +9,7 @@ export type Props = {
   children: ReactNode;
 };
 
-export default function Main({ isHome, children }) {
+export default function Main({ isHome, children }: Props) {
   return isHome ? (
     <div className={s.wrapper}>
       <main className={s.mainHome}>{children}</main>

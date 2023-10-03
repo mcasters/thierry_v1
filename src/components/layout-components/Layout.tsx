@@ -7,6 +7,7 @@ import { ROUTES } from '@/constants/routes';
 import Header from './Header';
 import Main from '@/components/layout-components/Main';
 import { PaintingCategory, SculptureCategory } from '@prisma/client';
+import { ContentFull } from '@/app/api/content/content';
 
 interface Props {
   introduction?: string;
@@ -21,25 +22,19 @@ export default function Layout({
   sculptureCategories,
   children,
 }: Props) {
-  const [headerIsFix, setHeaderIsFix] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === ROUTES.HOME;
-
-  const handler = (isFix) => setHeaderIsFix(isFix);
 
   return (
     <>
       <Header
-        handler={handler}
         isHome={isHome}
         introduction={introduction}
         title="Thierry Casters"
         paintingCategories={paintingCategories}
         sculptureCategories={sculptureCategories}
       />
-      <Main isHome={isHome} headerIsFix={headerIsFix}>
-        {children}
-      </Main>
+      <Main isHome={isHome}>{children}</Main>
     </>
   );
 }

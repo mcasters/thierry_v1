@@ -39,10 +39,12 @@ export default function ItemForm({
   );
   const [height, setHeight] = useState<string>(item?.height.toString() || '');
   const [width, setWidth] = useState<string>(item?.width.toString() || '');
-  const [length, setLength] = useState<string>(item?.length?.toString() || '');
   const [price, setPrice] = useState<string>(item?.price?.toString() || '');
-  const [categoryId, setCategoryId] = useState<string>(item?.categoryId || '');
+  const [categoryId, setCategoryId] = useState<string>(
+    item?.category?.id.toString() || '',
+  );
   const [isToSell, setIsToSell] = useState<boolean>(item?.isToSell || false);
+  const [length, setLength] = useState<string>(item?.length?.toString() || '');
   const [hasImage, setHasImage] = useState<boolean>(false);
   const router = useRouter();
 
@@ -58,6 +60,7 @@ export default function ItemForm({
     setLength('');
     setPrice('');
     setIsToSell(false);
+    setCategoryId('');
     resetImageRef.current = resetImageRef.current + 1;
   };
 
@@ -77,7 +80,7 @@ export default function ItemForm({
 
   return (
     <div className={s.formContainer}>
-      <h2>{item ? `Modifier une ${item.type}` : `Ajouter une ${type}`}</h2>
+      <h2>{item ? `Modifier une ${type}` : `Ajouter une ${type}`}</h2>
       <form ref={formRef} onSubmit={submit}>
         {item && <input type="hidden" name="id" value={item.id} />}
         <input type="hidden" name="isToSell" value={String(isToSell)} />
@@ -96,11 +99,13 @@ export default function ItemForm({
           onChange={(e) => setCategoryId(e.target.value)}
         >
           <option value="">-- Catégorie (facultatif) --</option>
-          {categories.map((cat: PaintingCategoryFull) => (
-            <option key={cat.id} value={cat.id}>
-              {cat.value}
-            </option>
-          ))}
+          {categories.map(
+            (cat: PaintingCategoryFull | SculptureCategoryFull) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.value}
+              </option>
+            ),
+          )}
         </select>
         <input
           onChange={(e) => {

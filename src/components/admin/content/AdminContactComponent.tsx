@@ -1,13 +1,14 @@
 'use client';
-import { Label, Content } from '@prisma/client';
+import { Label } from '@prisma/client';
 
 import ContentForm from '@/components/admin/form/ContentForm';
+import { ContentFull } from '@/app/api/content/content';
 
 interface Props {
-  addressContent: Content;
-  phoneContent: Content;
-  emailContent: Content;
-  textContactContent: Content;
+  addressContent: ContentFull;
+  phoneContent: ContentFull;
+  emailContent: ContentFull;
+  textContactContent: ContentFull;
 }
 export default function AdminContactComponent({
   addressContent,

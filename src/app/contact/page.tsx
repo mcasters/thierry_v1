@@ -1,25 +1,24 @@
 import Link from 'next/link';
 
-import { getContents } from '@/app/api/content/getContents';
-import { getContactContent } from '@/utils/common';
+import { getContents, getContentsFull } from '@/app/api/content/getContents';
 import s from '@/styles/contact.module.css';
 import { SiInstagram } from 'react-icons/si';
+import { getAddress, getEmail, getPhone, getTextContact } from '@/utils/common';
 
 export default async function Contact() {
-  const contents = await getContents();
-  const { addressContent, phoneContent, emailContent, textContactContent } =
-    getContactContent(contents);
+  const contents = await getContentsFull();
+  const email = getEmail(contents);
 
   return (
     <div className={s.contactContainer}>
       <address>
         <h1 className={s.title}>Contacter Thierry Casters</h1>
         <p>Thierry Casters</p>
-        <p className={s.preLine}>{addressContent.text}</p>
-        <p>{phoneContent.text}</p>
+        <p className={s.preLine}>{getAddress(contents)?.text}</p>
+        <p>{getPhone(contents)?.text}</p>
       </address>
-      <Link className={s.email} href={`mailto:${emailContent.text}`}>
-        {emailContent.text}
+      <Link className={s.email} href={`mailto:${email?.text}`}>
+        {email?.text}
       </Link>
       <a
         href="https://www.instagram.com/thierrycasters/"
@@ -30,7 +29,7 @@ export default async function Contact() {
         <SiInstagram />
       </a>
       <div className={s.text}>
-        <p className={s.preLine}>{textContactContent.text}</p>
+        <p className={s.preLine}>{getTextContact(contents)?.text}</p>
       </div>
     </div>
   );

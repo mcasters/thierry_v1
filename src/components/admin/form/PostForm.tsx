@@ -83,7 +83,7 @@ export default function PostForm({ post, toggleModal }: Props) {
           value={content}
         />
         <ImagesForm
-          images={[post?.mainImage]}
+          images={post?.mainImage ? [post?.mainImage] : undefined}
           reset={resetMainImageRef.current}
           pathImage={`/images/post`}
           isMultiple={false}

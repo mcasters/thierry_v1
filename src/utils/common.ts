@@ -26,41 +26,40 @@ export const getSrcMisc = (filename: string) =>
 
 export const getSrcPost = (filename: string) => `/images/post/${filename}`;
 
-export const getPresentationContent = (contents: ContentFull[]) => {
-  if (!contents || contents.length === 0) return undefined;
-
-  let presentationContent;
-  let demarcheContent;
-  let inspirationContent;
-  contents.forEach((c: ContentFull) => {
-    if (c.label === Label.PRESENTATION) presentationContent = c;
-    if (c.label === Label.DEMARCHE) demarcheContent = c;
-    if (c.label === Label.INSPIRATION) inspirationContent = c;
-  });
-  return { presentationContent, demarcheContent, inspirationContent };
+export const getPresentationContent = (
+  contents: ContentFull[],
+): ContentFull => {
+  return contents?.filter((c) => c.label === Label.PRESENTATION)[0] || null;
 };
 
-export const getIntro = (contents) => {
-  return contents?.filter((c) => c.label === Label.INTRO)[0].text || '';
+export const getDemarche = (contents: ContentFull[]): ContentFull => {
+  return contents?.filter((c) => c.label === Label.DEMARCHE)[0] || null;
 };
 
-export const getSliders = (contents) => {
-  return contents?.filter((c) => c.label === Label.SLIDER)[0].images || [];
+export const getInspiration = (contents: ContentFull[]): ContentFull => {
+  return contents?.filter((c) => c.label === Label.INSPIRATION)[0] || null;
 };
 
-export const getContactContent = (contents: Content[]) => {
-  if (!contents || contents.length === 0) return undefined;
+export const getIntro = (contents: ContentFull[]): ContentFull => {
+  return contents?.filter((c) => c.label === Label.INTRO)[0] || null;
+};
 
-  let addressContent;
-  let phoneContent;
-  let emailContent;
-  let textContactContent;
+export const getSliders = (contents: ContentFull[]): ContentFull => {
+  return contents?.filter((c) => c.label === Label.SLIDER)[0] || null;
+};
 
-  contents.forEach((c: Content) => {
-    if (c.label === Label.ADDRESS) addressContent = c;
-    if (c.label === Label.PHONE) phoneContent = c;
-    if (c.label === Label.EMAIL) emailContent = c;
-    if (c.label === Label.TEXT_CONTACT) textContactContent = c;
-  });
-  return { addressContent, phoneContent, emailContent, textContactContent };
+export const getAddress = (contents: ContentFull[]): ContentFull => {
+  return contents?.filter((c) => c.label === Label.ADDRESS)[0] || null;
+};
+
+export const getPhone = (contents: ContentFull[]): ContentFull => {
+  return contents?.filter((c) => c.label === Label.PHONE)[0] || null;
+};
+
+export const getEmail = (contents: ContentFull[]): ContentFull => {
+  return contents?.filter((c) => c.label === Label.EMAIL)[0] || null;
+};
+
+export const getTextContact = (contents: ContentFull[]): ContentFull => {
+  return contents?.filter((c) => c.label === Label.TEXT_CONTACT)[0] || null;
 };

@@ -1,23 +1,28 @@
 import Image from 'next/legacy/image';
 import React from 'react';
 import { getContentsFull } from '@/app/api/content/getContents';
-import { getPresentationContent } from '@/utils/common';
+import {
+  getDemarche,
+  getInspiration,
+  getPresentationContent,
+} from '@/utils/common';
 import s from '@/styles/presentation.module.css';
 
 export default async function Presentation() {
   const contents = await getContentsFull();
-  const { presentationContent, demarcheContent, inspirationContent } =
-    getPresentationContent(contents);
+  const presentation = getPresentationContent(contents);
+  const demarche = getDemarche(contents);
+  const inspiration = getInspiration(contents);
 
   return (
     <div className={s.presentationContainer}>
       <h1 className={s.title}>Présentation</h1>
 
       <div className={s.contentWrapper}>
-        {presentationContent.images.length > 0 && (
+        {presentation?.images.length > 0 && (
           <div className={s.imageContainer}>
             <Image
-              src={`/images/miscellaneous/${presentationContent.images[0].filename}`}
+              src={`/images/miscellaneous/${presentation.images[0].filename}`}
               alt="image"
               layout="fill"
               sizes="200px"
@@ -25,19 +30,19 @@ export default async function Presentation() {
             />
           </div>
         )}
-        <p>{presentationContent.text}</p>
+        <p>{presentation?.text}</p>
       </div>
 
-      {demarcheContent.text !== '' && (
+      {demarche && (
         <div className={s.contentWrapper}>
           <h2>Démarche artistique</h2>
-          <p>{demarcheContent.text}</p>
+          <p>{demarche.text}</p>
         </div>
       )}
-      {inspirationContent.text !== '' && (
+      {inspiration && (
         <div className={s.contentWrapper}>
           <h2>Inspirations</h2>
-          <p>{inspirationContent.text}</p>
+          <p>{inspiration.text}</p>
         </div>
       )}
     </div>

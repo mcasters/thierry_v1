@@ -8,7 +8,7 @@ import s from '@/components/admin/form.module.css';
 import { ContentImage, PostImage, Image as IImage } from '.prisma/client';
 
 type Props = {
-  Images?: ContentImage[] | PostImage[] | IImage[];
+  images?: ContentImage[] | PostImage[] | IImage[];
   setHasImages?: (arg0: boolean) => void;
   setHasNewImages?: (arg0: boolean) => void;
   reset?: number;
@@ -48,7 +48,7 @@ export default function ImagesForm({
     if (reset !== undefined) setNewImages([]);
   }, [reset]);
 
-  const handleDelete = (filename) => {
+  const handleDelete = (filename: string) => {
     if (apiForDelete && confirm('Sûr de vouloir supprimer ?')) {
       fetch(`${apiForDelete}/${filename}`).then((res) => {
         if (res.ok) {

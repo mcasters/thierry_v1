@@ -7,7 +7,7 @@ import {
 import { getPaintingCategoriesForMenu } from '@/app/api/peinture/category/getCategories';
 import { getSculptureCategoriesForMenu } from '@/app/api/sculpture/category/getCategories';
 import Layout from '@/components/layout-components/Layout';
-import { getHomeContent, getPresentationContent } from '@/utils/common';
+import { getIntro, getSliders } from '@/utils/common';
 
 export default async function Page() {
   // This request should be cached until manually invalidated.
@@ -25,17 +25,16 @@ export default async function Page() {
   //   next: { revalidate: 10 },
   // });
   const contents = await getContentsFull();
-  const { introContent, sliderContent } = getHomeContent(contents);
   const paintingCategories = await getPaintingCategoriesForMenu();
   const sculptureCategories = await getSculptureCategoriesForMenu();
 
   return (
     <Layout
-      introduction={introContent.text}
+      introduction={getIntro(contents)?.text}
       paintingCategories={paintingCategories}
       sculptureCategories={sculptureCategories}
     >
-      <HomePage images={sliderContent.images} />
+      <HomePage images={getSliders(contents)?.images} />
     </Layout>
   );
 }
