@@ -97,7 +97,7 @@ export default function ContentForm({
         {isChanged && (
           <>
             <button className="adminButton" type="submit">
-              OK
+              Enregistrer
             </button>
             <button
               className="adminButton"

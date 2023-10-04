@@ -15,13 +15,26 @@ export async function GET(
   if (session) {
     try {
       const filename = params.filename;
-
-      let imageDBDeleted = null;
       const dir = getPostDir();
 
+      const post = await prisma.post.findFirst({
+        where: {
+          images: {
+            some: {
+              filename,
+            },
+          },
+        },
+      });
+
       if (deleteFile(join(`${dir}`, `${filename}`))) {
-        imageDBDeleted = await prisma.postImage.delete({
-          where: { filename },
+        await prisma.post.update({
+          where: { id: post.id },
+          data: {
+            images: {
+              delete: { filename },
+            },
+          },
         });
       }
       return NextResponse.json({ message: 'ok' }, { status: 200 });

@@ -27,16 +27,17 @@ export async function GET(
       if (post) {
         for (const image of post.images) {
           deleteFile(`${dir}/${image.filename}`);
-          await prisma.postImage.delete({
-            where: {
-              filename: image.filename,
-            },
-          });
         }
-        await prisma.post.delete({
-          where: {
-            id,
+        await prisma.post.update({
+          where: { id },
+          data: {
+            images: {
+              delete: post.images,
+            },
           },
+        });
+        await prisma.post.delete({
+          where: { id },
         });
       }
       return NextResponse.json({ message: 'ok' });

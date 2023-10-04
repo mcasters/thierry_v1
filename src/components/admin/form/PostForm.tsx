@@ -92,7 +92,7 @@ export default function PostForm({ post, toggleModal }: Props) {
           title="Image principale"
         />
         <ImagesForm
-          images={post?.images}
+          images={post?.images.filter((i) => !i.isMain)}
           reset={resetImagesRef.current}
           pathImage={`/images/post`}
           isMultiple={true}

@@ -3,12 +3,7 @@ import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
 import { NextResponse } from 'next/server';
 
-import {
-  deleteFile,
-  resizeAndSaveImage,
-  getSculptureDir,
-  getPostDir,
-} from '@/utils/server';
+import { deleteFile, resizeAndSaveImage, getPostDir } from '@/utils/server';
 import prisma from '@/lib/prisma';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
@@ -20,75 +15,73 @@ export async function POST(req: Request) {
       const dir = getPostDir();
 
       const formData = await req.formData();
-      const postId = Number(formData.get('id'));
+      const id = Number(formData.get('id'));
       const oldPost = await prisma.post.findUnique({
-        where: { id: postId },
+        where: { id },
         include: {
-          mainImage: {
-            select: {
-              filename: true,
-            },
-          },
           images: {
             select: {
               filename: true,
+              isMain: true,
             },
           },
         },
       });
 
-      const mainFile = formData.get('file') as File;
-      const files = formData.getAll('files') as File[];
+      if (oldPost) {
+        let images = [];
+        const mainFile = formData.get('file') as File;
+        if (mainFile.size > 0) {
+          const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
+          if (fileInfo)
+            images.push({
+              filename: fileInfo.filename,
+              width: fileInfo.width,
+              height: fileInfo.height,
+              isMain: true,
+            });
 
-      let mainImage = {};
-      if (mainFile.size > 0) {
-        const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
-        mainImage = {
-          create: {
-            filename: fileInfo.filename,
-            width: fileInfo.width,
-            height: fileInfo.height,
-          },
-        };
-        if (oldPost.mainImage !== null) {
-          const pathOldMainImage = join(
-            `${dir}`,
-            `${oldPost.mainImage.filename}`,
-          );
-          deleteFile(pathOldMainImage);
-          await prisma.postImage.delete({
-            where: {
-              filename: oldPost.mainImage.filename,
+          const oldMainImage = oldPost.images.filter((i) => i.isMain);
+          if (oldMainImage.length > 0) {
+            const filename = oldMainImage[0].filename;
+            const pathOldMainImage = join(`${dir}`, `${filename}`);
+            deleteFile(pathOldMainImage);
+            await prisma.post.update({
+              where: { id },
+              data: {
+                images: {
+                  delete: { filename },
+                },
+              },
+            });
+          }
+        }
+
+        const files = formData.getAll('files') as File[];
+        for (const file of files) {
+          if (file.size > 0) {
+            const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+            if (fileInfo)
+              images.push({
+                filename: fileInfo.filename,
+                width: fileInfo.width,
+                height: fileInfo.height,
+              });
+          }
+        }
+
+        await prisma.post.update({
+          where: { id },
+          data: {
+            title: formData.get('title') as string,
+            date: parse(formData.get('date') as string, 'yyyy', new Date()),
+            text: formData.get('text') as string,
+            images: {
+              create: images,
             },
-          });
-        }
-      }
-
-      let images = [];
-      for (const file of files) {
-        if (file.size > 0) {
-          const fileInfo = await resizeAndSaveImage(file, dir, undefined);
-          images.push({
-            filename: fileInfo.filename,
-            width: fileInfo.width,
-            height: fileInfo.height,
-          });
-        }
-      }
-
-      const updatedPost = await prisma.post.update({
-        where: { id: postId },
-        data: {
-          title: formData.get('title'),
-          date: parse(formData.get('date') as string, 'yyyy', new Date()),
-          content: formData.get('content'),
-          mainImage,
-          images: {
-            create: images,
           },
-        },
-      });
-
+        });
+      }
       return NextResponse.json({ message: 'ok' }, { status: 200 });
     } catch (e) {
       console.log(e);

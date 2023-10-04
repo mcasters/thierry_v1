@@ -12,6 +12,7 @@ type Props = {
   type: string;
   alt: string;
   maxHeight?: number;
+  isCentred?: boolean;
 };
 
 const deviceSizes = [3840, 2048, 1920, 1200, 1080, 750, 640];
@@ -19,7 +20,13 @@ const deviceSizes = [3840, 2048, 1920, 1200, 1080, 750, 640];
 const nextImageUrl = (src: string, size: number) =>
   `/_next/image?url=${encodeURIComponent(src)}&w=${size}&q=75`;
 
-export default function ImageLightbox({ images, type, alt, maxHeight }: Props) {
+export default function ImageLightbox({
+  images,
+  type,
+  alt,
+  maxHeight,
+  isCentred,
+}: Props) {
   const [open, setOpen] = useState(false);
   const slides = images.map((image) => ({
     width: image.width,
@@ -36,7 +43,7 @@ export default function ImageLightbox({ images, type, alt, maxHeight }: Props) {
 
   if (type === TYPE.PAINTING || images.length === 1) {
     return (
-      <div className={s.buttonWrapper}>
+      <div className={isCentred ? s.buttonCentred : undefined}>
         <button
           type="button"
           onClick={() => setOpen(true)}

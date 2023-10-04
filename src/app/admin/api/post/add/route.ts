@@ -48,7 +48,7 @@ export async function POST(req: Request) {
         data: {
           title: formData.get('title') as string,
           date: parse(formData.get('date') as string, 'yyyy', new Date()),
-          text: formData.get('content') as string,
+          text: formData.get('text') as string,
           images: {
             create: images,
           },

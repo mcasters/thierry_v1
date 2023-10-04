@@ -15,8 +15,6 @@ export async function GET(
   if (session) {
     try {
       const filename = params.filename;
-
-      let imageDBDeleted = null;
       const dir = getMiscellaneousDir();
 
       const content = await prisma.content.findFirst({

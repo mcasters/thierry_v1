@@ -2,7 +2,8 @@ import prisma from '@/lib/prisma';
 import 'server-only';
 
 export async function getPostsFull() {
-  return await prisma.post.findMany({
+  const res = await prisma.post.findMany({
     include: { images: true },
   });
+  return JSON.parse(JSON.stringify(res));
 }

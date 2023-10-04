@@ -22,6 +22,7 @@ export default function PostComponent({ post }: Props) {
               alt={`${post.title} - Photo de Thierry Casters`}
               type={TYPE.POST}
               maxHeight={30}
+              isCentred={true}
             />
           )}
         </div>
@@ -34,7 +35,10 @@ export default function PostComponent({ post }: Props) {
           </p>
         </div>
         <div className={s.gallery}>
-          <Gallery images={post.images} type={TYPE.POST} />
+          <Gallery
+            images={post.images.filter((i) => !i.isMain)}
+            type={TYPE.POST}
+          />
         </div>
       </article>
       <div className="separate"></div>
