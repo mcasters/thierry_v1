@@ -1,13 +1,12 @@
-import { Content, Label } from '@prisma/client';
+import { Label } from '@prisma/client';
 import { ContentFull } from '@/app/api/content/content';
-import { ContentImage } from '.prisma/client';
 
 export const transformValueToKey = (value: string): string => {
   return value
     .toLowerCase()
     .split(' ' || "'")
     .join('_')
-    .replace(/[`~!@#$%^&*()”‘|+\-=?;:",.<>\{\}\[\]\\\/]/gi, '')
+    .replace(/[`~!@#$%^&*()”‘|+\-=?;:",.<>{}\[\]\\\/]/gi, '')
     .replace(/à/gi, 'a')
     .replace(/é/gi, 'e')
     .replace(/è/gi, 'e')

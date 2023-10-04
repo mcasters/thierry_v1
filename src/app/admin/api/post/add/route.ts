@@ -5,7 +5,6 @@ import prisma from '@/lib/prisma';
 import {
   resizeAndSaveImage,
   createDirIfNecessary,
-  getSculptureDir,
   getPostDir,
 } from '@/utils/server';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
@@ -18,42 +17,41 @@ export async function POST(req: Request) {
     try {
       const dir = getPostDir();
       createDirIfNecessary(dir);
-
       const formData = await req.formData();
 
       const mainFile = formData.get('file') as File;
-      const files = formData.getAll('files') as File[];
-
       let mainImage = {};
       if (mainFile.size > 0) {
         const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
-        mainImage = {
-          filename: fileInfo.filename,
-          width: fileInfo.width,
-          height: fileInfo.height,
-        };
+        if (fileInfo)
+          mainImage = {
+            create: {
+              filename: fileInfo.filename,
+              width: fileInfo.width,
+              height: fileInfo.height,
+            },
+          };
       }
-
+      const files = formData.getAll('files') as File[];
       let images = [];
       for (const file of files) {
         if (file.size > 0) {
           const fileInfo = await resizeAndSaveImage(file, dir, undefined);
-          images.push({
-            filename: fileInfo.filename,
-            width: fileInfo.width,
-            height: fileInfo.height,
-          });
+          if (fileInfo)
+            images.push({
+              filename: fileInfo.filename,
+              width: fileInfo.width,
+              height: fileInfo.height,
+            });
         }
       }
 
-      const newPost = await prisma.post.create({
+      await prisma.post.create({
         data: {
-          title: formData.get('title'),
+          title: formData.get('title') as string,
           date: parse(formData.get('date') as string, 'yyyy', new Date()),
-          content: formData.get('content'),
-          mainImage: {
-            create: mainImage,
-          },
+          content: formData.get('content') as string,
+          mainImage,
           images: {
             create: images,
           },

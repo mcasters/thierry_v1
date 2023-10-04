@@ -11,6 +11,7 @@ type Props = {
   images: IImage[] | PostImage[];
   type: string;
   alt: string;
+  maxHeight?: number;
 };
 
 const deviceSizes = [3840, 2048, 1920, 1200, 1080, 750, 640];
@@ -18,7 +19,7 @@ const deviceSizes = [3840, 2048, 1920, 1200, 1080, 750, 640];
 const nextImageUrl = (src: string, size: number) =>
   `/_next/image?url=${encodeURIComponent(src)}&w=${size}&q=75`;
 
-export default function ImageWithLightbox({ images, type, alt }: Props) {
+export default function ImageLightbox({ images, type, alt, maxHeight }: Props) {
   const [open, setOpen] = useState(false);
   const slides = images.map((image) => ({
     width: image.width,
@@ -40,6 +41,7 @@ export default function ImageWithLightbox({ images, type, alt }: Props) {
           type="button"
           onClick={() => setOpen(true)}
           className={s.imageButton}
+          style={maxHeight ? { height: `${maxHeight}vh` } : { height: '50vh' }}
         >
           <Image
             src={`/images/${type}/${images[0].filename}`}
@@ -75,6 +77,9 @@ export default function ImageWithLightbox({ images, type, alt }: Props) {
                 type="button"
                 onClick={() => setOpen(true)}
                 className={s.imageButton}
+                style={
+                  maxHeight ? { height: `${maxHeight}vh` } : { height: '50vh' }
+                }
               >
                 <Image
                   src={`/images/${type}/${image.filename}`}

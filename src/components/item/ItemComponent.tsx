@@ -1,11 +1,10 @@
 'use client';
 
 import { TYPE } from '@/constants';
-import ImageWithLightbox from '@/components/image/ImageWithLightbox';
+import ImageLightbox from '@/components/image/ImageLightbox';
 import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import { PaintingFull } from '@/app/api/peinture/painting';
 import s from './ItemComponent.module.css';
-import Gallery from '@/components/image/Gallery';
 
 interface Props {
   item: SculptureFull | PaintingFull;
@@ -15,7 +14,7 @@ export default function ItemComponent({ item }: Props) {
 
   return (
     <article id={`${item.id}`} className={s.article}>
-      <ImageWithLightbox
+      <ImageLightbox
         images={isSculpture ? item.images : [item.image]}
         alt={`${item.title} - ${item.type} de Thierry Casters`}
         type={item.type}

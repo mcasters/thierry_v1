@@ -19,7 +19,6 @@ export default function Gallery({ images, type }: Props) {
   const slides = images.map((image) => {
     const width = image.width * 4;
     const height = image.height * 4;
-    console.log(`/images/${type}/${image.filename}`);
     return {
       src: nextImageUrl(`/images/${type}/${image.filename}`, width),
       width,

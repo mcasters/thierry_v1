@@ -29,9 +29,6 @@ export async function GET(
         },
       });
 
-      console.log('/// content');
-      console.log(content);
-
       if (content) {
         deleteFile(join(`${dir}`, `${filename}`));
         await prisma.content.update({
