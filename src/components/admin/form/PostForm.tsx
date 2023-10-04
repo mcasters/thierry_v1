@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
 import { PostFull } from '@/app/api/post/post';
 import s from '../form.module.css';
+import { getMainImage } from '@/utils/common';
 
 interface Props {
   post?: PostFull;
@@ -18,20 +19,20 @@ export default function PostForm({ post, toggleModal }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const resetMainImageRef = useRef<number>(0);
   const resetImagesRef = useRef<number>(0);
+  const router = useRouter();
+  const api = post ? `api/post/update` : `api/post/add`;
 
   const [title, setTitle] = useState<string>(post?.title || '');
   const [date, setDate] = useState<Date>(
     post?.date ? new Date(post.date) : new Date(),
   );
-  const [content, setContent] = useState<string>(post?.content || '');
-  const router = useRouter();
-
-  const api = post ? `api/post/update` : `api/post/add`;
+  const [text, setText] = useState<string>(post?.text || '');
+  const mainImage = getMainImage(post);
 
   const reset = () => {
     setTitle('');
     setDate(new Date());
-    setContent('');
+    setText('');
     resetMainImageRef.current = resetMainImageRef.current + 1;
     resetImagesRef.current = resetImagesRef.current + 1;
   };
@@ -76,14 +77,14 @@ export default function PostForm({ post, toggleModal }: Props) {
           required
         />
         <textarea
-          onChange={(e) => setContent(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
           placeholder="Texte (facultatif)"
-          name="content"
+          name="text"
           rows={5}
-          value={content}
+          value={text}
         />
         <ImagesForm
-          images={post?.mainImage ? [post?.mainImage] : undefined}
+          images={mainImage ? [mainImage] : []}
           reset={resetMainImageRef.current}
           pathImage={`/images/post`}
           isMultiple={false}

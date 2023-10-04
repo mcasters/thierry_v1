@@ -1,5 +1,9 @@
 import { Label } from '@prisma/client';
 import { ContentFull } from '@/app/api/content/content';
+import { PostFull } from '@/app/api/post/post';
+import {PaintingFull} from "@/app/api/peinture/painting";
+import {TYPE} from "@/constants";
+import {SculptureFull} from "@/app/api/sculpture/sculpture";
 
 export const transformValueToKey = (value: string): string => {
   return value
@@ -62,3 +66,13 @@ export const getEmail = (contents: ContentFull[]): ContentFull => {
 export const getTextContact = (contents: ContentFull[]): ContentFull => {
   return contents?.filter((c) => c.label === Label.TEXT_CONTACT)[0] || null;
 };
+
+export const getMainImage = (post: PostFull | undefined) => {
+  return post?.images?.filter((i) => i.isMain)[0] || undefined;
+};
+
+export const isPaintingFull = (item: any): item is PaintingFull => Object.values(item).includes(TYPE.PAINTING);
+
+export const isSculptureFull = (item: any): item is SculptureFull => Object.values(item).includes(TYPE.SCULPTURE);
+
+export const isPostFull = (item: any): item is PostFull => Object.values(item).includes(TYPE.POST);

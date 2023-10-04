@@ -3,6 +3,6 @@ import 'server-only';
 
 export async function getPostsFull() {
   return await prisma.post.findMany({
-    include: { mainImage: true, images: true },
+    include: { images: true },
   });
 }

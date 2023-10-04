@@ -5,15 +5,17 @@ import UpdateButton from '@/components/admin/form/UpdateButton';
 import { TYPE } from '@/constants';
 import s from '../ListComponent.module.css';
 import { PostFull } from '@/app/api/post/post';
+import { getMainImage } from '@/utils/common';
 
 interface Props {
   post: PostFull;
 }
 
 export default function RowPostListComponent({ post }: Props) {
-  const src = post.mainImage?.filename
-    ? `/images/post/${post.mainImage?.filename}`
-    : post.images[0].filename
+  const mainImage = getMainImage(post);
+  const src = mainImage
+    ? `/images/post/${mainImage?.filename}`
+    : post.images[0]?.filename
     ? `/images/post/${post.images[0].filename}`
     : null;
 

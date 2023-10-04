@@ -2,7 +2,7 @@
 
 import React from 'react';
 import s from '../ListComponent.module.css';
-import RowPostListComponent from '@/components/admin/article/RowPostListComponent';
+import RowPostListComponent from '@/components/admin/post/RowPostListComponent';
 import { PostFull } from '@/app/api/post/post';
 
 interface Props {

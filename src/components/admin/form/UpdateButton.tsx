@@ -9,9 +9,9 @@ import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import { PaintingFull } from '@/app/api/peinture/painting';
 import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
 import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
-import { TYPE } from '@/constants';
 import PostForm from '@/components/admin/form/PostForm';
 import { PostFull } from '@/app/api/post/post';
+import { isPaintingFull, isPostFull, isSculptureFull } from '@/utils/common';
 
 type Props = {
   item:
@@ -39,14 +39,14 @@ export default function UpdateButton({ item, type, categories }: Props) {
         <RxUpdate />
       </button>
       <Modal isOpen={isOpen} toggle={toggle}>
-        {categories ? (
+        {isPaintingFull(item) || isSculptureFull(item) ? (
           <ItemForm
             item={item}
             type={type}
             toggleModal={toggle}
             categories={categories}
           />
-        ) : type === TYPE.POST ? (
+        ) : isPostFull(item) ? (
           <PostForm post={item} toggleModal={toggle} />
         ) : (
           <CategoryForm category={item} type={type} toggleModal={toggle} />

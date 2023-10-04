@@ -23,6 +23,13 @@ const prismaClientSingleton = () => {
           },
         },
       },
+      post: {
+        type: {
+          compute(): string {
+            return `${TYPE.POST}`;
+          },
+        },
+      },
     },
   });
 };

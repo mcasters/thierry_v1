@@ -20,20 +20,18 @@ export async function POST(req: Request) {
       const formData = await req.formData();
 
       const mainFile = formData.get('file') as File;
-      let mainImage = {};
+      let images = [];
       if (mainFile.size > 0) {
         const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
         if (fileInfo)
-          mainImage = {
-            create: {
-              filename: fileInfo.filename,
-              width: fileInfo.width,
-              height: fileInfo.height,
-            },
-          };
+          images.push({
+            filename: fileInfo.filename,
+            width: fileInfo.width,
+            height: fileInfo.height,
+            isMain: true,
+          });
       }
       const files = formData.getAll('files') as File[];
-      let images = [];
       for (const file of files) {
         if (file.size > 0) {
           const fileInfo = await resizeAndSaveImage(file, dir, undefined);
@@ -50,8 +48,7 @@ export async function POST(req: Request) {
         data: {
           title: formData.get('title') as string,
           date: parse(formData.get('date') as string, 'yyyy', new Date()),
-          content: formData.get('content') as string,
-          mainImage,
+          text: formData.get('content') as string,
           images: {
             create: images,
           },

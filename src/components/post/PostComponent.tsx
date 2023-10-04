@@ -5,18 +5,20 @@ import s from './PostComponent.module.css';
 import { PostFull } from '@/app/api/post/post';
 import Gallery from '@/components/image/Gallery';
 import { TYPE } from '@/constants';
+import { getMainImage } from '@/utils/common';
 
 interface Props {
   post: PostFull;
 }
 export default function PostComponent({ post }: Props) {
+  const mainImage = getMainImage(post);
   return (
     <>
       <article className={s.postContainer}>
         <div className={s.mainImage}>
-          {post.mainImage && (
+          {mainImage && (
             <ImageLightbox
-              images={[post.mainImage]}
+              images={[mainImage]}
               alt={`${post.title} - Photo de Thierry Casters`}
               type={TYPE.POST}
               maxHeight={30}
@@ -28,7 +30,7 @@ export default function PostComponent({ post }: Props) {
           <time>{new Date(post.date).getFullYear()}</time>
           <p>
             <br />
-            {post.content}
+            {post.text}
           </p>
         </div>
         <div className={s.gallery}>

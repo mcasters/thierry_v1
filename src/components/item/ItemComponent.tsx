@@ -1,16 +1,16 @@
 'use client';
 
-import { TYPE } from '@/constants';
 import ImageLightbox from '@/components/image/ImageLightbox';
 import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import { PaintingFull } from '@/app/api/peinture/painting';
 import s from './ItemComponent.module.css';
+import { isSculptureFull } from '@/utils/common';
 
 interface Props {
   item: SculptureFull | PaintingFull;
 }
 export default function ItemComponent({ item }: Props) {
-  const isSculpture = item.type === TYPE.SCULPTURE;
+  const isSculpture = isSculptureFull(item);
 
   return (
     <article id={`${item.id}`} className={s.article}>

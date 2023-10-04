@@ -14,13 +14,11 @@ export async function GET(
 
   if (session) {
     try {
+      const dir = getSculptureDir();
       const filename = params.filename;
 
-      let imageDBDeleted = null;
-      const dir = getSculptureDir();
-
       if (deleteFile(join(`${dir}`, `${filename}`))) {
-        imageDBDeleted = await prisma.image.delete({
+        await prisma.image.delete({
           where: { filename },
         });
       }

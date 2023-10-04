@@ -17,7 +17,7 @@ interface Props {
   item?: SculptureFull | PaintingFull;
   type: string;
   toggleModal?: () => void;
-  categories: PaintingCategoryFull[] | SculptureCategoryFull[];
+  categories?: PaintingCategoryFull[] | SculptureCategoryFull[];
 }
 
 export default function ItemForm({
@@ -99,7 +99,7 @@ export default function ItemForm({
           onChange={(e) => setCategoryId(e.target.value)}
         >
           <option value="">-- Catégorie (facultatif) --</option>
-          {categories.map(
+          {categories && categories.map(
             (cat: PaintingCategoryFull | SculptureCategoryFull) => (
               <option key={cat.id} value={cat.id}>
                 {cat.value}

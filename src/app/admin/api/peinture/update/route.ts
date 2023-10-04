@@ -3,7 +3,7 @@ import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
 
 import { deleteFile, resizeAndSaveImage, getPaintingDir } from '@/utils/server';
-import prisma from '../../../../../lib/prisma';
+import prisma from '@/lib/prisma';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { NextResponse } from 'next/server';
 

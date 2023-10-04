@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth/next';
 import prisma from '@/lib/prisma';
-import { deleteFile, getPostDir, getSculptureDir } from '@/utils/server';
+import { deleteFile, getPostDir } from '@/utils/server';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { NextResponse } from 'next/server';
 
@@ -16,11 +16,6 @@ export async function GET(
       const post = await prisma.post.findUnique({
         where: { id },
         include: {
-          mainImage: {
-            select: {
-              filename: true,
-            },
-          },
           images: {
             select: {
               filename: true,
@@ -28,26 +23,22 @@ export async function GET(
           },
         },
       });
-      deleteFile(`${dir}/${post.mainImage.filename}`);
-      await prisma.postImage.delete({
-        where: {
-          filename: post.mainImage.filename,
-        },
-      });
-      for (const image of post.images) {
-        deleteFile(`${dir}/${image.filename}`);
-        await prisma.postImage.delete({
+
+      if (post) {
+        for (const image of post.images) {
+          deleteFile(`${dir}/${image.filename}`);
+          await prisma.postImage.delete({
+            where: {
+              filename: image.filename,
+            },
+          });
+        }
+        await prisma.post.delete({
           where: {
-            filename: image.filename,
+            id,
           },
         });
       }
-      await prisma.post.delete({
-        where: {
-          id,
-        },
-      });
-
       return NextResponse.json({ message: 'ok' });
     } catch (e) {
       console.log(e);
