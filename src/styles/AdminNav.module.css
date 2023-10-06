@@ -8,6 +8,7 @@
     border-bottom: solid var(--color-xdark) 1px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
     text-align: center;
+    margin: 0.8em;
     padding-top: 0.6em;
     z-index: 2;
 }

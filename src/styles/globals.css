@@ -70,7 +70,7 @@
   /*
   common home and other pages
    */
-  --color-link-menu1: var(--color-blue-xlight);
+  --color-link-menu1: var(--color-blue-light);
   --color-link-menu1-hover: var(--color-brown1);
 
   --color-border-menu1: var(--color-medium);

@@ -54,19 +54,23 @@
 color link
  */
 
-.homNav .link, .nav .link {
+.menu .link {
     color: var(--color-link-menu1);
     display: inline-block;
     height: var(--nav-1-height);
 }
 
+.menu .link:hover {
+    color: var(--color-link-menu1-hover);
+}
+
+.nav .link.active {
+    border-bottom: 2px solid var(--color-link-menu1-hover);
+}
+
 .itemNav .link {
     color: var(--color-link-menu1-item);
     display: inline-block;
-}
-
-.homeNav .link:hover, .nav .link:hover {
-    color: var(--color-link-menu1-hover);
 }
 
 .itemNav .link:hover {
@@ -76,10 +80,6 @@ color link
 .itemNav .link.active {
     color: var(--color-link-menu1-item-hover);
     border-bottom: 2px solid var(--color-link-menu1-item-hover);
-}
-
-.nav .link.active {
-    border-bottom: 2px solid var(--color-link-menu1-hover);
 }
 
 /*

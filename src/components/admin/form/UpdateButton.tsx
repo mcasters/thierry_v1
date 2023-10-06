@@ -30,9 +30,7 @@ export default function UpdateButton({ item, type, categories }: Props) {
     <>
       <button
         onClick={(e) => {
-          console.log(item);
           e.preventDefault();
-          console.log(item);
           toggle();
         }}
         className="iconButton"

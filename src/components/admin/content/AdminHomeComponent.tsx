@@ -19,7 +19,6 @@ export default function AdminHomeComponent({
         isTextArea={true}
         textLabel="Introduction"
       />
-      <div className="separate"></div>
       <ContentForm
         content={sliderContent}
         label={Label.SLIDER}
