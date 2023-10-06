@@ -19,6 +19,7 @@ model User {
 
 model Post {
   id        Int         @id @default(autoincrement())
+  type      String      @default("post")
   title     String
   date      DateTime
   createdAt DateTime    @default(now())
@@ -71,6 +72,7 @@ enum Label {
 
 model Painting {
   id          Int               @id @default(autoincrement())
+  type        String            @default("peinture")
   title       String
   date        DateTime
   technique   String            @db.LongText
@@ -90,6 +92,7 @@ model Painting {
 
 model Sculpture {
   id          Int                @id @default(autoincrement())
+  type        String             @default("sculpture")
   title       String
   date        DateTime
   technique   String             @db.LongText

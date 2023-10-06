@@ -7,30 +7,6 @@ const prismaClientSingleton = () => {
       process.env.NODE_ENV === 'development'
         ? ['query', 'error', 'warn']
         : ['error'],
-  }).$extends({
-    result: {
-      painting: {
-        type: {
-          compute(): string {
-            return `${TYPE.PAINTING}`;
-          },
-        },
-      },
-      sculpture: {
-        type: {
-          compute(): string {
-            return `${TYPE.SCULPTURE}`;
-          },
-        },
-      },
-      post: {
-        type: {
-          compute(): string {
-            return `${TYPE.POST}`;
-          },
-        },
-      },
-    },
   });
 };
 

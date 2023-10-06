@@ -1,9 +1,10 @@
-import { Label } from '@prisma/client';
+import { Label, Painting } from '@prisma/client';
 import { ContentFull } from '@/app/api/content/content';
 import { PostFull } from '@/app/api/post/post';
-import {PaintingFull} from "@/app/api/peinture/painting";
-import {TYPE} from "@/constants";
-import {SculptureFull} from "@/app/api/sculpture/sculpture";
+import { PaintingFull } from '@/app/api/peinture/painting';
+import { TYPE } from '@/constants';
+import { SculptureFull } from '@/app/api/sculpture/sculpture';
+import { Image, PostImage } from '.prisma/client';
 
 export const transformValueToKey = (value: string): string => {
   return value
@@ -68,11 +69,69 @@ export const getTextContact = (contents: ContentFull[]): ContentFull => {
 };
 
 export const getMainImage = (post: PostFull | undefined) => {
-  return post?.images?.filter((i) => i.isMain)[0] || undefined;
+  return post?.images?.filter((i: PostImage) => i.isMain)[0] || undefined;
 };
 
-export const isPaintingFull = (item: any): item is PaintingFull => Object.values(item).includes(TYPE.PAINTING);
+export const isPaintingFull = (item: any): item is PaintingFull =>
+  Object.values(item).includes(TYPE.PAINTING);
 
-export const isSculptureFull = (item: any): item is SculptureFull => Object.values(item).includes(TYPE.SCULPTURE);
+export const isSculptureFull = (item: any): item is SculptureFull =>
+  Object.values(item).includes(TYPE.SCULPTURE);
 
-export const isPostFull = (item: any): item is PostFull => Object.values(item).includes(TYPE.POST);
+export const isPostFull = (item: any): item is PostFull =>
+  Object.values(item).includes(TYPE.POST);
+
+export const getEmptyImage = (): Image => {
+  return {
+    id: 0,
+    height: 0,
+    width: 0,
+    filename: '',
+    isMain: false,
+    sculptureId: null,
+  };
+};
+
+export const getEmptyPainting = (): PaintingFull => {
+  return {
+    id: 0,
+    type: TYPE.PAINTING,
+    title: '',
+    date: new Date(),
+    technique: '',
+    description: '',
+    height: 0,
+    width: 0,
+    isToSell: false,
+    sold: false,
+    price: null,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    imageId: 0,
+    image: getEmptyImage(),
+    category: null,
+    categoryId: null,
+  };
+};
+
+export const getEmptySculpture = (): SculptureFull => {
+  return {
+    id: 0,
+    type: TYPE.SCULPTURE,
+    title: '',
+    date: new Date(),
+    technique: '',
+    description: '',
+    height: 0,
+    width: 0,
+    length: 0,
+    isToSell: false,
+    sold: false,
+    price: null,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    images: [getEmptyImage()],
+    category: null,
+    categoryId: null,
+  };
+};
