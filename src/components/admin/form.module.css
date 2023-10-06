@@ -26,13 +26,12 @@
     height: 150px
 }
 
-.wrapper {
+.imageWrapper {
     display: inline-block;
 }
 
 .imageContainer {
     position: relative;
-    display: block;
     width: 150px;
     height: 150px;
     margin: 0 auto;
@@ -46,14 +45,6 @@
     padding-bottom: 1em;
 }
 
-.newImagesContainer {
-    display: inline-block;
-    position: relative;
-    width: 150px;
-    height: 150px;
-    margin: 0 auto;
-}
-
 .image {
     object-fit: contain;
 }
@@ -63,10 +54,16 @@
     padding-bottom: 2em;
 }
 
-.formContainer label, .sliderLabel {
+.formContainer label {
     font-variant-caps: small-caps;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     color: var(--color-dark);
     text-align: left;
     font-size: 0.8em;
+}
+
+.formContainer .contentLabel {
+    color: var(--color-blue-dark);
+    font-size: 1em;
+    font-weight: bold;
 }

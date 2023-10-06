@@ -25,7 +25,7 @@
     "bcryptjs": "^2.4.3",
     "date-fns": "^2.30.0",
     "http": "^0.0.1-security",
-    "next": "13.5.4",
+    "next": "^13.5.4",
     "next-auth": "^4.23.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -46,7 +46,7 @@
     "eslint": "8.48.0",
     "eslint-config-next": "^13.5.2",
     "eslint-config-prettier": "^9.0.0",
-    "postcss": "^8.4.12",
+    "postcss": "8.4.31",
     "prettier": "3.0.3",
     "prisma": "^5.4.1",
     "typescript": "5.2.2"

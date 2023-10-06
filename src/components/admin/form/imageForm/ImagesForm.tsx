@@ -77,12 +77,12 @@ export default function ImagesForm({
   return (
     <div className={s.imageFormContainer}>
       <h4 className={s.imageTitle}>
-        {title ? title : isMultiple ? 'Images :' : 'Image :'}
+        {title !== undefined ? title : isMultiple ? 'Images :' : 'Image :'}
       </h4>
       <div>
         {existantImages.length > 0 &&
           existantImages.map((filename) => (
-            <div key={filename} className={s.wrapper}>
+            <div key={filename} className={s.imageWrapper}>
               <div className={s.imageContainer}>
                 <Image
                   src={`${pathImage}/${filename}`}
@@ -115,7 +115,7 @@ export default function ImagesForm({
       <div>
         {newImages.length > 0 &&
           newImages.map((src) => (
-            <div key={src} className={s.wrapper}>
+            <div key={src} className={s.imageWrapper}>
               <div key={src} className={s.imageContainer}>
                 <Image
                   src={src}

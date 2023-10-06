@@ -46,9 +46,8 @@ export default function ContentForm({
     <div className={s.formContainer}>
       <form ref={formRef} onSubmit={submit}>
         <input type="hidden" name="label" value={label} />
-        {label === Label.SLIDER && <p className={s.sliderLabel}>Slider</p>}
         {!isTextArea && label !== Label.SLIDER && (
-          <label>
+          <label className={s.contentLabel}>
             {textLabel}
             <input
               placeholder={label}
@@ -63,7 +62,7 @@ export default function ContentForm({
           </label>
         )}
         {isTextArea && label !== Label.SLIDER && (
-          <label>
+          <label className={s.contentLabel}>
             {textLabel}
             <textarea
               placeholder={label}
@@ -77,13 +76,17 @@ export default function ContentForm({
           </label>
         )}
         {label === Label.SLIDER && (
-          <ImagesForm
-            images={content?.images}
-            pathImage="/images/miscellaneous"
-            apiForDelete="api/content/delete-image"
-            isMultiple={true}
-            setHasNewImages={setIsChanged}
-          />
+          <label className={s.contentLabel}>
+            Slider
+            <ImagesForm
+              images={content?.images}
+              pathImage="/images/miscellaneous"
+              apiForDelete="api/content/delete-image"
+              isMultiple={true}
+              setHasNewImages={setIsChanged}
+              title=""
+            />
+          </label>
         )}
         {label === Label.PRESENTATION && (
           <ImagesForm
