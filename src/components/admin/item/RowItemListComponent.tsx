@@ -8,6 +8,7 @@ import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
 import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
 import { PaintingFull } from '@/app/api/peinture/painting';
 import { SculptureFull } from '@/app/api/sculpture/sculpture';
+import { isSculptureFull } from '@/utils/common';
 
 interface Props {
   item: PaintingFull | SculptureFull;
@@ -15,10 +16,9 @@ interface Props {
 }
 
 export default function RowItemListComponent({ item, categories }: Props) {
-  const src =
-    item.type === TYPE.SCULPTURE
-      ? `/images/${item.type}/${item.images[0].filename}`
-      : `/images/${item.type}/${item.image.filename}`;
+  const src = isSculptureFull(item)
+    ? `/images/${item.type}/${item.images[0].filename}`
+    : `/images/${item.type}/${item.image.filename}`;
   return (
     <ul className={s.item}>
       <li className={s.itemTitle}>

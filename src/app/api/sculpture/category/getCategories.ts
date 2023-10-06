@@ -21,7 +21,7 @@ export async function getSculptureCategoriesForMenu() {
     categories.push({
       key: 'no-category',
       value: 'Sans catégorie',
-      id: undefined,
+      id: 0,
     } as SculptureCategory);
   return JSON.parse(JSON.stringify(categories));
 }

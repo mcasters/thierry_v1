@@ -15,7 +15,8 @@ export const authOptions: AuthOptions = {
         },
         password: { label: 'Mot de passe', type: 'password' },
       },
-      async authorize(credentials, req) {
+      authorize: async (credentials, req) => {
+        // @ts-ignore
         const { email, password } = credentials;
         const user = await prisma.user.findUnique({
           where: {
@@ -26,7 +27,13 @@ export const authOptions: AuthOptions = {
         bcrypt.compare(password, user.password, (err, res) => {
           if (err || !res) return null;
         });
-        return user;
+        const stringUser = {
+          id: user.id.toString(),
+          email: user.email,
+          password: user.password,
+          isAdmin: user.isAdmin,
+        };
+        return stringUser;
       },
     }),
   ],

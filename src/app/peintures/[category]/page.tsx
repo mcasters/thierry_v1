@@ -11,7 +11,7 @@ export default async function Page({
   const categoryTitle =
     params.category === 'no-category'
       ? 'Sans catégorie'
-      : paintings[0]?.category.value;
+      : paintings[0]?.category?.value;
   return (
     <div className={s.container}>
       <h1 className="hidden">Les peintures</h1>

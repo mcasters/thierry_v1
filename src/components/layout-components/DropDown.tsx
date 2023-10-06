@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 
 import { PaintingCategory, SculptureCategory } from '@prisma/client';
@@ -13,17 +13,17 @@ interface Props {
 export default function Dropdown({ menuItems, path, name, isActive }: Props) {
   const [open, setOpen] = useState(false);
 
-  const toggle = (e) => {
+  const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setOpen(!open);
   };
 
-  const openMenu = (e) => {
+  const openMenu = (e: React.MouseEvent) => {
     e.stopPropagation();
     setOpen(true);
   };
 
-  const closeMenu = (e) => {
+  const closeMenu = (e: React.MouseEvent) => {
     e.stopPropagation();
     setOpen(false);
   };

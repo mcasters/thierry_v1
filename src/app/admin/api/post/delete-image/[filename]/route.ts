@@ -27,15 +27,17 @@ export async function GET(
         },
       });
 
-      if (deleteFile(join(`${dir}`, `${filename}`))) {
-        await prisma.post.update({
-          where: { id: post.id },
-          data: {
-            images: {
-              delete: { filename },
+      if (post) {
+        if (deleteFile(join(`${dir}`, `${filename}`))) {
+          await prisma.post.update({
+            where: { id: post.id },
+            data: {
+              images: {
+                delete: { filename },
+              },
             },
-          },
-        });
+          });
+        }
       }
       return NextResponse.json({ message: 'ok' }, { status: 200 });
     } catch (e) {

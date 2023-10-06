@@ -1,13 +1,14 @@
 import { FiTrash2 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import React from 'react';
 
 type Props = {
   api: string;
 };
 export default function DeleteButton({ api }: Props) {
   const router = useRouter();
-  const handleDelete = (e) => {
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (confirm('Sûr de vouloir supprimer ?')) {
       fetch(api).then((res) => {

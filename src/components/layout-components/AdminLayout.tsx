@@ -14,7 +14,7 @@ export default function AdminLayout({ children }: Props) {
   return (
     <>
       <AdminNav />
-      <Main isHome={false} headerIsFix={true}>
+      <Main isHome={false}>
         <div className={s.adminWrapper}>{children}</div>
       </Main>
     </>

@@ -21,7 +21,7 @@ export async function getPaintingCategoriesForMenu() {
     categories.push({
       key: 'no-category',
       value: 'Sans catégorie',
-      id: undefined,
+      id: 0,
     } as PaintingCategory);
   return JSON.parse(JSON.stringify(categories));
 }

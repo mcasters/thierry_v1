@@ -28,10 +28,7 @@ export default function RowCategoryListComponent({ category, type }: Props) {
         <UpdateButton item={category} type={type} />
       </li>
       <li className={s.itemIcon}>
-        <DeleteButton
-          api={`api/${type}/category/delete/${category.id}`}
-          apiToUpdate={`api/${type}/category`}
-        />
+        <DeleteButton api={`api/${type}/category/delete/${category.id}`} />
       </li>
     </ul>
   );
