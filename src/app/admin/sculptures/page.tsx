@@ -4,6 +4,7 @@ import ItemForm from '@/components/admin/form/ItemForm';
 import CategoryComponent from '@/components/admin/item/category/CategoryComponent';
 import { getSculpturesFull } from '@/app/api/sculpture/getSculptures';
 import { getSculptureCategoriesFull } from '@/app/api/sculpture/category/getCategories';
+import { getEmptySculpture } from '@/utils/common';
 
 export default async function Sculptures() {
   const sculptures = await getSculpturesFull();
@@ -16,7 +17,7 @@ export default async function Sculptures() {
         items={sculptures}
         categories={categories}
       />
-      <ItemForm type={TYPE.SCULPTURE} categories={categories} />
+      <ItemForm item={getEmptySculpture()} categories={categories} />
       <CategoryComponent type={TYPE.SCULPTURE} categories={categories} />
     </>
   );

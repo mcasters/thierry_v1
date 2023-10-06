@@ -30,7 +30,9 @@ export default function UpdateButton({ item, type, categories }: Props) {
     <>
       <button
         onClick={(e) => {
+          console.log(item);
           e.preventDefault();
+          console.log(item);
           toggle();
         }}
         className="iconButton"
@@ -40,12 +42,7 @@ export default function UpdateButton({ item, type, categories }: Props) {
       </button>
       <Modal isOpen={isOpen} toggle={toggle}>
         {isPaintingFull(item) || isSculptureFull(item) ? (
-          <ItemForm
-            item={item}
-            type={type}
-            toggleModal={toggle}
-            categories={categories}
-          />
+          <ItemForm item={item} toggleModal={toggle} categories={categories} />
         ) : isPostFull(item) ? (
           <PostForm post={item} toggleModal={toggle} />
         ) : (
