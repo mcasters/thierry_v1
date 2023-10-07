@@ -21,11 +21,9 @@ export default async function Presentation() {
       <div className={s.contentWrapper}>
         {presentation?.images.length > 0 && (
           <div className={s.imageContainer}>
-            <Image
+            <img
               src={`/images/miscellaneous/${presentation.images[0].filename}`}
               alt="image"
-              layout="fill"
-              sizes="200px"
               className={s.image}
             />
           </div>

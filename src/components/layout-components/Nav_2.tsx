@@ -39,13 +39,11 @@ export default function Nav_2({ isHome, isFix }: Props) {
                   key={menuItem.NAME}
                   legacyBehavior={false}
                 >
-                  <Image
-                    src="/2.jpeg"
+                  <img
+                    src="/logo-100.png"
                     alt="Signature de Thierry Casters"
-                    width={60}
-                    height={60}
-                    quality={100}
-                    unoptimized={true}
+                    width={35}
+                    height={35}
                     className={s.logo}
                   />
                 </Link>

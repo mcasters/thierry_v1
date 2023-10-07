@@ -84,10 +84,9 @@ export default function ImagesForm({
           existantImages.map((filename) => (
             <div key={filename} className={s.imageWrapper}>
               <div className={s.imageContainer}>
-                <Image
+                <img
                   src={`${pathImage}/${filename}`}
                   alt="image"
-                  layout="fill"
                   sizes="150px"
                   className={s.image}
                 />

@@ -27,7 +27,9 @@
 }
 
 .imageWrapper {
+    padding: 0 0.1em 2em;
     display: inline-block;
+    text-align: center;
 }
 
 .imageContainer {
@@ -46,6 +48,8 @@
 }
 
 .image {
+    max-height: 100%;
+    max-width: 100%;
     object-fit: contain;
 }
 

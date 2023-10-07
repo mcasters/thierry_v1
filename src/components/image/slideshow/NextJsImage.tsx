@@ -13,8 +13,7 @@ export default function NextJsImage({ slide, rect }: Props) {
 
   return (
     <div style={{ position: 'relative', width, height }}>
-      <Image
-        layout="fill"
+      <img
         alt=""
         src={slide.src}
         loading="eager"

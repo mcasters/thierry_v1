@@ -50,10 +50,9 @@ export default function ImageLightbox({
           className={s.imageButton}
           style={maxHeight ? { height: `${maxHeight}vh` } : { height: '50vh' }}
         >
-          <Image
+          <img
             src={`/images/${type}/${images[0].filename}`}
             alt={alt}
-            layout="fill"
             sizes="(min-width: 765px) 100vw,50vw"
             className={s.image}
           />

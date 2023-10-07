@@ -51,7 +51,7 @@ export async function POST(req: Request) {
         const files = formData.getAll('files') as File[];
         for (const file of files) {
           if (file.size > 0) {
-            const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+            const fileInfo = await resizeAndSaveImage(file, dir, 2500);
             if (fileInfo) {
               await prisma.content.update({
                 where: { id: content.id },
@@ -107,7 +107,7 @@ export async function POST(req: Request) {
                 },
               });
             }
-            const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+            const fileInfo = await resizeAndSaveImage(file, dir, 500);
             if (fileInfo) {
               await prisma.content.update({
                 where: { id: content.id },

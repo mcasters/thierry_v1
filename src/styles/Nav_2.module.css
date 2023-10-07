@@ -98,8 +98,12 @@ Alignement centré avec Logo
 }
 
 .logo {
-  width: 40px;
-  height: auto;
+  transition: transform 0.4s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1, 1.1);
+  transition: transform 0.4s ease;
 }
 
 .nav li:last-child, .homeNav li:last-child, .itemNav li:last-child {
@@ -108,9 +112,9 @@ Alignement centré avec Logo
 }
 
 .nav li:first-child .link, .homeNav li:first-child .link, .itemNav li:first-child .link {
-  margin-right: 40px;
+  margin-right: 50px;
 }
 
 .nav li:last-child .link, .homeNav li:last-child .link, .itemNav li:last-child .link {
-  margin-left: 40px;
+  margin-left: 30px;
 }
