@@ -4,7 +4,7 @@ import Lightbox from 'yet-another-react-lightbox';
 import Inline from 'yet-another-react-lightbox/plugins/inline';
 import 'yet-another-react-lightbox/styles.css';
 
-import { getSrcMisc } from '@/utils/common';
+import { getSrcMisc } from '@/utils/commonUtils';
 import NextJsImage from '@/components/image/slideshow/NextJsImage';
 import { ContentImage } from '.prisma/client';
 

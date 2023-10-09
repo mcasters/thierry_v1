@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
 import { PostFull } from '@/app/api/post/post';
 import s from '../form.module.css';
-import { getMainImage } from '@/utils/common';
+import { getMainImage } from '@/utils/commonUtils';
 
 interface Props {
   post?: PostFull;

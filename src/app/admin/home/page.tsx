@@ -1,6 +1,6 @@
 import AdminHomeComponent from '@/components/admin/content/AdminHomeComponent';
 import { getContentsFull } from '@/app/api/content/getContents';
-import { getIntro, getSliders } from '@/utils/common';
+import { getIntro, getSliders } from '@/utils/commonUtils';
 import s from '@/styles/admin.module.css';
 
 export default async function Home() {

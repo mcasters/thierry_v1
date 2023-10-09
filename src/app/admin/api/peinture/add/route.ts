@@ -6,7 +6,7 @@ import {
   resizeAndSaveImage,
   createDirIfNecessary,
   getPaintingDir,
-} from '@/utils/server';
+} from '@/utils/serverUtils';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import prisma from '@/lib/prisma';
 

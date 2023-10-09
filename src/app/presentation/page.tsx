@@ -1,11 +1,11 @@
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import React from 'react';
 import { getContentsFull } from '@/app/api/content/getContents';
 import {
   getDemarche,
   getInspiration,
   getPresentationContent,
-} from '@/utils/common';
+} from '@/utils/commonUtils';
 import s from '@/styles/presentation.module.css';
 
 export default async function Presentation() {
@@ -21,7 +21,9 @@ export default async function Presentation() {
       <div className={s.contentWrapper}>
         {presentation?.images.length > 0 && (
           <div className={s.imageContainer}>
-            <img
+            <Image
+              layout="fill"
+              sizes="200px"
               src={`/images/miscellaneous/${presentation.images[0].filename}`}
               alt="image"
               className={s.image}

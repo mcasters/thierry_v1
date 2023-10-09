@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { FiTrash2 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
@@ -84,8 +84,9 @@ export default function ImagesForm({
           existantImages.map((filename) => (
             <div key={filename} className={s.imageWrapper}>
               <div className={s.imageContainer}>
-                <img
+                <Image
                   src={`${pathImage}/${filename}`}
+                  layout="fill"
                   alt="image"
                   sizes="150px"
                   className={s.image}

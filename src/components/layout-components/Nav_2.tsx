@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 
 import { MENU_2 } from '@/constants/routes';
 import { usePathname } from 'next/navigation';
@@ -39,7 +39,7 @@ export default function Nav_2({ isHome, isFix }: Props) {
                   key={menuItem.NAME}
                   legacyBehavior={false}
                 >
-                  <img
+                  <Image
                     src="/logo-100.png"
                     alt="Signature de Thierry Casters"
                     width={35}

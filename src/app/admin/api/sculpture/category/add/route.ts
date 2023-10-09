@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import prisma from '@/lib/prisma';
-import { transformValueToKey } from '@/utils/common';
+import { transformValueToKey } from '@/utils/commonUtils';
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);

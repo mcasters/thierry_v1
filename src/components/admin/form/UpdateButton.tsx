@@ -11,7 +11,11 @@ import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
 import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
 import PostForm from '@/components/admin/form/PostForm';
 import { PostFull } from '@/app/api/post/post';
-import { isPaintingFull, isPostFull, isSculptureFull } from '@/utils/common';
+import {
+  isPaintingFull,
+  isPostFull,
+  isSculptureFull,
+} from '@/utils/commonUtils';
 
 type Props = {
   item:

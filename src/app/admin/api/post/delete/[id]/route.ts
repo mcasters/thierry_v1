@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth/next';
 import prisma from '@/lib/prisma';
-import { deleteFile, getPostDir } from '@/utils/server';
+import { deleteFile, getPostDir } from '@/utils/serverUtils';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { NextResponse } from 'next/server';
 

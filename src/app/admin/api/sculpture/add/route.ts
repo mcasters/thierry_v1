@@ -6,7 +6,7 @@ import {
   resizeAndSaveImage,
   createDirIfNecessary,
   getSculptureDir,
-} from '@/utils/server';
+} from '@/utils/serverUtils';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { NextResponse } from 'next/server';
 

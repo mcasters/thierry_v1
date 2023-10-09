@@ -3,7 +3,7 @@ import { join } from 'path';
 
 import prisma from '@/lib/prisma';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { deleteFile, getPostDir } from '@/utils/server';
+import { deleteFile, getPostDir } from '@/utils/serverUtils';
 import { NextResponse } from 'next/server';
 
 export async function GET(

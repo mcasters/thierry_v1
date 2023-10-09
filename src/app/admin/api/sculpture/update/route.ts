@@ -3,7 +3,7 @@ import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
 import { NextResponse } from 'next/server';
 
-import { resizeAndSaveImage, getSculptureDir } from '@/utils/server';
+import { resizeAndSaveImage, getSculptureDir } from '@/utils/serverUtils';
 import prisma from '@/lib/prisma';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 

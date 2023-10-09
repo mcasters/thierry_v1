@@ -5,7 +5,7 @@ import s from './PostComponent.module.css';
 import { PostFull } from '@/app/api/post/post';
 import Gallery from '@/components/image/Gallery';
 import { TYPE } from '@/constants';
-import { getMainImage } from '@/utils/common';
+import { getMainImage } from '@/utils/commonUtils';
 
 interface Props {
   post: PostFull;

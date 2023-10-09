@@ -3,7 +3,12 @@ import Link from 'next/link';
 import { getContents, getContentsFull } from '@/app/api/content/getContents';
 import s from '@/styles/contact.module.css';
 import { SiInstagram } from 'react-icons/si';
-import { getAddress, getEmail, getPhone, getTextContact } from '@/utils/common';
+import {
+  getAddress,
+  getEmail,
+  getPhone,
+  getTextContact,
+} from '@/utils/commonUtils';
 
 export default async function Contact() {
   const contents = await getContentsFull();

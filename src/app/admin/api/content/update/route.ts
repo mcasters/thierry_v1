@@ -6,7 +6,7 @@ import {
   deleteFile,
   getMiscellaneousDir,
   resizeAndSaveImage,
-} from '@/utils/server';
+} from '@/utils/serverUtils';
 import prisma from '@/lib/prisma';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { Label } from '@prisma/client';

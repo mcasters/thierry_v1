@@ -4,7 +4,7 @@ import {
   getDemarche,
   getInspiration,
   getPresentationContent,
-} from '@/utils/common';
+} from '@/utils/commonUtils';
 import s from '@/styles/admin.module.css';
 
 export default async function Presentation() {

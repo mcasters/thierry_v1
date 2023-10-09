@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { TYPE } from '@/constants';
 
 import s from './lightbox.module.css';
@@ -50,8 +50,9 @@ export default function ImageLightbox({
           className={s.imageButton}
           style={maxHeight ? { height: `${maxHeight}vh` } : { height: '50vh' }}
         >
-          <img
+          <Image
             src={`/images/${type}/${images[0].filename}`}
+            layout="fill"
             alt={alt}
             sizes="(min-width: 765px) 100vw,50vw"
             className={s.image}

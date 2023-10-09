@@ -4,7 +4,7 @@ import ItemForm from '@/components/admin/form/ItemForm';
 import CategoryComponent from '@/components/admin/item/category/CategoryComponent';
 import { getPaintingsFull } from '@/app/api/peinture/getPaintings';
 import { getPaintingCategoriesFull } from '@/app/api/peinture/category/getCategories';
-import { getEmptyPainting } from '@/utils/common';
+import { getEmptyPainting } from '@/utils/commonUtils';
 
 export default async function Peintures() {
   const paintings = await getPaintingsFull();

@@ -1,11 +1,11 @@
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 
 import DeleteButton from '@/components/admin/form/DeleteButton';
 import UpdateButton from '@/components/admin/form/UpdateButton';
 import { TYPE } from '@/constants';
 import s from '../ListComponent.module.css';
 import { PostFull } from '@/app/api/post/post';
-import { getMainImage } from '@/utils/common';
+import { getMainImage } from '@/utils/commonUtils';
 
 interface Props {
   post: PostFull;
@@ -25,7 +25,7 @@ export default function RowPostListComponent({ post }: Props) {
         <span className={s.name}>{post.title}</span>
       </li>
       <li className={s.itemImage}>
-        {src !== null && <img src={src} alt="image" height={50} width={50} />}
+        {src !== null && <Image src={src} alt="image" height={50} width={50} />}
       </li>
       <li className={s.itemIcon}>
         <UpdateButton item={post} type={TYPE.POST} />

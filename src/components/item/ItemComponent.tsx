@@ -4,7 +4,7 @@ import ImageLightbox from '@/components/image/ImageLightbox';
 import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import { PaintingFull } from '@/app/api/peinture/painting';
 import s from './ItemComponent.module.css';
-import { isSculptureFull } from '@/utils/common';
+import { isSculptureFull } from '@/utils/commonUtils';
 
 interface Props {
   item: SculptureFull | PaintingFull;

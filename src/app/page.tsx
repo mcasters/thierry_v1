@@ -7,7 +7,7 @@ import {
 import { getPaintingCategoriesForMenu } from '@/app/api/peinture/category/getCategories';
 import { getSculptureCategoriesForMenu } from '@/app/api/sculpture/category/getCategories';
 import Layout from '@/components/layout-components/Layout';
-import { getIntro, getSliders } from '@/utils/common';
+import { getIntro, getSliders } from '@/utils/commonUtils';
 
 export default async function Page() {
   // This request should be cached until manually invalidated.

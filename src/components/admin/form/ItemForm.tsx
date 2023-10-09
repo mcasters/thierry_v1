@@ -11,7 +11,7 @@ import { SculptureFull } from '@/app/api/sculpture/sculpture';
 import { PaintingFull } from '@/app/api/peinture/painting';
 import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
 import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
-import { isSculptureFull } from '@/utils/common';
+import { isSculptureFull } from '@/utils/commonUtils';
 
 interface Props {
   item: SculptureFull | PaintingFull;

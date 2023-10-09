@@ -1,5 +1,10 @@
 import AdminContactComponent from '@/components/admin/content/AdminContactComponent';
-import { getAddress, getEmail, getPhone, getTextContact } from '@/utils/common';
+import {
+  getAddress,
+  getEmail,
+  getPhone,
+  getTextContact,
+} from '@/utils/commonUtils';
 import { getContents, getContentsFull } from '@/app/api/content/getContents';
 import s from '@/styles/admin.module.css';
 

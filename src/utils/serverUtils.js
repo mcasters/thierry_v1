@@ -76,9 +76,8 @@ export const resizeAndSaveImage = async (file, dir, largeWidth) => {
       })
       .catch((err) => console.log(err));
   } else {
-    const px = 2000;
     return image
-      .resize(px, px, {
+      .resize(2000, 1200, {
         fit: sharp.fit.inside,
         withoutEnlargement: true,
       })
@@ -89,7 +88,7 @@ export const resizeAndSaveImage = async (file, dir, largeWidth) => {
           },
         },
       })
-      .webp()
+      .webp({ quality: 80 })
       .toFile(`${dir}/${filename}`)
       .then((info) => {
         return { filename, width: info.width, height: info.height };

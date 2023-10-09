@@ -1,4 +1,4 @@
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import type { Slide, ContainerRect } from 'yet-another-react-lightbox';
 import s from './slideshow.module.css';
 
@@ -13,7 +13,8 @@ export default function NextJsImage({ slide, rect }: Props) {
 
   return (
     <div style={{ position: 'relative', width, height }}>
-      <img
+      <Image
+        layout="fill"
         alt=""
         src={slide.src}
         loading="eager"
