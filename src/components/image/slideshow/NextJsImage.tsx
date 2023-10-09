@@ -1,4 +1,4 @@
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import type { Slide, ContainerRect } from 'yet-another-react-lightbox';
 import s from './slideshow.module.css';
 

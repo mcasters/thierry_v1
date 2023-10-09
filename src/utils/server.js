@@ -1,6 +1,7 @@
 import { mkdir, rm, stat } from 'fs';
 import sharp from 'sharp';
 import { join, parse } from 'path';
+import { transformValueToKey } from '@/utils/common';
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
 
@@ -50,52 +51,32 @@ export const createDirIfNecessary = (dir) => {
   });
 };
 
-export const resizeAndSaveImage = async (file, dir, largeWidth) => {
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
-  const image = sharp(buffer);
-  const filename = `${parse(file.name).name}-${Date.now()}.webp`;
+export const resizeAndSaveImage = async (title, file, dir, px) => {
+  const filename = `${transformValueToKey(title)}-${Date.now()}`;
+  const _px = px !== undefined ? px : 2000;
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const image = sharp(buffer, {
+    sequentialRead: true,
+  });
 
-  if (largeWidth !== undefined) {
-    return image
-      .resize(largeWidth, null, {
-        fit: sharp.fit.inside,
-        withoutEnlargement: true,
-      })
-      .withMetadata({
-        exif: {
-          IFD0: {
-            Copyright: 'Thierry Casters',
-          },
+  return image
+    .resize(_px, _px, {
+      fit: sharp.fit.inside,
+      withoutEnlargement: true,
+    })
+    .withMetadata({
+      exif: {
+        IFD0: {
+          Copyright: 'Thierry Casters',
         },
-      })
-      .webp({ quality: 80 })
-      .toFile(`${dir}/${filename}`)
-      .then((info) => {
-        return { filename, width: info.width, height: info.height };
-      })
-      .catch((err) => console.log(err));
-  } else {
-    const px = 2000;
-    return image
-      .resize(px, px, {
-        fit: sharp.fit.inside,
-        withoutEnlargement: true,
-      })
-      .withMetadata({
-        exif: {
-          IFD0: {
-            Copyright: 'Thierry Casters',
-          },
-        },
-      })
-      .webp()
-      .toFile(`${dir}/${filename}`)
-      .then((info) => {
-        return { filename, width: info.width, height: info.height };
-      })
-      .catch((err) => console.log(err));
-  }
+      },
+    })
+    .webp({ quality: 80 })
+    .toFile(`${dir}/${filename}`)
+    .then((info) => {
+      return { filename, width: info.width, height: info.height };
+    })
+    .catch((err) => console.log(err));
 };
 
 export const deleteFile = (path) => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { FiTrash2 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
