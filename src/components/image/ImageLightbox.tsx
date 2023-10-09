@@ -20,6 +20,9 @@ const deviceSizes = [3840, 2048, 1920, 1200, 1080, 750, 640];
 const nextImageUrl = (src: string, size: number) =>
   `/_next/image?url=${encodeURIComponent(src)}&w=${size}&q=75`;
 
+const imageApi = (src: string, size: number) =>
+  `api/image?url=${encodeURIComponent(src)}&w=${size}&q=75`;
+
 export default function ImageLightbox({
   images,
   type,
@@ -41,6 +44,20 @@ export default function ImageLightbox({
       })),
   }));
 
+  const getSrcSet = () => {
+    let string: string = '';
+    deviceSizes
+      .filter((deviceSize) => deviceSize <= images[0].width)
+      .forEach((deviceSize) => {
+        if (string.endsWith('w')) string += ', ';
+        string += `${imageApi(
+          `/images/${type}/${images[0].filename}`,
+          deviceSize,
+        )} ${deviceSize}w`;
+      });
+    return string;
+  };
+
   if (type === TYPE.PAINTING || images.length === 1) {
     return (
       <div className={isCentred ? s.buttonCentred : undefined}>
@@ -50,11 +67,19 @@ export default function ImageLightbox({
           className={s.imageButton}
           style={maxHeight ? { height: `${maxHeight}vh` } : { height: '50vh' }}
         >
+          {/*<img*/}
+          {/*  src={`/images/${type}/${images[0].filename}`}*/}
+          {/*  alt={alt}*/}
+          {/*  srcSet={getSrcSet()}*/}
+          {/*  // sizes="(min-width: 765px) 100vw,50vw"*/}
+          {/*  className={s.image}*/}
+          {/*/>*/}
           <Image
             src={`/images/${type}/${images[0].filename}`}
             layout="fill"
             alt={alt}
-            sizes="(min-width: 765px) 100vw,50vw"
+            srcSet={getSrcSet()}
+            // sizes="(min-width: 765px) 100vw,50vw"
             className={s.image}
           />
         </button>

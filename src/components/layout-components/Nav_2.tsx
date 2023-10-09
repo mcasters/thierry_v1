@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 
 import { MENU_2 } from '@/constants/routes';
 import { usePathname } from 'next/navigation';
 import s from '@/styles/Nav_2.module.css';
+import Image from 'next/image';
 
 interface Props {
   isHome: boolean;

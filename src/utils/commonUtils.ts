@@ -1,4 +1,4 @@
-import { Label, Painting } from '@prisma/client';
+import { Label } from '@prisma/client';
 import { ContentFull } from '@/app/api/content/content';
 import { PostFull } from '@/app/api/post/post';
 import { PaintingFull } from '@/app/api/peinture/painting';
@@ -9,9 +9,9 @@ import { Image, PostImage } from '.prisma/client';
 export const transformValueToKey = (value: string): string => {
   return value
     .toLowerCase()
-    .split(' ' || "'")
+    .split(' ')
     .join('_')
-    .replace(/[`~!@#$%^&*()”‘|+\-=?;:",.<>{}\[\]\\\/]/gi, '')
+    .replace(/[`~!@#$%^&*()'”‘|+\-=?;:",.<>{}\[\]\\\/]/gi, '')
     .replace(/à/gi, 'a')
     .replace(/é/gi, 'e')
     .replace(/è/gi, 'e')
