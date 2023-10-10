@@ -9,16 +9,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const filename = searchParams.get('filename');
     const width = searchParams.get('w');
 
-    if (filename && width) {
-      const path = join(`${serverLibraryPath}`, 'sculpture', `${filename}`);
+    const path = join(`${serverLibraryPath}`, 'sculpture', `${filename}`);
 
-      const optimizedImage = await getOptimizedImage(path, width);
+    const optimizedImage = await getOptimizedImage(path, width);
 
-      return new Response(optimizedImage, {
-        status: 200,
-        headers: { 'Content-Type': 'image/webp' },
-      });
-    }
+    return new Response(optimizedImage, {
+      status: 200,
+      headers: { 'Content-Type': 'image/webp' },
+    });
   } catch (e) {
     console.log(e);
     return NextResponse.json({ error: 'Error' }, { status: 404 });
