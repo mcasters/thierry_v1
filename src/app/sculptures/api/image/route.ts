@@ -10,7 +10,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const width = searchParams.get('w');
 
     if (filename && width) {
-      const path = join(`${serverLibraryPath}`, 'peinture', `${filename}`);
+      const path = join(`${serverLibraryPath}`, 'sculpture', `${filename}`);
 
       const optimizedImage = await getOptimizedImage(path, width);
 

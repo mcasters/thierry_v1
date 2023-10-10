@@ -1,13 +1,12 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 
 import { ROUTES } from '@/constants/routes';
 import Header from './Header';
 import Main from '@/components/layout-components/Main';
 import { PaintingCategory, SculptureCategory } from '@prisma/client';
-import { ContentFull } from '@/app/api/content/content';
 
 interface Props {
   introduction?: string;

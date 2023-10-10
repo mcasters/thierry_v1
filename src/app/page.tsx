@@ -1,9 +1,5 @@
 import HomePage from '../components/home/HomePage';
-import { Label } from '@prisma/client';
-import {
-  getContentFullByLabel,
-  getContentsFull,
-} from '@/app/api/content/getContents';
+import { getContentsFull } from '@/app/api/content/getContents';
 import { getPaintingCategoriesForMenu } from '@/app/api/peinture/category/getCategories';
 import { getSculptureCategoriesForMenu } from '@/app/api/sculpture/category/getCategories';
 import Layout from '@/components/layout-components/Layout';

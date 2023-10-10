@@ -1,6 +1,6 @@
 'use client';
 
-import Lightbox, { useController } from 'yet-another-react-lightbox';
+import Lightbox from 'yet-another-react-lightbox';
 import Inline from 'yet-another-react-lightbox/plugins/inline';
 import 'yet-another-react-lightbox/styles.css';
 
@@ -18,7 +18,6 @@ export default function Slideshow({ images }: Props) {
     width,
     height,
   }));
-  const { next } = useController();
 
   return (
     <Lightbox

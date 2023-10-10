@@ -5,7 +5,7 @@ import {
   getPhone,
   getTextContact,
 } from '@/utils/commonUtils';
-import { getContents, getContentsFull } from '@/app/api/content/getContents';
+import { getContentsFull } from '@/app/api/content/getContents';
 import s from '@/styles/admin.module.css';
 
 export default async function Contact() {

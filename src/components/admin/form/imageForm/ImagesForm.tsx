@@ -88,7 +88,6 @@ export default function ImagesForm({
                   src={`${pathImage}/${filename}`}
                   layout="fill"
                   alt="image"
-                  sizes="150px"
                   className={s.image}
                 />
               </div>
@@ -121,7 +120,6 @@ export default function ImagesForm({
                   src={src}
                   alt="image"
                   layout="fill"
-                  sizes="150px"
                   className={s.image}
                 />
               </div>

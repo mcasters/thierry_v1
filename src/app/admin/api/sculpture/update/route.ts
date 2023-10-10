@@ -1,4 +1,3 @@
-import { join } from 'path';
 import { parse } from 'date-fns';
 import { getServerSession } from 'next-auth/next';
 import { NextResponse } from 'next/server';

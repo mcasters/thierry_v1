@@ -97,6 +97,17 @@ export const resizeAndSaveImage = async (file, dir, largeWidth) => {
   }
 };
 
+export const getOptimizedImage = async (path, width) => {
+  return await sharp(path, {
+    sequentialRead: true,
+  })
+    .rotate()
+    .resize(parseInt(width), undefined, {
+      withoutEnlargement: true,
+    })
+    .toBuffer();
+};
+
 export const deleteFile = (path) => {
   rm(path, (err) => {
     if (err) return false;

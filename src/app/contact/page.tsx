@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { getContents, getContentsFull } from '@/app/api/content/getContents';
+import { getContentsFull } from '@/app/api/content/getContents';
 import s from '@/styles/contact.module.css';
 import { SiInstagram } from 'react-icons/si';
 import {

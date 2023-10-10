@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
-import Image from 'next/image';
 import { TYPE } from '@/constants';
 
 import s from './lightbox.module.css';
-import { PostImage, Image as IImage } from '.prisma/client';
+import { PostImage, Image } from '.prisma/client';
 
 type Props = {
-  images: IImage[] | PostImage[];
+  images: Image[] | PostImage[];
   type: string;
   alt: string;
   maxHeight?: number;
@@ -17,11 +16,8 @@ type Props = {
 
 const deviceSizes = [3840, 2048, 1920, 1200, 1080, 750, 640];
 
-const nextImageUrl = (src: string, size: number) =>
-  `/_next/image?url=${encodeURIComponent(src)}&w=${size}&q=75`;
-
-const imageApi = (src: string, size: number) =>
-  `api/image?url=${encodeURIComponent(src)}&w=${size}&q=75`;
+const imageApi = (filename: string, size: number) =>
+  `api/image?filename=${encodeURIComponent(filename)}&w=${size}`;
 
 export default function ImageLightbox({
   images,
@@ -30,59 +26,64 @@ export default function ImageLightbox({
   maxHeight,
   isCentred,
 }: Props) {
+  const oneImage = type === TYPE.PAINTING || images.length === 1;
   const [open, setOpen] = useState(false);
   const slides = images.map((image) => ({
     width: image.width,
     height: image.height,
-    src: nextImageUrl(`/images/${type}/${image.filename}`, image.width),
+    src: imageApi(`${image.filename}`, image.width),
     srcSet: deviceSizes
       .filter((size) => size <= image.width)
       .map((size) => ({
-        src: nextImageUrl(`/images/${type}/${image.filename}`, size),
+        src: imageApi(`${image.filename}`, size),
         width: size,
         height: Math.round((image.height / image.width) * size),
       })),
   }));
 
-  const getSrcSet = () => {
+  const getSrcSet = (image: Image | PostImage) => {
     let string: string = '';
     deviceSizes
-      .filter((deviceSize) => deviceSize <= images[0].width)
+      .filter((deviceSize) => deviceSize <= image.width)
       .forEach((deviceSize) => {
         if (string.endsWith('w')) string += ', ';
-        string += `${imageApi(
-          `/images/${type}/${images[0].filename}`,
-          deviceSize,
-        )} ${deviceSize}w`;
+        string += `${imageApi(`${image.filename}`, deviceSize)} ${deviceSize}w`;
       });
     return string;
   };
 
-  if (type === TYPE.PAINTING || images.length === 1) {
-    return (
-      <div className={isCentred ? s.buttonCentred : undefined}>
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          className={s.imageButton}
-          style={maxHeight ? { height: `${maxHeight}vh` } : { height: '50vh' }}
-        >
-          {/*<img*/}
-          {/*  src={`/images/${type}/${images[0].filename}`}*/}
-          {/*  alt={alt}*/}
-          {/*  srcSet={getSrcSet()}*/}
-          {/*  // sizes="(min-width: 765px) 100vw,50vw"*/}
-          {/*  className={s.image}*/}
-          {/*/>*/}
-          <Image
-            src={`/images/${type}/${images[0].filename}`}
-            layout="fill"
-            alt={alt}
-            srcSet={getSrcSet()}
-            // sizes="(min-width: 765px) 100vw,50vw"
-            className={s.image}
-          />
-        </button>
+  return (
+    <div
+      className={
+        !oneImage
+          ? s.sculptureButtonWrapper
+          : isCentred
+          ? s.buttonCentred
+          : undefined
+      }
+    >
+      {images.map((image) => {
+        return (
+          <button
+            key={image.id}
+            type="button"
+            onClick={() => setOpen(true)}
+            className={s.imageButton}
+            style={
+              maxHeight ? { height: `${maxHeight}vh` } : { height: '50vh' }
+            }
+          >
+            <img
+              src={`/images/${type}/${image.filename}`}
+              alt={alt}
+              srcSet={getSrcSet(image)}
+              className={s.image}
+            />
+          </button>
+        );
+      })}
+
+      {oneImage && (
         <Lightbox
           open={open}
           close={() => setOpen(false)}
@@ -96,35 +97,8 @@ export default function ImageLightbox({
             buttonNext: () => null,
           }}
         />
-      </div>
-    );
-  } else {
-    return (
-      <>
-        <div className={s.sculptureButtonWrapper}>
-          {images.map((image) => {
-            return (
-              <button
-                key={image.filename}
-                type="button"
-                onClick={() => setOpen(true)}
-                className={s.imageButton}
-                style={
-                  maxHeight ? { height: `${maxHeight}vh` } : { height: '50vh' }
-                }
-              >
-                <Image
-                  src={`/images/${type}/${image.filename}`}
-                  alt={alt}
-                  layout="fill"
-                  sizes="(min-width: 765px) 100vw,50vw"
-                  className={s.image}
-                />
-              </button>
-            );
-          })}
-        </div>
-
+      )}
+      {!oneImage && (
         <Lightbox
           open={open}
           close={() => setOpen(false)}
@@ -134,7 +108,7 @@ export default function ImageLightbox({
             closeOnBackdropClick: true,
           }}
         />
-      </>
-    );
-  }
+      )}
+    </div>
+  );
 }

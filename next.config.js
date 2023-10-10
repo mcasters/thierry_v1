@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config) => {
-    config.output.globalObject = `(typeof self !== 'undefined' ? self : this)`;
+  webpack: (webpackConfig) => {
+    webpackConfig.output.globalObject = `(typeof self !== 'undefined' ? self : this)`;
 
-    return config;
+    return webpackConfig;
   },
   reactStrictMode: true,
 };
