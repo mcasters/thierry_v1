@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import Image from 'next/image';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import { TYPE } from '@/constants';
 
 import s from './lightbox.module.css';
-import { PostImage, Image } from '.prisma/client';
+import { PostImage, Image as IImage } from '.prisma/client';
+import { getSrcItem } from '@/utils/commonUtils';
 
 type Props = {
-  images: Image[] | PostImage[];
+  images: IImage[] | PostImage[];
   type: string;
   alt: string;
   maxHeight?: number;
@@ -15,6 +17,9 @@ type Props = {
 };
 
 const deviceSizes = [3840, 2048, 1920, 1200, 1080, 750, 640];
+
+const nextImageUrl = (src: string, size: number) =>
+  `/_next/image?url=${encodeURIComponent(src)}&w=${size}&q=75`;
 
 const imageApi = (filename: string, size: number) =>
   `api/image?filename=${encodeURIComponent(filename)}&w=${size}`;
@@ -31,26 +36,15 @@ export default function ImageLightbox({
   const slides = images.map((image) => ({
     width: image.width,
     height: image.height,
-    src: imageApi(`${image.filename}`, image.width),
+    src: nextImageUrl(`${getSrcItem(type, image.filename)}`, image.width),
     srcSet: deviceSizes
       .filter((size) => size <= image.width)
       .map((size) => ({
-        src: imageApi(`${image.filename}`, size),
+        src: nextImageUrl(`${getSrcItem(type, image.filename)}`, size),
         width: size,
         height: Math.round((image.height / image.width) * size),
       })),
   }));
-
-  const getSrcSet = (image: Image | PostImage) => {
-    let string: string = '';
-    deviceSizes
-      .filter((deviceSize) => deviceSize <= image.width)
-      .forEach((deviceSize) => {
-        if (string.endsWith('w')) string += ', ';
-        string += `${imageApi(`${image.filename}`, deviceSize)} ${deviceSize}w`;
-      });
-    return string;
-  };
 
   return (
     <div
@@ -73,10 +67,10 @@ export default function ImageLightbox({
               maxHeight ? { height: `${maxHeight}vh` } : { height: '50vh' }
             }
           >
-            <img
+            <Image
               src={`/images/${type}/${image.filename}`}
+              layout="fill"
               alt={alt}
-              srcSet={getSrcSet(image)}
               className={s.image}
             />
           </button>
