@@ -3,13 +3,13 @@ const { parse } = require('url');
 const next = require('next');
 
 const dev = process.env.NODE_ENV !== 'production';
-const hostname = '127.0.0.1' || 'localhost';
+// const hostname = '127.0.0.1' || 'localhost';
 const port = parseInt(process.env.PORT) || 3000;
 // when using middleware `hostname` and `port` must be provided below
-const app = next({ dev, hostname, port });
-const handle = app.getRequestHandler();
+const nextServer = next({ dev, dir: process.cwd(), port });
+const handle = nextServer.getRequestHandler();
 
-app.prepare().then(() => {
+nextServer.prepare().then(() => {
   createServer(async (req, res) => {
     try {
       // Be sure to pass `true` as the second argument to `url.parse`.
