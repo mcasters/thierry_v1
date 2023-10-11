@@ -1,34 +1,32 @@
-const { createServer } = require('http');
+const express = require('express');
 const { parse } = require('url');
 const next = require('next');
 
 const dev = process.env.NODE_ENV !== 'production';
-// const hostname = '127.0.0.1' || 'localhost';
+const hostname = '127.0.0.1' || 'localhost';
 const port = parseInt(process.env.PORT) || 3000;
-// when using middleware `hostname` and `port` must be provided below
-const nextServer = next({ dev, dir: process.cwd(), port });
+const nextServer = next({ dev, hostname, port });
 const handle = nextServer.getRequestHandler();
 
-nextServer.prepare().then(() => {
-  createServer(async (req, res) => {
-    try {
-      // Be sure to pass `true` as the second argument to `url.parse`.
-      // This tells it to parse the query portion of the URL.
-      const parsedUrl = parse(req.url, true);
-      const { pathname, query } = parsedUrl;
+nextServer
+  .prepare()
+  .then(() => {
+    const server = express();
 
-      await handle(req, res, parsedUrl);
-    } catch (err) {
-      console.error('Error occurred handling', req.url, err);
-      res.statusCode = 500;
-      res.end('internal server error');
+    if (!dev) {
+      server.set('trust proxy', 1);
     }
-  })
-    .once('error', (err) => {
-      console.error(err);
-      process.exit(1);
-    })
-    .listen(port, () => {
+
+    server.all('*', (req, res) => {
+      return handle(req, res);
+    });
+
+    server.listen(port, (err) => {
+      if (err) throw err;
       console.log(`> Ready on http://${hostname}:${port}`);
     });
-});
+  })
+  .catch((ex) => {
+    console.error(ex.stack);
+    process.exit(1);
+  });
