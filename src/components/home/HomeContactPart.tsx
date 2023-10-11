@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import { SiInstagram } from '@react-icons/all-files/si/SiInstagram';

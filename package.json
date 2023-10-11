@@ -47,7 +47,6 @@
     "eslint-config-next": "^13.5.2",
     "eslint-config-prettier": "^9.0.0",
     "postcss": "8.4.31",
-    "prettier": "3.0.3",
     "prisma": "^5.4.2",
     "typescript": "5.2.2"
   }

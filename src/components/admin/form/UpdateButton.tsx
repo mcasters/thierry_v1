@@ -1,3 +1,5 @@
+'use client';
+
 import { GrUpdate } from '@react-icons/all-files/gr/GrUpdate';
 
 import { PaintingCategory, SculptureCategory } from '@prisma/client';

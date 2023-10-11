@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 
 import DeleteButton from '@/components/admin/form/DeleteButton';

@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import type { Slide, ContainerRect } from 'yet-another-react-lightbox';
 import s from './slideshow.module.css';

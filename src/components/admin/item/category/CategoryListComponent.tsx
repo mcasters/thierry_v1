@@ -1,3 +1,5 @@
+'use client';
+
 import RowCategoryListComponent from './RowCategoryListComponent';
 import React from 'react';
 import s from '../../ListComponent.module.css';
