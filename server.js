@@ -1,32 +1,22 @@
-const express = require('express');
+const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
 
+const port = parseInt(process.env.PORT || '3000', 10);
+const hostname = 'localhost';
 const dev = process.env.NODE_ENV !== 'production';
-const hostname = '127.0.0.1' || 'localhost';
-const port = parseInt(process.env.PORT) || 3000;
-const nextServer = next({ dev, hostname, port });
-const handle = nextServer.getRequestHandler();
+const app = next({ dev, hostname, port });
+const handle = app.getRequestHandler();
 
-nextServer
-  .prepare()
-  .then(() => {
-    const server = express();
+app.prepare().then(() => {
+  createServer((req, res) => {
+    const parsedUrl = parse(req.url, true);
+    handle(req, res, parsedUrl);
+  }).listen(port);
 
-    if (!dev) {
-      server.set('trust proxy', 1);
-    }
-
-    server.all('*', (req, res) => {
-      return handle(req, res);
-    });
-
-    server.listen(port, (err) => {
-      if (err) throw err;
-      console.log(`> Ready on http://${hostname}:${port}`);
-    });
-  })
-  .catch((ex) => {
-    console.error(ex.stack);
-    process.exit(1);
-  });
+  console.log(
+    `> Server listening at http://localhost:${port} as ${
+      dev ? 'development' : process.env.NODE_ENV
+    }`,
+  );
+});

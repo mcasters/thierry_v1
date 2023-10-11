@@ -1,4 +1,4 @@
-import { RxUpdate } from 'react-icons/rx';
+import { GrUpdate } from '@react-icons/all-files/gr/GrUpdate';
 
 import { PaintingCategory, SculptureCategory } from '@prisma/client';
 import useModal from '@/components/admin/form/modal/useModal';
@@ -40,7 +40,7 @@ export default function UpdateButton({ item, type, categories }: Props) {
         className="iconButton"
         aria-label="Mise à jour"
       >
-        <RxUpdate />
+        <GrUpdate />
       </button>
       <Modal isOpen={isOpen} toggle={toggle}>
         {isPaintingFull(item) || isSculptureFull(item) ? (

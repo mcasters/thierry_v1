@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { FiTrash2 } from 'react-icons/fi';
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2';
 import toast from 'react-hot-toast';
 
 import { FileUploader } from '@/components/admin/form/imageForm/FileUploader';

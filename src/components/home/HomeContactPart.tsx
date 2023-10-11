@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { SiInstagram } from 'react-icons/si';
+import { SiInstagram } from '@react-icons/all-files/si/SiInstagram';
 import s from './HomeContactPart.module.css';
 
 interface Props {
