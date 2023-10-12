@@ -1,10 +1,10 @@
 import { Label } from '@prisma/client';
+import { Image, PostImage } from '.prisma/client';
 import { ContentFull } from '@/app/api/content/content';
 import { PostFull } from '@/app/api/post/post';
 import { PaintingFull } from '@/app/api/peinture/painting';
-import { TYPE } from '@/constants';
 import { SculptureFull } from '@/app/api/sculpture/sculpture';
-import { Image, PostImage } from '.prisma/client';
+import { TYPE } from '@/constants';
 
 export const transformValueToKey = (value: string): string => {
   return value
