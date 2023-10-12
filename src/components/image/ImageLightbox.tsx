@@ -21,7 +21,7 @@ type Props = {
 const deviceSizes = [3840, 2048, 1920, 1200, 1080, 750, 640];
 
 const nextImageUrl = (src: string, size: number) =>
-  `/_next/image?url=${encodeURIComponent(src)}&w=${size}&q=75`;
+  `/_next/image?url=${src}&w=${size}&q=75`;
 
 export default function ImageLightbox({
   images,
