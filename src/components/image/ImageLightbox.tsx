@@ -68,9 +68,11 @@ export default function ImageLightbox({
           >
             <Image
               src={`/images/${type}/${image.filename}`}
-              layout="fill"
+              fill={true}
+              style={{
+                objectFit: 'contain',
+              }}
               alt={alt}
-              className={s.image}
             />
           </button>
         );

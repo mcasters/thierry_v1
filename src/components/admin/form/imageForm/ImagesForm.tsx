@@ -88,9 +88,12 @@ export default function ImagesForm({
               <div className={s.imageContainer}>
                 <Image
                   src={`${pathImage}/${filename}`}
-                  layout="fill"
-                  alt="image"
-                  className={s.image}
+                  width={150}
+                  height={150}
+                  alt="Image de l'item"
+                  style={{
+                    objectFit: 'contain',
+                  }}
                 />
               </div>
               {apiForDelete && (
@@ -120,9 +123,12 @@ export default function ImagesForm({
               <div key={src} className={s.imageContainer}>
                 <Image
                   src={src}
-                  alt="image"
-                  layout="fill"
-                  className={s.image}
+                  width={150}
+                  height={150}
+                  alt="Nouvelle image de l'item"
+                  style={{
+                    objectFit: 'contain',
+                  }}
                 />
               </div>
             </div>

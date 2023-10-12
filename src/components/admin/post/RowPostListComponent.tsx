@@ -27,7 +27,9 @@ export default function RowPostListComponent({ post }: Props) {
         <span className={s.name}>{post.title}</span>
       </li>
       <li className={s.itemImage}>
-        {src !== null && <Image src={src} alt="image" height={50} width={50} />}
+        {src !== null && <Image src={src} alt="image" height={50} width={50} style={{
+            objectFit: 'contain',
+        }} />}
       </li>
       <li className={s.itemIcon}>
         <UpdateButton item={post} type={TYPE.POST} />

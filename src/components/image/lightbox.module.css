@@ -12,11 +12,6 @@
     margin: 0 auto;
 }
 
-.sculptureButtonWrapper .imageButton {
-    padding: 2em;
-
-}
-
 .imageButton {
     position: relative;
     display: block;
@@ -26,12 +21,9 @@
     border: none;
 }
 
-.image {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    object-position: top;
-    box-sizing: border-box;
+.sculptureButtonWrapper .imageButton {
+    padding: 2em;
+
 }
 
 /* Mobile */

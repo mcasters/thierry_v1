@@ -22,11 +22,13 @@ export default async function Presentation() {
         {presentation?.images.length > 0 && (
           <div className={s.imageContainer}>
             <Image
-              layout="fill"
-              sizes="200px"
               src={`/images/miscellaneous/${presentation.images[0].filename}`}
-              alt="image"
-              className={s.image}
+              width={300}
+              height={300}
+              alt="Photographie de présentation de Thierry Casters"
+              style={{
+                  objectFit: 'contain',
+              }}
             />
           </div>
         )}

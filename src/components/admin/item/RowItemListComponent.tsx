@@ -26,7 +26,9 @@ export default function RowItemListComponent({ item, categories }: Props) {
         <span className={s.name}>{item.title}</span>
       </li>
       <li className={s.itemImage}>
-        <Image src={src} alt="image" height={50} width={50} />
+        <Image src={src} alt="Image principale de l'item" height={50} width={50} style={{
+            objectFit: 'contain',
+        }} />
       </li>
       <li className={s.itemIcon}>
         <UpdateButton item={item} type={item.type} categories={categories} />

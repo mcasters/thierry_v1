@@ -45,6 +45,9 @@ export default function Nav_2({ isHome, isFix }: Props) {
                     width={35}
                     height={35}
                     className={s.logo}
+                    style={{
+                      objectFit: 'contain',
+                    }}
                   />
                 </Link>
               </li>

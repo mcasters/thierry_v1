@@ -10,20 +10,17 @@ type Props = {
 };
 
 export default function NextJsImage({ slide, rect }: Props) {
-  const width = rect.width;
-  const height = rect.height;
 
   return (
-    <div style={{ position: 'relative', width, height }}>
       <Image
-        layout="fill"
-        alt=""
-        src={slide.src}
+          width={rect.width}
+          height={rect.height}
+          alt=""
+          src={slide.src}
         loading="eager"
         draggable={false}
-        sizes={`${Math.ceil((width / window.innerWidth) * 100)}vw`}
+        sizes={`${Math.ceil((rect.width / window.innerWidth) * 100)}vw`}
         className={s.image}
       />
-    </div>
   );
 }

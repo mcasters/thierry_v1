@@ -32,25 +32,12 @@
     text-align: center;
 }
 
-.imageContainer {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    margin: 0 auto;
-}
-
 .imageFormContainer {
     padding-top: 2em;
 }
 
 .imageTitle {
     padding-bottom: 1em;
-}
-
-.image {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain;
 }
 
 .message {
