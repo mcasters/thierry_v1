@@ -16,9 +16,6 @@ export default function Nav_2({ isHome, isFix }: Props) {
   const pathname = usePathname();
   const isPainting = pathname.split('/')[1] === 'peintures';
   const isSculpture = pathname.split('/')[1] === 'sculptures';
-  const loaderProp =({ src }: any) => {
-    return src;
-  }
 
   return (
     <nav
@@ -52,7 +49,6 @@ export default function Nav_2({ isHome, isFix }: Props) {
                       objectFit: 'contain',
                     }}
                     priority
-                    loader={loaderProp}
                   />
                 </Link>
               </li>
