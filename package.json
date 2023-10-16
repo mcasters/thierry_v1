@@ -32,7 +32,11 @@
     "react-photo-album": "^2.3.0",
     "react-popper": "^2.3.0",
     "sharp": "^0.32.5",
-    "yet-another-react-lightbox": "^3.12.2"
+    "yet-another-react-lightbox": "^3.12.2",
+    "http": "^0.0.1-security",
+    "url": "^0.11.3",
+    "eslint": "8.51.0",
+    "eslint-config-next": "^13.5.4"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.4",
@@ -40,8 +44,6 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "^10.4.4",
-    "eslint": "8.48.0",
-    "eslint-config-next": "^13.5.2",
     "eslint-config-prettier": "^9.0.0",
     "postcss": "8.4.31",
     "prisma": "^5.4.2",
