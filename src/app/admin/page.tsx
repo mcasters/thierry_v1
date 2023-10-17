@@ -1,3 +1,5 @@
+import AdminThemeComponent from '@/components/admin/theme/AdminThemeComponent'
+
 export default async function AdminIndex() {
     const string1 =
         "Bon je n'ai pas encore fait la gestion des couleurs accessible ici, mais j'ai pas mal avancé pour le reste."
@@ -19,6 +21,7 @@ export default async function AdminIndex() {
         <>
             <h1>Administration</h1>
             <br />
+            <AdminThemeComponent />
             <br />
             {string1}
             <br />
