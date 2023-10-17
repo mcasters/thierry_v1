@@ -1,18 +1,11 @@
-import { ReactNode } from 'react';
-import { getPaintingCategoriesForMenu } from '@/app/api/peinture/category/getCategories';
-import { getSculptureCategoriesForMenu } from '@/app/api/sculpture/category/getCategories';
-import Layout from '@/components/layout-components/Layout';
+import React, { ReactNode } from 'react'
+import s from '@/styles/PostPage.module.css'
 
 export default async function layout({ children }: { children: ReactNode }) {
-  const paintingCategories = await getPaintingCategoriesForMenu();
-  const sculptureCategories = await getSculptureCategoriesForMenu();
-
-  return (
-    <Layout
-      paintingCategories={paintingCategories}
-      sculptureCategories={sculptureCategories}
-    >
-      {children}
-    </Layout>
-  );
+    return (
+        <div className={s.container}>
+            <h1 className="hidden">Posts</h1>
+            {children}
+        </div>
+    )
 }
