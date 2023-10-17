@@ -1,8 +1,32 @@
 .themeContainer {
+    max-width: 50%;
+    position: relative;
     text-align: left;
-    margin: 2em 0 4em;
 }
 
 .title {
-    padding-bottom: 1em;
+    display: inline-block;
+    vertical-align: top;
+    height: 28px;
+    line-height: 28px;
+    padding-right: 1em;
+}
+
+.swatch {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border-radius: 2px;
+    border: 1px solid #aaa;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.popup {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    border-radius: 5px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2;
 }

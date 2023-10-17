@@ -1,31 +1,17 @@
 'use client'
-import {
-    createContext,
-    Dispatch,
-    ReactNode,
-    SetStateAction,
-    useContext,
-    useState,
-} from 'react'
+import { createContext, ReactNode, useContext } from 'react'
+import { Theme } from '@prisma/client'
 
-interface ThemeContext {
-    backgroundColor: string
-    setBackgroundColor: Dispatch<SetStateAction<string>>
-}
-
-const ThemeContext = createContext<ThemeContext>({} as ThemeContext)
+const ThemeContext = createContext<Theme>({} as Theme)
 
 interface Props {
+    theme: Theme
     children: ReactNode
 }
 
-export function ThemeProvider({ children }: Props) {
-    const [backgroundColor, setBackgroundColor] = useState<string>('#f8f8f8')
-
+export function ThemeProvider({ theme, children }: Props) {
     return (
-        <ThemeContext.Provider value={{ backgroundColor, setBackgroundColor }}>
-            {children}
-        </ThemeContext.Provider>
+        <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
     )
 }
 

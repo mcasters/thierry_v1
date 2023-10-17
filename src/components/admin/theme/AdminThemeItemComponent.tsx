@@ -1,14 +1,15 @@
 'use client'
 
 import { HexColorPicker } from 'react-colorful'
-import { Dispatch, SetStateAction } from 'react'
+import { useCallback, useState } from 'react'
 
 import s from './AdminThemeComponent.module.css'
+import useOnClickOutside from '@/components/hooks/useOnClickOutside'
 
 interface Props {
     label: string
     color: string
-    setColor: Dispatch<SetStateAction<string>>
+    setColor: (newColor: string) => void
 }
 
 export default function AdminThemeItemComponent({
@@ -16,10 +17,25 @@ export default function AdminThemeItemComponent({
     color,
     setColor,
 }: Props) {
+    const [isOpen, toggle] = useState(false)
+
+    const close = useCallback(() => toggle(false), [])
+    const popup = useOnClickOutside(close)
+
     return (
         <div className={s.themeContainer}>
-            <h3 className={s.title}>{label}</h3>
-            <HexColorPicker color={color} onChange={setColor} />
+            <div className={s.title}>{label} :</div>
+            <div
+                className={s.swatch}
+                style={{ backgroundColor: color }}
+                onClick={() => toggle(true)}
+            />
+
+            {isOpen && (
+                <div className={s.popup} ref={popup}>
+                    <HexColorPicker color={color} onChange={setColor} />
+                </div>
+            )}
         </div>
     )
 }

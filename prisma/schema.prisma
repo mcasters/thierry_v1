@@ -134,3 +134,35 @@ model SculptureCategory {
   value      String
   sculptures Sculpture[]
 }
+
+model Theme {
+  id                      Int    @id @default(autoincrement())
+  name                    String @unique
+  backgroundColor         String
+  backgroundColorItem     String
+  lineColor               String
+  menu1Color              String
+  menu2Color              String
+  menu1HomeColor          String
+  menu2HomeColor          String
+  menu1ItemColor          String
+  menu2ItemColor          String
+  menu1LinkColor          String
+  menu2LinkColor          String
+  menu1LinkHomeColor      String
+  menu2LinkHomeColor      String
+  menu1LinkItemColor      String
+  menu2LinkItemColor      String
+  menu1LinkHoverColor     String
+  menu2LinkHoverColor     String
+  menu1LinkHomeHoverColor String
+  menu2LinkHomeHoverColor String
+  menu1LinkHoverItemColor String
+  menu2LinkHoverItemColor String
+  linkColor               String
+  linkHoverColor          String
+  color                   String
+  linkItemColor           String
+  linkHoverItemColor      String
+  colorItem               String
+}
