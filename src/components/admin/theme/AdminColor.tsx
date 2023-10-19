@@ -18,22 +18,22 @@ interface Props {
     themeId: number
 }
 
-export default function AdminThemeItemComponent({
+export default function AdminColor({
     label,
     color,
     setColor,
     presetColors,
     themeId,
 }: Props) {
-    const [isOpen, toggle] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
     const [currentColor, setCurrentColor] = useState(color)
     const [currentName, setCurrentName] = useState('')
 
     const router = useRouter()
-    const close = useCallback(() => toggle(false), [])
-    const popup = useOnClickOutside(close)
+    const close = useCallback(() => setIsOpen(false), [])
+    const ref = useOnClickOutside(close)
 
-    const saveColor = () => {
+    const savePresetColor = () => {
         const presetColor = {
             themeId,
             name: currentName,
@@ -48,23 +48,22 @@ export default function AdminThemeItemComponent({
         }).then((res) => {
             if (res.ok) {
                 toast('Couleur enregistrée')
-                close()
                 router.refresh()
             } else toast("Erreur à l'enregistrement")
         })
     }
 
     return (
-        <div className={s.itemThemeContainer}>
-            <div className={s.title}>{label} :</div>
+        <div className={s.colorContainer}>
+            <p className={s.label}>{label}</p>
             <div className={`${s.colorPickerContainer} colorPicker`}>
                 <div
                     className={s.swatch}
                     style={{ backgroundColor: color }}
-                    onClick={() => toggle(true)}
+                    onClick={() => setIsOpen(true)}
                 />
                 {isOpen && (
-                    <div className={s.popup} ref={popup}>
+                    <div className={s.popup} ref={ref}>
                         <HexColorPicker
                             color={currentColor}
                             onChange={setCurrentColor}
@@ -94,9 +93,12 @@ export default function AdminThemeItemComponent({
                             <button
                                 className={`${s.halfWidth} adminButton`}
                                 disabled={currentName === ''}
-                                onClick={(e) => saveColor()}
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    savePresetColor()
+                                }}
                             >
-                                Enregistrer la couleur
+                                Mémoriser la couleur
                             </button>
                         </div>
                         <div className={s.pickerSwatches}>
@@ -121,8 +123,9 @@ export default function AdminThemeItemComponent({
                             ))}
                         </div>
                         <button
-                            className={`${s.okButton} adminButton`}
+                            className={`${s.halfWidth} adminButton`}
                             onClick={(e) => {
+                                e.preventDefault()
                                 setColor(currentColor)
                                 close()
                             }}
@@ -130,8 +133,11 @@ export default function AdminThemeItemComponent({
                             OK
                         </button>
                         <button
-                            className={`${s.okButton} adminButton`}
-                            onClick={(e) => close()}
+                            className={`${s.halfWidth} adminButton`}
+                            onClick={(e) => {
+                                e.preventDefault()
+                                close()
+                            }}
                         >
                             Annuler
                         </button>

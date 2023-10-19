@@ -6,15 +6,15 @@ import { NextResponse } from 'next/server'
 
 export async function GET(
     req: Request,
-    { params }: { params: { name: string } }
+    { params }: { params: { id: string } }
 ) {
     const session = await getServerSession(authOptions)
 
     if (session) {
         try {
-            const name = params.name
+            const id = parseInt(params.id)
             await prisma.presetColor.delete({
-                where: { name },
+                where: { id },
             })
             return NextResponse.json({ message: 'ok' }, { status: 200 })
         } catch (e) {

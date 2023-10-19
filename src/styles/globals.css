@@ -274,13 +274,14 @@ label {
   display: inline-block;
   width: 100%;
   text-align: left;
+  margin-top: 1em;
 }
 
 .adminButton,
 [type="submit"],
 [type="reset"] {
   width: 25%;
-  margin: 2em 0.3em;
+  margin: 0.5em;
 }
 
 .hidden {

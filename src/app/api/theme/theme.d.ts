@@ -4,8 +4,10 @@ const ThemeFull = Prisma.validator<Prisma.ThemeDefaultArgs>()({
     include: {
         presetColors: {
             select: {
+                id: true,
                 color: true,
                 name: true,
+                themeId: true,
             },
         },
     },
