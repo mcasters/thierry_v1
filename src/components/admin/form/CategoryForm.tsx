@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import {useRouter} from 'next/navigation';
 
 import s from '../form.module.css';
-import { PaintingCategory, SculptureCategory } from '@prisma/client';
+import {PaintingCategory, SculptureCategory} from '@prisma/client';
 
 interface Props {
   category?: PaintingCategory | SculptureCategory;
@@ -34,7 +34,6 @@ export default function CategoryForm({ category, type, toggleModal }: Props) {
       });
     }
   };
-
   return (
     <div className={s.formContainer}>
       <h4>{title}</h4>

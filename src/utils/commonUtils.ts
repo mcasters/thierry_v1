@@ -1,10 +1,11 @@
-import { Label, Theme } from '@prisma/client'
+import { Label } from '@prisma/client'
 import { Image, PostImage } from '.prisma/client'
 import { ContentFull } from '@/app/api/content/content'
 import { PostFull } from '@/app/api/post/post'
 import { PaintingFull } from '@/app/api/peinture/painting'
 import { SculptureFull } from '@/app/api/sculpture/sculpture'
 import { TYPE } from '@/constants'
+import { ThemeFull } from '@/app/api/theme/theme'
 
 export const transformValueToKey = (value: string): string => {
     return value
@@ -136,7 +137,7 @@ export const getEmptySculpture = (): SculptureFull => {
     }
 }
 
-export const getDefaultTheme = (): Theme => {
+export const getDefaultTheme = (): ThemeFull => {
     return {
         id: 0,
         name: 'main',
@@ -167,5 +168,11 @@ export const getDefaultTheme = (): Theme => {
         linkItemColor: '#a4874f',
         linkHoverItemColor: '#a4874f',
         colorItem: '#a4874f',
+        presetColors: [
+            {
+                name: 'Prussian blue',
+                color: '#24445C',
+            },
+        ],
     }
 }

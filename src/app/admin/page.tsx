@@ -1,6 +1,8 @@
 import AdminThemeComponent from '@/components/admin/theme/AdminThemeComponent'
+import { getThemeFull } from '@/app/api/theme/getTheme'
 
 export default async function AdminIndex() {
+    const themeFull = await getThemeFull()
     const string1 =
         "Bon je n'ai pas encore fait la gestion des couleurs accessible ici, mais j'ai pas mal avancé pour le reste."
     const string2 =
@@ -19,9 +21,7 @@ export default async function AdminIndex() {
 
     return (
         <>
-            <h1>Administration</h1>
-            <br />
-            <AdminThemeComponent />
+            <AdminThemeComponent theme={themeFull} />
             <br />
             {string1}
             <br />

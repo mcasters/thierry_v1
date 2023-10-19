@@ -1,22 +1,46 @@
-.themeContainer {
-    max-width: 50%;
-    position: relative;
+.themeContainer h1 {
+    font-size: var(--font-size-xtitle);
+    padding: 2em 0;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.themeContainer section {
+    flex: auto;
+    padding: 2em;
+    max-width: 400px;
+}
+
+
+
+
+
+
+.itemThemeContainer {
+    display: flex;
     text-align: left;
+    min-width: 270px;
 }
 
 .title {
-    display: inline-block;
+    flex: auto;
     vertical-align: top;
-    height: 28px;
-    line-height: 28px;
+    height: 30px;
+    line-height: 30px;
     padding-right: 1em;
 }
 
+.colorPickerContainer {
+    position: relative;
+}
+
 .swatch {
-    display: inline-block;
     width: 28px;
     height: 28px;
-    border-radius: 2px;
+    border-radius: 1px;
     border: 1px solid #aaa;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.1);
     cursor: pointer;
@@ -25,8 +49,53 @@
 .popup {
     position: absolute;
     top: calc(100% + 2px);
-    left: 0;
-    border-radius: 5px;
+    left: -200px;
+    background: #f0f0f4;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     z-index: 2;
+    text-align: center;
+}
+
+.presetColorForm {
+    margin-top: 1em;
+}
+
+.pickerSwatches {
+    display: flex;
+    padding: 12px;
+    flex-wrap: wrap;
+}
+
+.presetColorContainer {
+    margin: 6px;
+}
+
+.pickerSwatch {
+    width: 22px;
+    height: 22px;
+    margin: 4px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.colorName {
+    font-size: 11px;
+    display: block;
+}
+
+.halfWidth {
+    display: inline-block;
+    width: 49%;
+    padding: 0.5em;
+    height: 36px;
+    line-height: 2.3;
+    vertical-align: top;
+    margin: 0;
+}
+
+.okButton {
+    margin: 0.5em;
+    width: 45%;
 }
