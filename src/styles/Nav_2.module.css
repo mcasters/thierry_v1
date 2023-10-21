@@ -1,4 +1,4 @@
-.homeNav, .nav, .itemNav {
+.homeNav, .nav, .itemNav, .homeNavFix {
   position: relative;
   width: 100%;
   font-family: var(--font-family-sans);
@@ -15,29 +15,11 @@
   transition: all ease-in-out 0.2s;
 }
 
-.sticky {
-  position: fixed;
-  top: calc(var(--line-height) + var(--nav-1-height));
-  border-bottom: 1px solid var(--color-border-menu2);
-  background-color: rgba(var(--color-background-menu2-home-fix), 0.5);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-  transition: all ease-in-out 0.2s;
-}
-
-.nav, .itemNav {
+.nav, .itemNav, .homeNavFix {
   position: fixed;
   top: calc(var(--line-height) + var(--nav-1-height));
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   transition: all ease-in-out 0.2s;
-}
-
-.nav {
-  border-bottom: 1px solid var(--color-border-menu2);
-  background-color: var(--color-background-menu2);
-}
-
-.itemNav {
-  background-color: var(--color-background-menu2-item);
 }
 
 .menu {
@@ -53,6 +35,21 @@
   top: 0;
   list-style-type: none;
   color: white;
+}
+
+.homeNavFix {
+  border-bottom: 1px solid var(--color-border-menu2);
+  background-color: rgba(var(--color-background-menu2-home-fix), 0.5);
+}
+
+
+.nav {
+  border-bottom: 1px solid var(--color-border-menu2);
+  background-color: var(--color-background-menu2);
+}
+
+.itemNav {
+  background-color: var(--color-background-menu2-item);
 }
 
 /*

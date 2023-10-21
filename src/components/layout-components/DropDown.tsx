@@ -1,69 +1,81 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React, { useState } from 'react'
+import Link from 'next/link'
 
-import { PaintingCategory, SculptureCategory } from '@prisma/client';
-import s from '@/styles/Nav_1.module.css';
+import { PaintingCategory, SculptureCategory } from '@prisma/client'
+import s from '@/styles/Nav_1.module.css'
+import { useTheme } from '@/app/context/themeProvider'
 
 interface Props {
-  menuItems: PaintingCategory[] | SculptureCategory[];
-  path: string;
-  name: string;
-  isActive: boolean;
+    menuItems: PaintingCategory[] | SculptureCategory[]
+    path: string
+    name: string
+    isActive: boolean
 }
 export default function Dropdown({ menuItems, path, name, isActive }: Props) {
-  const [open, setOpen] = useState(false);
+    const theme = useTheme()
+    const [open, setOpen] = useState(false)
 
-  const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    setOpen(!open);
-  };
+    const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation()
+        setOpen(!open)
+    }
 
-  const openMenu = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setOpen(true);
-  };
+    const openMenu = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        setOpen(true)
+    }
 
-  const closeMenu = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setOpen(false);
-  };
+    const closeMenu = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        setOpen(false)
+    }
 
-  return (
-    <li className={s.dropdown}>
-      <button
-        onClick={toggle}
-        onMouseEnter={openMenu}
-        onMouseLeave={closeMenu}
-        className={
-          isActive ? `${s.link} ${s.active} buttonLink` : `${s.link} buttonLink`
-        }
-      >
-        {name}
-      </button>
-      {open ? (
-        <ul
-          className={s.subMenu}
-          onMouseEnter={openMenu}
-          onMouseLeave={closeMenu}
-        >
-          {menuItems.map((menuItem, index) => (
-            <li key={index}>
-              <Link
-                href={`${path}/${menuItem.key}`}
-                legacyBehavior={false}
-                onClick={(e) => {
-                  setOpen(false);
-                }}
-                className={s.subLink}
-              >
-                {menuItem.value}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      ) : null}
-    </li>
-  );
+    return (
+        <li className={s.dropdown}>
+            <button
+                onClick={toggle}
+                onMouseEnter={openMenu}
+                onMouseLeave={closeMenu}
+                className={
+                    isActive
+                        ? `${s.link} ${s.active} buttonLink`
+                        : `${s.link} buttonLink`
+                }
+            >
+                {name}
+            </button>
+            {open ? (
+                <ul
+                    className={s.subMenu}
+                    onMouseEnter={openMenu}
+                    onMouseLeave={closeMenu}
+                >
+                    {menuItems.map((menuItem, index) => (
+                        <li key={index}>
+                            <Link
+                                href={`${path}/${menuItem.key}`}
+                                legacyBehavior={false}
+                                onClick={(e) => {
+                                    setOpen(false)
+                                }}
+                                className={s.subLink}
+                            >
+                                {menuItem.value}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            ) : null}
+            <style jsx>{`
+                .dropdown .link.active {
+                    border-bottom-color: ${theme.menu1LinkHoverColor};
+                }
+                .dropdown .link.active {
+                    border-bottom-color: ${theme.menu1LinkHoverItemColor};
+                }
+            `}</style>
+        </li>
+    )
 }

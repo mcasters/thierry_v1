@@ -190,9 +190,7 @@ a:hover, .buttonLink:hover, a:focus,
 }
 
 .buttonLink {
-  font-family: var(--font-family-serif) !important;
   font-size: var(--font-size);
-  padding: 2px 5px;
   display: inline;
   margin: 0;
   background: none;

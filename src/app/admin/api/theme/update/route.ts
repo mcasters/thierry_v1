@@ -23,7 +23,7 @@ export async function POST(req: Request) {
                     where: {
                         id,
                     },
-                    data: themeToUpdate,
+                    data: { ...rest },
                 })
             }
             return NextResponse.json({ message: 'ok' }, { status: 200 })
