@@ -11,6 +11,7 @@ import { getSculptureCategoriesForMenu } from '@/app/api/sculpture/category/getC
 import { getIntro } from '@/utils/commonUtils'
 import React from 'react'
 import { getTheme } from '@/app/api/theme/getTheme'
+import StyledJsxRegistry from './registry'
 
 export const metadata: Metadata = {
     title: 'Home',
@@ -32,13 +33,15 @@ export default async function RootLayout({
         <html lang="fr">
             <body>
                 <Providers session={session} theme={theme}>
-                    <Layout
-                        introduction={getIntro(contents)?.text}
-                        paintingCategories={paintingCategories}
-                        sculptureCategories={sculptureCategories}
-                    >
-                        {children}
-                    </Layout>
+                    <StyledJsxRegistry>
+                        <Layout
+                            introduction={getIntro(contents)?.text}
+                            paintingCategories={paintingCategories}
+                            sculptureCategories={sculptureCategories}
+                        >
+                            {children}
+                        </Layout>
+                    </StyledJsxRegistry>
                 </Providers>
             </body>
         </html>

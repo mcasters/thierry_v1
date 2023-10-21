@@ -9,7 +9,7 @@
   "license": "ISC",
   "main": "server.js",
   "scripts": {
-    "dev": "NODE_ENV=development node server.js",
+    "dev": "NODE_ENV=development rm -rf .next && node server.js",
     "build": "next build",
     "start": "cross-env NODE_ENV=production node dist/server.js",
     "lint": "next lint",
