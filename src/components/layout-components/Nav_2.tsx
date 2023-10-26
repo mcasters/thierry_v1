@@ -14,6 +14,7 @@ interface Props {
 
 export default function Nav_2({ navType }: Props) {
   const theme = useTheme();
+  const colorWithOpacity = theme.menu2HomeColor + "aa";
 
   return (
     <div>
@@ -74,10 +75,8 @@ export default function Nav_2({ navType }: Props) {
           background-color: ${theme.menu2Color};
         }
         .homeNavFix {
-          background-color: ${theme.menu2HomeColor};
-          opacity: 0.5;
+          background-color: ${colorWithOpacity};
         }
-
         .homeNav .link {
           color: ${theme.menu2LinkHomeColor};
         }

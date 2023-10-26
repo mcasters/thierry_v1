@@ -31,12 +31,21 @@ export default function Header({
   const isPainting = basePath === BASE_PATH.PAINTING;
   const isSculpture = basePath === BASE_PATH.SCULPTURE;
 
-  const navType =
+  const navType1 =
     isSculpture || isPainting
       ? LAYOUT.ITEM_NAV
       : isHome && !titleDisappear
       ? LAYOUT.HOME_NAV
       : isHome && titleDisappear
+      ? LAYOUT.HOME_NAV_FIX
+      : LAYOUT.NAV;
+
+  const navType2 =
+    isSculpture || isPainting
+      ? LAYOUT.ITEM_NAV
+      : isHome && !introDisappear
+      ? LAYOUT.HOME_NAV
+      : isHome && introDisappear
       ? LAYOUT.HOME_NAV_FIX
       : LAYOUT.NAV;
 
@@ -48,7 +57,7 @@ export default function Header({
         </div>
       )}
       <Nav_1
-        navType={navType}
+        navType={navType1}
         basePath={basePath}
         paintingCategories={paintingCategories}
         sculptureCategories={sculptureCategories}
@@ -64,7 +73,7 @@ export default function Header({
           <p>{introduction}</p>
         </div>
       )}
-      <Nav_2 navType={navType} />
+      <Nav_2 navType={navType2} />
       <div
         className={s.spaceNav2}
         style={{
