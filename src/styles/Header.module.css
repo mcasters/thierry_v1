@@ -15,18 +15,8 @@
   line-height: 80px;
 }
 
-
-.spaceNav1 {
-  height: var(--nav-1-height);
-}
-
 .intro {
   padding: 5em 10em;
   white-space: pre-line;
   z-index: 2;
 }
-
-.spaceNav2 {
-  height: var(--nav-2-height);
-}
-

@@ -1,41 +1,51 @@
 export const ROUTES = {
-  PRESENTATION: '/presentation',
-  PAINTING: '/peintures',
-  SCULPTURE: '/sculptures',
-  CONTACT: '/contact',
-  HOME: '/',
-  POST: '/posts',
-  ADMIN: '/admin',
-  A_PAINTING: '/admin/peintures',
-  A_SCULPTURE: '/admin/sculptures',
-  A_HOME: '/admin/home',
-  A_POST: '/admin/posts',
-  A_CONTACT: '/admin/contact',
-  A_PRESENTATION: '/admin/presentation',
+  PRESENTATION: "/presentation",
+  PAINTING: "/peintures",
+  SCULPTURE: "/sculptures",
+  CONTACT: "/contact",
+  HOME: "/",
+  POST: "/posts",
+  ADMIN: "/admin",
+  A_PAINTING: "/admin/peintures",
+  A_SCULPTURE: "/admin/sculptures",
+  A_HOME: "/admin/home",
+  A_POST: "/admin/posts",
+  A_CONTACT: "/admin/contact",
+  A_PRESENTATION: "/admin/presentation",
+};
+
+export const BASE_PATH = {
+  PRESENTATION: "presentation",
+  PAINTING: "peintures",
+  SCULPTURE: "sculptures",
+  CONTACT: "contact",
+  HOME: "",
+  POST: "posts",
+  ADMIN: "admin",
 };
 
 export const NAMES = {
-  PRESENTATION: 'Présentation',
-  PAINTING: 'Peintures',
-  SCULPTURE: 'Sculptures',
-  HOME: 'Home',
-  PRIVACY_FRENCH: 'Politique de confidentialité',
-  ADMIN: 'général',
-  POST: 'Posts',
-  CONTACT: 'Contact',
+  PRESENTATION: "Présentation",
+  PAINTING: "Peintures",
+  SCULPTURE: "Sculptures",
+  HOME: "Home",
+  PRIVACY_FRENCH: "Politique de confidentialité",
+  ADMIN: "général",
+  POST: "Posts",
+  CONTACT: "Contact",
 };
 
 export const MENU_1 = [
   {
-    PATH: ROUTES.PAINTING,
+    BASE_PATH: BASE_PATH.PAINTING,
     NAME: NAMES.PAINTING,
   },
   {
-    PATH: ROUTES.SCULPTURE,
+    BASE_PATH: BASE_PATH.SCULPTURE,
     NAME: NAMES.SCULPTURE,
   },
   {
-    PATH: ROUTES.POST,
+    BASE_PATH: BASE_PATH.POST,
     NAME: NAMES.POST,
   },
 ];

@@ -1,129 +1,130 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import Link from "next/link";
 
-import { PaintingCategory, SculptureCategory } from '@prisma/client'
-import { MENU_1, ROUTES } from '@/constants/routes'
-import Dropdown from '@/components/layout-components/DropDown'
-import s from '@/styles/Nav_1.module.css'
-import { useTheme } from '@/app/context/themeProvider'
+import { PaintingCategory, SculptureCategory } from "@prisma/client";
+import { BASE_PATH, MENU_1 } from "@/constants/routes";
+import Dropdown from "@/components/layout-components/DropDown";
+import s from "@/styles/Nav_1.module.css";
+import { useTheme } from "@/app/context/themeProvider";
+import LAYOUT from "@/constants/layout";
 
 interface Props {
-    isHome: boolean
-    isFix: boolean
-    paintingCategories: PaintingCategory[]
-    sculptureCategories: SculptureCategory[]
+  navType: string;
+  basePath: string;
+  paintingCategories: PaintingCategory[];
+  sculptureCategories: SculptureCategory[];
 }
 
 export default function Nav_1({
-    isFix,
-    isHome,
-    paintingCategories,
-    sculptureCategories,
+  navType,
+  basePath,
+  paintingCategories,
+  sculptureCategories,
 }: Props) {
-    const pathname = usePathname()
-    const theme = useTheme()
-    const isPainting = pathname.split('/')[1] === 'peintures'
-    const isSculpture = pathname.split('/')[1] === 'sculptures'
-    const isItem = isPainting || isSculpture
-    const backgroundColor = isItem
-        ? theme.menu1ItemColor
-        : !isHome
-        ? theme.menu1Color
-        : isFix
-        ? theme.menu1HomeColor
-        : undefined
-    const nav = isFix ? 'homeNavFix' : 'homeNav'
+  const theme = useTheme();
 
-    return (
-        <nav
-            className={
-                isItem
-                    ? s.itemNav
-                    : isHome && !isFix
-                    ? s.homeNav
-                    : isHome && isFix
-                    ? s.homeNavFix
-                    : s.nav
+  return (
+    <>
+      <nav
+        className={
+          navType === LAYOUT.ITEM_NAV
+            ? `${s.itemNav} itemNav`
+            : navType === LAYOUT.HOME_NAV
+            ? `${s.homeNav} homeNav`
+            : navType === LAYOUT.HOME_NAV_FIX
+            ? `${s.homeNavFix} homeNavFix`
+            : `${s.nav} nav`
+        }
+      >
+        <ul className={s.menu}>
+          {MENU_1.map((menuItem) => {
+            if (
+              menuItem.BASE_PATH === BASE_PATH.PAINTING &&
+              paintingCategories.length > 0
+            ) {
+              return (
+                <Dropdown
+                  key={menuItem.NAME}
+                  menuItems={paintingCategories}
+                  path={`/${menuItem.BASE_PATH}`}
+                  name={menuItem.NAME}
+                  isActive={basePath === BASE_PATH.PAINTING}
+                  navType={navType}
+                />
+              );
+            } else if (
+              menuItem.BASE_PATH === BASE_PATH.SCULPTURE &&
+              sculptureCategories.length > 0
+            ) {
+              return (
+                <Dropdown
+                  key={menuItem.NAME}
+                  menuItems={sculptureCategories}
+                  path={`/${menuItem.BASE_PATH}`}
+                  name={menuItem.NAME}
+                  isActive={basePath === BASE_PATH.SCULPTURE}
+                  navType={navType}
+                />
+              );
             }
-            style={{ backgroundColor }}
-        >
-            <ul className={s.menu}>
-                {MENU_1.map((menuItem) => {
-                    if (
-                        menuItem.PATH === ROUTES.PAINTING &&
-                        paintingCategories.length > 0
-                    ) {
-                        return (
-                            <Dropdown
-                                key={menuItem.NAME}
-                                menuItems={paintingCategories}
-                                path={menuItem.PATH}
-                                name={menuItem.NAME}
-                                isActive={isPainting}
-                            />
-                        )
-                    } else if (
-                        menuItem.PATH === ROUTES.SCULPTURE &&
-                        sculptureCategories.length > 0
-                    ) {
-                        return (
-                            <Dropdown
-                                key={menuItem.NAME}
-                                menuItems={sculptureCategories}
-                                path={menuItem.PATH}
-                                name={menuItem.NAME}
-                                isActive={isSculpture}
-                            />
-                        )
+            const isActive = basePath === menuItem.BASE_PATH;
+            return (
+              <li key={menuItem.NAME}>
+                <Link
+                  href={`/${menuItem.BASE_PATH}`}
+                  key={menuItem.NAME}
+                  legacyBehavior={true}
+                >
+                  <a
+                    className={
+                      isActive ? `${s.link} ${s.active} link` : `${s.link} link`
                     }
-                    const isActive = pathname === menuItem.PATH
-                    return (
-                        <li key={menuItem.NAME}>
-                            <Link
-                                href={menuItem.PATH}
-                                key={menuItem.NAME}
-                                className={
-                                    isActive
-                                        ? `${s.link} ${s.active}`
-                                        : `${s.link}`
-                                }
-                                legacyBehavior={false}
-                            >
-                                {menuItem.NAME}
-                            </Link>
-                        </li>
-                    )
-                })}
-            </ul>
-            <style jsx>{`
-                .homeNavFix .link {
-                    color: ${theme.menu1LinkHomeColor};
-                }
-                .nav .link {
-                    color: ${theme.menu1LinkColor};
-                }
-                .homeNavFix .link:hover {
-                    color: ${theme.menu1LinkHomeHoverColor};
-                }
-                .nav .link:hover {
-                    color: ${theme.menu1LinkHoverColor};
-                }
-                .nav .link.active {
-                    border-bottom-color: ${theme.menu1LinkHoverColor};
-                }
-                .itemNav .link {
-                    color: ${theme.menu1LinkItemColor};
-                }
-                .itemNav .link:hover {
-                    color: ${theme.menu1LinkHoverItemColor};
-                }
-                .itemNav .link.active {
-                    color: ${theme.menu1LinkHoverItemColor};
-                    border-bottom-color: ${theme.menu1LinkHoverItemColor};
-                }
-            `}</style>
-        </nav>
-    )
+                  >
+                    {menuItem.NAME}
+                  </a>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      <style jsx>{`
+        .itemNav {
+          background-color: ${theme.menu1ItemColor};
+        }
+        .nav {
+          background-color: ${theme.menu1Color};
+        }
+        .homeNavFix {
+          background-color: ${theme.menu1HomeColor};
+        }
+        .homeNavFix .link {
+          color: ${theme.menu1LinkHomeColor};
+        }
+        .nav .link {
+          color: ${theme.menu1LinkColor};
+        }
+        .itemNav .link {
+          color: ${theme.menu1LinkItemColor};
+        }
+        .homeNavFix .link:hover {
+          color: ${theme.menu1LinkHomeHoverColor};
+        }
+        .nav .link:hover {
+          color: ${theme.menu1LinkHoverColor};
+        }
+        .itemNav .link:hover {
+          color: ${theme.menu1LinkHoverItemColor};
+        }
+        .nav .link.active {
+          border-bottom-color: ${theme.menu1LinkHoverColor};
+        }
+        .itemNav .link.active {
+          color: ${theme.menu1LinkHoverItemColor};
+          border-bottom-color: ${theme.menu1LinkHoverItemColor};
+        }
+      `}</style>
+    </>
+  );
 }

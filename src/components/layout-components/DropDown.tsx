@@ -1,81 +1,118 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import Link from 'next/link'
+import React, { useState } from "react";
+import Link from "next/link";
 
-import { PaintingCategory, SculptureCategory } from '@prisma/client'
-import s from '@/styles/Nav_1.module.css'
-import { useTheme } from '@/app/context/themeProvider'
+import { PaintingCategory, SculptureCategory } from "@prisma/client";
+import s from "@/styles/Nav_1.module.css";
+import { useTheme } from "@/app/context/themeProvider";
+import LAYOUT from "@/constants/layout";
 
 interface Props {
-    menuItems: PaintingCategory[] | SculptureCategory[]
-    path: string
-    name: string
-    isActive: boolean
+  menuItems: PaintingCategory[] | SculptureCategory[];
+  path: string;
+  name: string;
+  isActive: boolean;
+  navType: string;
 }
-export default function Dropdown({ menuItems, path, name, isActive }: Props) {
-    const theme = useTheme()
-    const [open, setOpen] = useState(false)
+export default function Dropdown({
+  menuItems,
+  path,
+  name,
+  isActive,
+  navType,
+}: Props) {
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
 
-    const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation()
-        setOpen(!open)
-    }
+  const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setOpen(!open);
+  };
 
-    const openMenu = (e: React.MouseEvent) => {
-        e.stopPropagation()
-        setOpen(true)
-    }
+  const openMenu = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setOpen(true);
+  };
 
-    const closeMenu = (e: React.MouseEvent) => {
-        e.stopPropagation()
-        setOpen(false)
-    }
+  const closeMenu = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setOpen(false);
+  };
 
-    return (
-        <li className={s.dropdown}>
-            <button
-                onClick={toggle}
-                onMouseEnter={openMenu}
-                onMouseLeave={closeMenu}
-                className={
-                    isActive
-                        ? `${s.link} ${s.active} buttonLink`
-                        : `${s.link} buttonLink`
-                }
-            >
-                {name}
-            </button>
-            {open ? (
-                <ul
-                    className={s.subMenu}
-                    onMouseEnter={openMenu}
-                    onMouseLeave={closeMenu}
-                >
-                    {menuItems.map((menuItem, index) => (
-                        <li key={index}>
-                            <Link
-                                href={`${path}/${menuItem.key}`}
-                                legacyBehavior={false}
-                                onClick={(e) => {
-                                    setOpen(false)
-                                }}
-                                className={s.subLink}
-                            >
-                                {menuItem.value}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            ) : null}
-            <style jsx>{`
-                .dropdown .link.active {
-                    border-bottom-color: ${theme.menu1LinkHoverColor};
-                }
-                .dropdown .link.active {
-                    border-bottom-color: ${theme.menu1LinkHoverItemColor};
-                }
-            `}</style>
-        </li>
-    )
+  return (
+    <li
+      className={
+        navType === LAYOUT.ITEM_NAV
+          ? `${s.dropdown} itemNav`
+          : navType === LAYOUT.HOME_NAV
+          ? `${s.dropdown} homeNav`
+          : navType === LAYOUT.HOME_NAV_FIX
+          ? `${s.dropdown} homeNavFix`
+          : `${s.dropdown} nav`
+      }
+    >
+      <button
+        onClick={toggle}
+        onMouseEnter={openMenu}
+        onMouseLeave={closeMenu}
+        className={
+          isActive
+            ? `${s.link} ${s.active} link buttonLink`
+            : `${s.link} link buttonLink`
+        }
+      >
+        {name}
+      </button>
+      {open ? (
+        <ul
+          className={s.subMenu}
+          onMouseEnter={openMenu}
+          onMouseLeave={closeMenu}
+        >
+          {menuItems.map((menuItem, index) => (
+            <li key={index}>
+              <Link
+                href={`${path}/${menuItem.key}`}
+                legacyBehavior={false}
+                onClick={(e) => {
+                  setOpen(false);
+                }}
+                className={s.subLink}
+              >
+                {menuItem.value}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      <style jsx>{`
+        .homeNavFix .link {
+          color: ${theme.menu1LinkHomeColor};
+        }
+        .nav .link {
+          color: ${theme.menu1LinkColor};
+        }
+        .itemNav .link {
+          color: ${theme.menu1LinkItemColor};
+        }
+        .homeNavFix .link:hover {
+          color: ${theme.menu1LinkHomeHoverColor};
+        }
+        .nav .link:hover {
+          color: ${theme.menu1LinkHoverColor};
+        }
+        .itemNav .link:hover {
+          color: ${theme.menu1LinkHoverItemColor};
+        }
+        .nav .link.active {
+          border-bottom-color: ${theme.menu1LinkHoverColor};
+        }
+        .itemNav .link.active {
+          color: ${theme.menu1LinkHoverItemColor};
+          border-bottom-color: ${theme.menu1LinkHoverItemColor};
+        }
+      `}</style>
+    </li>
+  );
 }

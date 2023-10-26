@@ -1,103 +1,102 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from "next/link";
+import Image from "next/image";
 
-import { MENU_2 } from '@/constants/routes'
-import { usePathname } from 'next/navigation'
-import s from '@/styles/Nav_2.module.css'
-import { useTheme } from '@/app/context/themeProvider'
+import { MENU_2 } from "@/constants/routes";
+import s from "@/styles/Nav_2.module.css";
+import { useTheme } from "@/app/context/themeProvider";
+import LAYOUT from "@/constants/layout";
 
 interface Props {
-    isHome: boolean
-    isFix: boolean
+  navType: string;
 }
 
-export default function Nav_2({ isHome, isFix }: Props) {
-    const pathname = usePathname()
-    const theme = useTheme()
-    const isPainting = pathname.split('/')[1] === 'peintures'
-    const isSculpture = pathname.split('/')[1] === 'sculptures'
-    const isItem = isPainting || isSculpture
-    const backgroundColor = isItem
-        ? theme.menu2ItemColor
-        : !isHome
-        ? theme.menu2Color
-        : isFix
-        ? theme.menu2HomeColor
-        : undefined
+export default function Nav_2({ navType }: Props) {
+  const theme = useTheme();
 
-    return (
-        <nav
-            className={
-                isItem
-                    ? s.itemNav
-                    : isHome && !isFix
-                    ? s.homeNav
-                    : isHome && isFix
-                    ? s.homeNavFix
-                    : s.nav
-            }
-            style={{ backgroundColor }}
-        >
-            <ul className={s.menu}>
-                {MENU_2.map((menuItem) => {
-                    if (menuItem.NAME === 'Home')
-                        return (
-                            <li key={menuItem.NAME} className={s.liHome}>
-                                <Link
-                                    href={menuItem.PATH}
-                                    key={menuItem.NAME}
-                                    legacyBehavior={false}
-                                >
-                                    <Image
-                                        src="/logo-100.png"
-                                        alt="Signature de Thierry Casters"
-                                        width={35}
-                                        height={35}
-                                        className={s.logo}
-                                        style={{
-                                            objectFit: 'contain',
-                                        }}
-                                        priority
-                                    />
-                                </Link>
-                            </li>
-                        )
-                    return (
-                        <li key={menuItem.NAME}>
-                            <Link
-                                href={menuItem.PATH}
-                                key={menuItem.NAME}
-                                legacyBehavior={false}
-                                className={s.link}
-                            >
-                                {menuItem.NAME}
-                            </Link>
-                        </li>
-                    )
-                })}
-            </ul>
-            <style jsx>{`
-                .homeNavFix .link {
-                    color: ${theme.menu2LinkHomeColor};
-                }
-                .nav .link {
-                    color: ${theme.menu2LinkColor};
-                }
-                .homeNavFix .link:hover {
-                    color: ${theme.menu2LinkHomeHoverColor};
-                }
-                .nav .link:hover {
-                    color: ${theme.menu2LinkHoverColor};
-                }
-                .itemNav .link {
-                    color: ${theme.menu2LinkItemColor};
-                }
-                .itemNav .link:hover {
-                    color: ${theme.menu2LinkHoverItemColor};
-                }
-            `}</style>
-        </nav>
-    )
+  return (
+    <div>
+      <nav
+        className={
+          navType === LAYOUT.ITEM_NAV
+            ? `${s.itemNav} itemNav`
+            : navType === LAYOUT.HOME_NAV
+            ? `${s.homeNav} homeNav`
+            : navType === LAYOUT.HOME_NAV_FIX
+            ? `${s.homeNavFix} homeNavFix`
+            : `${s.nav} nav`
+        }
+      >
+        <ul className={s.menu}>
+          {MENU_2.map((menuItem) => {
+            if (menuItem.NAME === "Home")
+              return (
+                <li key={menuItem.NAME} className={s.liHome}>
+                  <Link
+                    href={menuItem.PATH}
+                    key={menuItem.NAME}
+                    legacyBehavior={false}
+                  >
+                    <Image
+                      src="/logo-100.png"
+                      alt="Signature de Thierry Casters"
+                      width={30}
+                      height={30}
+                      className={s.logo}
+                      style={{
+                        objectFit: "contain",
+                      }}
+                      priority
+                    />
+                  </Link>
+                </li>
+              );
+            return (
+              <li key={menuItem.NAME}>
+                <Link
+                  href={menuItem.PATH}
+                  key={menuItem.NAME}
+                  legacyBehavior={true}
+                >
+                  <a className={`${s.link} link`}>{menuItem.NAME}</a>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      <style jsx>{`
+        .itemNav {
+          background-color: ${theme.menu2ItemColor};
+        }
+        .nav {
+          background-color: ${theme.menu2Color};
+        }
+        .homeNavFix {
+          background-color: ${theme.menu2HomeColor};
+          opacity: 0.5;
+        }
+
+        .homeNav .link {
+          color: ${theme.menu2LinkHomeColor};
+        }
+        .nav .link {
+          color: ${theme.menu2LinkColor};
+        }
+        .itemNav .link {
+          color: ${theme.menu2LinkItemColor};
+        }
+        .homeNav .link:hover {
+          color: ${theme.menu2LinkHomeHoverColor};
+        }
+        .nav .link:hover {
+          color: ${theme.menu2LinkHoverColor};
+        }
+        .itemNav .link:hover {
+          color: ${theme.menu2LinkHoverItemColor};
+        }
+      `}</style>
+    </div>
+  );
 }

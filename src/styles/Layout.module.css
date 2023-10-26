@@ -1,14 +1,9 @@
-.wrapper {
-    position: relative;
-}
-
 .line {
     position: fixed;
     height: var(--line-height);
     top: 0;
     left: 0;
     width: 100%;
-    background-color: var(--color-line);
     z-index: 5;
 }
 

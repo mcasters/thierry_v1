@@ -9,8 +9,6 @@ export async function POST(req: Request) {
     if (session) {
         try {
             const { presetColor } = await req.json()
-            console.log('////// presetColor')
-            console.log(presetColor)
             const data = req.body
             await prisma.theme.update({
                 where: { id: presetColor.themeId },
