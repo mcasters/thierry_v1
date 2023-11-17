@@ -1,15 +1,15 @@
-import { join } from 'path';
-import { parse } from 'date-fns';
-import { getServerSession } from 'next-auth/next';
-import { NextResponse } from 'next/server';
+import { join } from "path";
+import { parse } from "date-fns";
+import { getServerSession } from "next-auth/next";
+import { NextResponse } from "next/server";
 
 import {
   deleteFile,
   resizeAndSaveImage,
   getPostDir,
-} from '@/utils/serverUtils';
-import prisma from '@/lib/prisma';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+} from "@/utils/serverUtils";
+import prisma from "@/lib/prisma";
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       const dir = getPostDir();
 
       const formData = await req.formData();
-      const id = Number(formData.get('id'));
+      const id = Number(formData.get("id"));
       const oldPost = await prisma.post.findUnique({
         where: { id },
         include: {
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
 
       if (oldPost) {
         let images = [];
-        const mainFile = formData.get('file') as File;
+        const mainFile = formData.get("file") as File;
         if (mainFile.size > 0) {
           const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
           if (fileInfo)
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
           }
         }
 
-        const files = formData.getAll('files') as File[];
+        const files = formData.getAll("files") as File[];
         for (const file of files) {
           if (file.size > 0) {
             const fileInfo = await resizeAndSaveImage(file, dir, undefined);
@@ -77,21 +77,21 @@ export async function POST(req: Request) {
         await prisma.post.update({
           where: { id },
           data: {
-            title: formData.get('title') as string,
-            date: parse(formData.get('date') as string, 'yyyy', new Date()),
-            text: formData.get('text') as string,
+            title: formData.get("title") as string,
+            date: parse(formData.get("date") as string, "yyyy", new Date()),
+            text: formData.get("text") as string,
             images: {
               create: images,
             },
           },
         });
       }
-      return NextResponse.json({ message: 'ok' }, { status: 200 });
+      return NextResponse.json({ message: "ok" }, { status: 200 });
     } catch (e) {
       console.log(e);
-      return NextResponse.json({ error: 'Error' }, { status: 404 });
+      return NextResponse.json({ error: "Error" }, { status: 404 });
     }
   } else {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 }

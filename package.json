@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "NODE_ENV=development node server.js",
     "build": "next build",
-    "start": "cross-env NODE_ENV=production node dist/server.js",
+    "start": "cross-env NODE_ENV=production node server.js",
     "lint": "next lint",
     "generate": "prisma generate",
     "prisma:push": "dotenv -e .env.local -- prisma db push",

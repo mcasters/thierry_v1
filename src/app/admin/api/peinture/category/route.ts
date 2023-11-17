@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
+import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { getPaintingCategoriesFull } from '@/app/api/peinture/category/getCategories';
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import { getPaintingCategoriesFull } from "@/app/api/peinture/category/getCategories";
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -11,6 +11,6 @@ export async function GET() {
     const res = await getPaintingCategoriesFull();
     return NextResponse.json({ res });
   } else {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 }

@@ -1,14 +1,14 @@
-import { parse } from 'date-fns';
-import { getServerSession } from 'next-auth/next';
+import { parse } from "date-fns";
+import { getServerSession } from "next-auth/next";
 
-import prisma from '@/lib/prisma';
+import prisma from "@/lib/prisma";
 import {
   resizeAndSaveImage,
   createDirIfNecessary,
   getPostDir,
-} from '@/utils/serverUtils';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { NextResponse } from 'next/server';
+} from "@/utils/serverUtils";
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       createDirIfNecessary(dir);
       const formData = await req.formData();
 
-      const mainFile = formData.get('file') as File;
+      const mainFile = formData.get("file") as File;
       let images = [];
       if (mainFile.size > 0) {
         const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
             isMain: true,
           });
       }
-      const files = formData.getAll('files') as File[];
+      const files = formData.getAll("files") as File[];
       for (const file of files) {
         if (file.size > 0) {
           const fileInfo = await resizeAndSaveImage(file, dir, undefined);
@@ -46,21 +46,21 @@ export async function POST(req: Request) {
 
       await prisma.post.create({
         data: {
-          title: formData.get('title') as string,
-          date: parse(formData.get('date') as string, 'yyyy', new Date()),
-          text: formData.get('text') as string,
+          title: formData.get("title") as string,
+          date: parse(formData.get("date") as string, "yyyy", new Date()),
+          text: formData.get("text") as string,
           images: {
             create: images,
           },
         },
       });
 
-      return NextResponse.json({ message: 'ok' }, { status: 200 });
+      return NextResponse.json({ message: "ok" }, { status: 200 });
     } catch (e) {
       console.log(e);
-      return NextResponse.json({ error: 'Error' }, { status: 404 });
+      return NextResponse.json({ error: "Error" }, { status: 404 });
     }
   } else {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 }

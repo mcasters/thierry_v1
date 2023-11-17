@@ -1,16 +1,16 @@
-import { getServerSession } from 'next-auth/next';
-import { join } from 'path';
+import { getServerSession } from "next-auth/next";
+import { join } from "path";
 
 import {
   createDirIfNecessary,
   deleteFile,
   getMiscellaneousDir,
   resizeAndSaveImage,
-} from '@/utils/serverUtils';
-import prisma from '@/lib/prisma';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { Label } from '@prisma/client';
-import { NextResponse } from 'next/server';
+} from "@/utils/serverUtils";
+import prisma from "@/lib/prisma";
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import { Label } from "@prisma/client";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       createDirIfNecessary(dir);
 
       const formData = await req.formData();
-      const label = formData.get('label') as Label;
+      const label = formData.get("label") as Label;
       const BDContent = await prisma.content.findUnique({
         where: {
           label: label,
@@ -42,13 +42,13 @@ export async function POST(req: Request) {
           content = await prisma.content.create({
             data: {
               label: label,
-              title: '',
-              text: '',
+              title: "",
+              text: "",
             },
           });
         } else content = BDContent;
 
-        const files = formData.getAll('files') as File[];
+        const files = formData.getAll("files") as File[];
         for (const file of files) {
           if (file.size > 0) {
             const fileInfo = await resizeAndSaveImage(file, dir, 2500);
@@ -73,8 +73,8 @@ export async function POST(req: Request) {
           content = await prisma.content.create({
             data: {
               label,
-              title: '',
-              text: formData.get('text') as string,
+              title: "",
+              text: formData.get("text") as string,
               images: {},
             },
             include: { images: true },
@@ -85,7 +85,7 @@ export async function POST(req: Request) {
               id: BDContent.id,
             },
             data: {
-              text: formData.get('text') as string,
+              text: formData.get("text") as string,
             },
             include: { images: true },
           });
@@ -93,7 +93,7 @@ export async function POST(req: Request) {
 
         // Contents with one image (PRESENTATION)
         if (label === Label.PRESENTATION) {
-          const file = formData.get('file') as File;
+          const file = formData.get("file") as File;
           if (file.size > 0) {
             if (content.images.length > 0) {
               const oldFilename = content.images[0].filename;
@@ -125,12 +125,12 @@ export async function POST(req: Request) {
           }
         }
       }
-      return NextResponse.json({ message: 'ok' }, { status: 200 });
+      return NextResponse.json({ message: "ok" }, { status: 200 });
     } catch (e) {
       console.log(e);
-      return NextResponse.json({ error: 'Error' }, { status: 404 });
+      return NextResponse.json({ error: "Error" }, { status: 404 });
     }
   } else {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 }

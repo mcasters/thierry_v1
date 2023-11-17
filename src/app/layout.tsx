@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 
 import Layout from "@/components/layout-components/Layout";
 import Providers from "./context/providers";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import "@/styles/globals.css";
 import { getContentsFull } from "@/app/api/content/getContents";
 import { getPaintingCategoriesForMenu } from "@/app/api/peinture/category/getCategories";

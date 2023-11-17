@@ -1,7 +1,7 @@
-import { getServerSession } from 'next-auth/next';
-import prisma from '@/lib/prisma';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { NextResponse } from 'next/server';
+import { getServerSession } from "next-auth/next";
+import prisma from "@/lib/prisma";
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import { NextResponse } from "next/server";
 
 export async function GET(
   request: Request,
@@ -16,12 +16,12 @@ export async function GET(
         where: { id },
       });
 
-      return NextResponse.json({ message: 'ok' });
+      return NextResponse.json({ message: "ok" });
     } catch (e) {
       console.log(e);
-      return NextResponse.json({ error: 'Error' }, { status: 404 });
+      return NextResponse.json({ error: "Error" }, { status: 404 });
     }
   } else {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 }

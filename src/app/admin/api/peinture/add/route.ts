@@ -1,14 +1,14 @@
-import { parse } from 'date-fns';
-import { getServerSession } from 'next-auth/next';
-import { NextResponse } from 'next/server';
+import { parse } from "date-fns";
+import { getServerSession } from "next-auth/next";
+import { NextResponse } from "next/server";
 
 import {
   resizeAndSaveImage,
   createDirIfNecessary,
   getPaintingDir,
-} from '@/utils/serverUtils';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import prisma from '@/lib/prisma';
+} from "@/utils/serverUtils";
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -18,25 +18,25 @@ export async function POST(req: Request) {
       const dir = getPaintingDir();
       createDirIfNecessary(dir);
       const formData = await req.formData();
-      const file = formData.get('file');
+      const file = formData.get("file");
       const fileInfo = await resizeAndSaveImage(file, dir, undefined);
       if (fileInfo) {
         const newPainting = await prisma.painting.create({
           data: {
-            title: formData.get('title') as string,
-            date: parse(formData.get('date') as string, 'yyyy', new Date()),
-            technique: formData.get('technique') as string,
-            description: formData.get('description') as string,
-            height: Number(formData.get('height')),
-            width: Number(formData.get('width')),
-            isToSell: formData.get('isToSell') === 'true',
-            price: Number(formData.get('price')),
+            title: formData.get("title") as string,
+            date: parse(formData.get("date") as string, "yyyy", new Date()),
+            technique: formData.get("technique") as string,
+            description: formData.get("description") as string,
+            height: Number(formData.get("height")),
+            width: Number(formData.get("width")),
+            isToSell: formData.get("isToSell") === "true",
+            price: Number(formData.get("price")),
             category:
-              formData.get('categoryId') === ''
+              formData.get("categoryId") === ""
                 ? {}
                 : {
                     connect: {
-                      id: Number(formData.get('categoryId')),
+                      id: Number(formData.get("categoryId")),
                     },
                   },
             image: {
@@ -50,12 +50,12 @@ export async function POST(req: Request) {
         });
       }
 
-      return NextResponse.json({ message: 'ok' }, { status: 200 });
+      return NextResponse.json({ message: "ok" }, { status: 200 });
     } catch (e) {
       console.log(e);
-      return NextResponse.json({ error: 'Error' }, { status: 404 });
+      return NextResponse.json({ error: "Error" }, { status: 404 });
     }
   } else {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 }
