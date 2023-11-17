@@ -1,8 +1,3 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    formats: ["image/webp"],
-    minimumCacheTTL: 60,
-  },
-};
+const nextConfig = {};
 module.exports = nextConfig;
