@@ -1,9 +1,12 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import PhotoAlbum from 'react-photo-album';
-import Lightbox from 'yet-another-react-lightbox';
-import { PostImage } from '.prisma/client';
+import { useState } from "react";
+import { PhotoAlbum, RenderPhotoProps } from "react-photo-album";
+import Lightbox from "yet-another-react-lightbox";
+import { PostImage } from ".prisma/client";
+import Image from "next/image";
+import { DEVICE } from "@/constants/image";
+import s from "@/components/image/lightbox.module.css";
 
 interface Props {
   images: PostImage[];
@@ -19,10 +22,10 @@ export default function Gallery({ images, type }: Props) {
   const [index, setIndex] = useState(-1);
 
   const slides = images.map((image) => {
-    const width = image.width * 4;
-    const height = image.height * 4;
+    const width = image.width;
+    const height = image.height;
     return {
-      src: nextImageUrl(`/images/${type}/${image.filename}`, width),
+      src: `${image.filename}`,
       width,
       height,
       srcSet: breakpoints
@@ -39,6 +42,25 @@ export default function Gallery({ images, type }: Props) {
       <PhotoAlbum
         layout="rows"
         photos={slides}
+        renderPhoto={({
+          photo,
+          imageProps: { alt, title, sizes, className, onClick },
+          wrapperStyle,
+        }: RenderPhotoProps) => {
+          return (
+            <div style={{ ...wrapperStyle, position: "relative" }}>
+              <Image
+                fill
+                src={photo}
+                loader={({ src, width, quality }) => {
+                  const directory = width <= DEVICE.SMALL ? "sm/" : "md/";
+                  return `/images/${type}/${directory}${src}`;
+                }}
+                {...{ alt, title, sizes, className, onClick }}
+              />
+            </div>
+          );
+        }}
         targetRowHeight={400}
         onClick={({ index: current }) => setIndex(current)}
       />
@@ -47,6 +69,30 @@ export default function Gallery({ images, type }: Props) {
         slides={slides}
         open={index >= 0}
         close={() => setIndex(-1)}
+        controller={{
+          closeOnPullDown: true,
+          closeOnBackdropClick: true,
+        }}
+        render={{
+          slide: ({ slide, rect }) => (
+            <Image
+              loader={({ src, width, quality }) => {
+                const directory = width <= DEVICE.SMALL ? "md/" : "";
+                return `/images/${type}/${directory}${src}`;
+              }}
+              fill={true}
+              sizes="100vw"
+              style={{
+                objectFit: "contain",
+              }}
+              src={slide.src}
+              loading="eager"
+              draggable={false}
+              className={s.image}
+              alt="image"
+            />
+          ),
+        }}
       />
     </>
   );

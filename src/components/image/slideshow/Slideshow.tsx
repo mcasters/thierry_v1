@@ -5,8 +5,9 @@ import Inline from "yet-another-react-lightbox/plugins/inline";
 import "yet-another-react-lightbox/styles.css";
 
 import { getSrcMisc } from "@/utils/commonUtils";
-import NextJsImage from "@/components/image/slideshow/NextJsImage";
 import { ContentImage } from ".prisma/client";
+import s from "@/components/image/slideshow/slideshow.module.css";
+import Image from "next/image";
 
 type Props = {
   images: ContentImage[];
@@ -22,7 +23,20 @@ export default function Slideshow({ images }: Props) {
   return (
     <Lightbox
       slides={slides}
-      render={{ slide: NextJsImage }}
+      render={{
+        slide: ({ slide, rect }) => (
+          <Image
+            width={rect.width}
+            height={rect.height}
+            alt=""
+            src={slide.src}
+            loading="eager"
+            draggable={false}
+            sizes={`${Math.ceil((rect.width / window.innerWidth) * 100)}vw`}
+            className={s.image}
+          />
+        ),
+      }}
       plugins={[Inline]}
       inline={{
         style: {

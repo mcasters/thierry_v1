@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Lightbox from "yet-another-react-lightbox";
+import { Lightbox } from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { TYPE } from "@/constants";
 
 import s from "./lightbox.module.css";
 import { Image as IImage, PostImage } from ".prisma/client";
-import { getSrcItem } from "@/utils/commonUtils";
+import { DEVICE } from "@/constants/image";
 
 type Props = {
   images: IImage[] | PostImage[];
@@ -17,11 +17,6 @@ type Props = {
   heightVh?: number;
   isCentred?: boolean;
 };
-
-const deviceSizes = [3840, 2048, 1920, 1200, 1080, 750, 640];
-
-const nextImageUrl = (src: string, size: number) =>
-  `/_next/image?url=${encodeURIComponent(src)}&w=${size}&q=75`;
 
 export default function ImageLightbox({
   images,
@@ -32,17 +27,10 @@ export default function ImageLightbox({
 }: Props) {
   const oneImage = type === TYPE.PAINTING || images.length === 1;
   const [open, setOpen] = useState(false);
-  const slides = images.map((image) => ({
-    width: image.width,
-    height: image.height,
-    src: nextImageUrl(`${getSrcItem(type, image.filename)}`, image.width),
-    srcSet: deviceSizes
-      .filter((size) => size <= image.width)
-      .map((size) => ({
-        src: nextImageUrl(`${getSrcItem(type, image.filename)}`, size),
-        width: size,
-        height: Math.round((image.height / image.width) * size),
-      })),
+  const slides = images.map(({ filename, width, height }) => ({
+    src: filename,
+    width,
+    height,
   }));
 
   return (
@@ -68,8 +56,13 @@ export default function ImageLightbox({
             }}
           >
             <Image
-              src={`/images/${type}/${image.filename}`}
+              loader={({ src, width, quality }) => {
+                const directory = width <= DEVICE.SMALL ? "sm/" : "md/";
+                return `/images/${type}/${directory}${src}`;
+              }}
+              src={`${image.filename}`}
               fill={true}
+              sizes="(max-width: 768px) 80vw, 50vw"
               style={{
                 objectFit: "contain",
               }}
@@ -89,6 +82,24 @@ export default function ImageLightbox({
             closeOnBackdropClick: true,
           }}
           render={{
+            slide: ({ slide, rect }) => (
+              <Image
+                loader={({ src, width, quality }) => {
+                  const directory = width <= DEVICE.SMALL ? "md/" : "";
+                  return `/images/${type}/${directory}${src}`;
+                }}
+                fill={true}
+                sizes="100vw"
+                style={{
+                  objectFit: "contain",
+                }}
+                alt={alt}
+                src={slide.src}
+                loading="eager"
+                draggable={false}
+                className={s.image}
+              />
+            ),
             buttonPrev: () => null,
             buttonNext: () => null,
           }}
@@ -102,6 +113,26 @@ export default function ImageLightbox({
           controller={{
             closeOnPullDown: true,
             closeOnBackdropClick: true,
+          }}
+          render={{
+            slide: ({ slide, rect }) => (
+              <Image
+                loader={({ src, width, quality }) => {
+                  const directory = width <= DEVICE.SMALL ? "md/" : "";
+                  return `/images/${type}/${directory}${src}`;
+                }}
+                fill={true}
+                sizes="100vw"
+                style={{
+                  objectFit: "contain",
+                }}
+                alt={alt}
+                src={slide.src}
+                loading="eager"
+                draggable={false}
+                className={s.image}
+              />
+            ),
           }}
         />
       )}

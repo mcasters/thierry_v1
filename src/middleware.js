@@ -11,9 +11,5 @@ export default withAuth(function middleware(req) {}, {
 });
 
 export const config = {
-  matcher: [
-    "/admin",
-    "/admin/:path*",
-    "/((?!api|_next/static|_next/image|images|favicon.ico).*)",
-  ],
+  matcher: ["/admin", "/admin/:path*"],
 };
