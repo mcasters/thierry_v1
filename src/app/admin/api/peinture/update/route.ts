@@ -1,11 +1,10 @@
-import { join } from "path";
 import { parse } from "date-fns";
 import { getServerSession } from "next-auth/next";
 
 import {
   deleteFile,
-  resizeAndSaveImage,
   getPaintingDir,
+  resizeAndSaveImage,
 } from "@/utils/serverUtils";
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
@@ -36,9 +35,8 @@ export async function POST(req: Request) {
         let image = {};
         const newFile = formData.get("file") as File;
         if (newFile.size !== 0) {
-          const path = join(`${dir}`, `${oldPaint.image.filename}`);
-          deleteFile(path);
-          fileInfo = await resizeAndSaveImage(newFile, dir, undefined);
+          deleteFile(dir, oldPaint.image.filename);
+          fileInfo = await resizeAndSaveImage(newFile, dir);
           if (fileInfo) {
             image = {
               create: {

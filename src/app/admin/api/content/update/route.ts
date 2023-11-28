@@ -1,8 +1,6 @@
 import { getServerSession } from "next-auth/next";
-import { join } from "path";
 
 import {
-  createDirIfNecessary,
   deleteFile,
   getMiscellaneousDir,
   resizeAndSaveImage,
@@ -18,7 +16,6 @@ export async function POST(req: Request) {
   if (session) {
     try {
       const dir = getMiscellaneousDir();
-      createDirIfNecessary(dir);
 
       const formData = await req.formData();
       const label = formData.get("label") as Label;
@@ -51,7 +48,7 @@ export async function POST(req: Request) {
         const files = formData.getAll("files") as File[];
         for (const file of files) {
           if (file.size > 0) {
-            const fileInfo = await resizeAndSaveImage(file, dir, 2500);
+            const fileInfo = await resizeAndSaveImage(file, dir);
             if (fileInfo) {
               await prisma.content.update({
                 where: { id: content.id },
@@ -97,7 +94,7 @@ export async function POST(req: Request) {
           if (file.size > 0) {
             if (content.images.length > 0) {
               const oldFilename = content.images[0].filename;
-              deleteFile(join(`${dir}`, `${oldFilename}`));
+              deleteFile(dir, oldFilename);
               await prisma.content.update({
                 where: { id: content.id },
                 data: {
@@ -107,7 +104,8 @@ export async function POST(req: Request) {
                 },
               });
             }
-            const fileInfo = await resizeAndSaveImage(file, dir, 500);
+
+            const fileInfo = await resizeAndSaveImage(file, dir);
             if (fileInfo) {
               await prisma.content.update({
                 where: { id: content.id },

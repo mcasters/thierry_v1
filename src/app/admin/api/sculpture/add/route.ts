@@ -3,9 +3,9 @@ import { getServerSession } from "next-auth/next";
 
 import prisma from "@/lib/prisma";
 import {
-  resizeAndSaveImage,
   createDirIfNecessary,
   getSculptureDir,
+  resizeAndSaveImage,
 } from "@/utils/serverUtils";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { NextResponse } from "next/server";
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
       let images = [];
       for (const file of files) {
         if (file.size > 0) {
-          const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+          const fileInfo = await resizeAndSaveImage(file, dir);
           if (fileInfo)
             images.push({
               filename: fileInfo.filename,

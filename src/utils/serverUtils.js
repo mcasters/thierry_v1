@@ -1,6 +1,7 @@
-import { mkdir, rm, stat } from "fs";
+import { mkdir, stat, unlinkSync } from "fs";
 import sharp from "sharp";
 import { join, parse } from "path";
+import { IMAGE } from "@/constants/image";
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
 
@@ -50,37 +51,27 @@ export const createDirIfNecessary = (dir) => {
   });
 };
 
-export const resizeAndSaveImage = async (file, dir, largeWidth) => {
+export const resizeAndSaveImage = async (file, dir) => {
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
   const image = sharp(buffer);
   const filename = `${parse(file.name).name}-${Date.now()}.jpeg`;
+  const sharpStream = sharp({ failOn: "none" });
+  let imageWidth, imageHeight;
 
-  if (largeWidth !== undefined) {
-    return image
-      .resize(largeWidth, null, {
-        fit: sharp.fit.inside,
-        withoutEnlargement: true,
-      })
-      .withMetadata({
-        exif: {
-          IFD0: {
-            Copyright: "Thierry Casters",
-          },
-        },
-      })
-      .jpeg()
-      .toFile(`${dir}/${filename}`)
-      .then((info) => {
-        return { filename, width: info.width, height: info.height };
-      })
-      .catch((err) => console.log(err));
-  } else {
-    return image
+  const promises = [];
+
+  promises.push(
+    sharpStream
+      .clone()
       .resize(2000, 1200, {
         fit: sharp.fit.inside,
         withoutEnlargement: true,
       })
+      .on("info", function (info) {
+        imageWidth = info.width;
+        imageHeight = info.height;
+      })
       .withMetadata({
         exif: {
           IFD0: {
@@ -88,29 +79,64 @@ export const resizeAndSaveImage = async (file, dir, largeWidth) => {
           },
         },
       })
-      .jpeg()
-      .toFile(`${dir}/${filename}`)
-      .then((info) => {
-        return { filename, width: info.width, height: info.height };
+      .jpeg({ quality: 80 })
+      .toFile(`${dir}/${filename}`),
+  );
+
+  promises.push(
+    sharpStream
+      .clone()
+      .resize(IMAGE.MD_PX)
+      .withMetadata({
+        exif: {
+          IFD0: {
+            Copyright: "Thierry Casters",
+          },
+        },
       })
-      .catch((err) => console.log(err));
-  }
-};
+      .jpeg({ quality: 80 })
+      .toFile(`${dir}/md/${filename}`),
+  );
 
-export const getOptimizedImage = async (path, width) => {
-  return await sharp(path, {
-    sequentialRead: true,
-  })
-    .rotate()
-    .resize(parseInt(width), undefined, {
-      withoutEnlargement: true,
+  promises.push(
+    sharpStream
+      .clone()
+      .resize(IMAGE.SM_PX)
+      .withMetadata({
+        exif: {
+          IFD0: {
+            Copyright: "Thierry Casters",
+          },
+        },
+      })
+      .jpeg({ quality: 80 })
+      .toFile(`${dir}/sm/${filename}`),
+  );
+
+  image.pipe(sharpStream);
+
+  return Promise.all(promises)
+    .then((res) => {
+      const info = res[0];
+      return { filename, width: info.width, height: info.height };
     })
-    .toBuffer();
+    .catch((err) => {
+      console.error("Error processing files, let's clean it up", err);
+      try {
+        unlinkSync(`${dir}/sm/${filename}`);
+        unlinkSync(`${dir}/md/${filename}`);
+        unlinkSync(`${dir}/${filename}`);
+      } catch (e) {}
+    });
 };
 
-export const deleteFile = (path) => {
-  rm(path, (err) => {
-    if (err) return false;
-  });
-  return true;
+export const deleteFile = (dir, filename) => {
+  try {
+    unlinkSync(`${dir}/sm/${filename}`);
+    unlinkSync(`${dir}/md/${filename}`);
+    unlinkSync(`${dir}/${filename}`);
+    return true;
+  } catch (e) {
+    return false;
+  }
 };

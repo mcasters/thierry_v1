@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2';
-import toast from 'react-hot-toast';
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { FiTrash2 } from "@react-icons/all-files/fi/FiTrash2";
+import toast from "react-hot-toast";
 
-import { FileUploader } from '@/components/admin/form/imageForm/FileUploader';
-import s from '@/components/admin/form.module.css';
-import { ContentImage, PostImage, Image as IImage } from '.prisma/client';
+import { FileUploader } from "@/components/admin/form/imageForm/FileUploader";
+import s from "@/components/admin/form.module.css";
+import { ContentImage, Image as IImage, PostImage } from ".prisma/client";
 
 type Props = {
-  images?: ContentImage[] | PostImage[] | IImage[];
+  images: ContentImage[] | PostImage[] | IImage[] | [];
   setHasImages?: (arg0: boolean) => void;
   setHasNewImages?: (arg0: boolean) => void;
   reset?: number;
@@ -32,12 +32,7 @@ export default function ImagesForm({
 }: Props) {
   const [newImages, setNewImages] = useState<string[]>([]);
   const [existantImages, setExistantImages] = useState<string[]>(() => {
-    return !images ||
-      images.length === 0 ||
-      images[0] === undefined ||
-      images[0] === null
-      ? []
-      : images.map((image) => image.filename);
+    return images.length === 0 ? [] : images.map((image) => image.filename);
   });
 
   useEffect(() => {
@@ -51,15 +46,15 @@ export default function ImagesForm({
   }, [reset]);
 
   const handleDelete = (filename: string) => {
-    if (apiForDelete && confirm('Sûr de vouloir supprimer ?')) {
+    if (apiForDelete && confirm("Sûr de vouloir supprimer ?")) {
       fetch(`${apiForDelete}/${filename}`).then((res) => {
         if (res.ok) {
           const tab = existantImages.filter((f) => {
             return f !== filename;
           });
           setExistantImages(tab);
-          toast('Image supprimée');
-        } else toast('Erreur à la suppression');
+          toast("Image supprimée");
+        } else toast("Erreur à la suppression");
       });
     }
   };
@@ -79,7 +74,7 @@ export default function ImagesForm({
   return (
     <div className={s.imageFormContainer}>
       <h4 className={s.imageTitle}>
-        {title !== undefined ? title : isMultiple ? 'Images :' : 'Image :'}
+        {title !== undefined ? title : isMultiple ? "Images :" : "Image :"}
       </h4>
       <div>
         {existantImages.length > 0 &&
@@ -92,7 +87,7 @@ export default function ImagesForm({
                   height={150}
                   alt="Image de l'item"
                   style={{
-                    objectFit: 'contain',
+                    objectFit: "contain",
                   }}
                 />
               </div>
@@ -112,7 +107,7 @@ export default function ImagesForm({
           ))}
       </div>
       <FileUploader
-        name={isMultiple ? 'files' : 'file'}
+        name={isMultiple ? "files" : "file"}
         handleFiles={getAlbumPreview}
         isMultiple={isMultiple}
       />
@@ -127,7 +122,7 @@ export default function ImagesForm({
                   height={150}
                   alt="Nouvelle image de l'item"
                   style={{
-                    objectFit: 'contain',
+                    objectFit: "contain",
                   }}
                 />
               </div>

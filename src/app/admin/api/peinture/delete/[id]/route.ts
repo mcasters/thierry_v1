@@ -25,7 +25,7 @@ export async function GET(
       });
       if (painting) {
         const filename = painting.image.filename;
-        deleteFile(`${dir}/${filename}`);
+        deleteFile(dir, filename);
         await prisma.image.delete({
           where: { filename },
         });

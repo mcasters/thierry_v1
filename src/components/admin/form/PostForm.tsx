@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React, { useRef, useState } from 'react';
-import { parse } from 'date-fns';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import React, { useRef, useState } from "react";
+import { parse } from "date-fns";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
-import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
-import { PostFull } from '@/app/api/post/post';
-import s from '../form.module.css';
-import { getMainImage } from '@/utils/commonUtils';
+import ImagesForm from "@/components/admin/form/imageForm/ImagesForm";
+import { PostFull } from "@/app/api/post/post";
+import s from "../form.module.css";
+import { getMainImage } from "@/utils/commonUtils";
 
 interface Props {
   post?: PostFull;
@@ -22,28 +22,28 @@ export default function PostForm({ post, toggleModal }: Props) {
   const router = useRouter();
   const api = post ? `api/post/update` : `api/post/add`;
 
-  const [title, setTitle] = useState<string>(post?.title || '');
+  const [title, setTitle] = useState<string>(post?.title || "");
   const [date, setDate] = useState<Date>(
     post?.date ? new Date(post.date) : new Date(),
   );
-  const [text, setText] = useState<string>(post?.text || '');
+  const [text, setText] = useState<string>(post?.text || "");
   const mainImage = getMainImage(post);
 
   const reset = () => {
-    setTitle('');
+    setTitle("");
     setDate(new Date());
-    setText('');
+    setText("");
     resetMainImageRef.current = resetMainImageRef.current + 1;
     resetImagesRef.current = resetImagesRef.current + 1;
   };
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formRef.current && confirm('Tu confirmes ?')) {
+    if (formRef.current && confirm("Tu confirmes ?")) {
       const formData = new FormData(formRef.current);
-      fetch(api, { method: 'POST', body: formData }).then((res) => {
+      fetch(api, { method: "POST", body: formData }).then((res) => {
         if (res.ok) {
-          toast(post ? 'Post modifié' : 'Post ajouté');
+          toast(post ? "Post modifié" : "Post ajouté");
           toggleModal ? toggleModal() : reset();
           router.refresh();
         } else toast("Erreur à l'enregistrement");
@@ -53,7 +53,7 @@ export default function PostForm({ post, toggleModal }: Props) {
 
   return (
     <div className={s.formContainer}>
-      <h2>{post ? 'Modifier un post' : 'Ajouter un post'}</h2>
+      <h2>{post ? "Modifier un post" : "Ajouter un post"}</h2>
       <form ref={formRef} onSubmit={submit}>
         {post && <input type="hidden" name="id" value={post.id} />}
         <input
@@ -67,7 +67,7 @@ export default function PostForm({ post, toggleModal }: Props) {
         />
         <input
           onChange={(e) => {
-            const date = parse(e.currentTarget.value, 'yyyy', new Date());
+            const date = parse(e.currentTarget.value, "yyyy", new Date());
             setDate(date);
           }}
           placeholder="Année"
@@ -88,15 +88,15 @@ export default function PostForm({ post, toggleModal }: Props) {
           reset={resetMainImageRef.current}
           pathImage={`/images/post`}
           isMultiple={false}
-          apiForDelete={'api/post/delete-image'}
+          apiForDelete={"api/post/delete-image"}
           title="Image principale"
         />
         <ImagesForm
-          images={post?.images.filter((i) => !i.isMain)}
+          images={post?.images.filter((i) => !i.isMain) || []}
           reset={resetImagesRef.current}
           pathImage={`/images/post`}
           isMultiple={true}
-          apiForDelete={'api/post/delete-image'}
+          apiForDelete={"api/post/delete-image"}
           title="Album d'images"
         />
         <div>

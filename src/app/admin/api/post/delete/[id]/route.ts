@@ -26,7 +26,7 @@ export async function GET(
 
       if (post) {
         for (const image of post.images) {
-          deleteFile(`${dir}/${image.filename}`);
+          deleteFile(dir, image.filename);
         }
         await prisma.post.update({
           where: { id },

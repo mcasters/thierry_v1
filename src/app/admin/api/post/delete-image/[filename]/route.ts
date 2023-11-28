@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth/next";
-import { join } from "path";
 
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
@@ -28,7 +27,7 @@ export async function GET(
       });
 
       if (post) {
-        if (deleteFile(join(`${dir}`, `${filename}`))) {
+        if (deleteFile(dir, filename)) {
           await prisma.post.update({
             where: { id: post.id },
             data: {

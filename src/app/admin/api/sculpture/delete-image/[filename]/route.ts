@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth/next";
-import { join } from "path";
 
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
@@ -17,7 +16,7 @@ export async function GET(
       const dir = getSculptureDir();
       const filename = params.filename;
 
-      if (deleteFile(join(`${dir}`, `${filename}`))) {
+      if (deleteFile(dir, filename)) {
         await prisma.image.delete({
           where: { filename },
         });

@@ -3,9 +3,9 @@ import { getServerSession } from "next-auth/next";
 
 import prisma from "@/lib/prisma";
 import {
-  resizeAndSaveImage,
   createDirIfNecessary,
   getPostDir,
+  resizeAndSaveImage,
 } from "@/utils/serverUtils";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { NextResponse } from "next/server";
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       const mainFile = formData.get("file") as File;
       let images = [];
       if (mainFile.size > 0) {
-        const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
+        const fileInfo = await resizeAndSaveImage(mainFile, dir);
         if (fileInfo)
           images.push({
             filename: fileInfo.filename,
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       const files = formData.getAll("files") as File[];
       for (const file of files) {
         if (file.size > 0) {
-          const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+          const fileInfo = await resizeAndSaveImage(file, dir);
           if (fileInfo)
             images.push({
               filename: fileInfo.filename,

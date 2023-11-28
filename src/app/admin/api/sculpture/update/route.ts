@@ -2,7 +2,7 @@ import { parse } from "date-fns";
 import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 
-import { resizeAndSaveImage, getSculptureDir } from "@/utils/serverUtils";
+import { getSculptureDir, resizeAndSaveImage } from "@/utils/serverUtils";
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
         let images = [];
         for (const file of files) {
           if (file.size > 0) {
-            const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+            const fileInfo = await resizeAndSaveImage(file, dir);
             if (fileInfo)
               images.push({
                 filename: fileInfo.filename,

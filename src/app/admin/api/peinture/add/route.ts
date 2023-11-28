@@ -3,9 +3,9 @@ import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 
 import {
-  resizeAndSaveImage,
   createDirIfNecessary,
   getPaintingDir,
+  resizeAndSaveImage,
 } from "@/utils/serverUtils";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import prisma from "@/lib/prisma";
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       createDirIfNecessary(dir);
       const formData = await req.formData();
       const file = formData.get("file");
-      const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+      const fileInfo = await resizeAndSaveImage(file, dir);
       if (fileInfo) {
         const newPainting = await prisma.painting.create({
           data: {

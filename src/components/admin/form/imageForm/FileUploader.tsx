@@ -1,9 +1,7 @@
-'use client';
-
-import { useRef } from 'react';
+import React, { useRef } from "react";
 
 interface Props {
-  handleFiles: (filesUploaded: FileList) => void;
+  handleFiles: (arg0: FileList) => void;
   name: string;
   isMultiple: boolean;
 }
@@ -11,26 +9,26 @@ interface Props {
 export const FileUploader = ({ handleFiles, isMultiple, name }: Props) => {
   const hiddenFileInput = useRef<HTMLInputElement>(null);
 
-  const handleClick = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    hiddenFileInput.current?.click();
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (e.target.files) handleFiles(e.target.files);
-  };
   return (
     <>
-      <button className="adminButton" onClick={handleClick}>
-        {isMultiple ? 'Choisir des fichiers' : 'Choisir un fichier'}
+      <button
+        className="adminButton"
+        onClick={(e) => {
+          e.preventDefault();
+          hiddenFileInput.current?.click();
+        }}
+      >
+        {isMultiple ? "Choisir des fichiers" : "Choisir un fichier"}
       </button>
       <input
         type="file"
         name={name}
-        onChange={handleChange}
+        onChange={(e) => {
+          e.preventDefault();
+          if (e.target.files) handleFiles(e.target.files);
+        }}
         ref={hiddenFileInput}
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         multiple={isMultiple}
       />
     </>

@@ -1,12 +1,11 @@
-import { join } from "path";
 import { parse } from "date-fns";
 import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 
 import {
   deleteFile,
-  resizeAndSaveImage,
   getPostDir,
+  resizeAndSaveImage,
 } from "@/utils/serverUtils";
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
@@ -36,7 +35,7 @@ export async function POST(req: Request) {
         let images = [];
         const mainFile = formData.get("file") as File;
         if (mainFile.size > 0) {
-          const fileInfo = await resizeAndSaveImage(mainFile, dir, undefined);
+          const fileInfo = await resizeAndSaveImage(mainFile, dir);
           if (fileInfo)
             images.push({
               filename: fileInfo.filename,
@@ -48,8 +47,7 @@ export async function POST(req: Request) {
           const oldMainImage = oldPost.images.filter((i) => i.isMain);
           if (oldMainImage.length > 0) {
             const filename = oldMainImage[0].filename;
-            const pathOldMainImage = join(`${dir}`, `${filename}`);
-            deleteFile(pathOldMainImage);
+            deleteFile(dir, filename);
             await prisma.post.update({
               where: { id },
               data: {
@@ -64,7 +62,7 @@ export async function POST(req: Request) {
         const files = formData.getAll("files") as File[];
         for (const file of files) {
           if (file.size > 0) {
-            const fileInfo = await resizeAndSaveImage(file, dir, undefined);
+            const fileInfo = await resizeAndSaveImage(file, dir);
             if (fileInfo)
               images.push({
                 filename: fileInfo.filename,

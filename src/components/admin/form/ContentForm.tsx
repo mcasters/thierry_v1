@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React, { useRef, useState } from 'react';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import React, { useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
-import { ContentFull } from '@/app/api/content/content';
-import { Label } from '@prisma/client';
-import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
-import s from '../form.module.css';
+import { ContentFull } from "@/app/api/content/content";
+import { Label } from "@prisma/client";
+import ImagesForm from "@/components/admin/form/imageForm/ImagesForm";
+import s from "../form.module.css";
 
 interface Props {
   label: Label;
@@ -21,19 +21,19 @@ export default function ContentForm({
   isTextArea,
   textLabel,
 }: Props) {
-  const [text, setText] = useState<string>(content?.text || '');
+  const [text, setText] = useState<string>(content?.text || "");
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formRef.current && confirm('Tu confirmes ?')) {
+    if (formRef.current && confirm("Tu confirmes ?")) {
       const formData = new FormData(formRef.current);
-      fetch('api/content/update', { method: 'POST', body: formData }).then(
+      fetch("api/content/update", { method: "POST", body: formData }).then(
         (res) => {
           if (res.ok) {
-            toast('Contenu modifié');
+            toast("Contenu modifié");
             setIsChanged(false);
             router.refresh();
           } else toast("Erreur à l'enregistrement");
@@ -79,7 +79,7 @@ export default function ContentForm({
           <label className={s.contentLabel}>
             Slider
             <ImagesForm
-              images={content?.images}
+              images={content?.images || []}
               pathImage="/images/miscellaneous"
               apiForDelete="api/content/delete-image"
               isMultiple={true}
@@ -90,11 +90,12 @@ export default function ContentForm({
         )}
         {label === Label.PRESENTATION && (
           <ImagesForm
-            images={content?.images}
+            images={content?.images || []}
             pathImage="/images/miscellaneous"
             apiForDelete="api/content/delete-image"
             isMultiple={false}
             setHasNewImages={setIsChanged}
+            title="Photo de présentation"
           />
         )}
         {isChanged && (
