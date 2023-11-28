@@ -7,7 +7,7 @@ import {
   getPostDir,
   resizeAndSaveImage,
 } from "@/utils/serverUtils";
-import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {

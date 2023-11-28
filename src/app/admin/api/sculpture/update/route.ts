@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 import { getSculptureDir, resizeAndSaveImage } from "@/utils/serverUtils";
 import prisma from "@/lib/prisma";
-import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import { authOptions } from "@/utils/authOptions";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);

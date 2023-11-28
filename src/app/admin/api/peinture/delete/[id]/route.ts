@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import prisma from "@/lib/prisma";
 import { deleteFile, getPaintingDir } from "@/utils/serverUtils";
-import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
 
 export async function GET(

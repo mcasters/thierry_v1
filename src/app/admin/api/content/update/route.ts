@@ -6,7 +6,7 @@ import {
   resizeAndSaveImage,
 } from "@/utils/serverUtils";
 import prisma from "@/lib/prisma";
-import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import { authOptions } from "@/utils/authOptions";
 import { Label } from "@prisma/client";
 import { NextResponse } from "next/server";
 

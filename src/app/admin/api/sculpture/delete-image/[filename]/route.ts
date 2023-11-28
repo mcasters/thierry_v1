@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth/next";
 
 import prisma from "@/lib/prisma";
-import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import { authOptions } from "@/utils/authOptions";
 import { deleteFile, getSculptureDir } from "@/utils/serverUtils";
 import { NextResponse } from "next/server";
 

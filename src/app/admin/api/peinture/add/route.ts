@@ -7,7 +7,7 @@ import {
   getPaintingDir,
   resizeAndSaveImage,
 } from "@/utils/serverUtils";
-import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
+import { authOptions } from "@/utils/authOptions";
 import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
