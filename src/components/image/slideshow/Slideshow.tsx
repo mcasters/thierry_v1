@@ -3,11 +3,10 @@
 import Lightbox from "yet-another-react-lightbox";
 import Inline from "yet-another-react-lightbox/plugins/inline";
 import "yet-another-react-lightbox/styles.css";
-
-import { getSrcMisc } from "@/utils/commonUtils";
 import { ContentImage } from ".prisma/client";
 import s from "@/components/image/slideshow/slideshow.module.css";
 import Image from "next/image";
+import { DEVICE } from "@/constants/image";
 
 type Props = {
   images: ContentImage[];
@@ -15,7 +14,7 @@ type Props = {
 
 export default function Slideshow({ images }: Props) {
   const slides = images.map(({ filename, width, height }) => ({
-    src: getSrcMisc(filename),
+    src: filename,
     width,
     height,
   }));
@@ -26,13 +25,17 @@ export default function Slideshow({ images }: Props) {
       render={{
         slide: ({ slide, rect }) => (
           <Image
+            loader={({ src, width, quality }) => {
+              const directory = width <= DEVICE.SMALL ? "md/" : "";
+              return `/images/miscellaneous/${directory}${src}`;
+            }}
             width={rect.width}
             height={rect.height}
-            alt=""
+            alt="Œuvre de Thierry Casters"
             src={slide.src}
             loading="eager"
             draggable={false}
-            sizes={`${Math.ceil((rect.width / window.innerWidth) * 100)}vw`}
+            sizes={"100vw"}
             className={s.image}
           />
         ),

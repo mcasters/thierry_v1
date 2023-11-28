@@ -57,8 +57,8 @@ export default function ImageLightbox({
           >
             <Image
               loader={({ src, width, quality }) => {
-                const directory = width <= DEVICE.SMALL ? "sm/" : "md/";
-                return `/images/${type}/${directory}${src}`;
+                const directory = width <= DEVICE.SMALL ? "sm" : "md";
+                return `/images/${type}/${directory}/${src}`;
               }}
               src={`${image.filename}`}
               fill={true}
