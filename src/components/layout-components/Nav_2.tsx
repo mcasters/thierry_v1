@@ -40,7 +40,10 @@ export default function Nav_2({ navType }: Props) {
                     legacyBehavior={false}
                   >
                     <Image
-                      src="/logo-100.png"
+                      loader={({ src, width, quality }) => {
+                        return `/${src}`;
+                      }}
+                      src="logo-100.png"
                       alt="Signature de Thierry Casters"
                       width={30}
                       height={30}
