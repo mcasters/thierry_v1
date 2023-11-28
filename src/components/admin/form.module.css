@@ -11,9 +11,12 @@
     }
 }
 
-
 .formContainer h2 {
     font-size: var(--font-size-xtitle);
+    padding-bottom: 1em;
+}
+
+.formContainer h4 {
     padding-bottom: 1em;
 }
 
@@ -38,6 +41,10 @@
 
 .imageTitle {
     padding-bottom: 1em;
+    font-variant-caps: small-caps;
+    letter-spacing: 3px;
+    color: var(--color-dark);
+    font-size: 0.8em;
 }
 
 .message {
@@ -45,16 +52,10 @@
     padding-bottom: 2em;
 }
 
-.formContainer label {
+.formContainer label, .formContainer .contentLabel {
     font-variant-caps: small-caps;
     letter-spacing: 3px;
     color: var(--color-dark);
     text-align: left;
     font-size: 0.8em;
-}
-
-.formContainer .contentLabel {
-    color: var(--color-blue-dark);
-    font-size: 1em;
-    font-weight: bold;
 }

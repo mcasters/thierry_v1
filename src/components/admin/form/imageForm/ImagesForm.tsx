@@ -82,7 +82,10 @@ export default function ImagesForm({
             <div key={filename} className={s.imageWrapper}>
               <div className={s.imageContainer}>
                 <Image
-                  src={`${pathImage}/${filename}`}
+                  loader={({ src, width, quality }) => {
+                    return `${pathImage}/sm/${src}`;
+                  }}
+                  src={`${filename}`}
                   width={150}
                   height={150}
                   alt="Image de l'item"
@@ -117,6 +120,7 @@ export default function ImagesForm({
             <div key={src} className={s.imageWrapper}>
               <div key={src} className={s.imageContainer}>
                 <Image
+                  unoptimized={true}
                   src={src}
                   width={150}
                   height={150}

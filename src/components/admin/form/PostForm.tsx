@@ -56,40 +56,46 @@ export default function PostForm({ post, toggleModal }: Props) {
       <h2>{post ? "Modifier un post" : "Ajouter un post"}</h2>
       <form ref={formRef} onSubmit={submit}>
         {post && <input type="hidden" name="id" value={post.id} />}
-        <input
-          autoFocus
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Titre"
-          name="title"
-          type="text"
-          value={title}
-          required
-        />
-        <input
-          onChange={(e) => {
-            const date = parse(e.currentTarget.value, "yyyy", new Date());
-            setDate(date);
-          }}
-          placeholder="Année"
-          name="date"
-          type="number"
-          value={date.getFullYear()}
-          required
-        />
-        <textarea
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Texte (facultatif)"
-          name="text"
-          rows={5}
-          value={text}
-        />
+        <label>
+          Titre
+          <input
+            autoFocus
+            onChange={(e) => setTitle(e.target.value)}
+            name="title"
+            type="text"
+            value={title}
+            required
+          />
+        </label>
+        <label>
+          Année
+          <input
+            onChange={(e) => {
+              const date = parse(e.currentTarget.value, "yyyy", new Date());
+              setDate(date);
+            }}
+            name="date"
+            type="number"
+            value={date.getFullYear()}
+            required
+          />
+        </label>
+        <label>
+          Texte (facultatif)
+          <textarea
+            onChange={(e) => setText(e.target.value)}
+            name="text"
+            rows={5}
+            value={text}
+          />
+        </label>
         <ImagesForm
           images={mainImage ? [mainImage] : []}
           reset={resetMainImageRef.current}
           pathImage={`/images/post`}
           isMultiple={false}
           apiForDelete={"api/post/delete-image"}
-          title="Image principale"
+          title="Image principale (facultative)"
         />
         <ImagesForm
           images={post?.images.filter((i) => !i.isMain) || []}
@@ -97,7 +103,7 @@ export default function PostForm({ post, toggleModal }: Props) {
           pathImage={`/images/post`}
           isMultiple={true}
           apiForDelete={"api/post/delete-image"}
-          title="Album d'images"
+          title="Album d'images (facultatif)"
         />
         <div>
           <input disabled={!title || !date} type="submit" value="Enregistrer" />

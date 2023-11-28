@@ -17,6 +17,10 @@
   padding-bottom: 1em;
 }
 
+.listContainer h4 {
+  padding-bottom: 1em;
+}
+
 .list {
   font-size: var(--font-size-min);
   display: block;

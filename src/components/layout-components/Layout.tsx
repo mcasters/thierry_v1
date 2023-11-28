@@ -30,19 +30,30 @@ export default function Layout({
   const isHome = basePath === BASE_PATH.HOME;
   const isPainting = basePath === "peintures";
   const isSculpture = basePath === "sculptures";
+  const isAdmin = basePath === "admin";
 
   return (
     <div className={isPainting || isSculpture ? `itemWrapper` : `wrapper`}>
       <div className={`${s.line} line`}></div>
       {isHome && <div className={s.gradient}></div>}
-      <Header
-        basePath={basePath}
-        introduction={introduction}
-        paintingCategories={paintingCategories}
-        sculptureCategories={sculptureCategories}
-      />
-      <Main isHome={isHome}>{children}</Main>
-      <Footer />
+      {isAdmin && (
+        <>
+          {children}
+          <Footer />
+        </>
+      )}
+      {!isAdmin && (
+        <>
+          <Header
+            basePath={basePath}
+            introduction={introduction}
+            paintingCategories={paintingCategories}
+            sculptureCategories={sculptureCategories}
+          />
+          <Main isHome={isHome}>{children}</Main>
+          <Footer />
+        </>
+      )}
       <style jsx>{`
         .line {
           background-color: ${theme.lineColor};

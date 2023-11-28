@@ -1,6 +1,6 @@
-import prisma from '@/lib/prisma';
-import { SculptureCategory } from '@prisma/client';
-import 'server-only';
+import prisma from "@/lib/prisma";
+import { SculptureCategory } from "@prisma/client";
+import "server-only";
 
 export async function getSculptureCategoriesFull() {
   const res = await prisma.sculptureCategory.findMany({
@@ -12,15 +12,15 @@ export async function getSculptureCategoriesFull() {
 export async function getSculptureCategoriesForMenu() {
   const categories =
     (await prisma.sculptureCategory.findMany()) as SculptureCategory[];
-  const sculptureWithoutCategory = await prisma.painting.findFirst({
+  const sculptureWithoutCategory = await prisma.sculpture.findFirst({
     where: {
       category: null,
     },
   });
   if (categories.length > 0 && sculptureWithoutCategory)
     categories.push({
-      key: 'no-category',
-      value: 'Sans catégorie',
+      key: "no-category",
+      value: "Sans catégorie",
       id: 0,
     } as SculptureCategory);
   return JSON.parse(JSON.stringify(categories));
