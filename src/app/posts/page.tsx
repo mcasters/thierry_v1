@@ -1,15 +1,13 @@
-import { getPostsFull } from '@/app/api/post/getPosts'
-import React from 'react'
-import PostComponent from '@/components/post/PostComponent'
-import { PostFull } from '@/app/api/post/post'
+import { getPostsFull } from "@/app/api/post/getPosts";
+import React from "react";
+import PostComponent from "@/components/post/PostComponent";
+import { PostFull } from "@/app/api/post/post";
 
 export default async function Posts() {
-    const posts = await getPostsFull()
+  const posts = await getPostsFull();
 
-    return (
-        posts.length > 0 &&
-        posts.map((post: PostFull) => (
-            <PostComponent key={post.id} post={post} />
-        ))
-    )
+  return (
+    posts.length > 0 &&
+    posts.map((post: PostFull) => <PostComponent key={post.id} post={post} />)
+  );
 }

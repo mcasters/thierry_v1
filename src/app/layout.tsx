@@ -12,10 +12,12 @@ import { getIntro } from "@/utils/commonUtils";
 import React from "react";
 import { getTheme } from "@/app/api/theme/getTheme";
 import StyledJsxRegistry from "./registry";
+import { DESCRIPTION, DOCUMENT_TITLE, KEYWORDS } from "@/constants/metaHtml";
 
 export const metadata: Metadata = {
-  title: "Home",
-  description: "Welcome to Next.js",
+  title: DOCUMENT_TITLE.HOME,
+  description: DESCRIPTION.HOME,
+  keywords: KEYWORDS,
 };
 
 export default async function RootLayout({

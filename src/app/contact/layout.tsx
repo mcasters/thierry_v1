@@ -1,9 +1,16 @@
-import s from '@/styles/contact.module.css'
+import s from "@/styles/contact.module.css";
+import { Metadata } from "next";
+import { DESCRIPTION, DOCUMENT_TITLE } from "@/constants/metaHtml";
+
+export const metadata: Metadata = {
+  title: DOCUMENT_TITLE.CONTACT,
+  description: DESCRIPTION.CONTACT,
+};
 
 export default async function layout({
-    children,
+  children,
 }: {
-    children: React.ReactNode
+  children: React.ReactNode;
 }) {
-    return <div className={s.contactContainer}>{children}</div>
+  return <div className={s.contactContainer}>{children}</div>;
 }
