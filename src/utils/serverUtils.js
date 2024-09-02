@@ -1,27 +1,10 @@
 import { mkdir, stat, unlinkSync } from "fs";
 import sharp from "sharp";
-import { join, parse } from "path";
+import { join } from "path";
 import { IMAGE } from "@/constants/image";
+import { transformValueToKey } from "@/utils/commonUtils";
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
-
-export const getPaintingImagePath = (painting) => {
-  return join(
-    `${serverLibraryPath}`,
-    `${painting.type}`,
-    `${painting.image.filename}`,
-  );
-};
-
-export const getSculptureImagePaths = (sculpture) => {
-  let paths = [];
-  sculpture.images.forEach((image) => {
-    paths.push(
-      join(`${serverLibraryPath}`, `${sculpture.type}`, `${image.filename}`),
-    );
-  });
-  return paths;
-};
 
 export const getPaintingDir = () => {
   return join(`${serverLibraryPath}`, "peinture");
@@ -52,26 +35,59 @@ export const createDirIfNecessary = (dir) => {
 };
 
 export const resizeAndSaveImage = async (file, dir) => {
+  const filename = transformValueToKey(file.name);
+  const newFilename = `${filename}_${Date.now()}.jpeg`;
+  const maxSize = 130000;
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
-  const image = sharp(buffer);
-  const filename = `${parse(file.name).name}-${Date.now()}.jpeg`;
-  const sharpStream = sharp({ failOn: "none" });
-  let imageWidth, imageHeight;
+  const constraintImage = async (buffer, quality = 90, drop = 5) => {
+    const done = await sharp(buffer)
+      .jpeg({
+        quality: Math.trunc(quality),
+      })
+      .toBuffer();
+    if (done.byteLength > maxSize) {
+      return constraintImage(buffer, quality - drop);
+    }
+    return done;
+  };
 
+  const imageBuffer = await sharp(buffer)
+    .resize(2000, 1200, {
+      fit: sharp.fit.inside,
+      withoutEnlargement: true,
+    })
+    .jpeg({ quality: 100 })
+    .toBuffer();
+
+  let lightImageBuffer = imageBuffer;
+  if (imageBuffer.byteLength > maxSize)
+    lightImageBuffer = await constraintImage(imageBuffer);
+
+  const sharpStream = sharp({ failOn: "none" });
   const promises = [];
 
   promises.push(
     sharpStream
       .clone()
-      .resize(2000, 1200, {
+      .withMetadata({
+        exif: {
+          IFD0: {
+            Copyright: "Thierry Casters",
+          },
+        },
+      })
+      .toFile(`${dir}/${newFilename}`),
+  );
+
+  promises.push(
+    sharpStream
+      .clone()
+      .resize({
+        width: IMAGE.MD_PX,
         fit: sharp.fit.inside,
         withoutEnlargement: true,
       })
-      .on("info", function (info) {
-        imageWidth = info.width;
-        imageHeight = info.height;
-      })
       .withMetadata({
         exif: {
           IFD0: {
@@ -79,14 +95,17 @@ export const resizeAndSaveImage = async (file, dir) => {
           },
         },
       })
-      .jpeg({ quality: 80 })
-      .toFile(`${dir}/${filename}`),
+      .toFile(`${dir}/md/${newFilename}`),
   );
 
   promises.push(
     sharpStream
       .clone()
-      .resize(IMAGE.MD_PX)
+      .resize({
+        width: IMAGE.SM_PX,
+        fit: sharp.fit.inside,
+        withoutEnlargement: true,
+      })
       .withMetadata({
         exif: {
           IFD0: {
@@ -94,38 +113,25 @@ export const resizeAndSaveImage = async (file, dir) => {
           },
         },
       })
-      .jpeg({ quality: 80 })
-      .toFile(`${dir}/md/${filename}`),
+      .toFile(`${dir}/sm/${newFilename}`),
   );
 
-  promises.push(
-    sharpStream
-      .clone()
-      .resize(IMAGE.SM_PX)
-      .withMetadata({
-        exif: {
-          IFD0: {
-            Copyright: "Thierry Casters",
-          },
-        },
-      })
-      .jpeg({ quality: 80 })
-      .toFile(`${dir}/sm/${filename}`),
-  );
-
-  image.pipe(sharpStream);
+  sharp(lightImageBuffer).pipe(sharpStream);
 
   return Promise.all(promises)
     .then((res) => {
       const info = res[0];
-      return { filename, width: info.width, height: info.height };
+      return { filename: newFilename, width: info.width, height: info.height };
     })
     .catch((err) => {
-      console.error("Error processing files, let's clean it up", err);
+      console.error(
+        "Erreur à l'écriture des fichiers images, nettoyage...",
+        err,
+      );
       try {
-        unlinkSync(`${dir}/sm/${filename}`);
-        unlinkSync(`${dir}/md/${filename}`);
-        unlinkSync(`${dir}/${filename}`);
+        unlinkSync(`${dir}/sm/${newFilename}`);
+        unlinkSync(`${dir}/md/${newFilename}`);
+        unlinkSync(`${dir}/${newFilename}`);
       } catch (e) {}
     });
 };
