@@ -18,7 +18,7 @@ export const FileUploader = ({ handleFiles, isMultiple, name }: Props) => {
           hiddenFileInput.current?.click();
         }}
       >
-        {isMultiple ? "Choisir des fichiers" : "Choisir un fichier"}
+        {isMultiple ? "Choisir le ou les fichiers" : "Choisir le fichier"}
       </button>
       <input
         type="file"

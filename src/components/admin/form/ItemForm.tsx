@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import React, { useRef, useState } from 'react';
-import { parse } from 'date-fns';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
-
-import ImagesForm from '@/components/admin/form/imageForm/ImagesForm';
-import s from '../form.module.css';
-import { SculptureFull } from '@/app/api/sculpture/sculpture';
-import { PaintingFull } from '@/app/api/peinture/painting';
-import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
-import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
-import { isSculptureFull } from '@/utils/commonUtils';
+import React, { useRef, useState } from "react";
+import { parse } from "date-fns";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import s from "../form.module.css";
+import { SculptureFull } from "@/app/api/sculpture/sculpture";
+import { PaintingFull } from "@/app/api/peinture/painting";
+import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
+import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
+import { isSculptureFull } from "@/utils/commonUtils";
+import Images from "@/components/admin/form/imageForm/Images";
+import Preview from "@/components/admin/form/imageForm/Preview";
 
 interface Props {
   item: SculptureFull | PaintingFull;
@@ -28,42 +28,44 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
   const [date, setDate] = useState<Date>(new Date(item.date));
   const [technique, setTechnique] = useState<string>(item.technique);
   const [description, setDescription] = useState<string>(
-    item.description || '',
+    item.description || "",
   );
   const [height, setHeight] = useState<string>(item.height.toString());
   const [width, setWidth] = useState<string>(item.width.toString());
-  const [price, setPrice] = useState<string>(item.price?.toString() || '');
+  const [price, setPrice] = useState<string>(item.price?.toString() || "");
   const [categoryId, setCategoryId] = useState<string>(
-    item.category?.id.toString() || '',
+    item.category?.id.toString() || "",
   );
   const [isToSell, setIsToSell] = useState<boolean>(item.isToSell);
   const [length, setLength] = useState<string>(
-    isSculpture ? item.length.toString() : '',
+    isSculpture ? item.length.toString() : "",
   );
-  const [hasImage, setHasImage] = useState<boolean>(false);
+  const [countImages, setCountImages] = useState<number>(
+    item.id === 0 ? 0 : isSculpture ? item.images?.length : 0,
+  );
   const router = useRouter();
   const api =
     item.id === 0 ? `api/${item.type}/add` : `api/${item.type}/update`;
 
   const reset = () => {
-    setTitle('');
+    setTitle("");
     setDate(new Date());
-    setTechnique('');
-    setDescription('');
-    setHeight('');
-    setWidth('');
-    setLength('');
-    setPrice('');
+    setTechnique("");
+    setDescription("");
+    setHeight("");
+    setWidth("");
+    setLength("");
+    setPrice("");
     setIsToSell(false);
-    setCategoryId('');
+    setCategoryId("");
     resetImageRef.current = resetImageRef.current + 1;
   };
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formRef.current && confirm('Tu confirmes ?')) {
+    if (formRef.current && confirm("Tu confirmes ?")) {
       const formData = new FormData(formRef.current);
-      fetch(api, { method: 'POST', body: formData }).then((res) => {
+      fetch(api, { method: "POST", body: formData }).then((res) => {
         if (res.ok) {
           toast(
             item.id === 0 ? `${item.type} ajoutée` : `${item.type} modifiée`,
@@ -73,6 +75,10 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
         } else toast("Erreur à l'enregistrement");
       });
     }
+  };
+
+  const handleAdd = (number: number) => {
+    setCountImages((prevState) => prevState + number);
   };
 
   return (
@@ -118,7 +124,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
           Année
           <input
             onChange={(e) => {
-              const date = parse(e.currentTarget.value, 'yyyy', new Date());
+              const date = parse(e.currentTarget.value, "yyyy", new Date());
               setDate(date);
             }}
             name="date"
@@ -197,15 +203,22 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             />
           </label>
         )}
-        <ImagesForm
-          images={item.id === 0 ? [] : isSculpture ? item.images : [item.image]}
-          setHasImages={setHasImage}
-          reset={resetImageRef.current}
-          pathImage={`/images/${item.type}`}
+        {item.id !== 0 && (
+          <Preview
+            images={isSculpture ? item.images : [item.image]}
+            pathImage={`/images/${item.type}`}
+            apiForDelete={
+              isSculpture && countImages > 1
+                ? `api/${item.type}/delete-image`
+                : undefined
+            }
+            onDelete={setCountImages}
+          />
+        )}
+        <Images
+          onAdd={handleAdd}
           isMultiple={isSculpture}
-          apiForDelete={
-            isSculpture ? `api/${item.type}/delete-image` : undefined
-          }
+          title={isSculpture ? "1 photo minimum" : "1 seule photo"}
         />
         <div>
           <input
@@ -217,7 +230,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
               !width ||
               (isSculpture && !length) ||
               (isToSell && !price) ||
-              !hasImage
+              countImages === 0
             }
             type="submit"
             value="Enregistrer"

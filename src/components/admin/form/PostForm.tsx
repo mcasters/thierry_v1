@@ -5,10 +5,11 @@ import { parse } from "date-fns";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-import ImagesForm from "@/components/admin/form/imageForm/ImagesForm";
+import Images from "@/components/admin/form/imageForm/Images";
 import { PostFull } from "@/app/api/post/post";
 import s from "../form.module.css";
 import { getMainImage } from "@/utils/commonUtils";
+import Preview from "@/components/admin/form/imageForm/Preview";
 
 interface Props {
   post?: PostFull;
@@ -45,7 +46,7 @@ export default function PostForm({ post, toggleModal }: Props) {
         if (res.ok) {
           toast(post ? "Post modifié" : "Post ajouté");
           toggleModal ? toggleModal() : reset();
-          router.refresh();
+          window.location.reload();
         } else toast("Erreur à l'enregistrement");
       });
     }
@@ -89,22 +90,23 @@ export default function PostForm({ post, toggleModal }: Props) {
             value={text}
           />
         </label>
-        <ImagesForm
-          images={mainImage ? [mainImage] : []}
-          reset={resetMainImageRef.current}
-          pathImage={`/images/post`}
-          isMultiple={false}
-          apiForDelete={"api/post/delete-image"}
-          title="Image principale (facultative)"
-        />
-        <ImagesForm
-          images={post?.images.filter((i) => !i.isMain) || []}
-          reset={resetImagesRef.current}
-          pathImage={`/images/post`}
-          isMultiple={true}
-          apiForDelete={"api/post/delete-image"}
-          title="Album d'images (facultatif)"
-        />
+
+        {post && (
+          <Preview
+            images={mainImage ? [mainImage] : []}
+            pathImage="/images/post"
+            apiForDelete="api/post/delete-image"
+          />
+        )}
+        <Images isMultiple={false} title="Image principale (facultative)" />
+        {post && (
+          <Preview
+            images={post.images.filter((i) => !i.isMain) || []}
+            pathImage="/images/post"
+            apiForDelete="api/post/delete-image"
+          />
+        )}
+        <Images isMultiple={true} title={"Album d'images (facultatif)"} />
         <div>
           <input disabled={!title || !date} type="submit" value="Enregistrer" />
           <button

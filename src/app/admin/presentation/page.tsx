@@ -1,11 +1,13 @@
-import AdminPresentationComponent from '@/components/admin/content/AdminPresentationComponent';
-import { getContentsFull } from '@/app/api/content/getContents';
+import { getContentsFull } from "@/app/api/content/getContents";
 import {
   getDemarche,
   getInspiration,
-  getPresentationContent,
-} from '@/utils/commonUtils';
-import s from '@/styles/admin.module.css';
+  getPresentation,
+} from "@/utils/commonUtils";
+import s from "@/styles/admin.module.css";
+import { Label } from "@prisma/client";
+import React from "react";
+import TextAreaForm from "@/components/admin/form/TextAreaForm";
 
 export default async function Presentation() {
   const contents = await getContentsFull();
@@ -13,10 +15,24 @@ export default async function Presentation() {
   return (
     <>
       <h1 className={s.pageTitle}>Contenus de la page Présentation</h1>
-      <AdminPresentationComponent
-        presentationContent={getPresentationContent(contents)}
-        demarcheContent={getDemarche(contents)}
-        inspirationContent={getInspiration(contents)}
+      <TextAreaForm
+        content={getPresentation(contents)}
+        label={Label.PRESENTATION}
+        api="api/content/update"
+        textLabel="Présentation"
+        withImage={true}
+      />
+      <TextAreaForm
+        content={getDemarche(contents)}
+        label={Label.DEMARCHE}
+        api="api/content/update"
+        textLabel="Démarche artistique"
+      />
+      <TextAreaForm
+        content={getInspiration(contents)}
+        label={Label.INSPIRATION}
+        api="api/content/update"
+        textLabel="Inspiration"
       />
     </>
   );

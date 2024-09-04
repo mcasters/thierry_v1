@@ -30,7 +30,7 @@
 }
 
 .imageWrapper {
-    padding: 0 0.1em 2em;
+    padding: 2em 0.1em 2em;
     display: inline-block;
     text-align: center;
 }
@@ -52,7 +52,7 @@
     padding-bottom: 2em;
 }
 
-.formContainer label, .formContainer .contentLabel {
+.formContainer label, .formContainer .contentLabel, h2.contentLabel {
     font-variant-caps: small-caps;
     letter-spacing: 3px;
     color: var(--color-dark);

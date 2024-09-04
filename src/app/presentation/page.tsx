@@ -4,13 +4,13 @@ import { getContentsFull } from "@/app/api/content/getContents";
 import {
   getDemarche,
   getInspiration,
-  getPresentationContent,
+  getPresentation,
 } from "@/utils/commonUtils";
 import s from "@/styles/presentation.module.css";
 
 export default async function Presentation() {
   const contents = await getContentsFull();
-  const presentation = getPresentationContent(contents);
+  const presentation = getPresentation(contents);
   const demarche = getDemarche(contents);
   const inspiration = getInspiration(contents);
 

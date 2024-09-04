@@ -1,65 +1,27 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
-import { FiTrash2 } from "@react-icons/all-files/fi/FiTrash2";
-import toast from "react-hot-toast";
 
 import { FileUploader } from "@/components/admin/form/imageForm/FileUploader";
 import s from "@/components/admin/form.module.css";
-import { ContentImage, Image as IImage, PostImage } from ".prisma/client";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type Props = {
-  images: ContentImage[] | PostImage[] | IImage[] | [];
-  setHasImages?: (arg0: boolean) => void;
-  setHasNewImages?: (arg0: boolean) => void;
-  reset?: number;
-  pathImage: string;
-  apiForDelete?: string;
   isMultiple: boolean;
+  api: string;
+  label: string;
   title?: string;
 };
 
-export default function ImagesForm({
-  images,
-  setHasImages,
-  setHasNewImages,
-  reset,
-  pathImage,
-  apiForDelete,
-  isMultiple,
-  title,
-}: Props) {
+export default function ImagesForm({ isMultiple, api, label, title }: Props) {
   const [newImages, setNewImages] = useState<string[]>([]);
-  const [existantImages, setExistantImages] = useState<string[]>(() => {
-    return images.length === 0 ? [] : images.map((image) => image.filename);
-  });
+  const [toUpdate, setToUpdate] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
 
-  useEffect(() => {
-    if (setHasImages !== undefined)
-      setHasImages(newImages.length > 0 || existantImages.length > 0);
-    if (setHasNewImages !== undefined) setHasNewImages(newImages.length > 0);
-  }, [newImages, existantImages, setHasImages, setHasNewImages]);
-
-  useEffect(() => {
-    if (reset !== undefined) setNewImages([]);
-  }, [reset]);
-
-  const handleDelete = (filename: string) => {
-    if (apiForDelete && confirm("Sûr de vouloir supprimer ?")) {
-      fetch(`${apiForDelete}/${filename}`).then((res) => {
-        if (res.ok) {
-          const tab = existantImages.filter((f) => {
-            return f !== filename;
-          });
-          setExistantImages(tab);
-          toast("Image supprimée");
-        } else toast("Erreur à la suppression");
-      });
-    }
-  };
-
-  const getAlbumPreview = (filesUploaded: FileList) => {
+  const handleFiles = (filesUploaded: FileList) => {
     if (filesUploaded?.length > 0) {
       const files = Array.from(filesUploaded);
 
@@ -68,71 +30,78 @@ export default function ImagesForm({
         newFiles.push(URL.createObjectURL(file));
       });
       setNewImages(newFiles);
+      setToUpdate(true);
+    }
+  };
+
+  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (formRef.current && confirm("Tu confirmes ?")) {
+      const formData = new FormData(formRef.current);
+      fetch(api, {
+        method: "POST",
+        body: formData,
+      }).then((res) => {
+        if (res.ok) {
+          toast("Contenu modifié");
+          setToUpdate(false);
+          window.location.reload();
+        } else toast("Erreur à l'enregistrement");
+      });
     }
   };
 
   return (
-    <div className={s.imageFormContainer}>
-      <h4 className={s.imageTitle}>
-        {title !== undefined ? title : isMultiple ? "Images :" : "Image :"}
-      </h4>
-      <div>
-        {existantImages.length > 0 &&
-          existantImages.map((filename) => (
-            <div key={filename} className={s.imageWrapper}>
-              <div className={s.imageContainer}>
-                <Image
-                  loader={({ src, width, quality }) => {
-                    return `${pathImage}/sm/${src}`;
-                  }}
-                  src={`${filename}`}
-                  width={150}
-                  height={150}
-                  alt="Image de l'item"
-                  style={{
-                    objectFit: "contain",
-                  }}
-                />
+    <div className={s.formContainer}>
+      <form ref={formRef} onSubmit={submit}>
+        <input type="hidden" name="label" value={label} />
+        <h4 className={s.imageTitle}>
+          {title !== undefined ? title : isMultiple ? "Images :" : "Image :"}
+        </h4>
+        <div className={s.imageFormContainer}>
+          <FileUploader
+            name={isMultiple ? "files" : "file"}
+            handleFiles={handleFiles}
+            isMultiple={isMultiple}
+          />
+        </div>
+        <div className={s.imageFormContainer}>
+          {newImages.length > 0 &&
+            newImages.map((src) => (
+              <div key={src} className={s.imageWrapper}>
+                <div key={src} className={s.imageContainer}>
+                  <Image
+                    unoptimized={true}
+                    src={src}
+                    width={150}
+                    height={150}
+                    alt="Nouvelle image de l'item"
+                    style={{
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
               </div>
-              {apiForDelete && (
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleDelete(filename);
-                  }}
-                  className="iconButton"
-                  aria-label="Supprimer"
-                >
-                  <FiTrash2 />
-                </button>
-              )}
-            </div>
-          ))}
-      </div>
-      <FileUploader
-        name={isMultiple ? "files" : "file"}
-        handleFiles={getAlbumPreview}
-        isMultiple={isMultiple}
-      />
-      <div>
-        {newImages.length > 0 &&
-          newImages.map((src) => (
-            <div key={src} className={s.imageWrapper}>
-              <div key={src} className={s.imageContainer}>
-                <Image
-                  unoptimized={true}
-                  src={src}
-                  width={150}
-                  height={150}
-                  alt="Nouvelle image de l'item"
-                  style={{
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-            </div>
-          ))}
-      </div>
+            ))}
+        </div>
+        {toUpdate && (
+          <>
+            <button className="adminButton" type="submit">
+              Enregistrer
+            </button>
+            <button
+              className="adminButton"
+              onClick={(e) => {
+                e.preventDefault();
+                router.refresh();
+                setToUpdate(false);
+              }}
+            >
+              Annuler
+            </button>
+          </>
+        )}
+      </form>
     </div>
   );
 }
