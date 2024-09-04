@@ -4,7 +4,6 @@ import AdminColor from "@/components/admin/theme/AdminColor";
 import { useState } from "react";
 import s from "./AdminThemeComponent.module.css";
 import { ThemeFull } from "@/app/api/theme/theme";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import AdminPresetColor from "@/components/admin/theme/AdminPresetColor";
 
@@ -13,7 +12,6 @@ interface Props {
 }
 
 export default function AdminThemeComponent({ theme }: Props) {
-  const router = useRouter();
   const [themeToUpdate, setThemeToUpdate] = useState<ThemeFull>(theme);
 
   const submit = () => {
@@ -26,7 +24,7 @@ export default function AdminThemeComponent({ theme }: Props) {
     }).then((res) => {
       if (res.ok) {
         toast("Thème enregistré");
-        router.refresh();
+        window.location.reload();
       } else toast("Erreur à l'enregistrement");
     });
   };
@@ -40,7 +38,7 @@ export default function AdminThemeComponent({ theme }: Props) {
     }).then((res) => {
       if (res.ok) {
         toast("Thème par défaut en place");
-        router.refresh();
+        window.location.reload();
       } else toast("Erreur à la mise en place du thème par défaut");
     });
   };
@@ -414,15 +412,29 @@ export default function AdminThemeComponent({ theme }: Props) {
             />
           </section>
         </div>
+        <div>
+          <p>
+            Les couleur changées ne sont enregistrées qu'en ayant validé sur
+            "Valider le thème".
+          </p>
+          <br />
+          <p>
+            Les couleur mémorisées (celle auxquelles tu donnes un nom), même si
+            elles ont été enregistrées lors de leur création, n'apparaitrons
+            dans la liste de couleurs mémorisées qu'une fois le thème validé
+            (c'est un bug d'affichage).
+          </p>
+          <br />
+        </div>
         <button type="submit" onClick={submit} className="adminButton">
-          Enregistrer
+          Valider le thème
         </button>
         <button onClick={reset} className="adminButton">
           Thème par défaut
         </button>
         <button
           onClick={(e) => {
-            router.refresh();
+            window.location.reload();
           }}
           className="adminButton"
         >
@@ -432,7 +444,7 @@ export default function AdminThemeComponent({ theme }: Props) {
       <div className={s.themeContainer}>
         <div className={s.grid}>
           <section>
-            <h2 className={s.subTitle}>Gestion des couleurs</h2>
+            <h2 className={s.subTitle}>Couleurs mémorisées</h2>
             <AdminPresetColor presetColors={themeToUpdate.presetColors} />
           </section>
         </div>

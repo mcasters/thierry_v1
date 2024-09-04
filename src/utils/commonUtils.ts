@@ -22,17 +22,7 @@ export const transformValueToKey = (value: string): string => {
     .replace(/ë/gi, "e");
 };
 
-export const getSrcItem = (type: string, filename: string) =>
-  `/images/${type}/${filename}`;
-
-export const getSrcMisc = (filename: string) =>
-  `/images/miscellaneous/${filename}`;
-
-export const getSrcPost = (filename: string) => `/images/post/${filename}`;
-
-export const getPresentationContent = (
-  contents: ContentFull[],
-): ContentFull => {
+export const getPresentation = (contents: ContentFull[]): ContentFull => {
   return contents?.filter((c) => c.label === Label.PRESENTATION)[0] || null;
 };
 
@@ -164,7 +154,7 @@ export const getDefaultTheme = () => {
     linkHoverColor: "#66c3d3",
     color: "#2e6177",
     linkItemColor: "#a4874f",
-    linkHoverItemColor: "#a4874f",
+    linkHoverItemColor: "#e8ce9d",
     colorItem: "#a4874f",
   };
 };

@@ -6,7 +6,6 @@ import { useCallback, useState } from "react";
 import "./colorPicker.css";
 import s from "./AdminThemeComponent.module.css";
 import useOnClickOutside from "@/components/hooks/useOnClickOutside";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { PresetColorLight } from "@/app/api/theme/theme";
 
@@ -29,7 +28,6 @@ export default function AdminColor({
   const [currentColor, setCurrentColor] = useState(color);
   const [currentName, setCurrentName] = useState("");
 
-  const router = useRouter();
   const close = useCallback(() => setIsOpen(false), []);
   const ref = useOnClickOutside(close);
 
@@ -48,7 +46,6 @@ export default function AdminColor({
     }).then((res) => {
       if (res.ok) {
         toast("Couleur enregistrée");
-        router.refresh();
       } else toast("Erreur à l'enregistrement");
     });
   };
