@@ -6,7 +6,8 @@ import Image from "next/image";
 import { FileUploader } from "@/components/admin/form/imageForm/FileUploader";
 import s from "@/components/admin/form.module.css";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import SubmitButton from "@/components/admin/form/SubmitButton";
+import CancelButton from "@/components/admin/form/CancelButton";
 
 type Props = {
   isMultiple: boolean;
@@ -19,7 +20,6 @@ export default function ImagesForm({ isMultiple, api, label, title }: Props) {
   const [newImages, setNewImages] = useState<string[]>([]);
   const [toUpdate, setToUpdate] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
-  const router = useRouter();
 
   const handleFiles = (filesUploaded: FileList) => {
     if (filesUploaded?.length > 0) {
@@ -43,10 +43,11 @@ export default function ImagesForm({ isMultiple, api, label, title }: Props) {
         body: formData,
       }).then((res) => {
         if (res.ok) {
-          toast("Contenu modifié");
-          setToUpdate(false);
-          window.location.reload();
-        } else toast("Erreur à l'enregistrement");
+          toast.success("Contenu modifié");
+          setTimeout(function () {
+            window.location.reload();
+          }, 2000);
+        } else toast.error("Erreur à l'enregistrement");
       });
     }
   };
@@ -86,19 +87,8 @@ export default function ImagesForm({ isMultiple, api, label, title }: Props) {
         </div>
         {toUpdate && (
           <>
-            <button className="adminButton" type="submit">
-              Enregistrer
-            </button>
-            <button
-              className="adminButton"
-              onClick={(e) => {
-                e.preventDefault();
-                router.refresh();
-                setToUpdate(false);
-              }}
-            >
-              Annuler
-            </button>
+            <SubmitButton />
+            <CancelButton />
           </>
         )}
       </form>

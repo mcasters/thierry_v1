@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, {useRef, useState} from 'react';
-import toast from 'react-hot-toast';
-import {useRouter} from 'next/navigation';
+import React, { useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
-import s from '../form.module.css';
-import {PaintingCategory, SculptureCategory} from '@prisma/client';
+import s from "../form.module.css";
+import { PaintingCategory, SculptureCategory } from "@prisma/client";
 
 interface Props {
   category?: PaintingCategory | SculptureCategory;
@@ -13,24 +13,26 @@ interface Props {
   toggleModal?: () => void;
 }
 export default function CategoryForm({ category, type, toggleModal }: Props) {
-  const [text, setText] = useState<string>(category?.value || '');
+  const [text, setText] = useState<string>(category?.value || "");
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const api = category
     ? `api/${type}/category/update`
     : `api/${type}/category/add`;
-  const title = category ? 'Modifier une catégorie' : 'Ajouter une catégorie';
+  const title = category ? "Modifier une catégorie" : "Ajouter une catégorie";
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formRef.current && confirm('Tu confirmes ?')) {
+    if (formRef.current && confirm("Tu confirmes ?")) {
       const formData = new FormData(formRef.current);
-      fetch(api, { method: 'POST', body: formData }).then((res) => {
+      fetch(api, { method: "POST", body: formData }).then((res) => {
         if (res.ok) {
-          toast(category ? 'Catégorie modifiée' : 'Catégorie ajoutée');
-          toggleModal ? toggleModal() : setText('');
-          router.refresh();
-        } else toast("Erreur à l'enregistrement");
+          toggleModal ? toggleModal() : setText("");
+          toast.success(category ? "Catégorie modifiée" : "Catégorie ajoutée");
+          setTimeout(function () {
+            window.location.reload();
+          }, 2000);
+        } else toast.error("Erreur à l'enregistrement");
       });
     }
   };
@@ -55,7 +57,7 @@ export default function CategoryForm({ category, type, toggleModal }: Props) {
           className="adminButton"
           onClick={(e) => {
             e.preventDefault();
-            toggleModal ? toggleModal() : setText('');
+            toggleModal ? toggleModal() : setText("");
           }}
         >
           Annuler

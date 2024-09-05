@@ -13,9 +13,11 @@ export default function DeleteButton({ api }: Props) {
     if (confirm("Sûr de vouloir supprimer ?")) {
       fetch(api).then((res) => {
         if (res.ok) {
-          toast("supprimé");
-          window.location.reload();
-        } else toast("Erreur à la suppression");
+          toast.success("supprimé");
+          setTimeout(function () {
+            window.location.reload();
+          }, 2000);
+        } else toast.error("Erreur à la suppression");
       });
     }
   };

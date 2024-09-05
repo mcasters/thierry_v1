@@ -1,39 +1,34 @@
 "use client";
 
 import { HexColorInput, HexColorPicker } from "react-colorful";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import "./colorPicker.css";
 import s from "./AdminThemeComponent.module.css";
 import useOnClickOutside from "@/components/hooks/useOnClickOutside";
 import toast from "react-hot-toast";
-import { PresetColorLight } from "@/app/api/theme/theme";
+import { ThemeFull } from "@/app/api/theme/theme";
+import CancelButton from "@/components/admin/form/CancelButton";
 
 interface Props {
+  theme: ThemeFull;
   label: string;
-  color: string;
-  setColor: (arg0: string) => void;
-  presetColors: PresetColorLight[];
-  themeId: number;
+  colorName: string;
 }
 
-export default function AdminColor({
-  label,
-  color,
-  setColor,
-  presetColors,
-  themeId,
-}: Props) {
+export default function AdminColor({ theme, label, colorName }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentColor, setCurrentColor] = useState(color);
-  const [currentName, setCurrentName] = useState("");
+  const [currentColor, setCurrentColor] = useState<string | any>(
+    theme[colorName as keyof ThemeFull],
+  );
+  const [currentName, setCurrentName] = useState<string>("");
 
   const close = useCallback(() => setIsOpen(false), []);
   const ref = useOnClickOutside(close);
 
   const savePresetColor = () => {
     const presetColor = {
-      themeId,
+      themeId: theme.id,
       name: currentName,
       color: currentColor,
     };
@@ -42,11 +37,31 @@ export default function AdminColor({
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ presetColor }),
+      body: JSON.stringify(presetColor),
     }).then((res) => {
       if (res.ok) {
-        toast("Couleur enregistrée");
-      } else toast("Erreur à l'enregistrement");
+        toast.success("Couleur enregistrée");
+      } else toast.error("Erreur à l'enregistrement");
+    });
+  };
+
+  const submit = () => {
+    const updatedTheme = Object.assign({}, theme, {
+      [colorName]: currentColor,
+    });
+    fetch("admin/api/theme/update", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(updatedTheme),
+    }).then((res) => {
+      if (res.ok) {
+        toast.success("Thème enregistré");
+        setTimeout(function () {
+          window.location.reload();
+        }, 2000);
+      } else toast.error("Erreur à l'enregistrement");
     });
   };
 
@@ -56,7 +71,8 @@ export default function AdminColor({
       <div className={`${s.colorPickerContainer} colorPicker`}>
         <div
           className={s.swatch}
-          style={{ backgroundColor: color }}
+          // @ts-ignore
+          style={{ backgroundColor: theme[colorName as keyof ThemeFull] }}
           onClick={() => setIsOpen(true)}
         />
         {isOpen && (
@@ -96,7 +112,7 @@ export default function AdminColor({
               </button>
             </div>
             <div className={s.pickerSwatches}>
-              {presetColors.map((presetColor) => (
+              {theme.presetColors.map((presetColor) => (
                 <div key={presetColor.name} className={s.presetColorContainer}>
                   <button
                     className={s.pickerSwatch}
@@ -109,25 +125,10 @@ export default function AdminColor({
                 </div>
               ))}
             </div>
-            <button
-              className={`${s.halfWidth} adminButton`}
-              onClick={(e) => {
-                e.preventDefault();
-                setColor(currentColor);
-                close();
-              }}
-            >
-              OK
+            <button onClick={submit} className="adminButton">
+              Enregistrer
             </button>
-            <button
-              className={`${s.halfWidth} adminButton`}
-              onClick={(e) => {
-                e.preventDefault();
-                close();
-              }}
-            >
-              Annuler
-            </button>
+            <CancelButton />
           </div>
         )}
       </div>

@@ -33,8 +33,8 @@ export default function Preview({
           });
           setExistantfilenames(tab);
           if (onDelete !== undefined) onDelete(tab.length);
-          toast("Image supprimée");
-        } else toast("Erreur à la suppression");
+          toast.success("Image supprimée");
+        } else toast.error("Erreur à la suppression");
       });
     }
   };

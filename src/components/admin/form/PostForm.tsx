@@ -10,6 +10,8 @@ import { PostFull } from "@/app/api/post/post";
 import s from "../form.module.css";
 import { getMainImage } from "@/utils/commonUtils";
 import Preview from "@/components/admin/form/imageForm/Preview";
+import CancelButton from "@/components/admin/form/CancelButton";
+import SubmitButton from "@/components/admin/form/SubmitButton";
 
 interface Props {
   post?: PostFull;
@@ -44,10 +46,12 @@ export default function PostForm({ post, toggleModal }: Props) {
       const formData = new FormData(formRef.current);
       fetch(api, { method: "POST", body: formData }).then((res) => {
         if (res.ok) {
-          toast(post ? "Post modifié" : "Post ajouté");
           toggleModal ? toggleModal() : reset();
-          window.location.reload();
-        } else toast("Erreur à l'enregistrement");
+          toast.success(post ? "Post modifié" : "Post ajouté");
+          setTimeout(function () {
+            window.location.reload();
+          }, 2000);
+        } else toast.error("Erreur à l'enregistrement");
       });
     }
   };
@@ -108,16 +112,8 @@ export default function PostForm({ post, toggleModal }: Props) {
         )}
         <Images isMultiple={true} title={"Album d'images (facultatif)"} />
         <div>
-          <input disabled={!title || !date} type="submit" value="Enregistrer" />
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              toggleModal ? toggleModal() : reset();
-            }}
-            className="adminButton"
-          >
-            Annuler
-          </button>
+          <SubmitButton disabled={!title || !date} />
+          <CancelButton />
         </div>
       </form>
     </div>

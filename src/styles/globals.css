@@ -252,7 +252,6 @@ textarea {
   width: 100%;
 }
 
-.adminButton,
 input,
 select {
   padding: 0.5em;
@@ -277,7 +276,9 @@ label {
 [type="submit"],
 [type="reset"] {
   width: 25%;
+  padding: 0.5em;
   margin: 0.5em;
+  line-height: 2.3;
 }
 
 .hidden {

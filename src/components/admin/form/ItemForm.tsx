@@ -3,7 +3,6 @@
 import React, { useRef, useState } from "react";
 import { parse } from "date-fns";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import s from "../form.module.css";
 import { SculptureFull } from "@/app/api/sculpture/sculpture";
 import { PaintingFull } from "@/app/api/peinture/painting";
@@ -12,6 +11,8 @@ import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
 import { isSculptureFull } from "@/utils/commonUtils";
 import Images from "@/components/admin/form/imageForm/Images";
 import Preview from "@/components/admin/form/imageForm/Preview";
+import CancelButton from "@/components/admin/form/CancelButton";
+import SubmitButton from "@/components/admin/form/SubmitButton";
 
 interface Props {
   item: SculptureFull | PaintingFull;
@@ -41,9 +42,8 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
     isSculpture ? item.length.toString() : "",
   );
   const [countImages, setCountImages] = useState<number>(
-    item.id === 0 ? 0 : isSculpture ? item.images?.length : 0,
+    item.id === 0 ? 0 : isSculpture ? item.images?.length : 1,
   );
-  const router = useRouter();
   const api =
     item.id === 0 ? `api/${item.type}/add` : `api/${item.type}/update`;
 
@@ -67,12 +67,14 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
       const formData = new FormData(formRef.current);
       fetch(api, { method: "POST", body: formData }).then((res) => {
         if (res.ok) {
-          toast(
+          toggleModal ? toggleModal() : reset();
+          toast.success(
             item.id === 0 ? `${item.type} ajoutée` : `${item.type} modifiée`,
           );
-          toggleModal ? toggleModal() : reset();
-          router.refresh();
-        } else toast("Erreur à l'enregistrement");
+          setTimeout(function () {
+            window.location.reload();
+          }, 2000);
+        } else toast.error("Erreur à l'enregistrement");
       });
     }
   };
@@ -221,7 +223,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
           title={isSculpture ? "1 photo minimum" : "1 seule photo"}
         />
         <div>
-          <input
+          <SubmitButton
             disabled={
               !title ||
               !date ||
@@ -232,18 +234,8 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
               (isToSell && !price) ||
               countImages === 0
             }
-            type="submit"
-            value="Enregistrer"
           />
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              toggleModal ? toggleModal() : reset();
-            }}
-            className="adminButton"
-          >
-            Annuler
-          </button>
+          <CancelButton />
         </div>
       </form>
     </div>

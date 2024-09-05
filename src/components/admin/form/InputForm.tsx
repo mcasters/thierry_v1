@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { ContentFull } from "@/app/api/content/content";
 import { Label } from "@prisma/client";
 import s from "../form.module.css";
+import SubmitButton from "@/components/admin/form/SubmitButton";
+import CancelButton from "@/components/admin/form/CancelButton";
 
 interface Props {
   label: Label;
@@ -29,10 +31,9 @@ export default function InputForm({ label, content, textLabel }: Props) {
         cache: "reload",
       }).then((res) => {
         if (res.ok) {
-          toast("Contenu modifié");
+          toast.success("Contenu modifié");
           setIsChanged(false);
-          router.refresh();
-        } else toast("Erreur à l'enregistrement");
+        } else toast.error("Erreur à l'enregistrement");
       });
     }
   };
@@ -56,19 +57,8 @@ export default function InputForm({ label, content, textLabel }: Props) {
         </label>
         {isChanged && (
           <>
-            <button className="adminButton" type="submit">
-              Enregistrer
-            </button>
-            <button
-              className="adminButton"
-              onClick={(e) => {
-                e.preventDefault();
-                router.refresh();
-                setIsChanged(false);
-              }}
-            >
-              Annuler
-            </button>
+            <SubmitButton />
+            <CancelButton />
           </>
         )}
       </form>

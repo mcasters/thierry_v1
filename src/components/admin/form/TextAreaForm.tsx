@@ -8,6 +8,8 @@ import { Label } from "@prisma/client";
 import s from "../form.module.css";
 import Images from "@/components/admin/form/imageForm/Images";
 import Preview from "@/components/admin/form/imageForm/Preview";
+import SubmitButton from "@/components/admin/form/SubmitButton";
+import CancelButton from "@/components/admin/form/CancelButton";
 
 interface Props {
   label: Label;
@@ -23,7 +25,7 @@ export default function TextAreaForm({
   textLabel,
   withImage = false,
 }: Props) {
-  const [pContent, setPContent] = useState<ContentFull>(content);
+  const [text, setText] = useState<ContentFull>(content);
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -36,9 +38,8 @@ export default function TextAreaForm({
         body: formData,
       }).then((res) => {
         if (res.ok) {
-          toast("Contenu modifié");
+          toast.success("Contenu modifié");
           setIsChanged(false);
-          window.location.reload();
         } else toast("Erreur à l'enregistrement");
       });
     }
@@ -52,10 +53,10 @@ export default function TextAreaForm({
           {textLabel}
           <textarea
             name="text"
-            value={pContent?.text}
+            value={text?.text}
             onChange={(e) => {
-              setPContent(
-                Object.assign({}, pContent, {
+              setText(
+                Object.assign({}, text, {
                   text: e.target.value,
                 }),
               );
@@ -66,7 +67,7 @@ export default function TextAreaForm({
         {withImage && (
           <>
             <Preview
-              images={pContent?.images}
+              images={text?.images}
               pathImage="/images/miscellaneous"
               apiForDelete="api/content/delete-image"
             />
@@ -79,18 +80,8 @@ export default function TextAreaForm({
         )}
         {isChanged && (
           <>
-            <button className="adminButton" type="submit">
-              Enregistrer
-            </button>
-            <button
-              className="adminButton"
-              onClick={(e) => {
-                e.preventDefault();
-                setIsChanged(false);
-              }}
-            >
-              Annuler
-            </button>
+            <SubmitButton />
+            <CancelButton />
           </>
         )}
       </form>
