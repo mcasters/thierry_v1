@@ -48,7 +48,7 @@ export default function Dropdown({
           : navType === LAYOUT.HOME_NAV
           ? `${s.dropdown} homeNav`
           : navType === LAYOUT.HOME_NAV_FIX
-          ? `${s.dropdown} homeNavFix`
+          ? `${s.dropdown} homeNavFix ${s.homeNav} homeNav`
           : `${s.dropdown} nav`
       }
     >
@@ -79,6 +79,7 @@ export default function Dropdown({
                   setOpen(false);
                 }}
                 className={s.subLink}
+                style={{ color: `${theme.menu1LinkHomeColor}` }}
               >
                 {menuItem.value}
               </Link>
@@ -87,7 +88,7 @@ export default function Dropdown({
         </ul>
       ) : null}
       <style jsx>{`
-        .homeNavFix .link {
+        .homeNav .link {
           color: ${theme.menu1LinkHomeColor};
         }
         .nav .link {
@@ -96,7 +97,7 @@ export default function Dropdown({
         .itemNav .link {
           color: ${theme.menu1LinkItemColor};
         }
-        .homeNavFix .link:hover {
+        .homeNav .link:hover {
           color: ${theme.menu1LinkHomeHoverColor};
         }
         .nav .link:hover {

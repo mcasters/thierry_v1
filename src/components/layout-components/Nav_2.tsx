@@ -25,7 +25,7 @@ export default function Nav_2({ navType }: Props) {
             : navType === LAYOUT.HOME_NAV
             ? `${s.homeNav} homeNav`
             : navType === LAYOUT.HOME_NAV_FIX
-            ? `${s.homeNavFix} homeNavFix`
+            ? `${s.homeNavFix} homeNavFix ${s.homeNav} homeNav`
             : `${s.nav} nav`
         }
       >

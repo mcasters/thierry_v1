@@ -33,7 +33,7 @@ export default function Nav_1({
             : navType === LAYOUT.HOME_NAV
             ? `${s.homeNav} homeNav`
             : navType === LAYOUT.HOME_NAV_FIX
-            ? `${s.homeNavFix} homeNavFix`
+            ? `${s.homeNavFix} homeNavFix ${s.homeNav} homeNav`
             : `${s.nav} nav`
         }
       >
@@ -99,7 +99,7 @@ export default function Nav_1({
         .homeNavFix {
           background-color: ${theme.menu1HomeColor};
         }
-        .homeNavFix .link {
+        .homeNav .link {
           color: ${theme.menu1LinkHomeColor};
         }
         .nav .link {
@@ -108,7 +108,7 @@ export default function Nav_1({
         .itemNav .link {
           color: ${theme.menu1LinkItemColor};
         }
-        .homeNavFix .link:hover {
+        .homeNav .link:hover {
           color: ${theme.menu1LinkHomeHoverColor};
         }
         .nav .link:hover {
