@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 
 import { ContentFull } from "@/app/api/content/content";
 import { Label } from "@prisma/client";
-import s from "../form.module.css";
+import s from "@/styles/admin/Admin.module.css";
 import Images from "@/components/admin/form/imageForm/Images";
 import Preview from "@/components/admin/form/imageForm/Preview";
 import SubmitButton from "@/components/admin/form/SubmitButton";
@@ -39,6 +39,11 @@ export default function TextAreaForm({
       }).then((res) => {
         if (res.ok) {
           toast.success("Contenu modifié");
+          if (withImage) {
+            setTimeout(function () {
+              window.location.reload();
+            }, 2000);
+          }
           setIsChanged(false);
         } else toast("Erreur à l'enregistrement");
       });
@@ -48,6 +53,20 @@ export default function TextAreaForm({
   return (
     <div className={s.formContainer}>
       <form ref={formRef} onSubmit={submit}>
+        {withImage && (
+          <div>
+            <Preview
+              images={text?.images}
+              pathImage="/images/miscellaneous"
+              apiForDelete="api/content/delete-image"
+            />
+            <Images
+              onAdd={(count) => setIsChanged(count === 1)}
+              isMultiple={false}
+              title="Image de présentation (facultative)"
+            />
+          </div>
+        )}
         <input type="hidden" name="label" value={label} />
         <label className={s.contentLabel}>
           {textLabel}
@@ -65,18 +84,11 @@ export default function TextAreaForm({
           />
         </label>
         {withImage && (
-          <>
-            <Preview
-              images={text?.images}
-              pathImage="/images/miscellaneous"
-              apiForDelete="api/content/delete-image"
-            />
-            <Images
-              onAdd={(count) => setIsChanged(count === 1)}
-              isMultiple={false}
-              title=""
-            />
-          </>
+          <div>
+            Si il y a une image de présentation, tu l'enregistres avec le même
+            bouton que celui pour le texte de présentation (bouton qui apparait
+            sous cette fenêtre dès qu'un changement est fait).
+          </div>
         )}
         {isChanged && (
           <>

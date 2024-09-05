@@ -30,7 +30,7 @@ export const NAMES = {
   SCULPTURE: "Sculptures",
   HOME: "Home",
   PRIVACY_FRENCH: "Politique de confidentialité",
-  ADMIN: "général",
+  ADMIN: "Général",
   POST: "Posts",
   CONTACT: "Contact",
 };

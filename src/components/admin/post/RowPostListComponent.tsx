@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
+import Image from "next/image";
 
-import DeleteButton from '@/components/admin/form/DeleteButton';
-import UpdateButton from '@/components/admin/form/UpdateButton';
-import { TYPE } from '@/constants';
-import s from '../ListComponent.module.css';
-import { PostFull } from '@/app/api/post/post';
-import { getMainImage } from '@/utils/commonUtils';
+import DeleteButton from "@/components/admin/form/DeleteButton";
+import UpdateButton from "@/components/admin/form/UpdateButton";
+import { TYPE } from "@/constants";
+import s from "../../../styles/admin/AdminListComponent.module.css";
+import { PostFull } from "@/app/api/post/post";
+import { getMainImage } from "@/utils/commonUtils";
 
 interface Props {
   post: PostFull;
@@ -27,9 +27,17 @@ export default function RowPostListComponent({ post }: Props) {
         <span className={s.name}>{post.title}</span>
       </li>
       <li className={s.itemImage}>
-        {src !== null && <Image src={src} alt="image" height={50} width={50} style={{
-            objectFit: 'contain',
-        }} />}
+        {src !== null && (
+          <Image
+            src={src}
+            alt="image"
+            height={50}
+            width={50}
+            style={{
+              objectFit: "contain",
+            }}
+          />
+        )}
       </li>
       <li className={s.itemIcon}>
         <UpdateButton item={post} type={TYPE.POST} />

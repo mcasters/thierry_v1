@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import RowCategoryListComponent from './RowCategoryListComponent';
-import React from 'react';
-import s from '../../ListComponent.module.css';
-import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
-import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
+import RowCategoryListComponent from "./RowCategoryListComponent";
+import React from "react";
+import s from "../../../../styles/admin/AdminListComponent.module.css";
+import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
+import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
 
 interface Props {
   type: string;
   categories: PaintingCategoryFull[] | SculptureCategoryFull[];
 }
 export default function CategoryListComponent({ type, categories }: Props) {
-  const title = 'Liste des catégories';
+  const title = "Liste des catégories";
   const message = `Une catégorie ne peut être supprimée que lorsqu'il n'y a pas ou plus de ${type} qui y est classée.`;
 
   return (

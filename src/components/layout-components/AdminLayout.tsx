@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
-import Main from '@/components/layout-components/Main';
-import AdminNav from '@/components/layout-components/AdminNav';
-import s from '@/styles/admin.module.css';
+import Main from "@/components/layout-components/Main";
+import AdminNav from "@/components/layout-components/AdminNav";
+import s from "@/styles/admin/Admin.module.css";
 
 interface Props {
   children: ReactNode;

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { FiTrash2 } from "@react-icons/all-files/fi/FiTrash2";
 import toast from "react-hot-toast";
-import s from "@/components/admin/form.module.css";
+import s from "@/styles/admin/Admin.module.css";
 import { ContentImage, Image as IImage, PostImage } from ".prisma/client";
 
 type Props = {
@@ -12,6 +12,7 @@ type Props = {
   pathImage: string;
   apiForDelete?: string;
   onDelete?: (arg0: number) => void;
+  textLabel?: string;
 };
 
 export default function Preview({
@@ -19,6 +20,7 @@ export default function Preview({
   pathImage,
   apiForDelete,
   onDelete,
+  textLabel,
 }: Props) {
   const [existantFilenames, setExistantfilenames] = useState<string[]>(
     images.map((i) => i.filename),
@@ -41,6 +43,7 @@ export default function Preview({
 
   return (
     <>
+      {textLabel && <label className={s.contentLabel}>{textLabel}</label>}
       {existantFilenames.map((filename) => (
         <div key={filename} className={s.imageWrapper}>
           <div>

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { FileUploader } from "@/components/admin/form/imageForm/FileUploader";
-import s from "@/components/admin/form.module.css";
+import s from "@/styles/admin/Admin.module.css";
 
 interface Props {
   onAdd?: (arg0: number) => void;
@@ -34,10 +34,10 @@ export default function Images({ onAdd, reset, isMultiple, title }: Props) {
   };
 
   return (
-    <div className={s.imageFormContainer}>
-      <h4 className={s.imageTitle}>
+    <div>
+      <h5 className={s.imageTitle}>
         {title !== undefined ? title : isMultiple ? "Images :" : "Image :"}
-      </h4>
+      </h5>
       <FileUploader
         name={isMultiple ? "files" : "file"}
         handleFiles={getAlbumPreview}

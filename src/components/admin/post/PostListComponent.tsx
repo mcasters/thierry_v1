@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import React from 'react';
-import s from '../ListComponent.module.css';
-import RowPostListComponent from '@/components/admin/post/RowPostListComponent';
-import { PostFull } from '@/app/api/post/post';
+import React from "react";
+import s from "../../../styles/admin/AdminListComponent.module.css";
+import RowPostListComponent from "@/components/admin/post/RowPostListComponent";
+import { PostFull } from "@/app/api/post/post";
 
 interface Props {
   posts?: PostFull[];
 }
 export default function PostListComponent({ posts }: Props) {
-  const title = 'Liste des posts';
+  const title = "Liste des posts";
 
   return (
     <div className={s.listContainer}>

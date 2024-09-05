@@ -2,11 +2,10 @@
 
 import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 import { ContentFull } from "@/app/api/content/content";
 import { Label } from "@prisma/client";
-import s from "../form.module.css";
+import s from "@/styles/admin/Admin.module.css";
 import SubmitButton from "@/components/admin/form/SubmitButton";
 import CancelButton from "@/components/admin/form/CancelButton";
 
@@ -19,7 +18,6 @@ export default function InputForm({ label, content, textLabel }: Props) {
   const [text, setText] = useState<string>(content?.text || "");
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
-  const router = useRouter();
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

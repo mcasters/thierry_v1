@@ -2,7 +2,7 @@
 
 import AdminColor from "@/components/admin/theme/AdminColor";
 import { useState } from "react";
-import s from "./AdminThemeComponent.module.css";
+import s from "../../../styles/admin/AdminThemeComponent.module.css";
 import { ThemeFull } from "@/app/api/theme/theme";
 import toast from "react-hot-toast";
 import AdminPresetColor from "@/components/admin/theme/AdminPresetColor";

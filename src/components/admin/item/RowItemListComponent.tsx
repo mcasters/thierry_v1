@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import DeleteButton from "@/components/admin/form/DeleteButton";
 import UpdateButton from "@/components/admin/form/UpdateButton";
-import s from "../ListComponent.module.css";
+import s from "../../../styles/admin/AdminListComponent.module.css";
 import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
 import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
 import { PaintingFull } from "@/app/api/peinture/painting";

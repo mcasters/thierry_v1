@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import RowItemListComponent from './RowItemListComponent';
-import React from 'react';
-import s from '../ListComponent.module.css';
-import { PaintingFull } from '@/app/api/peinture/painting';
-import { SculptureFull } from '@/app/api/sculpture/sculpture';
-import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
-import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
+import RowItemListComponent from "./RowItemListComponent";
+import React from "react";
+import s from "../../../styles/admin/AdminListComponent.module.css";
+import { PaintingFull } from "@/app/api/peinture/painting";
+import { SculptureFull } from "@/app/api/sculpture/sculpture";
+import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
+import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
 
 interface Props {
   type: string;

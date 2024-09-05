@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 import Images from "@/components/admin/form/imageForm/Images";
 import { PostFull } from "@/app/api/post/post";
-import s from "../form.module.css";
+import s from "@/styles/admin/Admin.module.css";
 import { getMainImage } from "@/utils/commonUtils";
 import Preview from "@/components/admin/form/imageForm/Preview";
 import CancelButton from "@/components/admin/form/CancelButton";
@@ -95,23 +95,27 @@ export default function PostForm({ post, toggleModal }: Props) {
           />
         </label>
 
-        {post && (
-          <Preview
-            images={mainImage ? [mainImage] : []}
-            pathImage="/images/post"
-            apiForDelete="api/post/delete-image"
-          />
-        )}
+        <div className={s.imageFormContainer}>
+          {post && (
+            <Preview
+              images={mainImage ? [mainImage] : []}
+              pathImage="/images/post"
+              apiForDelete="api/post/delete-image"
+            />
+          )}
+        </div>
         <Images isMultiple={false} title="Image principale (facultative)" />
-        {post && (
-          <Preview
-            images={post.images.filter((i) => !i.isMain) || []}
-            pathImage="/images/post"
-            apiForDelete="api/post/delete-image"
-          />
-        )}
-        <Images isMultiple={true} title={"Album d'images (facultatif)"} />
-        <div>
+        <div className={s.imageFormContainer}>
+          {post && (
+            <Preview
+              images={post.images.filter((i) => !i.isMain) || []}
+              pathImage="/images/post"
+              apiForDelete="api/post/delete-image"
+            />
+          )}
+          <Images isMultiple={true} title={"Album d'images (facultatif)"} />
+        </div>
+        <div className={s.buttonSection}>
           <SubmitButton disabled={!title || !date} />
           <CancelButton />
         </div>

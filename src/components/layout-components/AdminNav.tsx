@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import AuthStatus from '@/components/auth/AuthStatus';
-import { ADMIN_MENU } from '@/constants/routes';
-import s from '@/styles/AdminNav.module.css';
+import AuthStatus from "@/components/auth/AuthStatus";
+import { ADMIN_MENU } from "@/constants/routes";
+import s from "@/styles/admin/AdminNav.module.css";
 
 export default function AdminNav() {
   const authStatus = AuthStatus();

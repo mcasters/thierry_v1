@@ -3,8 +3,8 @@
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import React, { useCallback, useState } from "react";
 
-import "./colorPicker.css";
-import s from "./AdminThemeComponent.module.css";
+import "../../../styles/admin/colorPicker.css";
+import s from "../../../styles/admin/AdminThemeComponent.module.css";
 import useOnClickOutside from "@/components/hooks/useOnClickOutside";
 import toast from "react-hot-toast";
 import { ThemeFull } from "@/app/api/theme/theme";

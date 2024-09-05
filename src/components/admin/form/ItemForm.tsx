@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import { parse } from "date-fns";
 import toast from "react-hot-toast";
-import s from "../form.module.css";
+import s from "@/styles/admin/Admin.module.css";
 import { SculptureFull } from "@/app/api/sculpture/sculpture";
 import { PaintingFull } from "@/app/api/peinture/painting";
 import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
@@ -205,24 +205,26 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             />
           </label>
         )}
-        {item.id !== 0 && (
-          <Preview
-            images={isSculpture ? item.images : [item.image]}
-            pathImage={`/images/${item.type}`}
-            apiForDelete={
-              isSculpture && countImages > 1
-                ? `api/${item.type}/delete-image`
-                : undefined
-            }
-            onDelete={setCountImages}
+        <div className={s.imageFormContainer}>
+          {item.id !== 0 && (
+            <Preview
+              images={isSculpture ? item.images : [item.image]}
+              pathImage={`/images/${item.type}`}
+              apiForDelete={
+                isSculpture && countImages > 1
+                  ? `api/${item.type}/delete-image`
+                  : undefined
+              }
+              onDelete={setCountImages}
+            />
+          )}
+          <Images
+            onAdd={handleAdd}
+            isMultiple={isSculpture}
+            title={isSculpture ? "1 photo minimum" : "1 seule photo"}
           />
-        )}
-        <Images
-          onAdd={handleAdd}
-          isMultiple={isSculpture}
-          title={isSculpture ? "1 photo minimum" : "1 seule photo"}
-        />
-        <div>
+        </div>
+        <div className={s.buttonSection}>
           <SubmitButton
             disabled={
               !title ||

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import DeleteButton from '@/components/admin/form/DeleteButton';
-import UpdateButton from '@/components/admin/form/UpdateButton';
-import { TYPE } from '@/constants';
-import s from '../../ListComponent.module.css';
-import { SculptureCategoryFull } from '@/app/api/sculpture/category/category';
-import { PaintingCategoryFull } from '@/app/api/peinture/category/category';
+import DeleteButton from "@/components/admin/form/DeleteButton";
+import UpdateButton from "@/components/admin/form/UpdateButton";
+import { TYPE } from "@/constants";
+import s from "../../../../styles/admin/AdminListComponent.module.css";
+import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
+import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
 
 interface Props {
   category: SculptureCategoryFull | PaintingCategoryFull;
@@ -22,7 +22,7 @@ export default function RowCategoryListComponent({ category, type }: Props) {
         <span>
           {type === TYPE.SCULPTURE
             ? category.sculptures.length
-            : category.paintings.length}{' '}
+            : category.paintings.length}{" "}
           {type}(s)
         </span>
       </li>

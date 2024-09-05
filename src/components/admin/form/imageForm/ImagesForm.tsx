@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import Image from "next/image";
 
 import { FileUploader } from "@/components/admin/form/imageForm/FileUploader";
-import s from "@/components/admin/form.module.css";
+import s from "@/styles/admin/Admin.module.css";
 import toast from "react-hot-toast";
 import SubmitButton from "@/components/admin/form/SubmitButton";
 import CancelButton from "@/components/admin/form/CancelButton";
@@ -53,45 +53,41 @@ export default function ImagesForm({ isMultiple, api, label, title }: Props) {
   };
 
   return (
-    <div className={s.formContainer}>
-      <form ref={formRef} onSubmit={submit}>
-        <input type="hidden" name="label" value={label} />
-        <h4 className={s.imageTitle}>
-          {title !== undefined ? title : isMultiple ? "Images :" : "Image :"}
-        </h4>
-        <div className={s.imageFormContainer}>
-          <FileUploader
-            name={isMultiple ? "files" : "file"}
-            handleFiles={handleFiles}
-            isMultiple={isMultiple}
-          />
-        </div>
-        <div className={s.imageFormContainer}>
-          {newImages.length > 0 &&
-            newImages.map((src) => (
-              <div key={src} className={s.imageWrapper}>
-                <div key={src} className={s.imageContainer}>
-                  <Image
-                    unoptimized={true}
-                    src={src}
-                    width={150}
-                    height={150}
-                    alt="Nouvelle image de l'item"
-                    style={{
-                      objectFit: "contain",
-                    }}
-                  />
-                </div>
+    <form ref={formRef} onSubmit={submit}>
+      <input type="hidden" name="label" value={label} />
+      <h4 className={s.imageTitle}>
+        {title !== undefined ? title : isMultiple ? "Images :" : "Image :"}
+      </h4>
+      <FileUploader
+        name={isMultiple ? "files" : "file"}
+        handleFiles={handleFiles}
+        isMultiple={isMultiple}
+      />
+      <div>
+        {newImages.length > 0 &&
+          newImages.map((src) => (
+            <div key={src} className={s.imageWrapper}>
+              <div key={src} className={s.imageContainer}>
+                <Image
+                  unoptimized={true}
+                  src={src}
+                  width={150}
+                  height={150}
+                  alt="Nouvelle image de l'item"
+                  style={{
+                    objectFit: "contain",
+                  }}
+                />
               </div>
-            ))}
-        </div>
-        {toUpdate && (
-          <>
-            <SubmitButton />
-            <CancelButton />
-          </>
-        )}
-      </form>
-    </div>
+            </div>
+          ))}
+      </div>
+      {toUpdate && (
+        <>
+          <SubmitButton />
+          <CancelButton />
+        </>
+      )}
+    </form>
   );
 }

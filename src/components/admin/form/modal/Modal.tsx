@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
-import s from './Modal.module.css';
+import s from "../../../../styles/admin/Modal.module.css";
 
 interface Props {
   children?: ReactNode;

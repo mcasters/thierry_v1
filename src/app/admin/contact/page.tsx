@@ -5,7 +5,7 @@ import {
   getTextContact,
 } from "@/utils/commonUtils";
 import { getContentsFull } from "@/app/api/content/getContents";
-import s from "@/styles/admin.module.css";
+import s from "@/styles/admin/Admin.module.css";
 import { Label } from "@prisma/client";
 import TextAreaForm from "@/components/admin/form/TextAreaForm";
 import React from "react";
