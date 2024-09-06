@@ -24,13 +24,15 @@ export default async function Contact() {
         textLabel="Adresse"
       />
       <InputForm
-        content={getPhone(contents)}
         label={Label.PHONE}
+        api="api/content/update"
+        content={getPhone(contents)}
         textLabel="Téléphone"
       />
       <InputForm
-        content={getEmail(contents)}
         label={Label.EMAIL}
+        api="api/content/update"
+        content={getEmail(contents)}
         textLabel="E-mail"
       />
       <TextAreaForm

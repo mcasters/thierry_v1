@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi"]
 }
 
 datasource db {
@@ -136,8 +137,9 @@ model SculptureCategory {
 }
 
 model Theme {
-  id                      Int           @id @default(autoincrement())
-  name                    String        @unique
+  id                      Int     @id @default(autoincrement())
+  name                    String  @unique
+  isActive                Boolean @default(false)
   backgroundColor         String
   backgroundColorItem     String
   lineColor               String
@@ -165,13 +167,10 @@ model Theme {
   linkItemColor           String
   linkHoverItemColor      String
   colorItem               String
-  presetColors            PresetColor[]
 }
 
 model PresetColor {
-  id      Int    @id @default(autoincrement())
-  name    String @unique
-  color   String
-  theme   Theme  @relation(fields: [themeId], references: [id])
-  themeId Int
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  color String
 }

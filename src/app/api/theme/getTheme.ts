@@ -1,40 +1,61 @@
 import prisma from "@/lib/prisma";
-import { Theme } from "@prisma/client";
 import "server-only";
-import { getDefaultPresetColor, getDefaultTheme } from "@/utils/commonUtils";
-import { ThemeFull } from "@/app/api/theme/theme";
+import { getDefaultThemeData } from "@/utils/commonUtils";
+import { ThemeLight } from "@/app/api/theme/theme";
+import { THEME } from "@/constants/database";
+import { PresetColor, Theme } from "@prisma/client";
 
-export async function getTheme(): Promise<Theme> {
-  let theme = await prisma.theme.findFirst();
+export async function getThemesFull(): Promise<Theme[]> {
+  let res: Theme[];
+  res = await prisma.theme.findMany({});
+
+  if (res.length === 0) {
+    const defaultTheme = await prisma.theme.create({
+      data: {
+        ...getDefaultThemeData(),
+      },
+    });
+    res.push(defaultTheme);
+  }
+  return JSON.parse(JSON.stringify(res));
+}
+
+export async function getThemesLight(): Promise<ThemeLight[]> {
+  const res = await prisma.theme.findMany({
+    omit: {
+      id: true,
+    },
+  });
+  return JSON.parse(JSON.stringify(res));
+}
+
+export async function getActiveTheme(): Promise<Theme> {
+  let theme = await prisma.theme.findFirst({
+    where: {
+      isActive: true,
+    },
+  });
+
+  if (!theme) {
+    theme = await prisma.theme.findUnique({
+      where: {
+        name: THEME.DEFAULT,
+      },
+    });
+  }
+
   if (!theme) {
     theme = await prisma.theme.create({
       data: {
-        ...getDefaultTheme(),
-        presetColors: {
-          create: getDefaultPresetColor(),
-        },
+        ...getDefaultThemeData(),
       },
     });
   }
   return JSON.parse(JSON.stringify(theme));
 }
 
-export async function getThemeFull(): Promise<ThemeFull> {
-  let theme = await prisma.theme.findFirst({
-    include: { presetColors: true },
-  });
-  if (!theme) {
-    theme = await prisma.theme.create({
-      data: {
-        ...getDefaultTheme(),
-        presetColors: {
-          create: getDefaultPresetColor(),
-        },
-      },
-      include: {
-        presetColors: true,
-      },
-    });
-  }
-  return JSON.parse(JSON.stringify(theme));
+export async function getPresetColors(): Promise<PresetColor[]> {
+  let presetColors = await prisma.presetColor.findMany();
+
+  return JSON.parse(JSON.stringify(presetColors));
 }

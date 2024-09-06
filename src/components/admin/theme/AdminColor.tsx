@@ -7,19 +7,25 @@ import "../../../styles/admin/colorPicker.css";
 import s from "../../../styles/admin/AdminThemeComponent.module.css";
 import useOnClickOutside from "@/components/hooks/useOnClickOutside";
 import toast from "react-hot-toast";
-import { ThemeFull } from "@/app/api/theme/theme";
 import CancelButton from "@/components/admin/form/CancelButton";
+import { PresetColor, Theme } from "@prisma/client";
 
 interface Props {
-  theme: ThemeFull;
+  currentTheme: Theme;
   label: string;
   colorName: string;
+  presetColors: PresetColor[];
 }
 
-export default function AdminColor({ theme, label, colorName }: Props) {
+export default function AdminColor({
+  currentTheme,
+  label,
+  colorName,
+  presetColors,
+}: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentColor, setCurrentColor] = useState<string | any>(
-    theme[colorName as keyof ThemeFull],
+    currentTheme[colorName as keyof Theme],
   );
   const [currentName, setCurrentName] = useState<string>("");
 
@@ -28,11 +34,10 @@ export default function AdminColor({ theme, label, colorName }: Props) {
 
   const savePresetColor = () => {
     const presetColor = {
-      themeId: theme.id,
       name: currentName,
       color: currentColor,
     };
-    fetch("admin/api/theme/add-color", {
+    fetch("admin/api/theme/add-preset-color", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -46,7 +51,7 @@ export default function AdminColor({ theme, label, colorName }: Props) {
   };
 
   const submit = () => {
-    const updatedTheme = Object.assign({}, theme, {
+    const updatedTheme = Object.assign({}, currentTheme, {
       [colorName]: currentColor,
     });
     fetch("admin/api/theme/update", {
@@ -71,8 +76,9 @@ export default function AdminColor({ theme, label, colorName }: Props) {
       <div className={`${s.colorPickerContainer} colorPicker`}>
         <div
           className={s.swatch}
-          // @ts-ignore
-          style={{ backgroundColor: theme[colorName as keyof ThemeFull] }}
+          style={{
+            backgroundColor: currentColor,
+          }}
           onClick={() => setIsOpen(true)}
         />
         {isOpen && (
@@ -112,7 +118,7 @@ export default function AdminColor({ theme, label, colorName }: Props) {
               </button>
             </div>
             <div className={s.pickerSwatches}>
-              {theme.presetColors.map((presetColor) => (
+              {presetColors.map((presetColor) => (
                 <div key={presetColor.name} className={s.presetColorContainer}>
                   <button
                     className={s.pickerSwatch}

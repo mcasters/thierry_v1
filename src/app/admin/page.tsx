@@ -1,8 +1,20 @@
 import AdminThemeComponent from "@/components/admin/theme/AdminThemeComponent";
-import { getThemeFull } from "@/app/api/theme/getTheme";
+import {
+  getActiveTheme,
+  getPresetColors,
+  getThemesFull,
+} from "@/app/api/theme/getTheme";
 
 export default async function AdminIndex() {
-  const themeFull = await getThemeFull();
+  const themes = await getThemesFull();
+  const activeTheme = await getActiveTheme();
+  const presetColors = await getPresetColors();
 
-  return <AdminThemeComponent theme={themeFull} />;
+  return (
+    <AdminThemeComponent
+      themes={themes}
+      activeTheme={activeTheme}
+      presetColors={presetColors}
+    />
+  );
 }

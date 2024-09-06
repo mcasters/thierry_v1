@@ -10,7 +10,7 @@ import { getPaintingCategoriesForMenu } from "@/app/api/peinture/category/getCat
 import { getSculptureCategoriesForMenu } from "@/app/api/sculpture/category/getCategories";
 import { getIntro } from "@/utils/commonUtils";
 import React from "react";
-import { getTheme } from "@/app/api/theme/getTheme";
+import { getActiveTheme } from "@/app/api/theme/getTheme";
 import StyledJsxRegistry from "./registry";
 import { DESCRIPTION, DOCUMENT_TITLE, KEYWORDS } from "@/constants/metaHtml";
 
@@ -29,7 +29,7 @@ export default async function RootLayout({
   const contents = await getContentsFull();
   const paintingCategories = await getPaintingCategoriesForMenu();
   const sculptureCategories = await getSculptureCategoriesForMenu();
-  const theme = await getTheme();
+  const theme = await getActiveTheme();
 
   return (
     <html lang="fr">
