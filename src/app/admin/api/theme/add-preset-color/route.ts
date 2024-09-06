@@ -9,15 +9,10 @@ export async function POST(req: Request) {
   if (session) {
     try {
       const presetColor = await req.json();
-      await prisma.theme.update({
-        where: { id: presetColor.themeId },
+      await prisma.presetColor.create({
         data: {
-          presetColors: {
-            create: {
-              name: presetColor.name,
-              color: presetColor.color,
-            },
-          },
+          name: presetColor.name,
+          color: presetColor.color,
         },
       });
       return NextResponse.json({ message: "ok" }, { status: 200 });

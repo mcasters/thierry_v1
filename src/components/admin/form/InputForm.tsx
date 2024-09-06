@@ -4,17 +4,17 @@ import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 import { ContentFull } from "@/app/api/content/content";
-import { Label } from "@prisma/client";
 import s from "@/styles/admin/Admin.module.css";
 import SubmitButton from "@/components/admin/form/SubmitButton";
 import CancelButton from "@/components/admin/form/CancelButton";
 
 interface Props {
-  label: Label;
+  label: string;
+  api: string;
   content?: ContentFull;
   textLabel?: string;
 }
-export default function InputForm({ label, content, textLabel }: Props) {
+export default function InputForm({ label, api, content, textLabel }: Props) {
   const [text, setText] = useState<string>(content?.text || "");
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -23,13 +23,12 @@ export default function InputForm({ label, content, textLabel }: Props) {
     e.preventDefault();
     if (formRef.current && confirm("Tu confirmes ?")) {
       const formData = new FormData(formRef.current);
-      fetch("api/content/update", {
+      fetch(api, {
         method: "POST",
         body: formData,
-        cache: "reload",
       }).then((res) => {
         if (res.ok) {
-          toast.success("Contenu modifié");
+          toast.success("Enregistré");
           setIsChanged(false);
         } else toast.error("Erreur à l'enregistrement");
       });

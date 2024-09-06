@@ -2,6 +2,10 @@
     padding: 4em 0;
 }
 
+/*
+Grille de couleur
+ */
+
 .grid {
     display: flex;
     flex-wrap: wrap;
@@ -14,13 +18,18 @@
 }
 
 .subTitle {
+    font-size: var(--font-size-title);
     margin-bottom: 1em;
+    text-align: left;
 }
 
-
-
-
-
+.sectionTitle {
+    font-variant-caps: small-caps;
+    letter-spacing: 3px;
+    padding-bottom: 1em;
+    font-size: 1.1em;
+    text-align: left;
+}
 
 .colorContainer {
     display: flex;
@@ -35,6 +44,10 @@
     line-height: 30px;
     padding-right: 1em;
 }
+
+/*
+ColorPicker
+ */
 
 .colorPickerContainer {
     position: relative;

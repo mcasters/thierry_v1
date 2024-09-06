@@ -2,7 +2,7 @@
 
 import RowItemListComponent from "./RowItemListComponent";
 import React from "react";
-import s from "../../../styles/admin/AdminListComponent.module.css";
+import s from "@/styles/admin/AdminListComponent.module.css";
 import { PaintingFull } from "@/app/api/peinture/painting";
 import { SculptureFull } from "@/app/api/sculpture/sculpture";
 import { PaintingCategoryFull } from "@/app/api/peinture/category/category";

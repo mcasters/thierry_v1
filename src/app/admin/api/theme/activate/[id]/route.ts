@@ -4,24 +4,27 @@ import prisma from "@/lib/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(
+  req: Request,
+  { params }: { params: { id: string } },
+) {
   const session = await getServerSession(authOptions);
+
   if (session) {
     try {
-      const theme = await req.json();
-      const { id, isActive, ...rest } = theme;
-
-      const newTheme = await prisma.theme.create({
+      const id = parseInt(params.id);
+      await prisma.theme.update({
+        where: {
+          id,
+        },
         data: {
           isActive: true,
-          ...rest,
         },
       });
-
-      await prisma.theme.updateMany({
+      prisma.theme.updateMany({
         where: {
           isActive: true,
-          id: { not: newTheme.id },
+          id: { not: id },
         },
         data: {
           isActive: false,
