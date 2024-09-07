@@ -2,7 +2,7 @@
 
 import RowCategoryListComponent from "./RowCategoryListComponent";
 import React from "react";
-import s from "../../../../styles/admin/AdminListComponent.module.css";
+import s from "../../../../styles/admin/AdminList.module.css";
 import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
 import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
 

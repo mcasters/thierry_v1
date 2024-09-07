@@ -2,7 +2,7 @@
 
 import CategoryListComponent from "@/components/admin/item/category/CategoryListComponent";
 import CategoryForm from "@/components/admin/form/CategoryForm";
-import s from "../../../../styles/admin/AdminListComponent.module.css";
+import s from "../../../../styles/admin/AdminList.module.css";
 import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
 import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
 

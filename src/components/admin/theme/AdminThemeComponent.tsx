@@ -1,13 +1,14 @@
 "use client";
 
-import AdminColor from "@/components/admin/theme/AdminColor";
+import ColorPicker from "@/components/admin/theme/ColorPicker";
 import React, { useEffect, useState } from "react";
-import s from "../../../styles/admin/AdminThemeComponent.module.css";
+import s from "../../../styles/admin/AdminTheme.module.css";
 import toast from "react-hot-toast";
 import AdminPresetColor from "@/components/admin/theme/AdminPresetColor";
 import AddTheme from "@/components/admin/theme/AddTheme";
 import { PresetColor, Theme } from "@prisma/client";
 import { THEME } from "@/constants/database";
+import { PAGE_TYPE } from "@/constants/admin";
 
 interface Props {
   themes: Theme[];
@@ -46,7 +47,7 @@ export default function AdminThemeComponent({
         toast.success(`Thème "${selectedTheme.name}" actif`);
         setTimeout(function () {
           window.location.reload();
-        }, 2000);
+        }, 1500);
       } else toast.error("Erreur à la mise en place du thème actif");
     });
   };
@@ -64,7 +65,7 @@ export default function AdminThemeComponent({
             toast.success("Thème supprimé");
             setTimeout(function () {
               window.location.reload();
-            }, 2000);
+            }, 1500);
           }
         })
         .catch((err) => toast.error(`Erreur : ${err}`));
@@ -79,10 +80,10 @@ export default function AdminThemeComponent({
       },
     }).then((res) => {
       if (res.ok) {
-        toast.success("Thème par défaut en place");
+        toast.success("Restauration des couleurs du thème par défaut");
         setTimeout(function () {
           window.location.reload();
-        }, 2000);
+        }, 1500);
       } else toast.error("Erreur à la mise en place du thème par défaut");
     });
   };
@@ -117,178 +118,204 @@ export default function AdminThemeComponent({
       <div className={s.themeContainer}>
         <div className={s.grid}>
           <section>
-            <h3 className={s.sectionTitle}>Général</h3>
-
-            <AdminColor
+            <h3 className={s.sectionTitle}>{PAGE_TYPE.GENERAL}</h3>
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur de la ligne au top"
               colorName="lineColor"
+              pageTypeName={PAGE_TYPE.GENERAL}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur de fond"
               colorName="backgroundColor"
+              pageTypeName={PAGE_TYPE.GENERAL}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte"
               colorName="color"
+              pageTypeName={PAGE_TYPE.GENERAL}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur des liens"
               colorName="linkColor"
+              pageTypeName={PAGE_TYPE.GENERAL}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur des liens hover"
               colorName="linkHoverColor"
+              pageTypeName={PAGE_TYPE.GENERAL}
             />
           </section>
           <section>
-            <h3 className={s.sectionTitle}>Page Home</h3>
-            <AdminColor
+            <h3 className={s.sectionTitle}>{PAGE_TYPE.HOME}</h3>
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du menu 1"
               colorName="menu1HomeColor"
+              pageTypeName={PAGE_TYPE.HOME}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du menu 2"
               colorName="menu2HomeColor"
+              pageTypeName={PAGE_TYPE.HOME}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte du menu 1"
               colorName="menu1LinkHomeColor"
+              pageTypeName={PAGE_TYPE.HOME}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte hover du menu 1"
               colorName="menu1LinkHomeHoverColor"
+              pageTypeName={PAGE_TYPE.HOME}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte du menu 2"
               colorName="menu2LinkHomeColor"
+              pageTypeName={PAGE_TYPE.HOME}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte hover du menu 2"
               colorName="menu2LinkHomeHoverColor"
+              pageTypeName={PAGE_TYPE.HOME}
             />
           </section>
           <section>
-            <h3 className={s.sectionTitle}>Autres pages</h3>
-            <AdminColor
+            <h3 className={s.sectionTitle}>{PAGE_TYPE.OTHERS}</h3>
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du menu 1"
               colorName="menu1Color"
+              pageTypeName={PAGE_TYPE.OTHERS}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du menu 2"
               colorName="menu2Color"
+              pageTypeName={PAGE_TYPE.OTHERS}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte du menu 1"
               colorName="menu1LinkColor"
+              pageTypeName={PAGE_TYPE.OTHERS}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte hover du menu 1"
               colorName="menu1LinkHoverColor"
+              pageTypeName={PAGE_TYPE.OTHERS}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte du menu 2"
               colorName="menu2LinkColor"
+              pageTypeName={PAGE_TYPE.OTHERS}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte hover du menu 2"
               colorName="menu2LinkHoverColor"
+              pageTypeName={PAGE_TYPE.OTHERS}
             />
           </section>
           <section>
-            <h3 className={s.sectionTitle}>Pages des œuvres</h3>
-            <AdminColor
+            <h3 className={s.sectionTitle}>{PAGE_TYPE.ITEM}</h3>
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur de fond"
               colorName="backgroundColorItem"
+              pageTypeName={PAGE_TYPE.ITEM}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte"
               colorName="colorItem"
+              pageTypeName={PAGE_TYPE.ITEM}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur des liens"
               colorName="linkItemColor"
+              pageTypeName={PAGE_TYPE.ITEM}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur des liens hover"
               colorName="linkHoverItemColor"
+              pageTypeName={PAGE_TYPE.ITEM}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du menu 1"
               colorName="menu1ItemColor"
+              pageTypeName={PAGE_TYPE.ITEM}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du menu 2"
               colorName="menu2ItemColor"
+              pageTypeName={PAGE_TYPE.ITEM}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte du menu 1"
               colorName="menu1LinkItemColor"
+              pageTypeName={PAGE_TYPE.ITEM}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte hover du menu 1"
               colorName="menu1LinkHoverItemColor"
+              pageTypeName={PAGE_TYPE.ITEM}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte du menu 2"
               colorName="menu2LinkItemColor"
+              pageTypeName={PAGE_TYPE.ITEM}
             />
-            <AdminColor
+            <ColorPicker
               selectedTheme={selectedTheme}
               presetColors={presetColors}
               label="Couleur du texte hover du menu 2"
               colorName="menu2LinkHoverItemColor"
+              pageTypeName={PAGE_TYPE.ITEM}
             />
           </section>
           <section></section>
@@ -303,11 +330,15 @@ export default function AdminThemeComponent({
           newTheme={selectedTheme}
           api="admin/api/theme/add"
           label="Nom du thème"
-          textLabel="Mémoriser le thème sous un nom"
+          textLabel="Mémoriser le thème"
         />
         <button onClick={resetDefaultTheme} className="adminButton">
           Réinitialiser le thème par défaut
         </button>
+        <p>
+          Pour te créer un thème, tu pars d'un thème existant, que tu
+          séléctionnes tout en haut.{" "}
+        </p>
       </div>
     </>
   );

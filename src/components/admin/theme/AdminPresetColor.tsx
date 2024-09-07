@@ -2,7 +2,7 @@
 
 import { PresetColor } from ".prisma/client";
 
-import s from "../../../styles/admin/AdminThemeComponent.module.css";
+import s from "../../../styles/admin/AdminTheme.module.css";
 import DeleteButton from "@/components/admin/form/DeleteButton";
 
 interface Props {

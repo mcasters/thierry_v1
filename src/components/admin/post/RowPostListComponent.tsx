@@ -5,7 +5,7 @@ import Image from "next/image";
 import DeleteButton from "@/components/admin/form/DeleteButton";
 import UpdateButton from "@/components/admin/form/UpdateButton";
 import { TYPE } from "@/constants";
-import s from "../../../styles/admin/AdminListComponent.module.css";
+import s from "../../../styles/admin/AdminList.module.css";
 import { PostFull } from "@/app/api/post/post";
 import { getMainImage } from "@/utils/commonUtils";
 
