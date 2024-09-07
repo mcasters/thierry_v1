@@ -9,11 +9,12 @@ export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
   if (session) {
     try {
-      const defaultTheme = await prisma.theme.findFirst({
+      const defaultTheme = await prisma.theme.findUnique({
         where: {
           name: THEME.DEFAULT,
         },
       });
+
       if (!defaultTheme) {
         await prisma.theme.create({
           data: {

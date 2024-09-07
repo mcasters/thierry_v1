@@ -21,7 +21,7 @@ export async function POST(
           isActive: true,
         },
       });
-      prisma.theme.updateMany({
+      await prisma.theme.updateMany({
         where: {
           isActive: true,
           id: { not: id },

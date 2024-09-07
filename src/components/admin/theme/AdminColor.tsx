@@ -1,7 +1,7 @@
 "use client";
 
 import { HexColorInput, HexColorPicker } from "react-colorful";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import "../../../styles/admin/colorPicker.css";
 import s from "../../../styles/admin/AdminThemeComponent.module.css";
@@ -11,26 +11,30 @@ import CancelButton from "@/components/admin/form/CancelButton";
 import { PresetColor, Theme } from "@prisma/client";
 
 interface Props {
-  currentTheme: Theme;
+  selectedTheme: Theme;
   label: string;
   colorName: string;
   presetColors: PresetColor[];
 }
 
 export default function AdminColor({
-  currentTheme,
+  selectedTheme,
   label,
   colorName,
   presetColors,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentColor, setCurrentColor] = useState<string | any>(
-    currentTheme[colorName as keyof Theme],
+    selectedTheme[colorName as keyof Theme],
   );
   const [currentName, setCurrentName] = useState<string>("");
 
   const close = useCallback(() => setIsOpen(false), []);
   const ref = useOnClickOutside(close);
+
+  useEffect(() => {
+    if (selectedTheme) setCurrentColor(selectedTheme[colorName as keyof Theme]);
+  }, [selectedTheme]);
 
   const savePresetColor = () => {
     const presetColor = {
@@ -45,13 +49,13 @@ export default function AdminColor({
       body: JSON.stringify(presetColor),
     }).then((res) => {
       if (res.ok) {
-        toast.success("Couleur enregistrée");
+        toast.success("Couleur mémorisée");
       } else toast.error("Erreur à l'enregistrement");
     });
   };
 
   const submit = () => {
-    const updatedTheme = Object.assign({}, currentTheme, {
+    const updatedTheme = Object.assign({}, selectedTheme, {
       [colorName]: currentColor,
     });
     fetch("admin/api/theme/update", {
@@ -62,7 +66,7 @@ export default function AdminColor({
       body: JSON.stringify(updatedTheme),
     }).then((res) => {
       if (res.ok) {
-        toast.success("Thème enregistré");
+        toast.success("Couleur enregistrée dans le thème");
         setTimeout(function () {
           window.location.reload();
         }, 2000);

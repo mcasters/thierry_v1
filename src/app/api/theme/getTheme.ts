@@ -2,12 +2,12 @@ import prisma from "@/lib/prisma";
 import "server-only";
 import { getDefaultThemeData } from "@/utils/commonUtils";
 import { ThemeLight } from "@/app/api/theme/theme";
-import { THEME } from "@/constants/database";
 import { PresetColor, Theme } from "@prisma/client";
+import { getActivatedDefaultTheme } from "@/queries/theme";
 
 export async function getThemesFull(): Promise<Theme[]> {
   let res: Theme[];
-  res = await prisma.theme.findMany({});
+  res = await prisma.theme.findMany();
 
   if (res.length === 0) {
     const defaultTheme = await prisma.theme.create({
@@ -37,20 +37,9 @@ export async function getActiveTheme(): Promise<Theme> {
   });
 
   if (!theme) {
-    theme = await prisma.theme.findUnique({
-      where: {
-        name: THEME.DEFAULT,
-      },
-    });
+    theme = await getActivatedDefaultTheme();
   }
 
-  if (!theme) {
-    theme = await prisma.theme.create({
-      data: {
-        ...getDefaultThemeData(),
-      },
-    });
-  }
   return JSON.parse(JSON.stringify(theme));
 }
 
