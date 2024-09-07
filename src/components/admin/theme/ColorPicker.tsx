@@ -16,7 +16,7 @@ interface Props {
   presetColors: PresetColor[];
 }
 
-export default function ColorPickers({
+export default function ColorPicker({
   selectedTheme,
   label,
   colorName,

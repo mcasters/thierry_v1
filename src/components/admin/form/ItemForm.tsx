@@ -22,6 +22,7 @@ interface Props {
 
 export default function ItemForm({ item, toggleModal, categories }: Props) {
   const isSculpture = isSculptureFull(item);
+  const isUpdate = item.id !== 0;
   const formRef = useRef<HTMLFormElement>(null);
   const resetImageRef = useRef<number>(0);
 
@@ -42,10 +43,9 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
     isSculpture ? item.length.toString() : "",
   );
   const [countImages, setCountImages] = useState<number>(
-    item.id === 0 ? 0 : isSculpture ? item.images?.length : 1,
+    !isUpdate ? 0 : isSculpture ? item.images?.length : 1,
   );
-  const api =
-    item.id === 0 ? `api/${item.type}/add` : `api/${item.type}/update`;
+  const api = isUpdate ? `api/${item.type}/update` : `api/${item.type}/add`;
 
   const reset = () => {
     setTitle("");
@@ -69,11 +69,11 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
         if (res.ok) {
           toggleModal ? toggleModal() : reset();
           toast.success(
-            item.id === 0 ? `${item.type} ajoutée` : `${item.type} modifiée`,
+            isUpdate ? `${item.type} modifiée` : `${item.type} ajoutée`,
           );
           setTimeout(function () {
             window.location.reload();
-          }, 2000);
+          }, 1500);
         } else toast.error("Erreur à l'enregistrement");
       });
     }
@@ -84,11 +84,9 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
   };
 
   return (
-    <div className={s.formContainer}>
+    <div className={isUpdate ? s.wrapperModal : s.formContainer}>
       <h2>
-        {item.id === 0
-          ? `Ajouter une ${item.type}`
-          : `Modifier une ${item.type}`}
+        {isUpdate ? `Modifier une ${item.type}` : `Ajouter une ${item.type}`}
       </h2>
       <form ref={formRef} onSubmit={submit}>
         {item && <input type="hidden" name="id" value={item.id} />}
@@ -206,7 +204,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
           </label>
         )}
         <div className={s.imageFormContainer}>
-          {item.id !== 0 && (
+          {isUpdate && (
             <Preview
               images={isSculpture ? item.images : [item.image]}
               pathImage={`/images/${item.type}`}

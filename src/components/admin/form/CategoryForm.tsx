@@ -2,7 +2,6 @@
 
 import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 import s from "@/styles/admin/Admin.module.css";
 import { PaintingCategory, SculptureCategory } from "@prisma/client";
@@ -13,13 +12,13 @@ interface Props {
   toggleModal?: () => void;
 }
 export default function CategoryForm({ category, type, toggleModal }: Props) {
+  const isUpdate = category !== undefined;
   const [text, setText] = useState<string>(category?.value || "");
   const formRef = useRef<HTMLFormElement>(null);
-  const router = useRouter();
-  const api = category
+  const api = isUpdate
     ? `api/${type}/category/update`
     : `api/${type}/category/add`;
-  const title = category ? "Modifier une catégorie" : "Ajouter une catégorie";
+  const title = isUpdate ? "Modifier une catégorie" : "Ajouter une catégorie";
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,19 +27,19 @@ export default function CategoryForm({ category, type, toggleModal }: Props) {
       fetch(api, { method: "POST", body: formData }).then((res) => {
         if (res.ok) {
           toggleModal ? toggleModal() : setText("");
-          toast.success(category ? "Catégorie modifiée" : "Catégorie ajoutée");
+          toast.success(isUpdate ? "Catégorie modifiée" : "Catégorie ajoutée");
           setTimeout(function () {
             window.location.reload();
-          }, 2000);
+          }, 1500);
         } else toast.error("Erreur à l'enregistrement");
       });
     }
   };
   return (
-    <div className={s.formContainer}>
-      <h4>{title}</h4>
+    <div className={isUpdate ? s.wrapperModal : s.formContainer}>
+      <h2>{title}</h2>
       <form ref={formRef} onSubmit={submit}>
-        {category && <input type="hidden" name="id" value={category.id} />}
+        {isUpdate && <input type="hidden" name="id" value={category.id} />}
         <input
           placeholder="catégorie"
           name="text"

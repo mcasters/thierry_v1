@@ -29,11 +29,6 @@ export default function TextAreaForm({
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const string =
-    "Si il y a une image de présentation, tu l'enregistres avec le même\n" +
-    "            bouton que celui pour le texte de présentation (bouton qui apparait\n" +
-    "            sous cette fenêtre dès qu&apos;'un changement est fait).";
-
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formRef.current && confirm("Tu confirmes ?")) {
@@ -88,7 +83,6 @@ export default function TextAreaForm({
             }}
           />
         </label>
-        {withImage && <div>{string}</div>}
         {isChanged && (
           <>
             <SubmitButton />

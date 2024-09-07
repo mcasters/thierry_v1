@@ -35,7 +35,7 @@ export default function AddTheme({ newTheme, api, label, textLabel }: Props) {
           toast.success("Thème sauvegardé");
           setTimeout(function () {
             window.location.reload();
-          }, 2000);
+          }, 1500);
         } else toast.error("Erreur à l'enregistrement");
       });
     }

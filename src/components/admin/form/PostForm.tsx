@@ -19,11 +19,12 @@ interface Props {
 }
 
 export default function PostForm({ post, toggleModal }: Props) {
+  const isUpdate = post !== undefined;
   const formRef = useRef<HTMLFormElement>(null);
   const resetMainImageRef = useRef<number>(0);
   const resetImagesRef = useRef<number>(0);
   const router = useRouter();
-  const api = post ? `api/post/update` : `api/post/add`;
+  const api = isUpdate ? `api/post/update` : `api/post/add`;
 
   const [title, setTitle] = useState<string>(post?.title || "");
   const [date, setDate] = useState<Date>(
@@ -50,17 +51,17 @@ export default function PostForm({ post, toggleModal }: Props) {
           toast.success(post ? "Post modifié" : "Post ajouté");
           setTimeout(function () {
             window.location.reload();
-          }, 2000);
+          }, 1500);
         } else toast.error("Erreur à l'enregistrement");
       });
     }
   };
 
   return (
-    <div className={s.formContainer}>
-      <h2>{post ? "Modifier un post" : "Ajouter un post"}</h2>
+    <div className={isUpdate ? s.wrapperModal : s.formContainer}>
+      <h2>{isUpdate ? "Modifier un post" : "Ajouter un post"}</h2>
       <form ref={formRef} onSubmit={submit}>
-        {post && <input type="hidden" name="id" value={post.id} />}
+        {isUpdate && <input type="hidden" name="id" value={post.id} />}
         <label>
           Titre
           <input
@@ -96,7 +97,7 @@ export default function PostForm({ post, toggleModal }: Props) {
         </label>
 
         <div className={s.imageFormContainer}>
-          {post && (
+          {isUpdate && (
             <Preview
               images={mainImage ? [mainImage] : []}
               pathImage="/images/post"
@@ -106,7 +107,7 @@ export default function PostForm({ post, toggleModal }: Props) {
         </div>
         <Images isMultiple={false} title="Image principale (facultative)" />
         <div className={s.imageFormContainer}>
-          {post && (
+          {isUpdate && (
             <Preview
               images={post.images.filter((i) => !i.isMain) || []}
               pathImage="/images/post"

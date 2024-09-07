@@ -14,10 +14,8 @@
 .modalBox {
     display: block;
     background: var(--color-light);
-    width: 50vw;
     max-height: 90%;
-    padding: 1rem;
-    border-radius: 0.3rem;
+    border-radius: 0.2rem;
     overflow: scroll;
 }
 

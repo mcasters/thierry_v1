@@ -5,6 +5,8 @@ import {
   getThemesFull,
 } from "@/app/api/theme/getTheme";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminIndex() {
   const themes = await getThemesFull();
   const activeTheme = await getActiveTheme();
