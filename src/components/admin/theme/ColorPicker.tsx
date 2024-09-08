@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import s from "@/styles/admin/AdminTheme.module.css";
 import { HexColorInput, HexColorPicker } from "react-colorful";
+import { useAdminContext } from "@/app/context/adminProvider";
 
 interface Props {
   selectedTheme: Theme;
@@ -28,6 +29,7 @@ export default function ColorPicker({
     selectedTheme[colorName as keyof Theme],
   );
   const [currentName, setCurrentName] = useState<string>("");
+  const { workTheme, setWorkTheme } = useAdminContext();
 
   useEffect(() => {
     if (selectedTheme) setCurrentColor(selectedTheme[colorName as keyof Theme]);
@@ -52,21 +54,12 @@ export default function ColorPicker({
   };
 
   const saveColor = () => {
-    const updatedTheme = Object.assign({}, selectedTheme, {
+    const newWorkTheme = Object.assign({}, workTheme, {
       [colorName]: currentColor,
     });
-    fetch("admin/api/theme/update", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(updatedTheme),
-    }).then((res) => {
-      if (res.ok) {
-        toast.success("Couleur enregistrée dans le thème");
-        toggle();
-      } else toast.error("Erreur à l'enregistrement");
-    });
+    setWorkTheme(newWorkTheme);
+    toast.success("Enregistré");
+    toggle();
   };
 
   return (
