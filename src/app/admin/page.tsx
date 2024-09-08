@@ -1,4 +1,3 @@
-import { unstable_noStore as noStore } from "next/cache";
 import AdminThemeComponent from "@/components/admin/theme/AdminThemeComponent";
 import {
   getActiveTheme,
@@ -7,11 +6,16 @@ import {
 } from "@/app/api/theme/getTheme";
 import { AdminProvider } from "@/app/context/adminProvider";
 
-export default async function AdminIndex() {
-  noStore();
+export const dynamic = "force-dynamic";
+
+export default async function AdminIndex(props: {
+  searchParams: { lang?: string };
+}) {
+  const lang = props.searchParams["lang"] ?? "en";
   const themes = await getThemesFull();
   const activeTheme = await getActiveTheme();
   const presetColors = await getPresetColors();
+  console.log(lang);
 
   return (
     <AdminProvider>

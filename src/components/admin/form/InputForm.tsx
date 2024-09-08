@@ -19,6 +19,7 @@ export default function InputForm({ label, api, content, textLabel }: Props) {
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
+  const reset = () => setIsChanged(false);
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formRef.current && confirm("Tu confirmes ?")) {

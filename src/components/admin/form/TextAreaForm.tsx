@@ -2,7 +2,6 @@
 
 import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
-
 import { ContentFull } from "@/app/api/content/content";
 import { Label } from "@prisma/client";
 import s from "@/styles/admin/Admin.module.css";
@@ -28,6 +27,7 @@ export default function TextAreaForm({
   const [text, setText] = useState<ContentFull>(content);
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const resetImageRef = useRef<number>(0);
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,11 +39,10 @@ export default function TextAreaForm({
       }).then((res) => {
         if (res.ok) {
           toast.success("Contenu modifié");
-          if (withImage) {
-            setTimeout(function () {
-              window.location.reload();
-            }, 2000);
-          }
+          resetImageRef.current = resetImageRef.current + 1;
+          setTimeout(function () {
+            window.location.reload();
+          }, 1500);
           setIsChanged(false);
         } else toast("Erreur à l'enregistrement");
       });
@@ -64,6 +63,7 @@ export default function TextAreaForm({
               onAdd={(count) => setIsChanged(count === 1)}
               isMultiple={false}
               title="Image de présentation (facultative)"
+              reset={resetImageRef.current}
             />
           </div>
         )}

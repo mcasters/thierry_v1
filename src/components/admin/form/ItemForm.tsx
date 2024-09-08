@@ -13,6 +13,7 @@ import Images from "@/components/admin/form/imageForm/Images";
 import Preview from "@/components/admin/form/imageForm/Preview";
 import CancelButton from "@/components/admin/form/CancelButton";
 import SubmitButton from "@/components/admin/form/SubmitButton";
+import { useRouter } from "next/navigation";
 
 interface Props {
   item: SculptureFull | PaintingFull;
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export default function ItemForm({ item, toggleModal, categories }: Props) {
+  const router = useRouter();
   const isSculpture = isSculptureFull(item);
   const isUpdate = item.id !== 0;
   const formRef = useRef<HTMLFormElement>(null);
@@ -59,6 +61,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
     setIsToSell(false);
     setCategoryId("");
     resetImageRef.current = resetImageRef.current + 1;
+    if (toggleModal) toggleModal();
   };
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -71,9 +74,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
           toast.success(
             isUpdate ? `${item.type} modifiée` : `${item.type} ajoutée`,
           );
-          setTimeout(function () {
-            window.location.reload();
-          }, 1500);
+          router.refresh();
         } else toast.error("Erreur à l'enregistrement");
       });
     }
@@ -220,6 +221,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             onAdd={handleAdd}
             isMultiple={isSculpture}
             title={isSculpture ? "1 photo minimum" : "1 seule photo"}
+            reset={resetImageRef.current}
           />
         </div>
         <div className={s.buttonSection}>
@@ -235,7 +237,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
               countImages === 0
             }
           />
-          <CancelButton />
+          <CancelButton handleCancel={reset} />
         </div>
       </form>
     </div>

@@ -46,7 +46,7 @@ export default function ImagesForm({ isMultiple, api, label, title }: Props) {
           toast.success("Contenu modifié");
           setTimeout(function () {
             window.location.reload();
-          }, 2000);
+          }, 1500);
         } else toast.error("Erreur à l'enregistrement");
       });
     }

@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import s from "@/styles/admin/AdminTheme.module.css";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useAdminContext } from "@/app/context/adminProvider";
+import { useRouter } from "next/navigation";
 
 interface Props {
   selectedTheme: Theme;
@@ -24,6 +25,7 @@ export default function ColorPicker({
   pageTypeName,
   presetColors,
 }: Props) {
+  const router = useRouter();
   const { isOpen, toggle } = useModal();
   const [currentColor, setCurrentColor] = useState<string | any>(
     selectedTheme[colorName as keyof Theme],
@@ -49,6 +51,7 @@ export default function ColorPicker({
     }).then((res) => {
       if (res.ok) {
         toast.success("Couleur mémorisée");
+        router.refresh();
       } else toast.error("Erreur à l'enregistrement");
     });
   };

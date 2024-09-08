@@ -39,6 +39,7 @@ export default function PostForm({ post, toggleModal }: Props) {
     setText("");
     resetMainImageRef.current = resetMainImageRef.current + 1;
     resetImagesRef.current = resetImagesRef.current + 1;
+    if (toggleModal) toggleModal();
   };
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -47,11 +48,9 @@ export default function PostForm({ post, toggleModal }: Props) {
       const formData = new FormData(formRef.current);
       fetch(api, { method: "POST", body: formData }).then((res) => {
         if (res.ok) {
-          toggleModal ? toggleModal() : reset();
-          toast.success(post ? "Post modifié" : "Post ajouté");
-          setTimeout(function () {
-            window.location.reload();
-          }, 1500);
+          reset();
+          toast.success(isUpdate ? "Post modifié" : "Post ajouté");
+          router.refresh();
         } else toast.error("Erreur à l'enregistrement");
       });
     }
@@ -105,7 +104,11 @@ export default function PostForm({ post, toggleModal }: Props) {
             />
           )}
         </div>
-        <Images isMultiple={false} title="Image principale (facultative)" />
+        <Images
+          isMultiple={false}
+          title="Image principale (facultative)"
+          reset={resetMainImageRef.current}
+        />
         <div className={s.imageFormContainer}>
           {isUpdate && (
             <Preview
@@ -114,11 +117,15 @@ export default function PostForm({ post, toggleModal }: Props) {
               apiForDelete="api/post/delete-image"
             />
           )}
-          <Images isMultiple={true} title={"Album d'images (facultatif)"} />
+          <Images
+            isMultiple={true}
+            title={"Album d'images (facultatif)"}
+            reset={resetImagesRef.current}
+          />
         </div>
         <div className={s.buttonSection}>
           <SubmitButton disabled={!title || !date} />
-          <CancelButton />
+          <CancelButton handleCancel={reset} />
         </div>
       </form>
     </div>
