@@ -92,6 +92,7 @@ export default function ImageLightbox({
                 sizes="100vw"
                 style={{
                   objectFit: "contain",
+                  padding: "2em",
                 }}
                 alt={alt}
                 src={slide.src}
@@ -125,6 +126,7 @@ export default function ImageLightbox({
                 sizes="100vw"
                 style={{
                   objectFit: "contain",
+                  padding: "2em",
                 }}
                 alt={alt}
                 src={slide.src}
