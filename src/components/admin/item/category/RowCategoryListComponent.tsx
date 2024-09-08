@@ -13,6 +13,10 @@ interface Props {
 }
 
 export default function RowCategoryListComponent({ category, type }: Props) {
+  const itemCount =
+    type === TYPE.SCULPTURE
+      ? category.sculptures.length
+      : category.paintings.length;
   return (
     <ul className={s.item}>
       <li className={s.itemTitle}>
@@ -20,17 +24,17 @@ export default function RowCategoryListComponent({ category, type }: Props) {
       </li>
       <li className={s.itemInfo}>
         <span>
-          {type === TYPE.SCULPTURE
-            ? category.sculptures.length
-            : category.paintings.length}{" "}
-          {type}(s)
+          {itemCount} {type}(s)
         </span>
       </li>
       <li className={s.itemIcon}>
         <UpdateButton item={category} type={type} />
       </li>
       <li className={s.itemIcon}>
-        <DeleteButton api={`api/${type}/category/delete/${category.id}`} />
+        <DeleteButton
+          api={`api/${type}/category/delete/${category.id}`}
+          disabled={itemCount > 0}
+        />
       </li>
     </ul>
   );

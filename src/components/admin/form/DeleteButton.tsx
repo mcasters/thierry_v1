@@ -7,8 +7,9 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   api: string;
+  disabled?: boolean;
 };
-export default function DeleteButton({ api }: Props) {
+export default function DeleteButton({ api, disabled }: Props) {
   const router = useRouter();
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -27,6 +28,7 @@ export default function DeleteButton({ api }: Props) {
       onClick={handleDelete}
       className="iconButton"
       aria-label="Supprimer"
+      disabled={disabled ? disabled : false}
     >
       <FiTrash2 />
     </button>

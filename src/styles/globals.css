@@ -171,6 +171,11 @@ a, .buttonLink, .iconButton svg {
   transition: color 0.4s ease;
 }
 
+.iconButton:disabled, .iconButton:disabled {
+  opacity: 0.3;
+  cursor: unset;
+}
+
 a:hover, .buttonLink:hover, a:focus,
 .buttonLink:focus, .iconButton:hover svg {
   transition: color 0.4s ease;
