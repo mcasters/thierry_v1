@@ -44,7 +44,7 @@ export default function MemorizeTheme({ theme, api, label, textLabel }: Props) {
   return (
     <div className={s.formContainer}>
       <form onSubmit={submit}>
-        <label className={s.contentLabel}>
+        <label className={s.formLabel}>
           {textLabel}
           <input
             placeholder={label}

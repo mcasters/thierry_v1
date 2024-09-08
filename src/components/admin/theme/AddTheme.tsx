@@ -2,34 +2,29 @@
 
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import s from "@/styles/admin/Admin.module.css";
+import s from "@/styles/admin/AdminTheme.module.css";
 import SubmitButton from "@/components/admin/form/SubmitButton";
-import CancelButton from "@/components/admin/form/CancelButton";
 import { Theme } from "@prisma/client";
 
 interface Props {
   newTheme: Theme;
-  api: string;
-  label: string;
-  textLabel: string;
 }
-export default function AddTheme({ newTheme, api, label, textLabel }: Props) {
+export default function AddTheme({ newTheme }: Props) {
   const [themeName, setThemeName] = useState<string>("");
   const [isChanged, setIsChanged] = useState(false);
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const themeToMemorize = Object.assign({}, newTheme, {
-      id: 0,
+    const themeToSave = Object.assign({}, newTheme, {
       name: themeName,
     });
     if (confirm("Tu confirmes ?")) {
-      fetch(api, {
+      fetch("admin/api/theme/add", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify(themeToMemorize),
+        body: JSON.stringify(themeToSave),
       }).then((res) => {
         if (res.ok) {
           toast.success("Thème sauvegardé");
@@ -42,28 +37,22 @@ export default function AddTheme({ newTheme, api, label, textLabel }: Props) {
   };
 
   return (
-    <div className={s.formContainer}>
-      <form onSubmit={submit}>
-        <label className={s.contentLabel}>
-          {textLabel}
-          <input
-            placeholder={label}
-            name="text"
-            type="text"
-            value={themeName}
-            onChange={(e) => {
-              setThemeName(e.target.value);
-              setIsChanged(true);
-            }}
-          />
-        </label>
-        {isChanged && (
-          <>
-            <SubmitButton />
-            <CancelButton />
-          </>
-        )}
-      </form>
-    </div>
+    <form onSubmit={submit} className={s.themeActionContainer}>
+      <input
+        className={s.themeInput}
+        placeholder="Nom du nouveau thème"
+        name="text"
+        type="text"
+        value={themeName}
+        onChange={(e) => {
+          setThemeName(e.target.value);
+          setIsChanged(true);
+        }}
+      />
+      <SubmitButton
+        text="Mémoriser sous un nouveau thème"
+        disabled={!isChanged}
+      />
+    </form>
   );
 }

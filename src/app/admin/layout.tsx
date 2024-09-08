@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   description: DESCRIPTION.ADMIN,
 };
 
-export default function layout({ children }: { children: ReactNode }) {
+interface Props {
+  children: ReactNode;
+}
+
+export default function layout({ children }: Props) {
   return <AdminLayout>{children}</AdminLayout>;
 }

@@ -4,6 +4,7 @@ import {
   getPresetColors,
   getThemesFull,
 } from "@/app/api/theme/getTheme";
+import { AdminProvider } from "@/app/context/adminProvider";
 
 export const dynamic = "force-dynamic";
 
@@ -13,10 +14,12 @@ export default async function AdminIndex() {
   const presetColors = await getPresetColors();
 
   return (
-    <AdminThemeComponent
-      themes={themes}
-      activeTheme={activeTheme}
-      presetColors={presetColors}
-    />
+    <AdminProvider>
+      <AdminThemeComponent
+        themes={themes}
+        activeTheme={activeTheme}
+        presetColors={presetColors}
+      />
+    </AdminProvider>
   );
 }

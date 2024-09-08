@@ -2,31 +2,27 @@ import { getServerSession } from "next-auth/next";
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
+import { setInactiveExcept } from "@/queries/theme";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
   if (session) {
     try {
       const themeToUpdate = await req.json();
-      const { presetColors, id, ...rest } = themeToUpdate;
+      const { id, isActive, ...rest } = themeToUpdate;
 
-      if (id === 0) {
-        await prisma.theme.create({
-          data: {
-            ...rest,
-            presetColors: {
-              create: presetColors,
-            },
-          },
-        });
-      } else {
-        await prisma.theme.update({
-          where: {
-            id,
-          },
-          data: { ...rest },
-        });
-      }
+      await prisma.theme.update({
+        where: {
+          id,
+        },
+        data: {
+          isActive: true,
+          ...rest,
+        },
+      });
+
+      await setInactiveExcept(id);
+
       return NextResponse.json({ message: "ok" }, { status: 200 });
     } catch (e) {
       console.log(e);
