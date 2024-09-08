@@ -9,6 +9,7 @@ import { THEME } from "@/constants/database";
 import ColorDashboard from "@/components/admin/theme/ColorDashboard";
 import { useAdminContext } from "@/app/context/adminProvider";
 import UpdateTheme from "@/components/admin/theme/UpdateTheme";
+import { NOTES } from "@/constants/admin";
 
 interface Props {
   themes: Theme[];
@@ -74,22 +75,6 @@ export default function AdminThemeComponent({
     }
   };
 
-  const resetDefaultTheme = () => {
-    fetch("admin/api/theme/reset", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        toast.success("Restauration des couleurs du thème par défaut");
-        setTimeout(function () {
-          window.location.reload();
-        }, 1500);
-      } else toast.error("Erreur à la mise en place du thème par défaut");
-    });
-  };
-
   return (
     <>
       <h1 className={themeStyle.pageTitle}>Gestion du thème</h1>
@@ -110,7 +95,7 @@ export default function AdminThemeComponent({
           Activer
         </button>
         <button
-          disabled={selectedTheme?.name === THEME.DEFAULT}
+          disabled={selectedTheme?.name === THEME.BASE_THEME}
           onClick={DeleteTheme}
           className="adminButton"
         >
@@ -126,11 +111,21 @@ export default function AdminThemeComponent({
       <div className={themeStyle.themeActionContainer}>
         <UpdateTheme theme={workTheme} />
         <AddTheme newTheme={workTheme} />
-        <br />
-        <br />
-        <button onClick={resetDefaultTheme} className="adminButton">
-          Réinitialiser le thème par défaut
-        </button>
+      </div>
+      <div className={themeStyle.noteContainer}>
+        <h2>NOTES</h2>
+        <div>
+          <h3>Images :</h3>
+          {NOTES.IMAGES}
+        </div>
+        <div>
+          <h3>Thèmes :</h3>
+          {NOTES.THEMES}
+        </div>
+        <div>
+          <h3>Peintures et sculptures :</h3>
+          {NOTES.ITEMS}
+        </div>
       </div>
     </>
   );

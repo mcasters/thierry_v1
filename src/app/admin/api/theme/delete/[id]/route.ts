@@ -22,7 +22,7 @@ export async function POST(
       });
 
       if (themeToDelete) {
-        if (themeToDelete.name === THEME.DEFAULT) {
+        if (themeToDelete.name === THEME.BASE_THEME) {
           return NextResponse.json(
             { error: "le thème par défaut ne peut pas être supprimé" },
             { status: 404 },
@@ -31,7 +31,7 @@ export async function POST(
         if (themeToDelete.isActive) {
           await prisma.theme.update({
             where: {
-              name: THEME.DEFAULT,
+              name: THEME.BASE_THEME,
             },
             data: {
               isActive: true,

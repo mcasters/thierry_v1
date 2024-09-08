@@ -4,11 +4,15 @@ import React from "react";
 import toast from "react-hot-toast";
 import s from "@/styles/admin/AdminTheme.module.css";
 import { Theme } from "@prisma/client";
+import { THEME } from "@/constants/database";
 
 interface Props {
   theme: Theme;
 }
 export default function UpdateTheme({ theme }: Props) {
+  const name = theme.name;
+  const isBaseTheme = name === THEME.BASE_THEME;
+
   const updateTheme = () => {
     fetch("admin/api/theme/update", {
       method: "POST",
@@ -18,7 +22,7 @@ export default function UpdateTheme({ theme }: Props) {
       body: JSON.stringify(theme),
     }).then((res) => {
       if (res.ok) {
-        toast.success(`Thème "${theme.name}" mis à jour`);
+        toast.success(`Thème "${name}" mis à jour`);
         setTimeout(function () {
           window.location.reload();
         }, 1500);
@@ -28,8 +32,12 @@ export default function UpdateTheme({ theme }: Props) {
 
   return (
     <div className={s.themeActionContainer}>
-      <button onClick={updateTheme} className={`${s.themeInput} "adminButton"`}>
-        {`Mettre à jour "${theme.name}" :`}
+      <button
+        onClick={updateTheme}
+        className={`${s.themeInput} "adminButton"`}
+        disabled={isBaseTheme}
+      >
+        {`Mettre à jour "${name}"`}
       </button>
     </div>
   );

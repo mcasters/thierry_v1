@@ -1,19 +1,19 @@
 import { Theme } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { THEME } from "@/constants/database";
-import { getDefaultThemeData } from "@/utils/commonUtils";
+import { getBaseThemeData } from "@/utils/commonUtils";
 
 export const resetDefaultTheme = async (): Promise<Theme> => {
   let defaultTheme = await prisma.theme.findUnique({
     where: {
-      name: THEME.DEFAULT,
+      name: THEME.BASE_THEME,
     },
   });
 
   if (!defaultTheme) {
     defaultTheme = await prisma.theme.create({
       data: {
-        ...getDefaultThemeData(),
+        ...getBaseThemeData(),
       },
     });
   } else {
@@ -22,24 +22,24 @@ export const resetDefaultTheme = async (): Promise<Theme> => {
         id: defaultTheme.id,
       },
       data: {
-        ...getDefaultThemeData(),
+        ...getBaseThemeData(),
       },
     });
   }
   return defaultTheme;
 };
 
-export const getActivatedDefaultTheme = async (): Promise<Theme> => {
+export const getActivatedBaseTheme = async (): Promise<Theme> => {
   let theme = await prisma.theme.findUnique({
     where: {
-      name: THEME.DEFAULT,
+      name: THEME.BASE_THEME,
     },
   });
 
   if (!theme) {
     theme = await prisma.theme.create({
       data: {
-        ...getDefaultThemeData(),
+        ...getBaseThemeData(),
       },
     });
   }

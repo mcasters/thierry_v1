@@ -2,7 +2,7 @@
     padding: 4em 0;
 }
 
-.themeContainer h2 {
+.themeContainer h2, .noteContainer h2 {
     font-size: var(--font-size-title);
     text-align: left;
     padding-bottom: 1em;
@@ -139,4 +139,9 @@ ColorPicker
     padding: 0.5em;
     margin: 0.5em;
     line-height: 2.3;
+}
+
+.noteContainer {
+    text-align: left;
+    padding: 7em 0 0;
 }

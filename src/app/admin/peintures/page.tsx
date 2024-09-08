@@ -11,8 +11,6 @@ import React from "react";
 export default async function Peintures() {
   const paintings = await getPaintingsFull();
   const categories = await getPaintingCategoriesFull();
-  const string1 =
-    "** Note ** : Lorsqu'il existe des catégories, si des items sont créés sans être rangés dans une catégorie, alors une catégorie intitulée 'sans catérogie' se crée dans le menu pour y ranger les items en question. En revanche, s'il n'existe aucune catégorie, alors bien sûr, il n'y a pas de création automatique de catégorie, puisqu'on y accèdera directement par le menu racine (à même 'peintures' ou 'sculptures').";
 
   return (
     <>
@@ -24,7 +22,6 @@ export default async function Peintures() {
       />
       <ItemForm item={getEmptyPainting()} categories={categories} />
       <CategoryComponent type={TYPE.PAINTING} categories={categories} />
-      <div style={{ margin: "0 20em" }}>{string1}</div>
     </>
   );
 }

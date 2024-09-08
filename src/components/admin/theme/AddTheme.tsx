@@ -11,7 +11,6 @@ interface Props {
 }
 export default function AddTheme({ newTheme }: Props) {
   const [themeName, setThemeName] = useState<string>("");
-  const [isChanged, setIsChanged] = useState(false);
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +26,7 @@ export default function AddTheme({ newTheme }: Props) {
         body: JSON.stringify(themeToSave),
       }).then((res) => {
         if (res.ok) {
-          toast.success("Thème sauvegardé");
+          toast.success(`Thème "${themeName}" sauvegardé`);
           setTimeout(function () {
             window.location.reload();
           }, 1500);
@@ -39,6 +38,7 @@ export default function AddTheme({ newTheme }: Props) {
   return (
     <form onSubmit={submit} className={s.themeActionContainer}>
       <input
+        required
         className={s.themeInput}
         placeholder="Nom du nouveau thème"
         name="text"
@@ -46,13 +46,9 @@ export default function AddTheme({ newTheme }: Props) {
         value={themeName}
         onChange={(e) => {
           setThemeName(e.target.value);
-          setIsChanged(true);
         }}
       />
-      <SubmitButton
-        text="Mémoriser sous un nouveau thème"
-        disabled={!isChanged}
-      />
+      <SubmitButton text="Mémoriser le thème" />
     </form>
   );
 }

@@ -126,9 +126,9 @@ export const getEmptySculpture = (): SculptureFull => {
   };
 };
 
-export const getDefaultThemeData = () => {
+export const getBaseThemeData = () => {
   return {
-    name: THEME.DEFAULT,
+    name: THEME.BASE_THEME,
     isActive: true,
     lineColor: "#a4874f",
     backgroundColor: "#f8f8f8",
@@ -163,7 +163,7 @@ export const getDefaultThemeData = () => {
   };
 };
 
-export const getDefaultPresetColorData = () => {
+export const getBasePresetColorData = () => {
   return {
     name: "Prussian blue",
     color: "#24445C",

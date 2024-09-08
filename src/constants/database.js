@@ -1,3 +1,3 @@
 export const THEME = {
-  DEFAULT: "Thème par défaut",
+  BASE_THEME: "Thème de base",
 };
