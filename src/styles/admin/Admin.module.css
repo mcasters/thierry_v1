@@ -52,7 +52,7 @@ padding: 1em 0 2em;
     height: 150px
 }
 
-.formContainer label, .formContainer .contentLabel, h2.contentLabel {
+.formContainer .formLabel, h2.formLabel {
     font-variant-caps: small-caps;
     letter-spacing: 3px;
     color: var(--color-dark);

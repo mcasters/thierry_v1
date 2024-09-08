@@ -91,7 +91,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
       <form ref={formRef} onSubmit={submit}>
         {item && <input type="hidden" name="id" value={item.id} />}
         <input type="hidden" name="isToSell" value={String(isToSell)} />
-        <label>
+        <label className={s.formLabel}>
           Titre
           <input
             autoFocus
@@ -102,7 +102,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             required
           />
         </label>
-        <label>
+        <label className={s.formLabel}>
           Catégorie (facultatif)
           <select
             name="categoryId"
@@ -120,7 +120,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
               )}
           </select>
         </label>
-        <label>
+        <label className={s.formLabel}>
           Année
           <input
             onChange={(e) => {
@@ -133,7 +133,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             required
           />
         </label>
-        <label>
+        <label className={s.formLabel}>
           Technique
           <input
             onChange={(e) => setTechnique(e.target.value)}
@@ -143,7 +143,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             required
           />
         </label>
-        <label>
+        <label className={s.formLabel}>
           Description (facultatif)
           <textarea
             onChange={(e) => setDescription(e.target.value)}
@@ -152,7 +152,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             value={description}
           />
         </label>
-        <label>
+        <label className={s.formLabel}>
           Hauteur (cm)
           <input
             onChange={(e) => setHeight(e.target.value)}
@@ -162,7 +162,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             required
           />
         </label>
-        <label>
+        <label className={s.formLabel}>
           Largeur (cm)
           <input
             onChange={(e) => setWidth(e.target.value)}
@@ -172,7 +172,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
           />
         </label>
         {isSculpture && (
-          <label>
+          <label className={s.formLabel}>
             Profondeur (cm)
             <input
               onChange={(e) => setLength(e.target.value)}
@@ -183,7 +183,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             />
           </label>
         )}
-        <label>
+        <label className={s.formLabel}>
           À vendre :
           <input
             onChange={(e) => setIsToSell(e.target.checked)}
@@ -193,7 +193,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
           />
         </label>
         {isToSell && (
-          <label>
+          <label className={s.formLabel}>
             Prix
             <input
               onChange={(e) => setPrice(e.target.value)}

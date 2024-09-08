@@ -68,7 +68,7 @@ export default function TextAreaForm({
           </div>
         )}
         <input type="hidden" name="label" value={label} />
-        <label className={s.contentLabel}>
+        <label className={s.formLabel}>
           {textLabel}
           <textarea
             name="text"

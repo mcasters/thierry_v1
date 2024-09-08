@@ -5,9 +5,10 @@ import React from "react";
 interface Props {
   text?: string;
   classname?: string;
+  disabled?: boolean;
 }
 
-export default function CancelButton({ text, classname }: Props) {
+export default function CancelButton({ text, classname, disabled }: Props) {
   return (
     <button
       onClick={(e) => {
@@ -17,6 +18,7 @@ export default function CancelButton({ text, classname }: Props) {
         }, 0);
       }}
       className={`${classname ? classname : ""} adminButton`}
+      disabled={disabled ? disabled : false}
     >
       {text ? text : "Annuler"}
     </button>

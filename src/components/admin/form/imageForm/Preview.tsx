@@ -43,7 +43,7 @@ export default function Preview({
 
   return (
     <>
-      {textLabel && <label className={s.contentLabel}>{textLabel}</label>}
+      {textLabel && <label className={s.formLabel}>{textLabel}</label>}
       {existantFilenames.map((filename) => (
         <div key={filename} className={s.imageWrapper}>
           <div>

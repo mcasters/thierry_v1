@@ -62,7 +62,7 @@ export default function PostForm({ post, toggleModal }: Props) {
       <h2>{isUpdate ? "Modifier un post" : "Ajouter un post"}</h2>
       <form ref={formRef} onSubmit={submit}>
         {isUpdate && <input type="hidden" name="id" value={post.id} />}
-        <label>
+        <label className={s.formLabel}>
           Titre
           <input
             autoFocus
@@ -73,7 +73,7 @@ export default function PostForm({ post, toggleModal }: Props) {
             required
           />
         </label>
-        <label>
+        <label className={s.formLabel}>
           Année
           <input
             onChange={(e) => {
@@ -86,7 +86,7 @@ export default function PostForm({ post, toggleModal }: Props) {
             required
           />
         </label>
-        <label>
+        <label className={s.formLabel}>
           Texte (facultatif)
           <textarea
             onChange={(e) => setText(e.target.value)}

@@ -2,6 +2,12 @@
     padding: 4em 0;
 }
 
+.themeContainer h2 {
+    font-size: var(--font-size-title);
+    text-align: left;
+    padding-bottom: 1em;
+}
+
 /*
 Grille de couleur
  */
@@ -15,12 +21,6 @@ Grille de couleur
     flex: auto;
     padding: 2em;
     max-width: 400px;
-}
-
-.subTitle {
-    font-size: var(--font-size-title);
-    margin-bottom: 1em;
-    text-align: left;
 }
 
 .sectionTitle {
@@ -128,4 +128,15 @@ ColorPicker
     vertical-align: top;
     margin: 0.3em;
     padding: 0 0.4em;
+}
+
+.themeActionContainer {
+    text-align: left;
+}
+
+.themeInput {
+    width: 25%;
+    padding: 0.5em;
+    margin: 0.5em;
+    line-height: 2.3;
 }

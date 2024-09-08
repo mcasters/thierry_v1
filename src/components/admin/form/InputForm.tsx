@@ -39,7 +39,7 @@ export default function InputForm({ label, api, content, textLabel }: Props) {
     <div className={s.formContainer}>
       <form ref={formRef} onSubmit={submit}>
         <input type="hidden" name="label" value={label} />
-        <label className={s.contentLabel}>
+        <label className={s.formLabel}>
           {textLabel}
           <input
             placeholder={label}
