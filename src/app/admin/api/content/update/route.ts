@@ -5,7 +5,7 @@ import {
   getMiscellaneousDir,
   resizeAndSaveImage,
 } from "@/utils/serverUtils";
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { Label } from "@prisma/client";
 import { NextResponse } from "next/server";

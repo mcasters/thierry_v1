@@ -1,9 +1,9 @@
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 import "server-only";
 import { getBaseThemeData } from "@/utils/commonUtils";
 import { ThemeLight } from "@/app/api/theme/theme";
 import { PresetColor, Theme } from "@prisma/client";
-import { getActivatedBaseTheme } from "@/queries/theme";
+import { getActivatedBaseTheme } from "@/lib/db/theme";
 
 export async function getThemesFull(): Promise<Theme[]> {
   let res: Theme[];

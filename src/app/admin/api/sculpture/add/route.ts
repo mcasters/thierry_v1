@@ -1,7 +1,7 @@
 import { parse } from "date-fns";
 import { getServerSession } from "next-auth/next";
 
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 import {
   createDirIfNecessary,
   getSculptureDir,

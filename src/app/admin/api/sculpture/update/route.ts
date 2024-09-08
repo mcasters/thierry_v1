@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 
 import { getSculptureDir, resizeAndSaveImage } from "@/utils/serverUtils";
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 
 export async function POST(req: Request) {

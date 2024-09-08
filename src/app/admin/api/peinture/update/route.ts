@@ -6,7 +6,7 @@ import {
   getPaintingDir,
   resizeAndSaveImage,
 } from "@/utils/serverUtils";
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
 

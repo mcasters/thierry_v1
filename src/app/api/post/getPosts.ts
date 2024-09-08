@@ -1,5 +1,5 @@
-import prisma from '@/lib/prisma';
-import 'server-only';
+import prisma from "@/lib/db/prisma";
+import "server-only";
 
 export async function getPostsFull() {
   const res = await prisma.post.findMany({

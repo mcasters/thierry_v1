@@ -1,6 +1,6 @@
-import prisma from '@/lib/prisma';
-import { PaintingFull } from '@/app/api/peinture/painting';
-import 'server-only';
+import prisma from "@/lib/db/prisma";
+import { PaintingFull } from "@/app/api/peinture/painting";
+import "server-only";
 
 export async function getPaintingsFull() {
   const res = await prisma.painting.findMany({
@@ -11,7 +11,7 @@ export async function getPaintingsFull() {
 
 export async function getPaintingsFullByCategory(categoryKey: string) {
   const res =
-    categoryKey === 'no-category'
+    categoryKey === "no-category"
       ? await prisma.painting.findMany({
           where: {
             category: null,

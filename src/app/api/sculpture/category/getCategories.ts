@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 import { SculptureCategory } from "@prisma/client";
 import "server-only";
 

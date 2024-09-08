@@ -1,6 +1,6 @@
-import prisma from '@/lib/prisma';
-import { SculptureFull } from '@/app/api/sculpture/sculpture';
-import 'server-only';
+import prisma from "@/lib/db/prisma";
+import { SculptureFull } from "@/app/api/sculpture/sculpture";
+import "server-only";
 
 export async function getSculpturesFull() {
   const res = await prisma.sculpture.findMany({
@@ -11,7 +11,7 @@ export async function getSculpturesFull() {
 
 export async function getSculpturesFullByCategory(categoryKey: string) {
   const res =
-    categoryKey === 'no-category'
+    categoryKey === "no-category"
       ? await prisma.sculpture.findMany({
           where: {
             category: null,

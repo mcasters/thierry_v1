@@ -22,7 +22,6 @@ export default function AdminPresetColor({ presetColors }: Props) {
             />
             <DeleteButton
               api={`admin/api/theme/delete-preset-color/${presetColor.id}`}
-              key={presetColor.id}
             />
           </div>
         ))}

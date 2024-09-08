@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth/next";
 
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
 import { THEME } from "@/constants/database";

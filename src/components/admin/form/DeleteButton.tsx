@@ -14,9 +14,6 @@ export default function DeleteButton({ api }: Props) {
       fetch(api).then((res) => {
         if (res.ok) {
           toast.success("supprimé");
-          setTimeout(function () {
-            window.location.reload();
-          }, 2000);
         } else toast.error("Erreur à la suppression");
       });
     }

@@ -8,7 +8,7 @@ import {
   resizeAndSaveImage,
 } from "@/utils/serverUtils";
 import { authOptions } from "@/utils/authOptions";
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);

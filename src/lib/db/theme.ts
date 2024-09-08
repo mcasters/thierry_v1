@@ -1,5 +1,5 @@
 import { Theme } from "@prisma/client";
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 import { THEME } from "@/constants/database";
 import { getBaseThemeData } from "@/utils/commonUtils";
 

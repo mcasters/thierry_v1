@@ -1,6 +1,6 @@
-import prisma from '@/lib/prisma';
-import { PaintingCategory } from '@prisma/client';
-import 'server-only';
+import prisma from "@/lib/db/prisma";
+import { PaintingCategory } from "@prisma/client";
+import "server-only";
 
 export async function getPaintingCategoriesFull() {
   const res = await prisma.paintingCategory.findMany({
@@ -19,8 +19,8 @@ export async function getPaintingCategoriesForMenu() {
   });
   if (categories.length > 0 && paintingWithoutCategory)
     categories.push({
-      key: 'no-category',
-      value: 'Sans catégorie',
+      key: "no-category",
+      value: "Sans catégorie",
       id: 0,
     } as PaintingCategory);
   return JSON.parse(JSON.stringify(categories));

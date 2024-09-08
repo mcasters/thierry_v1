@@ -1,9 +1,9 @@
 import { getServerSession } from "next-auth/next";
 
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
-import { setInactiveExcept } from "@/queries/theme";
+import { setInactiveExcept } from "@/lib/db/theme";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);

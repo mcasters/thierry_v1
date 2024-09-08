@@ -103,7 +103,7 @@ export default function ColorPicker({
                   className={s.halfWidth}
                 />
               </div>
-              <div className={s.presetColorForm}>
+              <form className={s.presetColorForm}>
                 <input
                   className={s.halfWidth}
                   placeholder="Nom de la couleur"
@@ -120,7 +120,7 @@ export default function ColorPicker({
                 >
                   Mémoriser la couleur
                 </button>
-              </div>
+              </form>
               <div className={s.pickerSwatches}>
                 {presetColors.map((presetColor) => (
                   <div
