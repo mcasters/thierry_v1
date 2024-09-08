@@ -5,6 +5,7 @@ import { PaintingFull } from "@/app/api/peinture/painting";
 import { SculptureFull } from "@/app/api/sculpture/sculpture";
 import { TYPE } from "@/constants";
 import { THEME } from "@/constants/database";
+import { Theme } from "@prisma/client";
 
 export const transformValueToKey = (value: string): string => {
   return value
@@ -123,6 +124,44 @@ export const getEmptySculpture = (): SculptureFull => {
     images: [getEmptyImage()],
     category: null,
     categoryId: null,
+  };
+};
+
+export const getEmptyTheme = (): Theme => {
+  return {
+    id: 0,
+    name: "",
+    isActive: false,
+    lineColor: "",
+    backgroundColor: "",
+    backgroundColorItem: "",
+    color: "",
+    colorItem: "",
+
+    linkColor: "",
+    linkHoverColor: "",
+    linkItemColor: "",
+    linkHoverItemColor: "",
+
+    menu1Color: "",
+    menu1HomeColor: "",
+    menu1ItemColor: "",
+    menu1LinkColor: "",
+    menu1LinkHoverColor: "",
+    menu1LinkHomeColor: "",
+    menu1LinkHomeHoverColor: "",
+    menu1LinkItemColor: "",
+    menu1LinkHoverItemColor: "",
+
+    menu2Color: "",
+    menu2HomeColor: "",
+    menu2ItemColor: "",
+    menu2LinkColor: "",
+    menu2LinkHoverColor: "",
+    menu2LinkHomeColor: "",
+    menu2LinkHomeHoverColor: "",
+    menu2LinkItemColor: "",
+    menu2LinkHoverItemColor: "",
   };
 };
 

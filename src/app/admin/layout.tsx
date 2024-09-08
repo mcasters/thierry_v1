@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React from "react";
 
 import AdminLayout from "@/components/layout-components/AdminLayout";
 import { Metadata } from "next";
@@ -9,10 +9,6 @@ export const metadata: Metadata = {
   description: DESCRIPTION.ADMIN,
 };
 
-interface Props {
-  children: ReactNode;
-}
-
-export default function layout({ children }: Props) {
+export default function layout({ children }: { children: React.ReactNode }) {
   return <AdminLayout>{children}</AdminLayout>;
 }

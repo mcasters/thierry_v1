@@ -1,17 +1,17 @@
 "use client";
-import { createContext, ReactNode, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { Theme } from "@prisma/client";
 
-const AdminContext = createContext<Theme>({} as Theme);
-
-interface Props {
-  children: ReactNode;
+export interface AdminContextType {
+  workTheme: Theme;
+  setWorkTheme: React.Dispatch<React.SetStateAction<Theme>>;
 }
 
-export function AdminProvider({ children }: Props) {
-  const [workTheme, setWorkTheme] = useState({} as Theme);
+const AdminContext = createContext<AdminContextType>({} as AdminContextType);
+
+export function AdminProvider({ children }: { children: React.ReactNode }) {
+  const [workTheme, setWorkTheme] = useState<Theme>({} as Theme);
   return (
-    // @ts-ignore
     <AdminContext.Provider value={{ workTheme, setWorkTheme }}>
       {children}
     </AdminContext.Provider>
