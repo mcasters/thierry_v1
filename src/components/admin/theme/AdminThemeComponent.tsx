@@ -116,15 +116,17 @@ export default function AdminThemeComponent({
         <h2>NOTES</h2>
         <div>
           <h3>Images :</h3>
-          {NOTES.IMAGES}
+          <p>{NOTES.IMAGES}</p>
         </div>
+        <br />
         <div>
           <h3>Thèmes :</h3>
-          {NOTES.THEMES}
+          <p>{NOTES.THEMES}</p>
         </div>
+        <br />
         <div>
           <h3>Peintures et sculptures :</h3>
-          {NOTES.ITEMS}
+          <p>{NOTES.ITEMS}</p>
         </div>
       </div>
     </>

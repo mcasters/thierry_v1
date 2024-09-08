@@ -52,12 +52,8 @@ export default function InputForm({ label, api, content, textLabel }: Props) {
             }}
           />
         </label>
-        {isChanged && (
-          <>
-            <SubmitButton />
-            <CancelButton />
-          </>
-        )}
+        <SubmitButton disabled={!isChanged} />
+        <CancelButton disabled={!isChanged} />
       </form>
     </div>
   );

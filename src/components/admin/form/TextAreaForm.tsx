@@ -83,12 +83,8 @@ export default function TextAreaForm({
             }}
           />
         </label>
-        {isChanged && (
-          <>
-            <SubmitButton />
-            <CancelButton />
-          </>
-        )}
+        <SubmitButton disabled={!isChanged} />
+        <CancelButton disabled={!isChanged} />
       </form>
     </div>
   );
