@@ -9,7 +9,7 @@ import { Theme } from "@prisma/client";
 interface Props {
   newTheme: Theme;
 }
-export default function AddTheme({ newTheme }: Props) {
+export default function ThemeAdd({ newTheme }: Props) {
   const [themeName, setThemeName] = useState<string>("");
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {

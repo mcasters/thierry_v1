@@ -9,7 +9,7 @@ import { THEME } from "@/constants/database";
 interface Props {
   theme: Theme;
 }
-export default function UpdateTheme({ theme }: Props) {
+export default function ThemeUpdate({ theme }: Props) {
   const name = theme.name;
   const isBaseTheme = name === THEME.BASE_THEME;
 

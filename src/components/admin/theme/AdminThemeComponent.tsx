@@ -3,27 +3,22 @@
 import React, { useEffect, useState } from "react";
 import themeStyle from "../../../styles/admin/AdminTheme.module.css";
 import toast from "react-hot-toast";
-import AddTheme from "@/components/admin/theme/AddTheme";
-import { PresetColor, Theme } from "@prisma/client";
+import ThemeAdd from "@/components/admin/theme/ThemeAdd";
+import { Theme } from "@prisma/client";
 import { THEME } from "@/constants/database";
-import ColorDashboard from "@/components/admin/theme/ColorDashboard";
+import ThemeDashboard from "@/components/admin/theme/ThemeDashboard";
 import { useAdminContext } from "@/app/context/adminProvider";
-import UpdateTheme from "@/components/admin/theme/UpdateTheme";
+import ThemeUpdate from "@/components/admin/theme/ThemeUpdate";
 import { NOTES } from "@/constants/admin";
 
 interface Props {
   themes: Theme[];
   activeTheme: Theme;
-  presetColors: PresetColor[];
 }
 
-export default function AdminThemeComponent({
-  themes,
-  activeTheme,
-  presetColors,
-}: Props) {
+export default function AdminThemeComponent({ themes, activeTheme }: Props) {
   const [selectedThemeId, setSelectedThemeId] = useState<string>(
-    activeTheme?.id.toString(),
+    activeTheme.id.toString(),
   );
   const [selectedTheme, setSelectedTheme] = useState<Theme>(activeTheme);
   const { workTheme, setWorkTheme } = useAdminContext();
@@ -37,7 +32,7 @@ export default function AdminThemeComponent({
       setSelectedTheme(newSelectedTheme);
       setWorkTheme(newSelectedTheme);
     }
-  }, [selectedThemeId, themes]);
+  }, [selectedThemeId]);
 
   const activateTheme = () => {
     fetch(`admin/api/theme/activate/${selectedThemeId}`, {
@@ -103,14 +98,11 @@ export default function AdminThemeComponent({
         </button>
       </div>
       <div className={themeStyle.themeContainer}>
-        <ColorDashboard
-          selectedTheme={selectedTheme}
-          presetColors={presetColors}
-        />
+        <ThemeDashboard />
       </div>
       <div className={themeStyle.themeActionContainer}>
-        <UpdateTheme theme={workTheme} />
-        <AddTheme newTheme={workTheme} />
+        <ThemeUpdate theme={workTheme} />
+        <ThemeAdd newTheme={workTheme} />
       </div>
       <div className={themeStyle.noteContainer}>
         <h2>NOTES</h2>

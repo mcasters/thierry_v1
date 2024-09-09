@@ -1,6 +1,6 @@
 "use client";
 
-import { PresetColor, Theme } from "@prisma/client";
+import { Theme } from "@prisma/client";
 import useModal from "@/components/admin/form/modal/useModal";
 import Modal from "@/components/admin/form/modal/Modal";
 import React, { useEffect, useState } from "react";
@@ -8,61 +8,64 @@ import toast from "react-hot-toast";
 import s from "@/styles/admin/AdminTheme.module.css";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useAdminContext } from "@/app/context/adminProvider";
-import { useRouter } from "next/navigation";
 
 interface Props {
-  selectedTheme: Theme;
   label: string;
   colorName: string;
   pageTypeName: string;
-  presetColors: PresetColor[];
 }
 
-export default function ColorPicker({
-  selectedTheme,
-  label,
-  colorName,
-  pageTypeName,
-  presetColors,
-}: Props) {
-  const router = useRouter();
+type StringKeys<T> = {
+  [k in keyof T]: T[k] extends string ? k : never;
+}[keyof T];
+type OnlyString<T> = { [k in StringKeys<T>]: boolean };
+
+export default function ColorPicker({ label, colorName, pageTypeName }: Props) {
   const { isOpen, toggle } = useModal();
-  const [currentColor, setCurrentColor] = useState<string | any>(
-    selectedTheme[colorName as keyof Theme],
+  const { workTheme, setWorkTheme, presetColors, setPresetColors } =
+    useAdminContext();
+  const [newPresetColorName, setNewPresetColorName] = useState<string>("");
+  const [currentColor, setCurrentColor] = useState<string>(
+    workTheme[colorName as keyof OnlyString<Theme>],
   );
-  const [currentName, setCurrentName] = useState<string>("");
-  const { workTheme, setWorkTheme } = useAdminContext();
 
   useEffect(() => {
-    if (selectedTheme) setCurrentColor(selectedTheme[colorName as keyof Theme]);
-  }, [selectedTheme]);
+    if (!isOpen) setNewPresetColorName("");
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (workTheme) {
+      setCurrentColor(workTheme[colorName as keyof OnlyString<Theme>]);
+    }
+  }, [workTheme]);
+
+  useEffect(() => {
+    const updatedTheme = workTheme;
+    updatedTheme[colorName as keyof OnlyString<Theme>] = currentColor;
+    setWorkTheme(updatedTheme);
+  }, [currentColor]);
 
   const savePresetColor = () => {
-    const presetColor = {
-      name: currentName,
+    const presetColorToSave = {
+      name: newPresetColorName,
       color: currentColor,
     };
-    fetch("admin/api/theme/add-preset-color", {
+    fetch("admin/api/theme/preset-color/add", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(presetColor),
-    }).then((res) => {
-      if (res.ok) {
+      body: JSON.stringify(presetColorToSave),
+    })
+      .then((res) => res.json())
+      .then((presetColor) => {
+        setPresetColors([...presetColors, presetColor]);
         toast.success("Couleur mémorisée");
-        router.refresh();
-      } else toast.error("Erreur à l'enregistrement");
-    });
-  };
-
-  const saveColor = () => {
-    const newWorkTheme = Object.assign({}, workTheme, {
-      [colorName]: currentColor,
-    });
-    setWorkTheme(newWorkTheme);
-    toast.success("Enregistré");
-    toggle();
+      })
+      .catch((e) => {
+        console.log(e);
+        toast.error(`Erreur à l'enregistrement : ${e}`);
+      });
   };
 
   return (
@@ -110,12 +113,12 @@ export default function ColorPicker({
                 <input
                   className={s.halfWidth}
                   placeholder="Nom de la couleur"
-                  value={currentName}
-                  onChange={(e) => setCurrentName(e.target.value)}
+                  value={newPresetColorName}
+                  onChange={(e) => setNewPresetColorName(e.target.value)}
                 />
                 <button
                   className={`${s.halfWidth} adminButton`}
-                  disabled={currentName === ""}
+                  disabled={newPresetColorName === ""}
                   onClick={(e) => {
                     e.preventDefault();
                     savePresetColor();
@@ -141,12 +144,6 @@ export default function ColorPicker({
                   </div>
                 ))}
               </div>
-              <button onClick={saveColor} className="adminButton">
-                Enregistrer
-              </button>
-              <button className="adminButton" onClick={toggle}>
-                Annuler
-              </button>
             </div>
           </Modal>
         </div>

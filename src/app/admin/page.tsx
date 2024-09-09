@@ -1,29 +1,20 @@
 import AdminThemeComponent from "@/components/admin/theme/AdminThemeComponent";
-import {
-  getActiveTheme,
-  getPresetColors,
-  getThemesFull,
-} from "@/app/api/theme/getTheme";
+import { getPresetColors, getThemesFull } from "@/app/api/theme/getTheme";
 import { AdminProvider } from "@/app/context/adminProvider";
+import { getActivatedBaseTheme } from "@/lib/db/theme";
 
-export const dynamic = "force-dynamic";
-
-export default async function AdminIndex(props: {
-  searchParams: { lang?: string };
-}) {
-  const lang = props.searchParams["lang"] ?? "en";
+export default async function AdminIndex() {
   const themes = await getThemesFull();
-  const activeTheme = await getActiveTheme();
+  let activeTheme = themes.find((t) => t.isActive);
+  if (!activeTheme) activeTheme = await getActivatedBaseTheme();
   const presetColors = await getPresetColors();
-  console.log(lang);
 
   return (
-    <AdminProvider>
-      <AdminThemeComponent
-        themes={themes}
-        activeTheme={activeTheme}
-        presetColors={presetColors}
-      />
+    <AdminProvider
+      defaultWorkTheme={activeTheme}
+      defaultPresetColors={presetColors}
+    >
+      <AdminThemeComponent themes={themes} activeTheme={activeTheme} />
     </AdminProvider>
   );
 }

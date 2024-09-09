@@ -9,13 +9,13 @@ export async function POST(req: Request) {
   if (session) {
     try {
       const presetColor = await req.json();
-      await prisma.presetColor.create({
+      const dbPresetColor = await prisma.presetColor.create({
         data: {
           name: presetColor.name,
           color: presetColor.color,
         },
       });
-      return NextResponse.json({ message: "ok" }, { status: 200 });
+      return NextResponse.json(JSON.parse(JSON.stringify(dbPresetColor)));
     } catch (e) {
       console.log(e);
       return NextResponse.json({ error: "Error" }, { status: 404 });
