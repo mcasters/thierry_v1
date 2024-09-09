@@ -237,7 +237,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
               countImages === 0
             }
           />
-          <CancelButton handleCancel={reset} />
+          <CancelButton onCancel={reset} />
         </div>
       </form>
     </div>

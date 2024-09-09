@@ -7,22 +7,22 @@ interface Props {
   text?: string;
   classname?: string;
   disabled?: boolean;
-  handleCancel?: () => void;
+  onCancel?: () => void;
 }
 
 export default function CancelButton({
   text,
   classname,
   disabled,
-  handleCancel,
+  onCancel,
 }: Props) {
   const router = useRouter();
   return (
     <button
       onClick={(e) => {
         e.preventDefault();
-        handleCancel
-          ? handleCancel()
+        onCancel
+          ? onCancel()
           : setTimeout(function () {
               window.location.reload();
             }, 0);

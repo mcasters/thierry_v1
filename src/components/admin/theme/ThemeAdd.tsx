@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import s from "@/styles/admin/AdminTheme.module.css";
-import SubmitButton from "@/components/admin/form/SubmitButton";
 import { Theme } from "@prisma/client";
 
 interface Props {
@@ -47,8 +46,11 @@ export default function ThemeAdd({ newTheme }: Props) {
         onChange={(e) => {
           setThemeName(e.target.value);
         }}
+        style={{ marginRight: "0" }}
       />
-      <SubmitButton text="Mémoriser le thème" />
+      <button type="submit" className="adminButton" style={{ marginLeft: "0" }}>
+        Mémoriser le thème
+      </button>
     </form>
   );
 }

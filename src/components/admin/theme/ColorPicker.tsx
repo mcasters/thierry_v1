@@ -24,13 +24,13 @@ export default function ColorPicker({ label, colorName, pageTypeName }: Props) {
   const { isOpen, toggle } = useModal();
   const { workTheme, setWorkTheme, presetColors, setPresetColors } =
     useAdminContext();
-  const [newPresetColorName, setNewPresetColorName] = useState<string>("");
+  const [presetColorName, setPresetColorName] = useState<string>("");
   const [currentColor, setCurrentColor] = useState<string>(
     workTheme[colorName as keyof OnlyString<Theme>],
   );
 
   useEffect(() => {
-    if (!isOpen) setNewPresetColorName("");
+    if (!isOpen) setPresetColorName("");
   }, [isOpen]);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function ColorPicker({ label, colorName, pageTypeName }: Props) {
 
   const savePresetColor = () => {
     const presetColorToSave = {
-      name: newPresetColorName,
+      name: presetColorName,
       color: currentColor,
     };
     fetch("admin/api/theme/preset-color/add", {
@@ -113,12 +113,12 @@ export default function ColorPicker({ label, colorName, pageTypeName }: Props) {
                 <input
                   className={s.halfWidth}
                   placeholder="Nom de la couleur"
-                  value={newPresetColorName}
-                  onChange={(e) => setNewPresetColorName(e.target.value)}
+                  value={presetColorName}
+                  onChange={(e) => setPresetColorName(e.target.value)}
                 />
                 <button
                   className={`${s.halfWidth} adminButton`}
-                  disabled={newPresetColorName === ""}
+                  disabled={presetColorName === ""}
                   onClick={(e) => {
                     e.preventDefault();
                     savePresetColor();

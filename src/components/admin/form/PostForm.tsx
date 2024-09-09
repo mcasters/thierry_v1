@@ -125,7 +125,7 @@ export default function PostForm({ post, toggleModal }: Props) {
         </div>
         <div className={s.buttonSection}>
           <SubmitButton disabled={!title || !date} />
-          <CancelButton handleCancel={reset} />
+          <CancelButton onCancel={reset} />
         </div>
       </form>
     </div>

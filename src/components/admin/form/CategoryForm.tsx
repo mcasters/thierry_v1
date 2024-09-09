@@ -53,7 +53,7 @@ export default function CategoryForm({ category, type, toggleModal }: Props) {
           }}
         />
         <SubmitButton />
-        <CancelButton handleCancel={reset} />
+        <CancelButton onCancel={reset} />
       </form>
     </div>
   );

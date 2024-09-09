@@ -10,6 +10,7 @@ import ThemeDashboard from "@/components/admin/theme/ThemeDashboard";
 import { useAdminContext } from "@/app/context/adminProvider";
 import ThemeUpdate from "@/components/admin/theme/ThemeUpdate";
 import { NOTES } from "@/constants/admin";
+import CancelButton from "@/components/admin/form/CancelButton";
 
 interface Props {
   themes: Theme[];
@@ -17,21 +18,16 @@ interface Props {
 }
 
 export default function AdminThemeComponent({ themes, activeTheme }: Props) {
+  const { workTheme, setWorkTheme } = useAdminContext();
   const [selectedThemeId, setSelectedThemeId] = useState<string>(
     activeTheme.id.toString(),
   );
-  const [selectedTheme, setSelectedTheme] = useState<Theme>(activeTheme);
-  const { workTheme, setWorkTheme } = useAdminContext();
 
   useEffect(() => {
-    const newSelectedTheme = themes.find(
+    const selectedTheme = themes.find(
       (t) => t.id.toString() === selectedThemeId,
     );
-
-    if (newSelectedTheme) {
-      setSelectedTheme(newSelectedTheme);
-      setWorkTheme(newSelectedTheme);
-    }
+    if (selectedTheme) setWorkTheme({ ...selectedTheme });
   }, [selectedThemeId]);
 
   const activateTheme = () => {
@@ -42,7 +38,7 @@ export default function AdminThemeComponent({ themes, activeTheme }: Props) {
       },
     }).then((res) => {
       if (res.ok) {
-        toast.success(`Thème "${selectedTheme.name}" actif`);
+        toast.success(`Thème "${workTheme.name}" actif`);
         setTimeout(function () {
           window.location.reload();
         }, 1500);
@@ -60,7 +56,7 @@ export default function AdminThemeComponent({ themes, activeTheme }: Props) {
       })
         .then((res) => {
           if (res.ok) {
-            toast.success(`Thème "${selectedTheme.name}" supprimé`);
+            toast.success(`Thème "${workTheme.name}" supprimé`);
             setTimeout(function () {
               window.location.reload();
             }, 1500);
@@ -68,6 +64,13 @@ export default function AdminThemeComponent({ themes, activeTheme }: Props) {
         })
         .catch((err) => toast.error(`Erreur : ${err}`));
     }
+  };
+
+  const handleCancel = () => {
+    const themeBeforeChange = themes.find(
+      (t) => t.id.toString() === selectedThemeId,
+    );
+    if (themeBeforeChange) setWorkTheme({ ...themeBeforeChange });
   };
 
   return (
@@ -82,7 +85,7 @@ export default function AdminThemeComponent({ themes, activeTheme }: Props) {
         >
           {themes.map((t: Theme) => (
             <option key={t.id} value={t.id}>
-              {`${t.name} ${t.isActive ? "(ACTIF)" : ""}`}
+              {`${t.name} ${t.isActive ? `(ACTIF)` : ""}`}
             </option>
           ))}
         </select>
@@ -90,7 +93,7 @@ export default function AdminThemeComponent({ themes, activeTheme }: Props) {
           Activer
         </button>
         <button
-          disabled={selectedTheme?.name === THEME.BASE_THEME}
+          disabled={workTheme.name === THEME.BASE_THEME}
           onClick={DeleteTheme}
           className="adminButton"
         >
@@ -102,6 +105,9 @@ export default function AdminThemeComponent({ themes, activeTheme }: Props) {
       </div>
       <div className={themeStyle.themeActionContainer}>
         <ThemeUpdate theme={workTheme} />
+        <CancelButton onCancel={handleCancel} text="Annuler les changements" />
+      </div>
+      <div className={themeStyle.themeActionContainer}>
         <ThemeAdd newTheme={workTheme} />
       </div>
       <div className={themeStyle.noteContainer}>

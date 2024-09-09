@@ -31,14 +31,12 @@ export default function ThemeUpdate({ theme }: Props) {
   };
 
   return (
-    <div className={s.themeActionContainer}>
-      <button
-        onClick={updateTheme}
-        className={`${s.themeInput} "adminButton"`}
-        disabled={isBaseTheme}
-      >
-        {`Mettre à jour "${name}"`}
-      </button>
-    </div>
+    <button
+      onClick={updateTheme}
+      className={`${s.themeInput} "adminButton"`}
+      disabled={isBaseTheme}
+    >
+      {`Mettre à jour "${name}"`}
+    </button>
   );
 }
