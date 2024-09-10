@@ -13,27 +13,27 @@ export default function ThemeDashboard() {
         <h3 className={s.sectionTitle}>{PAGE_TYPE.GENERAL}</h3>
         <ColorPicker
           label="Couleur de la ligne au top"
-          colorName="lineColor"
+          colorLabel="lineColor"
           pageTypeName={PAGE_TYPE.GENERAL}
         />
         <ColorPicker
           label="Couleur de fond"
-          colorName="backgroundColor"
+          colorLabel="backgroundColor"
           pageTypeName={PAGE_TYPE.GENERAL}
         />
         <ColorPicker
           label="Couleur du texte"
-          colorName="color"
+          colorLabel="color"
           pageTypeName={PAGE_TYPE.GENERAL}
         />
         <ColorPicker
           label="Couleur des liens"
-          colorName="linkColor"
+          colorLabel="linkColor"
           pageTypeName={PAGE_TYPE.GENERAL}
         />
         <ColorPicker
           label="Couleur des liens hover"
-          colorName="linkHoverColor"
+          colorLabel="linkHoverColor"
           pageTypeName={PAGE_TYPE.GENERAL}
         />
       </section>
@@ -41,32 +41,32 @@ export default function ThemeDashboard() {
         <h3 className={s.sectionTitle}>{PAGE_TYPE.HOME}</h3>
         <ColorPicker
           label="Couleur du menu 1"
-          colorName="menu1HomeColor"
+          colorLabel="menu1HomeColor"
           pageTypeName={PAGE_TYPE.HOME}
         />
         <ColorPicker
           label="Couleur du menu 2"
-          colorName="menu2HomeColor"
+          colorLabel="menu2HomeColor"
           pageTypeName={PAGE_TYPE.HOME}
         />
         <ColorPicker
           label="Couleur du texte du menu 1"
-          colorName="menu1LinkHomeColor"
+          colorLabel="menu1LinkHomeColor"
           pageTypeName={PAGE_TYPE.HOME}
         />
         <ColorPicker
           label="Couleur du texte hover du menu 1"
-          colorName="menu1LinkHomeHoverColor"
+          colorLabel="menu1LinkHomeHoverColor"
           pageTypeName={PAGE_TYPE.HOME}
         />
         <ColorPicker
           label="Couleur du texte du menu 2"
-          colorName="menu2LinkHomeColor"
+          colorLabel="menu2LinkHomeColor"
           pageTypeName={PAGE_TYPE.HOME}
         />
         <ColorPicker
           label="Couleur du texte hover du menu 2"
-          colorName="menu2LinkHomeHoverColor"
+          colorLabel="menu2LinkHomeHoverColor"
           pageTypeName={PAGE_TYPE.HOME}
         />
       </section>
@@ -74,32 +74,32 @@ export default function ThemeDashboard() {
         <h3 className={s.sectionTitle}>{PAGE_TYPE.OTHERS}</h3>
         <ColorPicker
           label="Couleur du menu 1"
-          colorName="menu1Color"
+          colorLabel="menu1Color"
           pageTypeName={PAGE_TYPE.OTHERS}
         />
         <ColorPicker
           label="Couleur du menu 2"
-          colorName="menu2Color"
+          colorLabel="menu2Color"
           pageTypeName={PAGE_TYPE.OTHERS}
         />
         <ColorPicker
           label="Couleur du texte du menu 1"
-          colorName="menu1LinkColor"
+          colorLabel="menu1LinkColor"
           pageTypeName={PAGE_TYPE.OTHERS}
         />
         <ColorPicker
           label="Couleur du texte hover du menu 1"
-          colorName="menu1LinkHoverColor"
+          colorLabel="menu1LinkHoverColor"
           pageTypeName={PAGE_TYPE.OTHERS}
         />
         <ColorPicker
           label="Couleur du texte du menu 2"
-          colorName="menu2LinkColor"
+          colorLabel="menu2LinkColor"
           pageTypeName={PAGE_TYPE.OTHERS}
         />
         <ColorPicker
           label="Couleur du texte hover du menu 2"
-          colorName="menu2LinkHoverColor"
+          colorLabel="menu2LinkHoverColor"
           pageTypeName={PAGE_TYPE.OTHERS}
         />
       </section>
@@ -107,52 +107,52 @@ export default function ThemeDashboard() {
         <h3 className={s.sectionTitle}>{PAGE_TYPE.ITEM}</h3>
         <ColorPicker
           label="Couleur de fond"
-          colorName="backgroundColorItem"
+          colorLabel="backgroundColorItem"
           pageTypeName={PAGE_TYPE.ITEM}
         />
         <ColorPicker
           label="Couleur du texte"
-          colorName="colorItem"
+          colorLabel="colorItem"
           pageTypeName={PAGE_TYPE.ITEM}
         />
         <ColorPicker
           label="Couleur des liens"
-          colorName="linkItemColor"
+          colorLabel="linkItemColor"
           pageTypeName={PAGE_TYPE.ITEM}
         />
         <ColorPicker
           label="Couleur des liens hover"
-          colorName="linkHoverItemColor"
+          colorLabel="linkHoverItemColor"
           pageTypeName={PAGE_TYPE.ITEM}
         />
         <ColorPicker
           label="Couleur du menu 1"
-          colorName="menu1ItemColor"
+          colorLabel="menu1ItemColor"
           pageTypeName={PAGE_TYPE.ITEM}
         />
         <ColorPicker
           label="Couleur du menu 2"
-          colorName="menu2ItemColor"
+          colorLabel="menu2ItemColor"
           pageTypeName={PAGE_TYPE.ITEM}
         />
         <ColorPicker
           label="Couleur du texte du menu 1"
-          colorName="menu1LinkItemColor"
+          colorLabel="menu1LinkItemColor"
           pageTypeName={PAGE_TYPE.ITEM}
         />
         <ColorPicker
           label="Couleur du texte hover du menu 1"
-          colorName="menu1LinkHoverItemColor"
+          colorLabel="menu1LinkHoverItemColor"
           pageTypeName={PAGE_TYPE.ITEM}
         />
         <ColorPicker
           label="Couleur du texte du menu 2"
-          colorName="menu2LinkItemColor"
+          colorLabel="menu2LinkItemColor"
           pageTypeName={PAGE_TYPE.ITEM}
         />
         <ColorPicker
           label="Couleur du texte hover du menu 2"
-          colorName="menu2LinkHoverItemColor"
+          colorLabel="menu2LinkHoverItemColor"
           pageTypeName={PAGE_TYPE.ITEM}
         />
       </section>

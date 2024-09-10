@@ -105,6 +105,12 @@ ColorPicker
     margin: 3px;
 }
 
+.presetColorContainerFocus {
+    width: 50px;
+    margin: 3px;
+    border: solid 1px #337188;
+}
+
 .pickerSwatch {
     width: 22px;
     height: 22px;

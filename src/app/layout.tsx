@@ -8,9 +8,9 @@ import "@/styles/globals.css";
 import { getContentsFull } from "@/app/api/content/getContents";
 import { getPaintingCategoriesForMenu } from "@/app/api/peinture/category/getCategories";
 import { getSculptureCategoriesForMenu } from "@/app/api/sculpture/category/getCategories";
-import { getIntro } from "@/utils/commonUtils";
+import { getIntro, themeToHexa } from "@/utils/commonUtils";
 import React from "react";
-import { getActiveTheme } from "@/app/api/theme/getTheme";
+import { getActiveTheme, getPresetColors } from "@/app/api/theme/getTheme";
 import StyledJsxRegistry from "./registry";
 import { DESCRIPTION, DOCUMENT_TITLE, KEYWORDS } from "@/constants/metaHtml";
 
@@ -30,11 +30,13 @@ export default async function RootLayout({
   const paintingCategories = await getPaintingCategoriesForMenu();
   const sculptureCategories = await getSculptureCategoriesForMenu();
   const theme = await getActiveTheme();
+  const presetColors = await getPresetColors();
+  const hexaTheme = themeToHexa(theme, presetColors);
 
   return (
     <html lang="fr">
       <body>
-        <Providers session={session} theme={theme}>
+        <Providers session={session} theme={hexaTheme}>
           <StyledJsxRegistry>
             <Layout
               introduction={getIntro(contents)?.text}

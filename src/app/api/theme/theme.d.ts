@@ -11,3 +11,9 @@ const PresetColorLight = Prisma.validator<Prisma.PresetColorDefaultArgs>()({
 export type PresetColorLight = Prisma.PresetColorGetPayload<
   typeof PresetColorLight
 >;
+
+type StringKeys<T> = {
+  [k in keyof T]: T[k] extends string ? k : never;
+}[keyof T];
+
+export type OnlyString<T> = { [k in StringKeys<T>]: boolean };

@@ -5,6 +5,8 @@ import { PaintingFull } from "@/app/api/peinture/painting";
 import { SculptureFull } from "@/app/api/sculpture/sculpture";
 import { TYPE } from "@/constants";
 import { THEME } from "@/constants/database";
+import { PresetColor, Theme } from "@prisma/client";
+import { OnlyString } from "@/app/api/theme/theme";
 
 export const transformValueToKey = (value: string): string => {
   return value
@@ -168,4 +170,36 @@ export const getBasePresetColorData = () => {
     name: "Prussian blue",
     color: "#24445C",
   };
+};
+
+export const themeToHexa = (
+  theme: Theme,
+  presetColors: PresetColor[],
+): Theme => {
+  let updatedTheme = theme;
+  Object.entries(theme).forEach(([key, value]) => {
+    if (typeof value === "string" && value.charAt(0) !== "#") {
+      presetColors.find((p) => {
+        if (p.name === value) {
+          updatedTheme[key as keyof OnlyString<Theme>] = p.color;
+        }
+      });
+    }
+  });
+  return updatedTheme;
+};
+
+export const colorNameToHex = (
+  colorName: string,
+  presetColors: PresetColor[],
+): string => {
+  let colorHex = colorName;
+  if (colorName.charAt(0) !== "#") {
+    presetColors.find((p) => {
+      if (p.name === colorName) {
+        colorHex = p.color;
+      }
+    });
+  }
+  return colorHex;
 };
