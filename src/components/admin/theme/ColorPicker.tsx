@@ -33,7 +33,7 @@ export default function ColorPicker({
   const [presetColorColorName, setPresetColorColorName] = useState<string>(
     workTheme[colorLabel as keyof OnlyString<Theme>],
   );
-
+  //////////////////////////////////
   useEffect(() => {
     if (!isOpen) setPresetColorNameToSave("");
   }, [isOpen]);
@@ -44,7 +44,7 @@ export default function ColorPicker({
     setCurrentColorName(_currentColorName);
     setCurrentColorHex(colorNameToHex(_currentColorName, presetColors));
     setIsPresetColor(_currentColorName.charAt(0) !== "#");
-  }, [workTheme]);
+  }, [workTheme, presetColors]);
 
   // When changing color
   useEffect(() => {

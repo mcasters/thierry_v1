@@ -40,12 +40,12 @@ export default function ThemeDashboard() {
       <section>
         <h3 className={s.sectionTitle}>{PAGE_TYPE.HOME}</h3>
         <ColorPicker
-          label="Couleur du menu 1"
+          label="Couleur de fond du menu 1"
           colorLabel="menu1HomeColor"
           pageTypeName={PAGE_TYPE.HOME}
         />
         <ColorPicker
-          label="Couleur du menu 2"
+          label="Couleur de fond du menu 2"
           colorLabel="menu2HomeColor"
           pageTypeName={PAGE_TYPE.HOME}
         />
@@ -73,12 +73,12 @@ export default function ThemeDashboard() {
       <section>
         <h3 className={s.sectionTitle}>{PAGE_TYPE.OTHERS}</h3>
         <ColorPicker
-          label="Couleur du menu 1"
+          label="Couleur de fond du menu 1"
           colorLabel="menu1Color"
           pageTypeName={PAGE_TYPE.OTHERS}
         />
         <ColorPicker
-          label="Couleur du menu 2"
+          label="Couleur de fond du menu 2"
           colorLabel="menu2Color"
           pageTypeName={PAGE_TYPE.OTHERS}
         />
@@ -126,12 +126,12 @@ export default function ThemeDashboard() {
           pageTypeName={PAGE_TYPE.ITEM}
         />
         <ColorPicker
-          label="Couleur du menu 1"
+          label="Couleur de fond du menu 1"
           colorLabel="menu1ItemColor"
           pageTypeName={PAGE_TYPE.ITEM}
         />
         <ColorPicker
-          label="Couleur du menu 2"
+          label="Couleur de fond du menu 2"
           colorLabel="menu2ItemColor"
           pageTypeName={PAGE_TYPE.ITEM}
         />
