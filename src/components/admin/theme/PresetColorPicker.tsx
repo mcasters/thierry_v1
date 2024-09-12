@@ -8,7 +8,7 @@ import { useAdminContext } from "@/app/context/adminProvider";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import Modal from "@/components/admin/form/modal/Modal";
 import useModal from "@/components/admin/form/modal/useModal";
-import { PresetColor } from "@prisma/client";
+import { PresetColor, Theme } from "@prisma/client";
 
 interface Props {
   presetColor: PresetColor;
@@ -16,7 +16,8 @@ interface Props {
 
 export default function PresetColorPicker({ presetColor }: Props) {
   const { isOpen, toggle } = useModal();
-  const { presetColors, setPresetColors } = useAdminContext();
+  const { workTheme, setWorkTheme, presetColors, setPresetColors } =
+    useAdminContext();
   const [currentColor, setCurrentColor] = useState<string>(presetColor.color);
   const [isToSave, setIsToSave] = useState<boolean>(false);
 
@@ -44,13 +45,19 @@ export default function PresetColorPicker({ presetColor }: Props) {
 
   const remove = (id: number) => {
     if (confirm("Sûr de vouloir supprimer ?")) {
-      fetch(`admin/api/theme/preset-color/delete/${id}`).then((res) => {
-        if (res.ok) {
-          const presetColorsUpdated = presetColors.filter((p) => p.id !== id);
-          setPresetColors(presetColorsUpdated);
-          toast.success("supprimé");
-        } else toast.error("Erreur à la suppression");
-      });
+      fetch(`admin/api/theme/preset-color/delete/${id}`)
+        .then((res) => res.json())
+        .then((json) => {
+          const updatedThemes: Theme[] = json.updatedThemes;
+          const updatedPresetColors: PresetColor[] = json.updatedPresetColors;
+          if (updatedThemes && updatedPresetColors) {
+            setWorkTheme(
+              updatedThemes.filter((t) => t.name === workTheme.name)[0],
+            );
+            setPresetColors(updatedPresetColors);
+            toast.success("Couleur perso supprimée");
+          } else toast.error("Erreur à la suppression");
+        });
     }
   };
 

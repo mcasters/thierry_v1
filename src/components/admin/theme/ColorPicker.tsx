@@ -65,7 +65,6 @@ export default function ColorPicker({
   // When user is changing workTheme or presetColors : realtime update
   useEffect(() => {
     const _currentColor = workTheme[colorLabel as keyof OnlyString<Theme>];
-    console.log(_currentColor);
     setCurrentColor(colorNameToHex(_currentColor, presetColors));
     setCurrentColorName(_currentColor);
     setIsPresetColor(_currentColor.charAt(0) !== "#");
