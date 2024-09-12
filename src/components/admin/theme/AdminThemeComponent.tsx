@@ -14,13 +14,12 @@ import CancelButton from "@/components/admin/form/CancelButton";
 
 interface Props {
   themes: Theme[];
-  activeTheme: Theme;
 }
 
-export default function AdminThemeComponent({ themes, activeTheme }: Props) {
+export default function AdminThemeComponent({ themes }: Props) {
   const { workTheme, setWorkTheme } = useAdminContext();
   const [selectedThemeId, setSelectedThemeId] = useState<string>(
-    activeTheme.id.toString(),
+    workTheme.id.toString(),
   );
 
   useEffect(() => {

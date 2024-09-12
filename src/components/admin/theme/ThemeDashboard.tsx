@@ -158,7 +158,7 @@ export default function ThemeDashboard() {
       </section>
       <section></section>
       <section>
-        <h3 className={s.sectionTitle}>Couleurs mémorisées</h3>
+        <h3 className={s.sectionTitle}>Couleurs perso</h3>
         <PresetColorDashboard />
       </section>
     </div>

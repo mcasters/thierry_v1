@@ -70,7 +70,29 @@ ColorPicker
     height: 28px;
     border-radius: 1px;
     border: 1px solid #aaa;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    margin: 3px;
+}
+
+.swatchFocus {
+    all: unset;
+    width: 28px;
+    height: 28px;
+    margin: 3px;
+    border-radius: 1px;
+    outline: solid #94afb9 2px;
+    outline-offset: 2px;
+    cursor: pointer;
+}
+
+.swatchOpen {
+    all: unset;
+    width: 28px;
+    height: 28px;
+    margin: 3px;
+    border-radius: 1px;
+    outline: solid #204c5d 3px;
+    outline-offset: 2px;
     cursor: pointer;
 }
 
@@ -102,22 +124,6 @@ ColorPicker
 .presetColorContainer {
     width: 50px;
     margin: 3px;
-}
-
-.presetColorContainerFocus {
-    width: 50px;
-    margin: 3px;
-    border: solid 1px #337188;
-}
-
-.pickerSwatch {
-    width: 22px;
-    height: 22px;
-    margin: 4px;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    outline: none;
 }
 
 .colorName {

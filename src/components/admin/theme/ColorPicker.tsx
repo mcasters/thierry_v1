@@ -4,12 +4,13 @@ import { Theme } from "@prisma/client";
 import useModal from "@/components/admin/form/modal/useModal";
 import Modal from "@/components/admin/form/modal/Modal";
 import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import s from "@/styles/admin/AdminTheme.module.css";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useAdminContext } from "@/app/context/adminProvider";
 import { OnlyString } from "@/app/api/theme/theme";
 import { colorNameToHex } from "@/utils/commonUtils";
+import ColorPickerPresetColor from "@/components/admin/theme/ColorPicketPresetColor";
+import toast from "react-hot-toast";
 
 interface Props {
   label: string;
@@ -23,57 +24,63 @@ export default function ColorPicker({
   pageTypeName,
 }: Props) {
   const { isOpen, toggle } = useModal();
+  const [isToSave, setIsToSave] = useState<boolean>(false);
   const { workTheme, setWorkTheme, presetColors, setPresetColors } =
     useAdminContext();
-  const [currentColorName, setCurrentColorName] = useState<string>("");
-  const [currentColorHex, setCurrentColorHex] = useState<string>("");
-  const [isPresetColor, setIsPresetColor] = useState<boolean>(false);
-  const [presetColorNameToSave, setPresetColorNameToSave] =
-    useState<string>("");
-  const [presetColorColorName, setPresetColorColorName] = useState<string>(
+  const [currentColor, setCurrentColor] = useState<string>(
+    colorNameToHex(
+      workTheme[colorLabel as keyof OnlyString<Theme>],
+      presetColors,
+    ),
+  );
+  const [currentColorName, setCurrentColorName] = useState<string>(
     workTheme[colorLabel as keyof OnlyString<Theme>],
   );
-  //////////////////////////////////
+  const [isPresetColor, setIsPresetColor] = useState<boolean>(
+    workTheme[colorLabel as keyof OnlyString<Theme>].charAt(0) !== "#",
+  );
+
   useEffect(() => {
-    if (!isOpen) setPresetColorNameToSave("");
+    if (!isToSave) {
+      setIsToSave(true);
+    }
+  }, [currentColor]);
+
+  // When close modal : save in workTheme
+  useEffect(() => {
+    if (!isOpen && isToSave) {
+      const updatedWorkTheme = workTheme;
+      if (isPresetColor) {
+        updatedWorkTheme[colorLabel as keyof OnlyString<Theme>] =
+          currentColorName;
+        setWorkTheme(updatedWorkTheme);
+      } else {
+        updatedWorkTheme[colorLabel as keyof OnlyString<Theme>] = currentColor;
+        setWorkTheme(updatedWorkTheme);
+      }
+      setIsToSave(false);
+    }
   }, [isOpen]);
 
-  // When selecting theme
+  // When user is changing workTheme or presetColors : realtime update
   useEffect(() => {
-    const _currentColorName = workTheme[colorLabel as keyof OnlyString<Theme>];
-    setCurrentColorName(_currentColorName);
-    setCurrentColorHex(colorNameToHex(_currentColorName, presetColors));
-    setIsPresetColor(_currentColorName.charAt(0) !== "#");
+    const _currentColor = workTheme[colorLabel as keyof OnlyString<Theme>];
+    console.log(_currentColor);
+    setCurrentColor(colorNameToHex(_currentColor, presetColors));
+    setCurrentColorName(_currentColor);
+    setIsPresetColor(_currentColor.charAt(0) !== "#");
   }, [workTheme, presetColors]);
 
-  // When changing color
-  useEffect(() => {
-    const updatedTheme = workTheme;
-    if (isPresetColor) {
-      updatedTheme[colorLabel as keyof OnlyString<Theme>] = currentColorName;
-      setWorkTheme(updatedTheme);
-    } else {
-      updatedTheme[colorLabel as keyof OnlyString<Theme>] = currentColorHex;
-      setWorkTheme(updatedTheme);
-    }
-  }, [currentColorHex]);
-
-  const handleChangeInHex = (value: string): void => {
-    setIsPresetColor(false);
-    setCurrentColorHex(value);
-    setCurrentColorName(value);
+  const handleChange = (hex: string, name: string | undefined): void => {
+    setCurrentColor(hex);
+    setCurrentColorName(name ? name : hex);
+    setIsPresetColor(!!name);
   };
 
-  const handleChangeInPresetColor = (hex: string, name: string): void => {
-    setIsPresetColor(true);
-    setCurrentColorHex(hex);
-    setCurrentColorName(name);
-  };
-
-  const savePresetColor = () => {
+  const savePresetColor = (colorName: string) => {
     const presetColorToSave = {
-      name: presetColorNameToSave,
-      color: currentColorName,
+      name: colorName,
+      color: currentColor,
     };
     fetch("admin/api/theme/preset-color/add", {
       method: "POST",
@@ -83,25 +90,30 @@ export default function ColorPicker({
       body: JSON.stringify(presetColorToSave),
     })
       .then((res) => res.json())
-      .then((presetColor) => {
-        setPresetColors([...presetColors, presetColor]);
-        toast.success("Couleur mémorisée");
-      })
-      .catch((e) => {
-        console.log(e);
-        toast.error(`Erreur à l'enregistrement : ${e}`);
+      .then((json) => {
+        if (json.data) {
+          const presetColor = json.data;
+          setPresetColors([...presetColors, presetColor]);
+          const updatedWorkTheme = workTheme;
+          updatedWorkTheme[colorLabel as keyof OnlyString<Theme>] =
+            presetColor.name;
+          setWorkTheme(updatedWorkTheme);
+          toast.success("Couleur perso enregistrée");
+        } else toast.error(`Erreur à l'enregistrement`);
       });
   };
 
   return (
-    <>
+    <div key={label}>
       <div className={s.colorContainer}>
         <p className={s.label}>{label}</p>
         <div className={s.colorPickerContainer}>
           <button
-            className={s.swatch}
+            className={
+              isOpen ? s.swatchOpen : isPresetColor ? s.swatchFocus : s.swatch
+            }
             style={{
-              backgroundColor: currentColorHex,
+              backgroundColor: currentColor,
             }}
             onClick={(e) => {
               e.preventDefault();
@@ -115,8 +127,8 @@ export default function ColorPicker({
               </h3>
               <div className={s.picker}>
                 <HexColorPicker
-                  color={currentColorHex}
-                  onChange={handleChangeInHex}
+                  color={currentColor}
+                  onChange={(e) => handleChange(e, undefined)}
                 />
               </div>
               <p>Couleur sélectionnée (notation hexadécimale) :</p>
@@ -124,65 +136,25 @@ export default function ColorPicker({
                 <div
                   className={s.halfWidth}
                   style={{
-                    backgroundColor: currentColorHex,
+                    backgroundColor: currentColor,
                   }}
                 ></div>
                 <HexColorInput
-                  color={currentColorHex}
-                  onChange={handleChangeInHex}
+                  color={currentColor}
+                  onChange={(e) => handleChange(e, undefined)}
                   prefixed={true}
                   className={s.halfWidth}
                 />
               </div>
-              <form className={s.presetColorForm}>
-                <input
-                  className={s.halfWidth}
-                  placeholder="Nom de la couleur"
-                  value={presetColorNameToSave}
-                  onChange={(e) => setPresetColorNameToSave(e.target.value)}
-                />
-                <button
-                  className={`${s.halfWidth} adminButton`}
-                  disabled={presetColorNameToSave === ""}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    savePresetColor();
-                  }}
-                >
-                  Mémoriser la couleur
-                </button>
-              </form>
-              <div className={s.pickerSwatches}>
-                {presetColors.map((presetColor) => (
-                  <div
-                    key={presetColor.name}
-                    className={
-                      isPresetColor && presetColor.name === currentColorName
-                        ? s.presetColorContainerFocus
-                        : s.presetColorContainer
-                    }
-                  >
-                    <button
-                      className={s.pickerSwatch}
-                      style={{
-                        background: presetColor.color,
-                      }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleChangeInPresetColor(
-                          presetColor.color,
-                          presetColor.name,
-                        );
-                      }}
-                    />
-                    <p className={s.colorName}>{presetColor.name}</p>
-                  </div>
-                ))}
-              </div>
+              <ColorPickerPresetColor
+                colorLabel={colorLabel}
+                onChange={handleChange}
+                onSave={savePresetColor}
+              />
             </div>
           </Modal>
         </div>
       </div>
-    </>
+    </div>
   );
 }

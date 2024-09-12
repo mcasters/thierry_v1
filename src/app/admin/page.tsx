@@ -16,7 +16,7 @@ export default async function AdminIndex() {
       defaultWorkTheme={activeTheme}
       defaultPresetColors={presetColors}
     >
-      <AdminThemeComponent themes={themes} activeTheme={activeTheme} />
+      <AdminThemeComponent themes={themes} />
     </AdminProvider>
   );
 }

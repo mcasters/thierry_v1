@@ -38,6 +38,7 @@ export default function PresetColorPicker({ presetColor }: Props) {
   useEffect(() => {
     if (!isOpen && isToSave) {
       updatePresetColor();
+      setIsToSave(false);
     }
   }, [isOpen]);
 
@@ -45,8 +46,8 @@ export default function PresetColorPicker({ presetColor }: Props) {
     if (confirm("Sûr de vouloir supprimer ?")) {
       fetch(`admin/api/theme/preset-color/delete/${id}`).then((res) => {
         if (res.ok) {
-          const newPresetColors = presetColors.filter((p) => p.id !== id);
-          setPresetColors(newPresetColors);
+          const presetColorsUpdated = presetColors.filter((p) => p.id !== id);
+          setPresetColors(presetColorsUpdated);
           toast.success("supprimé");
         } else toast.error("Erreur à la suppression");
       });
@@ -66,12 +67,14 @@ export default function PresetColorPicker({ presetColor }: Props) {
       body: JSON.stringify(presetColorToSave),
     })
       .then((res) => res.json())
-      .then((presetColor) => {
-        toast.success("Couleur mémorisée mise à jour");
-      })
-      .catch((e) => {
-        console.log(e);
-        toast.error(`Erreur à l'enregistrement : ${e}`);
+      .then((json) => {
+        if (json.data) {
+          toast.success("Couleur perso mise à jour");
+          const presetColorsUpdated = presetColors.map((p) =>
+            p.id === presetColor.id ? presetColor : p,
+          );
+          setPresetColors(presetColorsUpdated);
+        } else toast.error(`Erreur à l'enregistrement`);
       });
   };
 
@@ -93,7 +96,7 @@ export default function PresetColorPicker({ presetColor }: Props) {
         <Modal isOpen={isOpen} toggle={toggle}>
           <div className={s.colorPicker}>
             <h3>Modification : {presetColor.name}</h3>
-            <p>(s'appliquera à toutes les couleurs mémorisées du thème</p>
+            <p>(s'appliquera à toutes les couleurs perso du thème)</p>
             <div className={s.picker}>
               <HexColorPicker color={currentColor} onChange={setCurrentColor} />
             </div>

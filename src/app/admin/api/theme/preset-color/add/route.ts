@@ -15,7 +15,9 @@ export async function POST(req: Request) {
           color: presetColor.color,
         },
       });
-      return NextResponse.json(JSON.parse(JSON.stringify(dbPresetColor)));
+      return NextResponse.json({
+        data: JSON.parse(JSON.stringify(dbPresetColor)),
+      });
     } catch (e) {
       console.log(e);
       return NextResponse.json({ error: "Error" }, { status: 404 });
