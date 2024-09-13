@@ -9,7 +9,7 @@ import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useAdminContext } from "@/app/context/adminProvider";
 import { OnlyString } from "@/app/api/theme/theme";
 import { colorNameToHex } from "@/utils/commonUtils";
-import ColorPickerPresetColor from "@/components/admin/theme/ColorPicketPresetColor";
+import ColorPickerPresetColor from "@/components/admin/theme/ColorPicketPresetPart";
 import toast from "react-hot-toast";
 
 interface Props {
@@ -27,13 +27,13 @@ export default function ColorPicker({
   const [isToSave, setIsToSave] = useState<boolean>(false);
   const { workTheme, setWorkTheme, presetColors, setPresetColors } =
     useAdminContext();
-  const [currentColor, setCurrentColor] = useState<string>(
+  const [color, setColor] = useState<string>(
     colorNameToHex(
       workTheme[colorLabel as keyof OnlyString<Theme>],
       presetColors,
     ),
   );
-  const [currentColorName, setCurrentColorName] = useState<string>(
+  const [colorName, setColorName] = useState<string>(
     workTheme[colorLabel as keyof OnlyString<Theme>],
   );
   const [isPresetColor, setIsPresetColor] = useState<boolean>(
@@ -44,59 +44,58 @@ export default function ColorPicker({
     if (!isToSave) {
       setIsToSave(true);
     }
-  }, [currentColor]);
+  }, [color]);
 
   // When close modal : save in workTheme
   useEffect(() => {
     if (!isOpen && isToSave) {
       const updatedWorkTheme = workTheme;
-      if (isPresetColor) {
-        updatedWorkTheme[colorLabel as keyof OnlyString<Theme>] =
-          currentColorName;
-        setWorkTheme(updatedWorkTheme);
-      } else {
-        updatedWorkTheme[colorLabel as keyof OnlyString<Theme>] = currentColor;
-        setWorkTheme(updatedWorkTheme);
-      }
+      updatedWorkTheme[colorLabel as keyof OnlyString<Theme>] = isPresetColor
+        ? colorName
+        : color;
+      setWorkTheme(updatedWorkTheme);
       setIsToSave(false);
     }
   }, [isOpen]);
 
-  // When user is changing workTheme or presetColors : realtime update
+  // When user is changing workTheme : realtime update
   useEffect(() => {
-    const _currentColor = workTheme[colorLabel as keyof OnlyString<Theme>];
-    setCurrentColor(colorNameToHex(_currentColor, presetColors));
-    setCurrentColorName(_currentColor);
-    setIsPresetColor(_currentColor.charAt(0) !== "#");
-  }, [workTheme, presetColors]);
+    const _color = workTheme[colorLabel as keyof OnlyString<Theme>];
+    setColor(colorNameToHex(_color, presetColors));
+    setColorName(_color);
+    setIsPresetColor(_color.charAt(0) !== "#");
+  }, [workTheme]);
+
+  // When user is changing presetColors : realtime update
+  useEffect(() => {
+    if (isPresetColor) {
+      setColor(colorNameToHex(colorName, presetColors));
+    }
+  }, [presetColors]);
 
   const handleChange = (hex: string, name: string | undefined): void => {
-    setCurrentColor(hex);
-    setCurrentColorName(name ? name : hex);
+    setColor(hex);
+    setColorName(name ? name : hex);
     setIsPresetColor(!!name);
   };
 
   const savePresetColor = (colorName: string) => {
-    const presetColorToSave = {
-      name: colorName,
-      color: currentColor,
-    };
     fetch("admin/api/theme/preset-color/add", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(presetColorToSave),
+      body: JSON.stringify({
+        name: colorName,
+        color: color,
+      }),
     })
       .then((res) => res.json())
       .then((json) => {
-        if (json.data) {
-          const presetColor = json.data;
-          setPresetColors([...presetColors, presetColor]);
-          const updatedWorkTheme = workTheme;
-          updatedWorkTheme[colorLabel as keyof OnlyString<Theme>] =
-            presetColor.name;
-          setWorkTheme(updatedWorkTheme);
+        const updatedPresetColors = json.updatedPresetColors;
+        if (updatedPresetColors) {
+          setPresetColors(updatedPresetColors);
+          handleChange(color, colorName);
           toast.success("Couleur perso enregistrée");
         } else toast.error(`Erreur à l'enregistrement`);
       });
@@ -112,7 +111,7 @@ export default function ColorPicker({
               isOpen ? s.swatchOpen : isPresetColor ? s.swatchFocus : s.swatch
             }
             style={{
-              backgroundColor: currentColor,
+              backgroundColor: color,
             }}
             onClick={(e) => {
               e.preventDefault();
@@ -126,7 +125,7 @@ export default function ColorPicker({
               </h3>
               <div className={s.picker}>
                 <HexColorPicker
-                  color={currentColor}
+                  color={color}
                   onChange={(e) => handleChange(e, undefined)}
                 />
               </div>
@@ -135,11 +134,11 @@ export default function ColorPicker({
                 <div
                   className={s.halfWidth}
                   style={{
-                    backgroundColor: currentColor,
+                    backgroundColor: color,
                   }}
                 ></div>
                 <HexColorInput
-                  color={currentColor}
+                  color={color}
                   onChange={(e) => handleChange(e, undefined)}
                   prefixed={true}
                   className={s.halfWidth}

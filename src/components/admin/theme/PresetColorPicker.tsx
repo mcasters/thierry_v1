@@ -16,7 +16,7 @@ interface Props {
 
 export default function PresetColorPicker({ presetColor }: Props) {
   const { isOpen, toggle } = useModal();
-  const { workTheme, setWorkTheme, presetColors, setPresetColors } =
+  const { setThemes, workTheme, setWorkTheme, presetColors, setPresetColors } =
     useAdminContext();
   const [currentColor, setCurrentColor] = useState<string>(presetColor.color);
   const [isToSave, setIsToSave] = useState<boolean>(false);
@@ -51,6 +51,7 @@ export default function PresetColorPicker({ presetColor }: Props) {
           const updatedThemes: Theme[] = json.updatedThemes;
           const updatedPresetColors: PresetColor[] = json.updatedPresetColors;
           if (updatedThemes && updatedPresetColors) {
+            setThemes(updatedThemes);
             setWorkTheme(
               updatedThemes.filter((t) => t.name === workTheme.name)[0],
             );
@@ -62,25 +63,22 @@ export default function PresetColorPicker({ presetColor }: Props) {
   };
 
   const updatePresetColor = () => {
-    const presetColorToSave = {
-      id: presetColor.id,
-      color: currentColor,
-    };
     fetch("admin/api/theme/preset-color/update", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(presetColorToSave),
+      body: JSON.stringify({
+        id: presetColor.id,
+        color: currentColor,
+      }),
     })
       .then((res) => res.json())
       .then((json) => {
-        if (json.data) {
+        const updatedPresetColors: PresetColor[] = json.updatedPresetColors;
+        if (updatedPresetColors) {
+          setPresetColors(updatedPresetColors);
           toast.success("Couleur perso mise à jour");
-          const presetColorsUpdated = presetColors.map((p) =>
-            p.id === presetColor.id ? presetColor : p,
-          );
-          setPresetColors(presetColorsUpdated);
         } else toast.error(`Erreur à l'enregistrement`);
       });
   };

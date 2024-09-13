@@ -12,7 +12,7 @@ interface Props {
   onSave: (colorName: string) => void;
 }
 
-export default function ColorPickerPresetColor({
+export default function ColorPickerPresetPart({
   colorLabel,
   onChange,
   onSave,
