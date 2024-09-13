@@ -3,8 +3,8 @@ import { getServerSession } from "next-auth/next";
 import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
-import { OnlyString } from "@/app/api/theme/theme";
 import { Theme } from "@prisma/client";
+import { OnlyString } from "@/app/api/theme/theme";
 
 export async function GET(
   req: Request,
@@ -23,26 +23,30 @@ export async function GET(
 
       if (presetColor) {
         const themes = await prisma.theme.findMany();
-        const themesToUpdate: Theme[] = [];
-
-        themes.forEach((t) => {
-          Object.entries(t).forEach(([key, value]) => {
-            if (typeof value === "string" && value === presetColor.name) {
-              t[key as keyof OnlyString<Theme>] = presetColor.color;
-              themesToUpdate.push(t);
+        const updatedThemes: Theme[] = [];
+        for await (const theme of themes) {
+          let updatedTheme: Theme = theme;
+          let isModidied = false;
+          for await (const [key, value] of Object.entries(theme)) {
+            if (
+              value === presetColor.name &&
+              key !== "name" &&
+              key !== "isActive"
+            ) {
+              isModidied = true;
+              updatedTheme[key as keyof OnlyString<Theme>] = presetColor.color;
             }
-          });
-        });
+          }
+          if (isModidied) updatedThemes.push(updatedTheme);
+        }
 
-        for await (const theme of themesToUpdate) {
-          const { id, ...data } = theme;
+        for await (const theme of updatedThemes) {
+          const { id, ...rest } = theme;
           await prisma.theme.update({
             where: {
               id,
             },
-            data: {
-              ...data,
-            },
+            data: { ...rest },
           });
         }
 
@@ -50,11 +54,11 @@ export async function GET(
           where: { id },
         });
 
-        const updatedThemes = await prisma.theme.findMany();
+        const allThemes = await prisma.theme.findMany();
         const updatedPresetColors = await prisma.presetColor.findMany();
 
         return NextResponse.json({
-          updatedThemes: JSON.parse(JSON.stringify(updatedThemes)),
+          updatedThemes: JSON.parse(JSON.stringify(allThemes)),
           updatedPresetColors: JSON.parse(JSON.stringify(updatedPresetColors)),
         });
       }

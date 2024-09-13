@@ -9,14 +9,16 @@ export async function POST(req: Request) {
   if (session) {
     try {
       const presetColor = await req.json();
-      const dbPresetColor = await prisma.presetColor.create({
+      await prisma.presetColor.create({
         data: {
           name: presetColor.name,
           color: presetColor.color,
         },
       });
+      const updatedPresetColors = await prisma.presetColor.findMany();
+
       return NextResponse.json({
-        data: JSON.parse(JSON.stringify(dbPresetColor)),
+        updatedPresetColors: JSON.parse(JSON.stringify(updatedPresetColors)),
       });
     } catch (e) {
       console.log(e);

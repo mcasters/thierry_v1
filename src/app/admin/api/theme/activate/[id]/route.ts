@@ -13,7 +13,7 @@ export async function POST(
   if (session) {
     try {
       const id = parseInt(params.id);
-      await prisma.theme.update({
+      const activatedTheme = await prisma.theme.update({
         where: {
           id,
         },
@@ -31,7 +31,9 @@ export async function POST(
         },
       });
 
-      return NextResponse.json({ message: "ok" }, { status: 200 });
+      return NextResponse.json({
+        activatedTheme: JSON.parse(JSON.stringify(activatedTheme)),
+      });
     } catch (e) {
       console.log(e);
       return NextResponse.json({ error: "Error" }, { status: 404 });

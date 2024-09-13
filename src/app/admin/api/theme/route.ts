@@ -3,28 +3,26 @@ import { getServerSession } from "next-auth/next";
 import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
-import { getBasePresetColorData } from "@/utils/commonUtils";
-import { PresetColor } from "@prisma/client";
+import { getBaseThemeData } from "@/utils/commonUtils";
+import { Theme } from "@prisma/client";
 
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (session) {
     try {
-      let res: PresetColor[];
-      res = await prisma.presetColor.findMany();
+      let res: Theme[];
+      res = await prisma.theme.findMany();
 
       if (res.length === 0) {
-        const defaultPresetColor = await prisma.presetColor.create({
+        const defaultTheme = await prisma.theme.create({
           data: {
-            ...getBasePresetColorData(),
+            ...getBaseThemeData(),
           },
         });
-        res.push(defaultPresetColor);
+        res.push(defaultTheme);
       }
-      return NextResponse.json({
-        presetColors: JSON.parse(JSON.stringify(res)),
-      });
+      return NextResponse.json({ themes: JSON.parse(JSON.stringify(res)) });
     } catch (e) {
       console.log(e);
       return NextResponse.json({ error: "Error" }, { status: 404 });

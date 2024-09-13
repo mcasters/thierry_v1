@@ -3,23 +3,19 @@ import { getServerSession } from "next-auth/next";
 import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
-import { setInactiveExcept } from "@/lib/db/theme";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
   if (session) {
     try {
       const theme = await req.json();
-      const { id, isActive, ...rest } = theme;
+      const { id, ...rest } = theme;
 
-      const newTheme = await prisma.theme.create({
+      await prisma.theme.create({
         data: {
-          isActive: true,
           ...rest,
         },
       });
-
-      await setInactiveExcept(newTheme.id);
 
       return NextResponse.json({ message: "ok" }, { status: 200 });
     } catch (e) {
