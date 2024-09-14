@@ -2,9 +2,10 @@
 
 import React, { useState } from "react";
 import s from "@/styles/admin/AdminTheme.module.css";
-import { useAdminContext } from "@/app/context/adminProvider";
+import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import { OnlyString } from "@/app/api/theme/theme";
 import { Theme } from "@prisma/client";
+import { useAdminPresetColorsContext } from "@/app/context/adminPresetColorsProvider";
 
 interface Props {
   colorLabel: string;
@@ -17,7 +18,8 @@ export default function ColorPickerPresetPart({
   onChange,
   onSave,
 }: Props) {
-  const { workTheme, presetColors } = useAdminContext();
+  const { workTheme } = useAdminWorkThemeContext();
+  const { presetColors } = useAdminPresetColorsContext();
   const [currentColor, setCurrentColor] = useState<string>(
     workTheme[colorLabel as keyof OnlyString<Theme>],
   );

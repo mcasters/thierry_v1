@@ -1,7 +1,9 @@
 import AdminThemeComponent from "@/components/admin/theme/AdminThemeComponent";
 import { getPresetColors, getThemesFull } from "@/app/api/theme/getTheme";
-import { AdminProvider } from "@/app/context/adminProvider";
+import { AdminWorkThemeProvider } from "@/app/context/adminWorkThemeProvider";
 import { getActivatedBaseTheme } from "@/lib/db/theme";
+import { AdminPresetColorsProvider } from "@/app/context/adminPresetColorsProvider";
+import { AdminThemesProvider } from "@/app/context/adminThemesProvider";
 
 export const dynamic = "force-dynamic";
 
@@ -12,12 +14,12 @@ export default async function AdminIndex() {
   const presetColors = await getPresetColors();
 
   return (
-    <AdminProvider
-      defaultThemes={themes}
-      defaultWorkTheme={activeTheme}
-      defaultPresetColors={presetColors}
-    >
-      <AdminThemeComponent />
-    </AdminProvider>
+    <AdminThemesProvider defaultThemes={themes}>
+      <AdminWorkThemeProvider defaultWorkTheme={activeTheme}>
+        <AdminPresetColorsProvider defaultPresetColors={presetColors}>
+          <AdminThemeComponent />
+        </AdminPresetColorsProvider>
+      </AdminWorkThemeProvider>
+    </AdminThemesProvider>
   );
 }

@@ -3,10 +3,12 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import s from "@/styles/admin/AdminTheme.module.css";
-import { useAdminContext } from "@/app/context/adminProvider";
+import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
+import { useAdminThemesContext } from "@/app/context/adminThemesProvider";
 
 export default function ThemeAdd() {
-  const { setThemes, workTheme, setWorkTheme } = useAdminContext();
+  const { setThemes } = useAdminThemesContext();
+  const { workTheme, setWorkTheme } = useAdminWorkThemeContext();
   const [themeName, setThemeName] = useState<string>("");
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {

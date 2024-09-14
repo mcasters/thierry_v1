@@ -6,11 +6,12 @@ import Modal from "@/components/admin/form/modal/Modal";
 import React, { useEffect, useState } from "react";
 import s from "@/styles/admin/AdminTheme.module.css";
 import { HexColorInput, HexColorPicker } from "react-colorful";
-import { useAdminContext } from "@/app/context/adminProvider";
+import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import { OnlyString } from "@/app/api/theme/theme";
 import { colorNameToHex } from "@/utils/commonUtils";
 import ColorPickerPresetColor from "@/components/admin/theme/ColorPicketPresetPart";
 import toast from "react-hot-toast";
+import { useAdminPresetColorsContext } from "@/app/context/adminPresetColorsProvider";
 
 interface Props {
   label: string;
@@ -23,10 +24,11 @@ export default function ColorPicker({
   colorLabel,
   pageTypeName,
 }: Props) {
+  console.log("Enter");
+  const { workTheme, setWorkTheme } = useAdminWorkThemeContext();
+  const { presetColors, setPresetColors } = useAdminPresetColorsContext();
   const { isOpen, toggle } = useModal();
   const [isToSave, setIsToSave] = useState<boolean>(false);
-  const { workTheme, setWorkTheme, presetColors, setPresetColors } =
-    useAdminContext();
 
   const [color, setColor] = useState<string>(
     colorNameToHex(

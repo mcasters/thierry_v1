@@ -4,10 +4,12 @@ import React from "react";
 import toast from "react-hot-toast";
 import s from "@/styles/admin/AdminTheme.module.css";
 import { THEME } from "@/constants/database";
-import { useAdminContext } from "@/app/context/adminProvider";
+import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
+import { useAdminThemesContext } from "@/app/context/adminThemesProvider";
 
 export default function ThemeUpdate() {
-  const { setThemes, workTheme } = useAdminContext();
+  const { setThemes } = useAdminThemesContext();
+  const { workTheme } = useAdminWorkThemeContext();
   const name = workTheme.name;
   const isBaseTheme = name === THEME.BASE_THEME;
 

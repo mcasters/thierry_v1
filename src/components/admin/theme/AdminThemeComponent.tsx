@@ -7,17 +7,20 @@ import ThemeAdd from "@/components/admin/theme/ThemeAdd";
 import { Theme } from "@prisma/client";
 import { THEME } from "@/constants/database";
 import ThemeDashboard from "@/components/admin/theme/ThemeDashboard";
-import { useAdminContext } from "@/app/context/adminProvider";
+import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import ThemeUpdate from "@/components/admin/theme/ThemeUpdate";
 import { NOTES } from "@/constants/admin";
 import CancelButton from "@/components/admin/form/CancelButton";
+import { useAdminThemesContext } from "@/app/context/adminThemesProvider";
 
 /*
 SelectedTheme is the set in the workTheme (context)
 activatedTheme is the one who is displayed, and it is independent to the activated theme
  */
 export default function AdminThemeComponent() {
-  const { themes, setThemes, workTheme, setWorkTheme } = useAdminContext();
+  const { themes, setThemes } = useAdminThemesContext();
+  const { workTheme, setWorkTheme } = useAdminWorkThemeContext();
+
   const [selectedThemeId, setSelectedThemeId] = useState<string>(
     workTheme.id.toString(),
   );
@@ -27,9 +30,9 @@ export default function AdminThemeComponent() {
   }, [workTheme]);
 
   useEffect(() => {
-    const selectedTheme = themes.filter(
-      (t) => t.id.toString() === selectedThemeId,
-    )[0];
+    const selectedTheme = themes.find(
+      (t: Theme) => t.id.toString() === selectedThemeId,
+    );
     if (selectedTheme) {
       setWorkTheme({ ...selectedTheme });
     }
@@ -68,33 +71,27 @@ export default function AdminThemeComponent() {
       })
         .then((res) => res.json())
         .then((json) => {
-          const updatedThemes = json.updatedThemes;
+          const updatedThemes: Theme[] = json.updatedThemes;
           if (updatedThemes) {
             setThemes(updatedThemes);
             toast.success(`Thème "${workTheme.name}" supprimé`);
-            if (workTheme.isActive)
+            if (workTheme.isActive) {
               setTimeout(function () {
                 window.location.reload();
               }, 1500);
+            } else {
+              const activeTheme = updatedThemes.find((t: Theme) => t.isActive);
+              if (activeTheme) setWorkTheme({ ...activeTheme });
+            }
           } else toast.error("Erreur à la suppression du thème");
         });
     }
   };
 
-  console.log("themes outside");
-  console.log(themes);
-
   const handleCancel = () => {
-    console.log("themes");
-    console.log(themes);
-    const themeBeforeChange = themes.filter(
-      (t) => t.id.toString() === selectedThemeId,
-    )[0];
-
-    console.log("workTheme");
-    console.log(workTheme);
-    console.log("themeBeforeChange");
-    console.log(themeBeforeChange);
+    const themeBeforeChange = themes.find(
+      (t: Theme) => t.id.toString() === selectedThemeId,
+    );
     if (themeBeforeChange) setWorkTheme({ ...themeBeforeChange });
   };
 

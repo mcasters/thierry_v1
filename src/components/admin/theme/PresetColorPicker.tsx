@@ -4,20 +4,23 @@ import s from "@/styles/admin/AdminTheme.module.css";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FiTrash2 } from "@react-icons/all-files/fi/FiTrash2";
-import { useAdminContext } from "@/app/context/adminProvider";
+import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import Modal from "@/components/admin/form/modal/Modal";
 import useModal from "@/components/admin/form/modal/useModal";
 import { PresetColor, Theme } from "@prisma/client";
+import { useAdminThemesContext } from "@/app/context/adminThemesProvider";
+import { useAdminPresetColorsContext } from "@/app/context/adminPresetColorsProvider";
 
 interface Props {
   presetColor: PresetColor;
 }
 
 export default function PresetColorPicker({ presetColor }: Props) {
+  const { setThemes } = useAdminThemesContext();
+  const { workTheme, setWorkTheme } = useAdminWorkThemeContext();
+  const { presetColors, setPresetColors } = useAdminPresetColorsContext();
   const { isOpen, toggle } = useModal();
-  const { setThemes, workTheme, setWorkTheme, presetColors, setPresetColors } =
-    useAdminContext();
   const [currentColor, setCurrentColor] = useState<string>(presetColor.color);
   const [isToSave, setIsToSave] = useState<boolean>(false);
 
