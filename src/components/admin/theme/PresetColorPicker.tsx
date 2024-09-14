@@ -1,7 +1,7 @@
 "use client";
 
 import s from "@/styles/admin/AdminTheme.module.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FiTrash2 } from "@react-icons/all-files/fi/FiTrash2";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
@@ -11,44 +11,42 @@ import useModal from "@/components/admin/form/modal/useModal";
 import { PresetColor, Theme } from "@prisma/client";
 import { useAdminThemesContext } from "@/app/context/adminThemesProvider";
 import { useAdminPresetColorsContext } from "@/app/context/adminPresetColorsProvider";
+import CancelButton from "@/components/admin/form/CancelButton";
 
 interface Props {
   presetColor: PresetColor;
 }
 
 export default function PresetColorPicker({ presetColor }: Props) {
+  const { isOpen, toggle } = useModal();
   const { setThemes } = useAdminThemesContext();
   const { workTheme, setWorkTheme } = useAdminWorkThemeContext();
-  const { presetColors, setPresetColors } = useAdminPresetColorsContext();
-  const { isOpen, toggle } = useModal();
-  const [currentColor, setCurrentColor] = useState<string>(presetColor.color);
-  const [isToSave, setIsToSave] = useState<boolean>(false);
+  const { setPresetColors } = useAdminPresetColorsContext();
+  const [currentPresetColor, setCurrentPresetColor] =
+    useState<PresetColor>(presetColor);
 
-  useEffect(() => {
-    const newPresetColors = presetColors.map((p) => {
-      if (p.name === presetColor.name)
-        return { id: p.id, name: p.name, color: currentColor };
-      else return p;
-    });
-    setPresetColors(newPresetColors);
-  }, [currentColor]);
+  const updatePresetColor = () => {
+    fetch("admin/api/theme/preset-color/update", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ ...currentPresetColor }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const updatedPresetColors: PresetColor[] = json.updatedPresetColors;
+        if (updatedPresetColors) {
+          setPresetColors(updatedPresetColors);
+          toggle();
+          toast.success("Couleur perso mise à jour");
+        } else toast.error(`Erreur à l'enregistrement`);
+      });
+  };
 
-  useEffect(() => {
-    if (!isToSave) {
-      setIsToSave(true);
-    }
-  }, [currentColor]);
-
-  useEffect(() => {
-    if (!isOpen && isToSave) {
-      updatePresetColor();
-      setIsToSave(false);
-    }
-  }, [isOpen]);
-
-  const remove = (id: number) => {
+  const remove = () => {
     if (confirm("Sûr de vouloir supprimer ?")) {
-      fetch(`admin/api/theme/preset-color/delete/${id}`)
+      fetch(`admin/api/theme/preset-color/delete/${presetColor.id}`)
         .then((res) => res.json())
         .then((json) => {
           const updatedThemes: Theme[] = json.updatedThemes;
@@ -66,27 +64,6 @@ export default function PresetColorPicker({ presetColor }: Props) {
     }
   };
 
-  const updatePresetColor = () => {
-    fetch("admin/api/theme/preset-color/update", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        id: presetColor.id,
-        color: currentColor,
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        const updatedPresetColors: PresetColor[] = json.updatedPresetColors;
-        if (updatedPresetColors) {
-          setPresetColors(updatedPresetColors);
-          toast.success("Couleur perso mise à jour");
-        } else toast.error(`Erreur à l'enregistrement`);
-      });
-  };
-
   return (
     <div className={s.colorContainer}>
       <p className={s.label}>{presetColor.name}</p>
@@ -94,7 +71,7 @@ export default function PresetColorPicker({ presetColor }: Props) {
         <button
           className={`${s.swatch} ${s.presetColor}`}
           style={{
-            backgroundColor: currentColor,
+            backgroundColor: currentPresetColor.color,
           }}
           onClick={(e) => {
             e.preventDefault();
@@ -105,34 +82,45 @@ export default function PresetColorPicker({ presetColor }: Props) {
         <Modal isOpen={isOpen} toggle={toggle}>
           <div className={s.colorPicker}>
             <h3>Modification : {presetColor.name}</h3>
-            <p>(s'appliquera à toutes les couleurs perso du thème)</p>
+            <p>(s&apos;appliquera à toutes les couleurs perso du thème)</p>
             <div className={s.picker}>
-              <HexColorPicker color={currentColor} onChange={setCurrentColor} />
+              <HexColorPicker
+                color={currentPresetColor.color}
+                onChange={(c) =>
+                  setCurrentPresetColor({ ...presetColor, color: c })
+                }
+              />
             </div>
             <p>Couleur sélectionnée (notation hexadécimale) :</p>
             <div>
               <div
                 className={s.halfWidth}
                 style={{
-                  backgroundColor: currentColor,
+                  backgroundColor: currentPresetColor.color,
                 }}
               ></div>
               <HexColorInput
-                color={currentColor}
-                onChange={setCurrentColor}
+                color={currentPresetColor.color}
+                onChange={(c) =>
+                  setCurrentPresetColor({ ...presetColor, color: c })
+                }
                 prefixed={true}
                 className={s.halfWidth}
               />
             </div>
+            <button className="adminButton" onClick={updatePresetColor}>
+              OK
+            </button>
+            <CancelButton onCancel={toggle} />
           </div>
         </Modal>
       </div>
       <button
         className="iconButton"
         aria-label="Supprimer"
-        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+        onClick={(e) => {
           e.preventDefault();
-          remove(presetColor.id);
+          remove();
         }}
       >
         <FiTrash2 />
