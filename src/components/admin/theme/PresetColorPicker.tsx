@@ -55,10 +55,11 @@ export default function PresetColorPicker({ presetColor }: Props) {
           const updatedPresetColors: PresetColor[] = json.updatedPresetColors;
           if (updatedThemes && updatedPresetColors) {
             setThemes(updatedThemes);
-            setWorkTheme(
-              updatedThemes.filter((t) => t.name === workTheme.name)[0],
-            );
             setPresetColors(updatedPresetColors);
+            const workThemeUpdated = updatedThemes.find(
+              (t: Theme) => t.id === workTheme.id,
+            );
+            if (workThemeUpdated) setWorkTheme({ ...workThemeUpdated });
             toast.success("Couleur perso supprimée");
           } else toast.error("Erreur à la suppression");
         });

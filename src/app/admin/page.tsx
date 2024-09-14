@@ -1,4 +1,4 @@
-import AdminThemeComponent from "@/components/admin/theme/AdminThemeComponent";
+import AdminTheme from "@/components/admin/theme/AdminTheme";
 import { getPresetColors, getThemesFull } from "@/app/api/theme/getTheme";
 import { AdminWorkThemeProvider } from "@/app/context/adminWorkThemeProvider";
 import { getActivatedBaseTheme } from "@/lib/db/theme";
@@ -17,7 +17,7 @@ export default async function AdminIndex() {
     <AdminThemesProvider defaultThemes={themes}>
       <AdminWorkThemeProvider defaultWorkTheme={activeTheme}>
         <AdminPresetColorsProvider defaultPresetColors={presetColors}>
-          <AdminThemeComponent />
+          <AdminTheme />
         </AdminPresetColorsProvider>
       </AdminWorkThemeProvider>
     </AdminThemesProvider>

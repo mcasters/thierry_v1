@@ -17,7 +17,7 @@ import { useAdminThemesContext } from "@/app/context/adminThemesProvider";
 SelectedTheme is the set in the workTheme (context)
 activatedTheme is the one who is displayed, and it is independent to the activated theme
  */
-export default function AdminThemeComponent() {
+export default function AdminThemeRoot() {
   const { themes, setThemes } = useAdminThemesContext();
   const { workTheme, setWorkTheme } = useAdminWorkThemeContext();
 

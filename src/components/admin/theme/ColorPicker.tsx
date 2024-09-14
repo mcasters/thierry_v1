@@ -20,38 +20,38 @@ interface Props {
 }
 
 export default function ColorPicker({
-  label,
-  colorLabel,
+  label, // title displayed
+  colorLabel, // key name in theme object
   pageTypeName,
 }: Props) {
-  console.log("Enter");
   const { workTheme, setWorkTheme } = useAdminWorkThemeContext();
   const { presetColors, setPresetColors } = useAdminPresetColorsContext();
   const { isOpen, toggle } = useModal();
   const [isToSave, setIsToSave] = useState<boolean>(false);
+  const [color, setColor] = useState<string>("");
+  const [colorName, setColorName] = useState<string>("");
+  const [isPresetColor, setIsPresetColor] = useState<boolean>(false);
 
-  const [color, setColor] = useState<string>(
-    colorNameToHex(
-      workTheme[colorLabel as keyof OnlyString<Theme>],
-      presetColors,
-    ),
-  );
-  const [colorName, setColorName] = useState<string>(
-    workTheme[colorLabel as keyof OnlyString<Theme>],
-  );
-  const [isPresetColor, setIsPresetColor] = useState<boolean>(
-    workTheme[colorLabel as keyof OnlyString<Theme>].charAt(0) !== "#",
-  );
-
+  // when Mount and when toggle theme and when delete presetColor
   useEffect(() => {
-    if (!isToSave) {
-      setIsToSave(true);
+    const _color = workTheme[colorLabel as keyof OnlyString<Theme>];
+    const _isPresetColor = _color.charAt(0) !== "#";
+    setColor(_isPresetColor ? colorNameToHex(_color, presetColors) : _color);
+    setColorName(_isPresetColor ? _color : "");
+    setIsPresetColor(_isPresetColor);
+  }, [workTheme]);
+
+  // When mount and when modifying and NOT adding presetColor.
+  useEffect(() => {
+    if (!isToSave && isPresetColor) {
+      const _color = workTheme[colorLabel as keyof OnlyString<Theme>];
+      setColor(colorNameToHex(_color, presetColors));
     }
-  }, [color]);
+  }, [presetColors]);
 
   // When close modal : save in workTheme
   useEffect(() => {
-    if (!isOpen && isToSave) {
+    if (isToSave && !isOpen) {
       const updatedWorkTheme = workTheme;
       updatedWorkTheme[colorLabel as keyof OnlyString<Theme>] = isPresetColor
         ? colorName
@@ -61,28 +61,14 @@ export default function ColorPicker({
     }
   }, [isOpen]);
 
-  // When user is changing workTheme : realtime update
-  useEffect(() => {
-    const _color = workTheme[colorLabel as keyof OnlyString<Theme>];
-    setColor(colorNameToHex(_color, presetColors));
-    setColorName(_color);
-    setIsPresetColor(_color.charAt(0) !== "#");
-  }, [workTheme]);
-
-  // When user is changing presetColors : realtime update
-  useEffect(() => {
-    if (isPresetColor) {
-      setColor(colorNameToHex(colorName, presetColors));
-    }
-  }, [presetColors]);
-
   const handleChange = (hex: string, name: string | undefined): void => {
     setColor(hex);
     setColorName(name ? name : hex);
     setIsPresetColor(!!name);
+    setIsToSave(true);
   };
 
-  const savePresetColor = (colorName: string) => {
+  const addPresetColor = (colorName: string) => {
     fetch("admin/api/theme/preset-color/add", {
       method: "POST",
       headers: {
@@ -150,7 +136,7 @@ export default function ColorPicker({
               <ColorPickerPresetColor
                 colorLabel={colorLabel}
                 onChange={handleChange}
-                onSave={savePresetColor}
+                onSave={addPresetColor}
               />
             </div>
           </Modal>
