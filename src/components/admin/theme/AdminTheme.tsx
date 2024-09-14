@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import themeStyle from "../../../styles/admin/AdminTheme.module.css";
 import toast from "react-hot-toast";
 import ThemeAdd from "@/components/admin/theme/ThemeAdd";
@@ -13,33 +13,19 @@ import { NOTES } from "@/constants/admin";
 import CancelButton from "@/components/admin/form/CancelButton";
 import { useAdminThemesContext } from "@/app/context/adminThemesProvider";
 
-/*
-SelectedTheme is the set in the workTheme (context)
-activatedTheme is the one who is displayed, and it is independent to the activated theme
- */
 export default function AdminTheme() {
   const { themes, setThemes } = useAdminThemesContext();
   const { workTheme, setWorkTheme } = useAdminWorkThemeContext();
 
-  const [selectedThemeId, setSelectedThemeId] = useState<string>(
-    workTheme.id.toString(),
-  );
-
-  useEffect(() => {
-    setSelectedThemeId(workTheme.id.toString());
-  }, [workTheme]);
-
-  useEffect(() => {
+  const changeSelectedId = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTheme = themes.find(
-      (t: Theme) => t.id.toString() === selectedThemeId,
+      (t) => t.id.toString() === e.target.value,
     );
-    if (selectedTheme) {
-      setWorkTheme({ ...selectedTheme });
-    }
-  }, [selectedThemeId]);
+    if (selectedTheme) setWorkTheme({ ...selectedTheme });
+  };
 
   const activateTheme = () => {
-    fetch(`admin/api/theme/activate/${selectedThemeId}`, {
+    fetch(`admin/api/theme/activate/${workTheme.id}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -63,7 +49,7 @@ export default function AdminTheme() {
         `As-tu vraiment confiance ??? ... Plutôt que de supprimer le thème "${workTheme.name}", ça pourrait supprimer l'intégralité du contenu de ton ordinateur !`,
       )
     ) {
-      fetch(`admin/api/theme/delete/${selectedThemeId}`, {
+      fetch(`admin/api/theme/delete/${workTheme.id}`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -89,9 +75,7 @@ export default function AdminTheme() {
   };
 
   const handleCancel = () => {
-    const themeBeforeChange = themes.find(
-      (t: Theme) => t.id.toString() === selectedThemeId,
-    );
+    const themeBeforeChange = themes.find((t: Theme) => t.id === workTheme.id);
     if (themeBeforeChange) setWorkTheme({ ...themeBeforeChange });
   };
 
@@ -100,11 +84,7 @@ export default function AdminTheme() {
       <h1 className={themeStyle.pageTitle}>Gestion du thème</h1>
       <div className={themeStyle.themeContainer}>
         <h2>Liste des thèmes :</h2>
-        <select
-          name="name"
-          value={selectedThemeId}
-          onChange={(e) => setSelectedThemeId(e.target.value)}
-        >
+        <select name="name" value={workTheme.id} onChange={changeSelectedId}>
           {themes.map((t: Theme) => (
             <option key={t.id} value={t.id}>
               {`${t.name} ${t.isActive ? `(ACTIF)` : ""}`}

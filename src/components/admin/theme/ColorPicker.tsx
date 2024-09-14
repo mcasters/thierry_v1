@@ -3,7 +3,7 @@
 import { Theme } from "@prisma/client";
 import useModal from "@/components/admin/form/modal/useModal";
 import Modal from "@/components/admin/form/modal/Modal";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import s from "@/styles/admin/AdminTheme.module.css";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
@@ -27,45 +27,11 @@ export default function ColorPicker({
   const { workTheme, setWorkTheme } = useAdminWorkThemeContext();
   const { presetColors, setPresetColors } = useAdminPresetColorsContext();
   const { isOpen, toggle } = useModal();
-  const [isToSave, setIsToSave] = useState<boolean>(false);
-  const [color, setColor] = useState<string>("");
-  const [colorName, setColorName] = useState<string>("");
-  const [isPresetColor, setIsPresetColor] = useState<boolean>(false);
 
-  // when Mount and when toggle theme and when delete presetColor
-  useEffect(() => {
-    const _color = workTheme[colorLabel as keyof OnlyString<Theme>];
-    const _isPresetColor = _color.charAt(0) !== "#";
-    setColor(_isPresetColor ? colorNameToHex(_color, presetColors) : _color);
-    setColorName(_isPresetColor ? _color : "");
-    setIsPresetColor(_isPresetColor);
-  }, [workTheme]);
-
-  // When mount and when modifying and NOT adding presetColor.
-  useEffect(() => {
-    if (!isToSave && isPresetColor) {
-      const _color = workTheme[colorLabel as keyof OnlyString<Theme>];
-      setColor(colorNameToHex(_color, presetColors));
-    }
-  }, [presetColors]);
-
-  // When close modal : save in workTheme
-  useEffect(() => {
-    if (isToSave && !isOpen) {
-      const updatedWorkTheme = workTheme;
-      updatedWorkTheme[colorLabel as keyof OnlyString<Theme>] = isPresetColor
-        ? colorName
-        : color;
-      setWorkTheme(updatedWorkTheme);
-      setIsToSave(false);
-    }
-  }, [isOpen]);
-
-  const handleChange = (hex: string, name: string | undefined): void => {
-    setColor(hex);
-    setColorName(name ? name : hex);
-    setIsPresetColor(!!name);
-    setIsToSave(true);
+  const handleChange = (color: string): void => {
+    const updatedWorkTheme = { ...workTheme };
+    updatedWorkTheme[colorLabel as keyof OnlyString<Theme>] = color;
+    setWorkTheme(updatedWorkTheme);
   };
 
   const addPresetColor = (colorName: string) => {
@@ -76,7 +42,7 @@ export default function ColorPicker({
       },
       body: JSON.stringify({
         name: colorName,
-        color: color,
+        color: workTheme[colorLabel as keyof OnlyString<Theme>],
       }),
     })
       .then((res) => res.json())
@@ -84,7 +50,7 @@ export default function ColorPicker({
         const updatedPresetColors = json.updatedPresetColors;
         if (updatedPresetColors) {
           setPresetColors(updatedPresetColors);
-          handleChange(color, colorName);
+          handleChange(colorName);
           toast.success("Couleur perso enregistrée");
         } else toast.error(`Erreur à l'enregistrement`);
       });
@@ -97,10 +63,18 @@ export default function ColorPicker({
         <div className={s.colorPickerContainer}>
           <button
             className={
-              isOpen ? s.swatchOpen : isPresetColor ? s.swatchFocus : s.swatch
+              isOpen
+                ? s.swatchOpen
+                : workTheme[colorLabel as keyof OnlyString<Theme>].charAt(0) !==
+                  "#"
+                ? s.swatchFocus
+                : s.swatch
             }
             style={{
-              backgroundColor: color,
+              backgroundColor: colorNameToHex(
+                workTheme[colorLabel as keyof OnlyString<Theme>],
+                presetColors,
+              ),
             }}
             onClick={(e) => {
               e.preventDefault();
@@ -114,8 +88,11 @@ export default function ColorPicker({
               </h3>
               <div className={s.picker}>
                 <HexColorPicker
-                  color={color}
-                  onChange={(e) => handleChange(e, undefined)}
+                  color={colorNameToHex(
+                    workTheme[colorLabel as keyof OnlyString<Theme>],
+                    presetColors,
+                  )}
+                  onChange={handleChange}
                 />
               </div>
               <p>Couleur sélectionnée (notation hexadécimale) :</p>
@@ -123,12 +100,18 @@ export default function ColorPicker({
                 <div
                   className={s.halfWidth}
                   style={{
-                    backgroundColor: color,
+                    backgroundColor: colorNameToHex(
+                      workTheme[colorLabel as keyof OnlyString<Theme>],
+                      presetColors,
+                    ),
                   }}
                 ></div>
                 <HexColorInput
-                  color={color}
-                  onChange={(e) => handleChange(e, undefined)}
+                  color={colorNameToHex(
+                    workTheme[colorLabel as keyof OnlyString<Theme>],
+                    presetColors,
+                  )}
+                  onChange={handleChange}
                   prefixed={true}
                   className={s.halfWidth}
                 />

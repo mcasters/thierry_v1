@@ -9,7 +9,7 @@ import { useAdminPresetColorsContext } from "@/app/context/adminPresetColorsProv
 
 interface Props {
   colorLabel: string;
-  onChange: (color: string, name: string) => void;
+  onChange: (colorName: string) => void;
   onSave: (colorName: string) => void;
 }
 
@@ -20,14 +20,10 @@ export default function ColorPickerPresetPart({
 }: Props) {
   const { workTheme } = useAdminWorkThemeContext();
   const { presetColors } = useAdminPresetColorsContext();
-  const [currentColor, setCurrentColor] = useState<string>(
-    workTheme[colorLabel as keyof OnlyString<Theme>],
-  );
   const [nameToSave, setNameToSave] = useState<string>("");
 
   const handleSave = () => {
     onSave(nameToSave);
-    setCurrentColor(nameToSave);
     setNameToSave("");
   };
   return (
@@ -51,14 +47,17 @@ export default function ColorPickerPresetPart({
         {presetColors.map((p) => (
           <div key={p.id} className={s.presetColorContainer}>
             <button
-              className={p.name === currentColor ? s.swatchFocus : s.swatch}
+              className={
+                p.name === workTheme[colorLabel as keyof OnlyString<Theme>]
+                  ? s.swatchFocus
+                  : s.swatch
+              }
               style={{
                 background: p.color,
               }}
               onClick={(e) => {
                 e.preventDefault();
-                onChange(p.color, p.name);
-                setCurrentColor(p.name);
+                onChange(p.name);
               }}
             />
             <p className={s.colorName}>{p.name}</p>
