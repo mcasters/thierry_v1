@@ -12,21 +12,27 @@ import ThemeUpdate from "@/components/admin/theme/ThemeUpdate";
 import { NOTES } from "@/constants/admin";
 import CancelButton from "@/components/admin/form/CancelButton";
 
-interface Props {
-  themes: Theme[];
-}
-
-export default function AdminThemeComponent({ themes }: Props) {
-  const { workTheme, setWorkTheme } = useAdminContext();
+/*
+SelectedTheme is the set in the workTheme (context)
+activatedTheme is the one who is displayed, and it is independent to the activated theme
+ */
+export default function AdminThemeComponent() {
+  const { themes, setThemes, workTheme, setWorkTheme } = useAdminContext();
   const [selectedThemeId, setSelectedThemeId] = useState<string>(
     workTheme.id.toString(),
   );
 
   useEffect(() => {
-    const selectedTheme = themes.find(
+    setSelectedThemeId(workTheme.id.toString());
+  }, [workTheme]);
+
+  useEffect(() => {
+    const selectedTheme = themes.filter(
       (t) => t.id.toString() === selectedThemeId,
-    );
-    if (selectedTheme) setWorkTheme({ ...selectedTheme });
+    )[0];
+    if (selectedTheme) {
+      setWorkTheme({ ...selectedTheme });
+    }
   }, [selectedThemeId]);
 
   const activateTheme = () => {
@@ -35,40 +41,60 @@ export default function AdminThemeComponent({ themes }: Props) {
       headers: {
         "Content-type": "application/json",
       },
-    }).then((res) => {
-      if (res.ok) {
-        toast.success(`Thème "${workTheme.name}" actif`);
-        setTimeout(function () {
-          window.location.reload();
-        }, 1500);
-      } else toast.error("Erreur à la mise en place du thème actif");
-    });
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const activatedTheme = json.activatedTheme;
+        if (activatedTheme) {
+          toast.success(`Thème "${activatedTheme.name}" actif`);
+          setTimeout(function () {
+            window.location.reload();
+          }, 1500);
+        } else toast.error("Erreur à l'activation du thème");
+      });
   };
 
   const DeleteTheme = () => {
-    if (confirm("Tu confirmes ?")) {
+    if (
+      confirm(
+        `As-tu vraiment confiance ??? ... Plutôt que de supprimer le thème "${workTheme.name}", ça pourrait supprimer l'intégralité du contenu de ton ordinateur !`,
+      )
+    ) {
       fetch(`admin/api/theme/delete/${selectedThemeId}`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
         },
       })
-        .then((res) => {
-          if (res.ok) {
+        .then((res) => res.json())
+        .then((json) => {
+          const updatedThemes = json.updatedThemes;
+          if (updatedThemes) {
+            setThemes(updatedThemes);
             toast.success(`Thème "${workTheme.name}" supprimé`);
-            setTimeout(function () {
-              window.location.reload();
-            }, 1500);
-          }
-        })
-        .catch((err) => toast.error(`Erreur : ${err}`));
+            if (workTheme.isActive)
+              setTimeout(function () {
+                window.location.reload();
+              }, 1500);
+          } else toast.error("Erreur à la suppression du thème");
+        });
     }
   };
 
+  console.log("themes outside");
+  console.log(themes);
+
   const handleCancel = () => {
-    const themeBeforeChange = themes.find(
+    console.log("themes");
+    console.log(themes);
+    const themeBeforeChange = themes.filter(
       (t) => t.id.toString() === selectedThemeId,
-    );
+    )[0];
+
+    console.log("workTheme");
+    console.log(workTheme);
+    console.log("themeBeforeChange");
+    console.log(themeBeforeChange);
     if (themeBeforeChange) setWorkTheme({ ...themeBeforeChange });
   };
 
@@ -100,14 +126,15 @@ export default function AdminThemeComponent({ themes }: Props) {
         </button>
       </div>
       <div className={themeStyle.themeContainer}>
+        <h2>Thème sélectionné :</h2>
         <ThemeDashboard />
       </div>
       <div className={themeStyle.themeActionContainer}>
-        <ThemeUpdate theme={workTheme} />
+        <ThemeUpdate />
         <CancelButton onCancel={handleCancel} text="Annuler les changements" />
       </div>
       <div className={themeStyle.themeActionContainer}>
-        <ThemeAdd newTheme={workTheme} />
+        <ThemeAdd />
       </div>
       <div className={themeStyle.noteContainer}>
         <h2>NOTES</h2>

@@ -10,7 +10,7 @@ export async function POST(req: Request) {
       const themeToUpdate = await req.json();
       const { id, ...rest } = themeToUpdate;
 
-      await prisma.theme.update({
+      const updatedTheme = await prisma.theme.update({
         where: {
           id,
         },
@@ -19,7 +19,12 @@ export async function POST(req: Request) {
         },
       });
 
-      return NextResponse.json({ message: "ok" }, { status: 200 });
+      let themes = null;
+      if (updatedTheme) themes = await prisma.theme.findMany();
+
+      return NextResponse.json({
+        themes: JSON.parse(JSON.stringify(themes)),
+      });
     } catch (e) {
       console.log(e);
       return NextResponse.json({ error: "Error" }, { status: 404 });

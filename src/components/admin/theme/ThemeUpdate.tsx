@@ -3,14 +3,12 @@
 import React from "react";
 import toast from "react-hot-toast";
 import s from "@/styles/admin/AdminTheme.module.css";
-import { Theme } from "@prisma/client";
 import { THEME } from "@/constants/database";
+import { useAdminContext } from "@/app/context/adminProvider";
 
-interface Props {
-  theme: Theme;
-}
-export default function ThemeUpdate({ theme }: Props) {
-  const name = theme.name;
+export default function ThemeUpdate() {
+  const { setThemes, workTheme } = useAdminContext();
+  const name = workTheme.name;
   const isBaseTheme = name === THEME.BASE_THEME;
 
   const updateTheme = () => {
@@ -19,15 +17,22 @@ export default function ThemeUpdate({ theme }: Props) {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(theme),
-    }).then((res) => {
-      if (res.ok) {
-        toast.success(`Thème "${name}" mis à jour`);
-        setTimeout(function () {
-          window.location.reload();
-        }, 1500);
-      } else toast.error("Erreur à l'enregistrement");
-    });
+      body: JSON.stringify(workTheme),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const themes = json.themes;
+        if (themes) {
+          toast.success(`Thème "${workTheme.name}" mis à jour`);
+          if (workTheme.isActive) {
+            setTimeout(function () {
+              window.location.reload();
+            }, 1500);
+          } else {
+            setThemes(themes);
+          }
+        } else toast.error("Erreur à la mise à jour du thème");
+      });
   };
 
   return (

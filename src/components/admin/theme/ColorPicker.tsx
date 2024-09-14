@@ -27,6 +27,7 @@ export default function ColorPicker({
   const [isToSave, setIsToSave] = useState<boolean>(false);
   const { workTheme, setWorkTheme, presetColors, setPresetColors } =
     useAdminContext();
+
   const [color, setColor] = useState<string>(
     colorNameToHex(
       workTheme[colorLabel as keyof OnlyString<Theme>],

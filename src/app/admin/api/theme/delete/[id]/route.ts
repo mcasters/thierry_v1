@@ -4,6 +4,7 @@ import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
 import { THEME } from "@/constants/database";
+import { Theme } from "@prisma/client";
 
 export async function POST(
   req: Request,
@@ -14,6 +15,7 @@ export async function POST(
   if (session) {
     try {
       const id = parseInt(params.id);
+      let updatedThemes: Theme[] | null = null;
 
       const themeToDelete = await prisma.theme.findUnique({
         where: {
@@ -42,9 +44,11 @@ export async function POST(
         await prisma.theme.delete({
           where: { id },
         });
+        updatedThemes = await prisma.theme.findMany();
       }
-
-      return NextResponse.json({ message: "ok" }, { status: 200 });
+      return NextResponse.json({
+        updatedThemes: JSON.parse(JSON.stringify(updatedThemes)),
+      });
     } catch (e) {
       console.log(e);
       return NextResponse.json({ error: "Error" }, { status: 404 });

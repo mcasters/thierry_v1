@@ -9,15 +9,24 @@ export async function POST(req: Request) {
   if (session) {
     try {
       const theme = await req.json();
-      const { id, ...rest } = theme;
+      const { id, isActive, ...rest } = theme;
+      let themes = null;
 
-      await prisma.theme.create({
+      const newTheme = await prisma.theme.create({
         data: {
+          isActive: false,
           ...rest,
         },
       });
 
-      return NextResponse.json({ message: "ok" }, { status: 200 });
+      if (newTheme) {
+        themes = await prisma.theme.findMany();
+      }
+
+      return NextResponse.json({
+        themes: JSON.parse(JSON.stringify(themes)),
+        newTheme: JSON.parse(JSON.stringify(newTheme)),
+      });
     } catch (e) {
       console.log(e);
       return NextResponse.json({ error: "Error" }, { status: 404 });

@@ -3,17 +3,15 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import s from "@/styles/admin/AdminTheme.module.css";
-import { Theme } from "@prisma/client";
+import { useAdminContext } from "@/app/context/adminProvider";
 
-interface Props {
-  newTheme: Theme;
-}
-export default function ThemeAdd({ newTheme }: Props) {
+export default function ThemeAdd() {
+  const { setThemes, workTheme, setWorkTheme } = useAdminContext();
   const [themeName, setThemeName] = useState<string>("");
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const themeToSave = Object.assign({}, newTheme, {
+    const themeToSave = Object.assign({}, workTheme, {
       name: themeName,
     });
     if (confirm("Tu confirmes ?")) {
@@ -23,14 +21,18 @@ export default function ThemeAdd({ newTheme }: Props) {
           "Content-type": "application/json",
         },
         body: JSON.stringify(themeToSave),
-      }).then((res) => {
-        if (res.ok) {
-          toast.success(`Thème "${themeName}" sauvegardé`);
-          setTimeout(function () {
-            window.location.reload();
-          }, 1500);
-        } else toast.error("Erreur à l'enregistrement");
-      });
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          const themes = json.themes;
+          const newTheme = json.newTheme;
+          if (themes) {
+            setThemes(themes);
+            setWorkTheme(newTheme);
+            setThemeName("");
+            toast.success(`Thème "${themeName}" sauvegardé`);
+          } else toast.error("Erreur à l'enregistrement du thème");
+        });
     }
   };
 
@@ -49,7 +51,7 @@ export default function ThemeAdd({ newTheme }: Props) {
         style={{ marginRight: "0" }}
       />
       <button type="submit" className="adminButton" style={{ marginLeft: "0" }}>
-        Mémoriser le thème
+        Mémoriser en nouveau thème
       </button>
     </form>
   );
