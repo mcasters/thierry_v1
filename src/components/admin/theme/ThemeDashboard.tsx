@@ -40,6 +40,11 @@ export default function ThemeDashboard() {
       <section>
         <h3 className={s.sectionTitle}>{PAGE_TYPE.HOME}</h3>
         <ColorPicker
+          label="Couleur du titre"
+          colorLabel="titleColor"
+          pageTypeName={PAGE_TYPE.HOME}
+        />
+        <ColorPicker
           label="Couleur de fond du menu 1"
           colorLabel="menu1HomeColor"
           pageTypeName={PAGE_TYPE.HOME}

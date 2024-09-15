@@ -137,6 +137,7 @@ export const getBaseThemeData = () => {
     backgroundColorItem: "#24445C",
     color: "#2e6177",
     colorItem: "#a4874f",
+    titleColor: "#2e6177",
 
     linkColor: "#2e6177",
     linkHoverColor: "#66c3d3",

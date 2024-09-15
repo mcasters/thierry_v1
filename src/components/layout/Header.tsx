@@ -8,6 +8,8 @@ import Nav_2 from "@/components/layout/Nav_2";
 import s from "../../styles/Header.module.css";
 import { GENERAL } from "@/constants";
 import { BASE_PATH } from "@/constants/routes";
+import { useTheme } from "@/app/context/themeProvider";
+import React from "react";
 
 interface Props {
   basePath: string;
@@ -21,6 +23,7 @@ export default function Header({
   paintingCategories,
   sculptureCategories,
 }: Props) {
+  const theme = useTheme();
   const { isUpTo: titleDisappear, ref: titleRef } = useElementIsUpTo(
     LAYOUT.LINE_HEIGHT,
   );
@@ -53,7 +56,7 @@ export default function Header({
     <header className={s.container}>
       {isHome && (
         <div ref={titleRef}>
-          <h1 className={s.title}>{GENERAL.SITE_TITLE}</h1>
+          <h1 className={`${s.title} title`}>{GENERAL.SITE_TITLE}</h1>
         </div>
       )}
       <Nav_1
@@ -81,6 +84,11 @@ export default function Header({
           height: LAYOUT.NAV_2_HEIGHT,
         }}
       />
+      <style jsx>{`
+        .title {
+          color: ${theme.titleColor};
+        }
+      `}</style>
     </header>
   );
 }

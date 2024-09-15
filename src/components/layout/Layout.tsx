@@ -58,12 +58,10 @@ export default function Layout({
           <Footer />
         </>
       )}
-      <style jsx>{`
+      <style jsx global>{`
         .line {
           background-color: ${theme.lineColor};
         }
-      `}</style>
-      <style jsx global>{`
         .wrapper {
           background-color: ${theme.backgroundColor};
           color: ${theme.color};
