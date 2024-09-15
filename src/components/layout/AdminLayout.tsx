@@ -2,8 +2,8 @@
 
 import { ReactNode } from "react";
 
-import Main from "@/components/layout-components/Main";
-import AdminNav from "@/components/layout-components/AdminNav";
+import Main from "@/components/layout/Main";
+import AdminNav from "@/components/layout/AdminNav";
 import s from "@/styles/admin/Admin.module.css";
 
 interface Props {

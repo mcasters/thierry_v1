@@ -1,6 +1,6 @@
 import React from "react";
 
-import AdminLayout from "@/components/layout-components/AdminLayout";
+import AdminLayout from "@/components/layout/AdminLayout";
 import { Metadata } from "next";
 import { DESCRIPTION, DOCUMENT_TITLE } from "@/constants/metaHtml";
 

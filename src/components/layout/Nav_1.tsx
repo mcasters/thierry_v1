@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { PaintingCategory, SculptureCategory } from "@prisma/client";
 import { BASE_PATH, MENU_1 } from "@/constants/routes";
-import Dropdown from "@/components/layout-components/DropDown";
+import Dropdown from "@/components/layout/DropDown";
 import s from "@/styles/Nav_1.module.css";
 import { useTheme } from "@/app/context/themeProvider";
 import LAYOUT from "@/constants/layout";

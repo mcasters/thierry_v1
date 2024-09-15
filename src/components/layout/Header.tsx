@@ -4,7 +4,7 @@ import { PaintingCategory, SculptureCategory } from "@prisma/client";
 import useElementIsUpTo from "@/components/hooks/useElementIsUpTo";
 import LAYOUT from "@/constants/layout";
 import Nav_1 from "./Nav_1";
-import Nav_2 from "@/components/layout-components/Nav_2";
+import Nav_2 from "@/components/layout/Nav_2";
 import s from "../../styles/Header.module.css";
 import { GENERAL } from "@/constants";
 import { BASE_PATH } from "@/constants/routes";
