@@ -11,10 +11,5 @@
 }
 
 .main {
-    /*background: linear-gradient(*/
-    /*        to bottom,*/
-    /*        transparent,*/
-    /*        var(--color-light)*/
-    /*) var(--color-xlight);*/
     text-align: center;
 }

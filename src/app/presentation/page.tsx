@@ -18,16 +18,15 @@ export default async function Presentation() {
     <>
       <div className={s.contentWrapper}>
         {presentation?.images.length > 0 && (
-          <div className={s.imageContainer}>
+          <div className={s.imageWrap}>
             <Image
               src={`/images/miscellaneous/sm/${presentation.images[0].filename}`}
-              width={300}
-              height={300}
+              sizes="(max-width: 768px) 80vw, 50vw"
+              fill={true}
               alt="Photographie de présentation de Thierry Casters"
               style={{
                 objectFit: "contain",
               }}
-              unoptimized={true}
             />
           </div>
         )}

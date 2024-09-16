@@ -1,5 +1,12 @@
-.contactContainer {
-  padding: 10em;
+.container {
+  padding: 8rem 2rem 2rem;
+}
+
+/* desktop */
+@media (min-width: 769px) {
+  .container {
+    padding: 10em;
+  }
 }
 
 .title {

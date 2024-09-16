@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function layout({ children }: { children: ReactNode }) {
   return (
-    <div className={s.presentationContainer}>
+    <div className={s.container}>
       <h1 className={s.title}>Présentation</h1>
       {children}
     </div>

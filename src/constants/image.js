@@ -1,10 +1,10 @@
 export const IMAGE = {
   SM_PX: 384,
-  MD_PX: 640,
+  MD_PX: 768,
   MAX_PX: 2000,
 };
 
 export const DEVICE = {
-  SMALL: 640,
+  SMALL: 768,
   MEDIUM: 1200,
 };

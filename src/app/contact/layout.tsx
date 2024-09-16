@@ -13,5 +13,5 @@ export default async function layout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className={s.contactContainer}>{children}</div>;
+  return <div className={s.container}>{children}</div>;
 }

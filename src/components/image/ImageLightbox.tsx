@@ -14,16 +14,14 @@ type Props = {
   images: IImage[] | PostImage[];
   type: string;
   alt: string;
-  heightVh?: number;
-  isCentred?: boolean;
+  isCentered?: boolean;
 };
 
 export default function ImageLightbox({
   images,
   type,
   alt,
-  heightVh,
-  isCentred,
+  isCentered,
 }: Props) {
   const oneImage = type === TYPE.PAINTING || images.length === 1;
   const [open, setOpen] = useState(false);
@@ -38,8 +36,8 @@ export default function ImageLightbox({
       className={
         !oneImage
           ? s.imageGridContainer
-          : isCentred
-          ? s.imageCentredContainer
+          : isCentered
+          ? s.imageCenteredContainer
           : undefined
       }
     >
@@ -50,10 +48,6 @@ export default function ImageLightbox({
             type="button"
             onClick={() => setOpen(true)}
             className={s.imageWrap}
-            style={{
-              height: heightVh ? `${heightVh}vh` : "45vh",
-              width: "100%",
-            }}
           >
             <Image
               loader={({ src, width, quality }) => {
@@ -65,6 +59,7 @@ export default function ImageLightbox({
               sizes="(max-width: 768px) 80vw, 50vw"
               style={{
                 objectFit: "contain",
+                padding: oneImage ? 0 : "0.5rem",
               }}
               alt={alt}
             />
@@ -92,13 +87,12 @@ export default function ImageLightbox({
                 sizes="100vw"
                 style={{
                   objectFit: "contain",
-                  padding: "2em",
+                  padding: rect.width <= DEVICE.SMALL ? "1em" : "2em",
                 }}
                 alt={alt}
                 src={slide.src}
                 loading="eager"
                 draggable={false}
-                className={s.image}
               />
             ),
             buttonPrev: () => null,
@@ -126,13 +120,12 @@ export default function ImageLightbox({
                 sizes="100vw"
                 style={{
                   objectFit: "contain",
-                  padding: "2em",
+                  padding: rect.width <= DEVICE.SMALL ? "1em" : "2em",
                 }}
                 alt={alt}
                 src={slide.src}
                 loading="eager"
                 draggable={false}
-                className={s.image}
               />
             ),
           }}

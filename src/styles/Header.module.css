@@ -16,7 +16,14 @@
 }
 
 .intro {
-  padding: 5em 10em;
+  padding: 5em 2em;
   white-space: pre-line;
   z-index: 2;
+}
+
+/* desktop */
+@media (min-width: 769px) {
+  .intro {
+    padding: 5em 10em;
+  }
 }

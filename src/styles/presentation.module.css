@@ -1,22 +1,45 @@
-.presentationContainer {
+.container {
   white-space: pre-line;
-  padding: 3em 10em;
+  padding: 1.3rem;
+}
+
+/* desktop */
+@media (min-width: 769px) {
+  .container {
+    padding: 3rem 10rem;
+  }
 }
 
 .title {
   display: none;
 }
 
-.presentationContainer h2 {
-  padding: 2em;
+.container h2 {
+  padding: 2rem;
 }
 
 .contentWrapper {
-  padding: 4em 0;
+  padding: 2rem 0;
 }
 
-.imageContainer {
+/* desktop */
+@media (min-width: 769px) {
+  .contentWrapper {
+    padding: 4rem 0;
+  }
+}
+
+.imageWrap {
+  position: relative;
   display: inline-block;
-  padding: 2em;
-  margin: 0.6em;
+  padding: 2rem;
+  height: 70vw;
+  width: 100%;
+}
+
+/* desktop */
+@media (min-width: 769px) {
+  .imageWrap {
+    height: 40vh;
+  }
 }

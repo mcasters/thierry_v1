@@ -19,8 +19,7 @@
    * Layout
    * ======================================================================== */
 
-  --max-content-width: 540px;
-  --max-content-half-width: 270px;
+  --max-width: 540px;
   --admin-nav-height: 90px;
   --nav-2-height: 55px;
   /*
@@ -58,70 +57,12 @@
   --color-brown2: #72402b;
   --color-brown: #5c3524;
 
-  --color-line: var(--color-brown1);
-  /*
-  home
-   */
-  --color-background-menu1-home-fix: var(--color-light);
-  --color-background-menu2-home-fix: var(--color-xlight-rgb);
-  --color-link-menu2-home: var(--color-prussian-blue);
-  --color-link-menu2-home-hover: var(--color-blue-xlight);
-
   /*
   common home and other pages
    */
-  --color-link-menu1: var(--color-blue-light);
-  --color-link-menu1-hover: var(--color-brown1);
 
   --color-border-menu1: var(--color-medium);
   --color-border-menu2: var(--color-medium);
-
-  /*
-  Other pages
-   */
-  --color-background-menu1: var(--color-light);
-  --color-background-menu2: var(--color-xlight);
-  --color-link-menu2: var(--color-brown1);
-  --color-link-menu2-hover: var(--color-brown1);
-
-  /*
-  Item pages
-  */
-  --color-background-menu1-item: var(--color-blue-xdark);
-  --color-background-menu2-item: var(--color-blue-dark);
-  --color-link-menu1-item: var(--color-blue-xlight);
-  --color-link-menu1-item-hover: var(--color-blue-xxlight);
-  --color-link-menu2-item: var(--color-blue-xxlight);
-  --color-link-menu2-item-hover: var(--color-blue-xxxlight);
-
-
-
-  --max-width: 85vw;
-  --border-radius: 12px;
-
-  /*
-    --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
-    --secondary-glow: linear-gradient(
-            to bottom right,
-            rgba(1, 65, 255, 0),
-            rgba(1, 65, 255, 0),
-            rgba(1, 65, 255, 0.3)
-    );
-
-   */
-
-  --primary-glow: conic-gradient(
-          from 180deg at 50% 50%,
-          #16abff33 0deg,
-          #0885ff33 55deg,
-          #54d6ff33 120deg,
-          #24445C 160deg,
-          transparent 360deg
-  );
-  --secondary-glow: radial-gradient(
-          rgba(var(--color-blue-medium-rgb), 1),
-          rgba(var(--color-blue-medium-rgb), 0)
-  );
 
   /*
    * Parallax
@@ -145,14 +86,6 @@ body {
   font-size: var(--font-size);
   -webkit-font-smoothing: antialiased;
   line-height: 1.375;
-  /*
-  background: linear-gradient(
-          to bottom,
-          transparent,
-          rgb(var(--color-blue-xdark-rgb))
-  )
-  rgb(var(--color-blue-dark-rgb));
-   */
 }
 
 html,
@@ -187,7 +120,7 @@ a:hover, .buttonLink:hover, a:focus,
   border: none;
   background: none;
   font-size: var(--font-size-plus);
-  padding: 0.3em;
+  padding: 0.3rem;
   margin: 0;
   box-shadow: none;
 }
@@ -251,7 +184,7 @@ figure {
  */
 
 textarea {
-  padding: 0.5em;
+  padding: 0.5rem;
   resize: vertical;
   line-height: 2.3;
   width: 100%;
@@ -259,7 +192,7 @@ textarea {
 
 input,
 select {
-  padding: 0.5em;
+  padding: 0.5rem;
   width: 100%;
   line-height: 2.3;
 }
@@ -274,15 +207,15 @@ label {
   display: inline-block;
   width: 100%;
   text-align: left;
-  margin-top: 1em;
+  margin-top: 1rem;
 }
 
 .adminButton,
 [type="submit"],
 [type="reset"] {
   width: 25%;
-  padding: 0.5em;
-  margin: 0.5em;
+  padding: 0.5rem;
+  margin: 0.5rem;
   line-height: 2.3;
 }
 
@@ -295,10 +228,10 @@ label {
  * ========================================================================== */
 
 :global(.browserupgrade) {
-  margin: 0.2em 0;
+  margin: 0.2rem 0;
   background: #ccc;
   color: #000;
-  padding: 0.2em 0;
+  padding: 0.2rem 0;
 }
 
 /*

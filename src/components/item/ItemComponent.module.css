@@ -1,17 +1,13 @@
-.article {
-    padding-bottom: 10em;
-}
-
 .article h2 {
     font-size: var(--font-size-plus);
 }
 
 .article p {
-    padding-bottom: 1em;
+    padding-bottom: 1rem;
     font-size: var(--font-size-min);
 }
 
 .info {
-    padding-top: 1em;
+    padding-top: 1rem;
     white-space: pre-line;
 }

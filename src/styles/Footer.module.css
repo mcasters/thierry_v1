@@ -1,6 +1,13 @@
 .footer {
   text-align: center;
-  padding: 3rem;
+  padding: 0.5rem;
+}
+
+/* desktop */
+@media (min-width: 769px) {
+    .footer {
+        padding: 3rem;
+    }
 }
 
 .dark {
@@ -8,9 +15,17 @@
 }
 
 .center {
-    width: 50%;
+    width: 95%;
     display: inline-block;
-    padding-top: 4em;
+    padding-top: 2rem;
+}
+
+/* desktop */
+@media (min-width: 769px) {
+    .center {
+        width: 50%;
+        padding-top: 4rem;
+    }
 }
 
 .center p {

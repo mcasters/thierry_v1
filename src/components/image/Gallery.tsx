@@ -73,11 +73,6 @@ export default function Gallery({ images, type }: Props) {
           closeOnPullDown: true,
           closeOnBackdropClick: true,
         }}
-        // styles={{
-        //   container: {
-        //     padding: "2em",
-        //   },
-        // }}
         render={{
           slide: ({ slide, rect }) => (
             <Image
@@ -89,7 +84,7 @@ export default function Gallery({ images, type }: Props) {
               sizes="100vw"
               style={{
                 objectFit: "contain",
-                padding: "2em",
+                padding: rect.width <= DEVICE.SMALL ? "1em" : "2em",
               }}
               src={slide.src}
               loading="eager"

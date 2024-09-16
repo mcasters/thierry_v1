@@ -37,7 +37,13 @@ export default function Layout({
   const gradientRgb = `${gradientRgbObject?.r},${gradientRgbObject?.g},${gradientRgbObject?.b}`;
 
   return (
-    <div className={isPainting || isSculpture ? `itemWrapper` : `wrapper`}>
+    <div
+      className={
+        isPainting || isSculpture
+          ? `${s.itemWrapper} itemWrapper`
+          : `${s.wrapper} wrapper`
+      }
+    >
       <div className={`${s.line} line`}></div>
       {isHome && <div className={`${s.gradient} gradient`}></div>}
       {isAdmin && (
