@@ -1,6 +1,6 @@
-export const IMAGE = {
+export const IMAGE_SIZE = {
   SM_PX: 384,
-  MD_PX: 768,
+  MD_PX: 640,
   MAX_PX: 2000,
 };
 

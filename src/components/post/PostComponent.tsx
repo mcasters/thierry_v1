@@ -36,7 +36,7 @@ export default function PostComponent({ post }: Props) {
         <div className={s.gallery}>
           <Gallery
             images={post.images.filter((i) => !i.isMain)}
-            type={TYPE.POST}
+            alt={post.title}
           />
         </div>
       </article>

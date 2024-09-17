@@ -1,10 +1,10 @@
-import { Prisma } from '@prisma/client';
-import { getPaintingsFull } from '@/app/api/peinture/getPaintings';
+import { Prisma } from "@prisma/client";
+import { getPaintingsFull } from "@/app/api/peinture/getPaintings";
 
-const PaintingFull = Prisma.validator<Prisma.PaintingDefaultArgs>()({
+const paintingFull = Prisma.validator<Prisma.PaintingDefaultArgs>()({
   include: { image: true, category: true },
 });
 
-export type PaintingFull = Prisma.PaintingGetPayload<typeof PaintingFull>;
+export type PaintingFull = Prisma.PaintingGetPayload<typeof paintingFull>;
 
 export type PaintingsFull = Prisma.PromiseReturnType<typeof getPaintingsFull>;

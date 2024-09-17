@@ -1,13 +1,17 @@
-.article h2 {
+.article {
+    padding: 2rem;
+}
+
+.infoContainer h2 {
     font-size: var(--font-size-plus);
 }
 
-.article p {
-    padding-bottom: 1rem;
-    font-size: var(--font-size-min);
+.infoContainer {
+    padding-top: 1rem;
+    white-space: pre-line;
 }
 
 .info {
-    padding-top: 1rem;
-    white-space: pre-line;
+    padding-bottom: 4rem;
+    font-size: var(--font-size-min);
 }

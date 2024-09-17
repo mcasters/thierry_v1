@@ -24,7 +24,7 @@
 /* desktop */
 @media (min-width: 769px) {
     .grid, .sculptureGrid {
-        padding: 5rem;
+        padding: 2rem;
     }
 
     .grid {

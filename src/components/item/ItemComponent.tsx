@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import ImageLightbox from '@/components/image/ImageLightbox';
-import { SculptureFull } from '@/app/api/sculpture/sculpture';
-import { PaintingFull } from '@/app/api/peinture/painting';
-import s from './ItemComponent.module.css';
-import { isSculptureFull } from '@/utils/commonUtils';
+import ImageLightbox from "@/components/image/ImageLightbox";
+import { SculptureFull } from "@/app/api/sculpture/sculpture";
+import { PaintingFull } from "@/app/api/peinture/painting";
+import s from "./ItemComponent.module.css";
+import { isSculptureFull } from "@/utils/commonUtils";
 
 interface Props {
   item: SculptureFull | PaintingFull;
@@ -14,28 +14,44 @@ export default function ItemComponent({ item }: Props) {
 
   return (
     <article id={`${item.id}`} className={s.article}>
-      <ImageLightbox
-        images={isSculpture ? item.images : [item.image]}
-        alt={`${item.title} - ${item.type} de Thierry Casters`}
-        type={item.type}
-      />
-      <div className={s.info}>
+      <figure>
+        <ImageLightbox
+          images={isSculpture ? item.images : [item.image]}
+          alt={`${item.title} - ${item.type} de Thierry Casters`}
+          type={item.type}
+        />
+      </figure>
+      <figcaption className={s.infoContainer}>
         <h2>{item.title}</h2>
-        <p>
-          {item.height} cm x {item.width} cm{' '}
-          {isSculpture ? ` x ${item.length} cm` : ''}
-          {' - '}
-          <time>{new Date(item.date).getFullYear()}</time>
-          <br />
-          {item.technique}
-          <br />
-          {item.description !== '' && item.description}
-        </p>
-        <p>
-          {item.isToSell ? `prix : ${item.price} euros` : ''}
-          {item.sold ? 'vendu' : ''}
-        </p>
-      </div>
+        <div className={s.info}>
+          <p>
+            <time>{new Date(item.date).getFullYear()}</time>
+            {", "}
+            {item.technique}
+            {","}
+            <br />
+            {!isSculpture ? `${item.height} x ${item.width} cm` : ""}
+            {isSculpture
+              ? `${item.height} x ${item.width} x ${item.length} cm`
+              : ""}
+          </p>
+          {item.description !== "" && (
+            <>
+              <br />
+              <p>{item.description}</p>
+            </>
+          )}
+          {item.isToSell && (
+            <>
+              <br />
+              <p>
+                {`prix : ${item.price} euros`}
+                {item.sold ? "vendu" : ""}
+              </p>
+            </>
+          )}
+        </div>
+      </figcaption>
     </article>
   );
 }

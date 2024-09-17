@@ -17,12 +17,7 @@ type Props = {
   isCentered?: boolean;
 };
 
-export default function ImageLightbox({
-  images,
-  type,
-  alt,
-  isCentered,
-}: Props) {
+export default function ImageLightbox({ images, type, alt }: Props) {
   const oneImage = type === TYPE.PAINTING || images.length === 1;
   const [open, setOpen] = useState(false);
   const slides = images.map(({ filename, width, height }) => ({
@@ -32,22 +27,17 @@ export default function ImageLightbox({
   }));
 
   return (
-    <div
-      className={
-        !oneImage
-          ? s.imageGridContainer
-          : isCentered
-          ? s.imageCenteredContainer
-          : undefined
-      }
-    >
-      {images.map((image) => {
+    <div className={!oneImage ? s.imageGridContainer : undefined}>
+      {images.map((image: IImage | PostImage) => {
         return (
           <button
             key={image.id}
             type="button"
             onClick={() => setOpen(true)}
             className={s.imageWrap}
+            style={{
+              aspectRatio: image.width / image.height,
+            }}
           >
             <Image
               loader={({ src, width, quality }) => {
