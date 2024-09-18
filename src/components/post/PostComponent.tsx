@@ -36,13 +36,15 @@ export default function PostComponent({ post }: Props) {
             {post.text}
           </p>
         </div>
-        <div className={s.gallery}>
-          <Gallery
-            images={galleryImages}
-            title={`${post.title}`}
-            alt={`${post.title} - Photo d'un post de Thierry Casters`}
-          />
-        </div>
+        {galleryImages && (
+          <div className={s.gallery}>
+            <Gallery
+              images={galleryImages}
+              title={`${post.title}`}
+              alt={`${post.title} - Photo d'un post de Thierry Casters`}
+            />
+          </div>
+        )}
       </article>
       <div className="separate"></div>
     </>
