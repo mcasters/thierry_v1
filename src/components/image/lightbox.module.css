@@ -8,10 +8,11 @@
     .imageGridContainer {
         display: grid;
         grid-template-columns: repeat(3, minmax(25%, auto));
+        gap: 0.8rem;
     }
 }
 
-.imageWrap {
+.imageWrap, .sculptureImagesWrap {
     position: relative;
     background-color: unset;
     border: none;
@@ -19,3 +20,6 @@
     max-height: 50vh;
 }
 
+.sculptureImagesWrap {
+    margin: 0.5rem 0;
+}

@@ -1,25 +1,28 @@
 "use client";
 
-import ImageLightbox from "@/components/image/ImageLightbox";
+import Lightbox from "@/components/image/Lightbox";
 import s from "./PostComponent.module.css";
 import { PostFull } from "@/app/api/post/post";
 import Gallery from "@/components/image/Gallery";
 import { TYPE } from "@/constants";
-import { getMainImage } from "@/utils/commonUtils";
+import { useMemo } from "react";
+import { getGalleryImages, getMainImage } from "@/utils/commonUtils";
 
 interface Props {
   post: PostFull;
 }
 export default function PostComponent({ post }: Props) {
-  const mainImage = getMainImage(post);
+  const mainImage = useMemo(() => getMainImage(post), [post]);
+  const galleryImages = useMemo(() => getGalleryImages(post), [post]);
+
   return (
     <>
       <article className={s.postContainer}>
         <div className={s.mainImage}>
           {mainImage && (
-            <ImageLightbox
+            <Lightbox
               images={[mainImage]}
-              alt={`${post.title} - Photo de Thierry Casters`}
+              alt={`${post.title} - Photo d'un post de Thierry Casters`}
               type={TYPE.POST}
               isCentered={true}
             />
@@ -35,8 +38,9 @@ export default function PostComponent({ post }: Props) {
         </div>
         <div className={s.gallery}>
           <Gallery
-            images={post.images.filter((i) => !i.isMain)}
-            alt={post.title}
+            images={galleryImages}
+            title={`${post.title}`}
+            alt={`${post.title} - Photo d'un post de Thierry Casters`}
           />
         </div>
       </article>

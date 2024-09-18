@@ -64,6 +64,10 @@ export const getMainImage = (post: PostFull | undefined) => {
   return post?.images?.filter((i: PostImage) => i.isMain)[0] || undefined;
 };
 
+export const getGalleryImages = (post: PostFull | undefined) => {
+  return post.images.filter((i) => !i.isMain) || undefined;
+};
+
 export const isPaintingFull = (item: any): item is PaintingFull =>
   Object.values(item).includes(TYPE.PAINTING);
 

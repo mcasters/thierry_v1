@@ -18,7 +18,7 @@ export default function AdminTheme() {
   const { workTheme, setWorkTheme } = useAdminWorkThemeContext();
 
   const changeSelectedId = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedTheme = themes.find(
+    const selectedTheme: Theme | undefined = themes.find(
       (t) => t.id.toString() === e.target.value,
     );
     if (selectedTheme) setWorkTheme({ ...selectedTheme });

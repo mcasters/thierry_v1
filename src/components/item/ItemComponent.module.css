@@ -1,5 +1,12 @@
 .article {
-    padding: 2rem;
+    padding: 0;
+}
+
+/* desktop */
+@media (min-width: 769px) {
+    .article {
+        padding: 2rem;
+    }
 }
 
 .infoContainer h2 {

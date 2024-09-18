@@ -5,20 +5,18 @@ import { RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
 import Lightbox from "yet-another-react-lightbox";
 import { PostImage } from ".prisma/client";
-import Image from "next/image";
 import { DEVICE, IMAGE_SIZE } from "@/constants/image";
 
 interface Props {
   images: PostImage[];
+  title: string;
   alt: string;
 }
 
-const breakpoints = [IMAGE_SIZE.MD_PX, IMAGE_SIZE.SM_PX];
-
-export default function Gallery({ images, alt }: Props) {
+export default function Gallery({ images, title, alt }: Props) {
   const [index, setIndex] = useState(-1);
 
-  const slides = images.map((image) => {
+  const photos = images.map((image) => {
     const width = image.width;
     const height = image.height;
     return {
@@ -26,47 +24,47 @@ export default function Gallery({ images, alt }: Props) {
       width,
       height,
       alt,
-      srcSet: breakpoints.map((breakpoint) => ({
-        src: `/images/post/${breakpoint === IMAGE_SIZE.MD_PX ? "md" : "sm"}/${image.filename}`,
-        width: breakpoint,
-        height: Math.round((height / width) * breakpoint),
-      })),
+      title,
+      srcSet: [
+        {
+          src: `/images/post/sm/${image.filename}`,
+          width: IMAGE_SIZE.SM_PX,
+          height: Math.round((height / width) * IMAGE_SIZE.SM_PX),
+        },
+        {
+          src: `/images/post/md/${image.filename}`,
+          width: IMAGE_SIZE.MD_PX,
+          height: Math.round((height / width) * IMAGE_SIZE.MD_PX),
+        },
+        {
+          src: `/images/post/${image.filename}`,
+          width: width,
+          height: height,
+        },
+      ],
     };
   });
   return (
     <>
       <RowsPhotoAlbum
-        photos={slides}
+        photos={photos}
         onClick={({ index: current }) => setIndex(current)}
-        breakpoints={[IMAGE_SIZE.SM_PX, IMAGE_SIZE.MD_PX]}
+        breakpoints={[DEVICE.SMALL, DEVICE.MEDIUM]}
+        componentsProps={() => ({
+          button: {
+            "aria-label": "Agrandir",
+          },
+        })}
       />
       <Lightbox
         index={index}
-        slides={slides}
+        slides={photos}
         open={index >= 0}
         close={() => setIndex(-1)}
         controller={{
+          closeOnPullUp: true,
           closeOnPullDown: true,
           closeOnBackdropClick: true,
-        }}
-        render={{
-          slide: ({ slide, rect }) => (
-            <Image
-              loader={({ src, width, quality }) => {
-                return `${src}`;
-              }}
-              fill={true}
-              sizes="100vw"
-              style={{
-                objectFit: "contain",
-                padding: rect.width <= DEVICE.SMALL ? "1em" : "2em",
-              }}
-              src={slide.src}
-              loading="eager"
-              draggable={false}
-              alt="image"
-            />
-          ),
         }}
       />
     </>

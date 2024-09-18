@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
 
-import AuthStatus from '@/components/auth/AuthStatus';
-import s from '@/styles/Footer.module.css';
+import AuthStatus from "@/components/auth/AuthStatus";
+import s from "@/styles/Footer.module.css";
 
 export default function Footer() {
   const authStatus = AuthStatus();
   const pathname = usePathname();
-  const isPainting = pathname.split('/')[1] === 'peintures';
-  const isSculpture = pathname.split('/')[1] === 'sculptures';
+  const isPainting = pathname.split("/")[1] === "peintures";
+  const isSculpture = pathname.split("/")[1] === "sculptures";
   const text =
-    'Images and site content copyright © 2023 Thierry Casters. All rights reserved';
+    "Images and site content copyright © 2024 Thierry Casters. All rights reserved";
 
   return (
     <>
