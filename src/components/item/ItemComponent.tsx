@@ -1,22 +1,21 @@
 "use client";
 
-import { SculptureFull } from "@/app/api/sculpture/sculpture";
-import { PaintingFull } from "@/app/api/peinture/painting";
 import s from "./ItemComponent.module.css";
-import { isSculptureFull } from "@/utils/commonUtils";
+import { getImagesTab, isSculptureFull } from "@/utils/commonUtils";
 import Lightbox from "@/components/image/Lightbox";
+import { useMemo } from "react";
+import { DrawingFull, PaintingFull, SculptureFull } from "@/lib/db/item";
 
 interface Props {
-  item: SculptureFull | PaintingFull;
+  item: SculptureFull | PaintingFull | DrawingFull;
 }
 export default function ItemComponent({ item }: Props) {
-  const isSculpture = isSculptureFull(item);
-
+  const images = useMemo(() => getImagesTab(item), [item]);
   return (
     <article id={`${item.id}`} className={s.article}>
       <figure>
         <Lightbox
-          images={isSculpture ? item.images : [item.image]}
+          images={images}
           alt={`${item.title} - ${item.type} de Thierry Casters`}
           type={item.type}
         />
@@ -30,10 +29,9 @@ export default function ItemComponent({ item }: Props) {
             {item.technique}
             {","}
             <br />
-            {!isSculpture ? `${item.height} x ${item.width} cm` : ""}
-            {isSculpture
+            {isSculptureFull(item)
               ? `${item.height} x ${item.width} x ${item.length} cm`
-              : ""}
+              : `${item.height} x ${item.width} cm`}
           </p>
           {item.description !== "" && (
             <>

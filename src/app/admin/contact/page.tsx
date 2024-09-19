@@ -18,7 +18,7 @@ export default async function Contact() {
     <>
       <h1 className={s.pageTitle}>Contenus de la page contact</h1>
       <TextAreaForm
-        content={getAddress(contents)}
+        textContent={getAddress(contents)}
         label={Label.ADDRESS}
         api="api/content/update"
         textLabel="Adresse"
@@ -26,17 +26,17 @@ export default async function Contact() {
       <InputForm
         label={Label.PHONE}
         api="api/content/update"
-        content={getPhone(contents)}
+        textContent={getPhone(contents)}
         textLabel="Téléphone"
       />
       <InputForm
         label={Label.EMAIL}
         api="api/content/update"
-        content={getEmail(contents)}
+        textContent={getEmail(contents)}
         textLabel="E-mail"
       />
       <TextAreaForm
-        content={getTextContact(contents)}
+        textContent={getTextContact(contents)}
         label={Label.TEXT_CONTACT}
         api="api/content/update"
         textLabel="Texte d'accompagnement (facultatif)"

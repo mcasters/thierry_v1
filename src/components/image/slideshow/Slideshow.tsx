@@ -3,13 +3,13 @@
 import Lightbox from "yet-another-react-lightbox";
 import Inline from "yet-another-react-lightbox/plugins/inline";
 import "yet-another-react-lightbox/styles.css";
-import { ContentImage } from ".prisma/client";
 import s from "@/components/image/slideshow/slideshow.module.css";
 import Image from "next/image";
 import { DEVICE } from "@/constants/image";
+import { Image as IImage } from "@/lib/db/item";
 
 type Props = {
-  images: ContentImage[];
+  images: IImage[];
 };
 
 export default function Slideshow({ images }: Props) {

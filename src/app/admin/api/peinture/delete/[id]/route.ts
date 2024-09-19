@@ -15,24 +15,14 @@ export async function GET(
       const id = Number(params.id);
       const painting = await prisma.painting.findUnique({
         where: { id },
-        include: {
-          image: {
-            select: {
-              filename: true,
-            },
-          },
-        },
       });
       if (painting) {
-        const filename = painting.image.filename;
+        const filename = painting.imageFilename;
         deleteFile(dir, filename);
         await prisma.painting.delete({
           where: {
             id,
           },
-        });
-        await prisma.image.delete({
-          where: { filename },
         });
       }
       return NextResponse.json({ message: "ok" });

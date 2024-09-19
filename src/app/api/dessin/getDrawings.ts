@@ -1,6 +1,6 @@
 import prisma from "@/lib/db/prisma";
 import "server-only";
-import { DrawingFull } from "@/app/api/dessin/drawing";
+import { DrawingFull } from "@/lib/db/item";
 
 export async function getDrawingsFull() {
   const res = await prisma.drawing.findMany({

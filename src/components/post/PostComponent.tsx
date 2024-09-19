@@ -2,11 +2,11 @@
 
 import Lightbox from "@/components/image/Lightbox";
 import s from "./PostComponent.module.css";
-import { PostFull } from "@/app/api/post/post";
 import Gallery from "@/components/image/Gallery";
 import { TYPE } from "@/constants";
 import { useMemo } from "react";
 import { getGalleryImages, getMainImage } from "@/utils/commonUtils";
+import { PostFull } from "@/lib/db/item";
 
 interface Props {
   post: PostFull;

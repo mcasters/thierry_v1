@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 import Images from "@/components/admin/form/imageForm/Images";
-import { PostFull } from "@/app/api/post/post";
+import { PostFull } from "@/lib/db/item";
 import s from "@/styles/admin/Admin.module.css";
 import { getMainImage } from "@/utils/commonUtils";
 import Preview from "@/components/admin/form/imageForm/Preview";

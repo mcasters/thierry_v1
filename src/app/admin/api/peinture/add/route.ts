@@ -31,6 +31,9 @@ export async function POST(req: Request) {
             width: Number(formData.get("width")),
             isToSell: formData.get("isToSell") === "true",
             price: Number(formData.get("price")),
+            imageFilename: fileInfo.filename,
+            imageWidth: fileInfo.width,
+            imageHeight: fileInfo.height,
             category:
               formData.get("categoryId") === ""
                 ? {}
@@ -39,13 +42,6 @@ export async function POST(req: Request) {
                       id: Number(formData.get("categoryId")),
                     },
                   },
-            image: {
-              create: {
-                filename: fileInfo.filename,
-                width: fileInfo.width,
-                height: fileInfo.height,
-              },
-            },
           },
         });
       }

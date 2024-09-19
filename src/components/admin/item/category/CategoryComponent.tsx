@@ -3,12 +3,11 @@
 import CategoryListComponent from "@/components/admin/item/category/CategoryListComponent";
 import CategoryForm from "@/components/admin/form/CategoryForm";
 import s from "../../../../styles/admin/AdminList.module.css";
-import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
-import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
+import { Category } from "@/lib/db/item";
 
 interface Props {
   type: string;
-  categories: PaintingCategoryFull[] | SculptureCategoryFull[];
+  categories: Category[];
 }
 export default function CategoryComponent({ type, categories }: Props) {
   const title = "Gestion des catégories";

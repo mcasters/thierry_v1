@@ -3,12 +3,11 @@
 import RowCategoryListComponent from "./RowCategoryListComponent";
 import React from "react";
 import s from "../../../../styles/admin/AdminList.module.css";
-import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
-import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
+import { Category } from "@/lib/db/item";
 
 interface Props {
   type: string;
-  categories: PaintingCategoryFull[] | SculptureCategoryFull[];
+  categories: Category[];
 }
 export default function CategoryListComponent({ type, categories }: Props) {
   const title = "Liste des catégories";
@@ -18,17 +17,15 @@ export default function CategoryListComponent({ type, categories }: Props) {
     <div className={s.listContainer}>
       <h4>{title}</h4>
       <div className={s.list}>
-        {categories.map(
-          (category: SculptureCategoryFull | PaintingCategoryFull) => {
-            return (
-              <RowCategoryListComponent
-                key={category.id}
-                category={category}
-                type={type}
-              />
-            );
-          },
-        )}
+        {categories.map((category) => {
+          return (
+            <RowCategoryListComponent
+              key={category.id}
+              category={category}
+              type={type}
+            />
+          );
+        })}
       </div>
       <p>{message}</p>
     </div>

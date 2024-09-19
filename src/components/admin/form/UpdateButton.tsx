@@ -1,18 +1,12 @@
 "use client";
 
 import { GrUpdate } from "@react-icons/all-files/gr/GrUpdate";
-
-import { PaintingCategory, SculptureCategory } from "@prisma/client";
 import useModal from "@/components/admin/form/modal/useModal";
 import Modal from "@/components/admin/form/modal/Modal";
 import ItemForm from "@/components/admin/form/ItemForm";
 import CategoryForm from "@/components/admin/form/CategoryForm";
-import { SculptureFull } from "@/app/api/sculpture/sculpture";
-import { PaintingFull } from "@/app/api/peinture/painting";
-import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
-import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
+import { Category, PaintingFull, PostFull, SculptureFull } from "@/lib/db/item";
 import PostForm from "@/components/admin/form/PostForm";
-import { PostFull } from "@/app/api/post/post";
 import {
   isPaintingFull,
   isPostFull,
@@ -20,14 +14,9 @@ import {
 } from "@/utils/commonUtils";
 
 type Props = {
-  item:
-    | PaintingFull
-    | SculptureFull
-    | PaintingCategory
-    | SculptureCategory
-    | PostFull;
+  item: PaintingFull | SculptureFull | Category | PostFull;
   type: string;
-  categories?: PaintingCategoryFull[] | SculptureCategoryFull[];
+  categories?: Category[];
 };
 export default function UpdateButton({ item, type, categories }: Props) {
   const { isOpen, toggle } = useModal();

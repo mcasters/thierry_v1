@@ -19,12 +19,12 @@ export default async function Contact() {
       <address>
         <h1 className={s.title}>Contacter Thierry Casters</h1>
         <p>Thierry Casters</p>
-        <p className={s.preLine}>{getAddress(contents)?.text}</p>
+        <p className={s.preLine}>{getAddress(contents)}</p>
         <br />
-        <p>{getPhone(contents)?.text}</p>
+        <p>{getPhone(contents)}</p>
       </address>
-      <Link className={s.email} href={`mailto:${email?.text}`}>
-        {email?.text}
+      <Link className={s.email} href={`mailto:${email}`}>
+        {email}
       </Link>
       <a
         href="https://www.instagram.com/thierrycasters/"
@@ -35,7 +35,7 @@ export default async function Contact() {
         <SiInstagram />
       </a>
       <div className={s.text}>
-        <p className={s.preLine}>{getTextContact(contents)?.text}</p>
+        <p className={s.preLine}>{getTextContact(contents)}</p>
       </div>
     </>
   );

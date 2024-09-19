@@ -4,11 +4,8 @@ import React, { useRef, useState } from "react";
 import { parse } from "date-fns";
 import toast from "react-hot-toast";
 import s from "@/styles/admin/Admin.module.css";
-import { SculptureFull } from "@/app/api/sculpture/sculpture";
-import { PaintingFull } from "@/app/api/peinture/painting";
-import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
-import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
-import { isSculptureFull } from "@/utils/commonUtils";
+import { Category, PaintingFull, SculptureFull } from "@/lib/db/item";
+import { getImagesTab, isSculptureFull } from "@/utils/commonUtils";
 import Images from "@/components/admin/form/imageForm/Images";
 import Preview from "@/components/admin/form/imageForm/Preview";
 import CancelButton from "@/components/admin/form/CancelButton";
@@ -18,14 +15,14 @@ import { useRouter } from "next/navigation";
 interface Props {
   item: SculptureFull | PaintingFull;
   toggleModal?: () => void;
-  categories?: PaintingCategoryFull[] | SculptureCategoryFull[];
+  categories?: Category[];
 }
 
 export default function ItemForm({ item, toggleModal, categories }: Props) {
   const router = useRouter();
   const isSculpture = isSculptureFull(item);
   const isUpdate = item.id !== 0;
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>();
   const resetImageRef = useRef<number>(0);
 
   const [title, setTitle] = useState<string>(item.title);
@@ -42,10 +39,10 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
   );
   const [isToSell, setIsToSell] = useState<boolean>(item.isToSell);
   const [length, setLength] = useState<string>(
-    isSculpture ? item.length.toString() : "",
+    isSculptureFull(item) ? item.length.toString() : "",
   );
   const [countImages, setCountImages] = useState<number>(
-    !isUpdate ? 0 : isSculpture ? item.images?.length : 1,
+    !isUpdate ? 0 : isSculptureFull(item) ? item.images.length : 1,
   );
   const api = isUpdate ? `api/${item.type}/update` : `api/${item.type}/add`;
 
@@ -112,13 +109,11 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
           >
             <option value="">-- Aucune catégorie --</option>
             {categories &&
-              categories.map(
-                (cat: PaintingCategoryFull | SculptureCategoryFull) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.value}
-                  </option>
-                ),
-              )}
+              categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.value}
+                </option>
+              ))}
           </select>
         </label>
         <label className={s.formLabel}>
@@ -207,7 +202,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
         <div className={s.imageFormContainer}>
           {isUpdate && (
             <Preview
-              images={isSculpture ? item.images : [item.image]}
+              images={getImagesTab(item)}
               pathImage={`/images/${item.type}`}
               apiForDelete={
                 isSculpture && countImages > 1

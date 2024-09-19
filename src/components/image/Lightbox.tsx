@@ -4,13 +4,13 @@ import { useMemo, useState } from "react";
 import { Lightbox as YetLightbox } from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { TYPE } from "@/constants";
-import { Image as IImage, PostImage } from ".prisma/client";
 import { DEVICE, IMAGE_SIZE } from "@/constants/image";
 import s from "@/components/image/lightbox.module.css";
+import { Image as IImage } from "@/lib/db/item";
 import Image from "next/image";
 
 type Props = {
-  images: IImage[] | PostImage[];
+  images: IImage[];
   type: string;
   alt: string;
   isCentered?: boolean;
@@ -54,7 +54,7 @@ export default function Lightbox({
 
   return (
     <div className={!oneImage ? s.imageGridContainer : undefined}>
-      {images.map((image: IImage | PostImage, index) => {
+      {images.map((image, index) => {
         return (
           <button
             key={image.id}

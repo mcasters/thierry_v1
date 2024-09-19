@@ -1,12 +1,22 @@
-import { Image, Label, PostImage } from ".prisma/client";
-import { ContentFull } from "@/app/api/content/content";
-import { PostFull } from "@/app/api/post/post";
-import { PaintingFull } from "@/app/api/peinture/painting";
-import { SculptureFull } from "@/app/api/sculpture/sculpture";
+import {
+  ContentImage,
+  Label,
+  Painting,
+  Sculpture,
+  SculptureImage,
+} from ".prisma/client";
 import { TYPE } from "@/constants";
 import { THEME } from "@/constants/database";
 import { PresetColor, Theme } from "@prisma/client";
 import { OnlyString } from "@/app/api/theme/theme";
+import {
+  ContentFull,
+  DrawingFull,
+  Image,
+  PaintingFull,
+  PostFull,
+  SculptureFull,
+} from "@/lib/db/item";
 
 export const transformValueToKey = (value: string): string => {
   return value
@@ -24,44 +34,46 @@ export const transformValueToKey = (value: string): string => {
     .replace(/ë/gi, "e");
 };
 
-export const getPresentation = (contents: ContentFull[]): ContentFull => {
+export const getPresentationContent = (
+  contents: ContentFull[],
+): ContentFull | null => {
   return contents?.filter((c) => c.label === Label.PRESENTATION)[0] || null;
 };
 
-export const getDemarche = (contents: ContentFull[]): ContentFull => {
-  return contents?.filter((c) => c.label === Label.DEMARCHE)[0] || null;
+export const getDemarche = (contents: ContentFull[]): string => {
+  return contents?.filter((c) => c.label === Label.DEMARCHE)[0]?.text || "";
 };
 
-export const getInspiration = (contents: ContentFull[]): ContentFull => {
-  return contents?.filter((c) => c.label === Label.INSPIRATION)[0] || null;
+export const getInspiration = (contents: ContentFull[]): string => {
+  return contents?.filter((c) => c.label === Label.INSPIRATION)[0]?.text || "";
 };
 
-export const getIntro = (contents: ContentFull[]): ContentFull => {
-  return contents?.filter((c) => c.label === Label.INTRO)[0] || null;
+export const getIntro = (contents: ContentFull[]): string => {
+  return contents?.filter((c) => c.label === Label.INTRO)[0]?.text || "";
 };
 
-export const getSliders = (contents: ContentFull[]): ContentFull => {
-  return contents?.filter((c) => c.label === Label.SLIDER)[0] || null;
+export const getSliders = (contents: ContentFull[]): Image[] | [] => {
+  return contents?.filter((c) => c.label === Label.SLIDER)[0]?.images || [];
 };
 
-export const getAddress = (contents: ContentFull[]): ContentFull => {
-  return contents?.filter((c) => c.label === Label.ADDRESS)[0] || null;
+export const getAddress = (contents: ContentFull[]): string => {
+  return contents?.filter((c) => c.label === Label.ADDRESS)[0]?.text || "";
 };
 
-export const getPhone = (contents: ContentFull[]): ContentFull => {
-  return contents?.filter((c) => c.label === Label.PHONE)[0] || null;
+export const getPhone = (contents: ContentFull[]): string => {
+  return contents?.filter((c) => c.label === Label.PHONE)[0]?.text || "";
 };
 
-export const getEmail = (contents: ContentFull[]): ContentFull => {
-  return contents?.filter((c) => c.label === Label.EMAIL)[0] || null;
+export const getEmail = (contents: ContentFull[]): string => {
+  return contents?.filter((c) => c.label === Label.EMAIL)[0]?.text || "";
 };
 
-export const getTextContact = (contents: ContentFull[]): ContentFull => {
-  return contents?.filter((c) => c.label === Label.TEXT_CONTACT)[0] || null;
+export const getTextContact = (contents: ContentFull[]): string => {
+  return contents?.filter((c) => c.label === Label.TEXT_CONTACT)[0]?.text || "";
 };
 
 export const getMainImage = (post: PostFull | undefined) => {
-  return post?.images?.filter((i: PostImage) => i.isMain)[0] || undefined;
+  return post?.images?.filter((i) => i.isMain)[0] || undefined;
 };
 
 export const getGalleryImages = (post: PostFull | undefined) => {
@@ -77,18 +89,33 @@ export const isSculptureFull = (item: any): item is SculptureFull =>
 export const isPostFull = (item: any): item is PostFull =>
   Object.values(item).includes(TYPE.POST);
 
-export const getEmptyImage = (): Image => {
-  return {
-    id: 0,
-    height: 0,
-    width: 0,
-    filename: "",
-    isMain: false,
-    sculptureId: null,
-  };
+export const getEmptySculptureImage = (): SculptureImage[] => {
+  return [
+    {
+      id: 0,
+      height: 0,
+      width: 0,
+      filename: "",
+      isMain: false,
+      sculptureId: null,
+    },
+  ];
 };
 
-export const getEmptyPainting = (): PaintingFull => {
+export const getEmptyContentImage = (): ContentImage[] => {
+  return [
+    {
+      id: 0,
+      height: 0,
+      width: 0,
+      filename: "",
+      isMain: false,
+      contentId: null,
+    },
+  ];
+};
+
+export const getEmptyPainting = (): Painting => {
   return {
     id: 0,
     type: TYPE.PAINTING,
@@ -103,14 +130,25 @@ export const getEmptyPainting = (): PaintingFull => {
     price: null,
     createdAt: new Date(),
     updatedAt: new Date(),
-    imageId: 0,
-    image: getEmptyImage(),
+    imageFilename: "",
+    imageHeight: 0,
+    imageWidth: 0,
     category: null,
     categoryId: null,
   };
 };
 
-export const getEmptySculpture = (): SculptureFull => {
+export const getEmptyContent = (): ContentFull => {
+  return {
+    id: 0,
+    label: "",
+    title: "",
+    text: "",
+    images: getEmptyContentImage(),
+  };
+};
+
+export const getEmptySculpture = (): Sculpture => {
   return {
     id: 0,
     type: TYPE.SCULPTURE,
@@ -126,7 +164,7 @@ export const getEmptySculpture = (): SculptureFull => {
     price: null,
     createdAt: new Date(),
     updatedAt: new Date(),
-    images: [getEmptyImage()],
+    images: getEmptySculptureImage(),
     category: null,
     categoryId: null,
   };
@@ -230,3 +268,28 @@ function componentToHex(c: number): string {
 export function rgbToHex(r: number, g: number, b: number): string {
   return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 } // rgbToHex(0, 51, 255); // #0033ff
+
+export const getImagesTab = (
+  item: SculptureFull | PaintingFull | DrawingFull,
+): Image[] => {
+  if (isSculptureFull(item)) {
+    return item.images.map((i) => {
+      return {
+        id: i.id,
+        filename: i.filename,
+        width: i.width,
+        height: i.height,
+        isMain: i.isMain,
+      };
+    });
+  }
+  return [
+    {
+      id: 0,
+      filename: item.imageFilename,
+      width: item.imageWidth,
+      height: item.imageHeight,
+      isMain: false,
+    },
+  ];
+};

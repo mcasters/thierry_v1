@@ -1,6 +1,7 @@
 export const TYPE = {
   PAINTING: "peinture",
   SCULPTURE: "sculpture",
+  DRAWING: "dessin",
   POST: "post",
 };
 

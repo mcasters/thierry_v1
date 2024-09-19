@@ -1,5 +1,5 @@
 import prisma from "@/lib/db/prisma";
-import { PaintingFull } from "@/app/api/peinture/painting";
+import { PaintingFull } from "@/lib/db/item";
 import "server-only";
 
 export async function getPaintingsFull() {

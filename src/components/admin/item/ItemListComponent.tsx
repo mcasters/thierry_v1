@@ -3,15 +3,12 @@
 import RowItemListComponent from "./RowItemListComponent";
 import React from "react";
 import s from "@/styles/admin/AdminList.module.css";
-import { PaintingFull } from "@/app/api/peinture/painting";
-import { SculptureFull } from "@/app/api/sculpture/sculpture";
-import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
-import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
+import { Category, PaintingFull, SculptureFull } from "@/lib/db/item";
 
 interface Props {
   type: string;
   items: PaintingFull[] | SculptureFull[];
-  categories: PaintingCategoryFull[] | SculptureCategoryFull[];
+  categories: Category[];
 }
 export default function ItemListComponent({ type, items, categories }: Props) {
   const title = `Liste des ${type}s`;

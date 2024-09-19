@@ -4,11 +4,11 @@ import { useState } from "react";
 import { RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
 import Lightbox from "yet-another-react-lightbox";
-import { PostImage } from ".prisma/client";
 import { DEVICE, IMAGE_SIZE } from "@/constants/image";
+import { Image } from "@/lib/db/item";
 
 interface Props {
-  images: PostImage[];
+  images: Image[];
   title: string;
   alt: string;
 }

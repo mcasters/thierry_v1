@@ -43,7 +43,7 @@ model PostImage {
 
 model Content {
   id     Int            @id @default(autoincrement())
-  label  Label          @unique @default(INTRO)
+  label  Label          @unique
   title  String?
   text   String         @db.LongText
   images ContentImage[]
@@ -114,7 +114,7 @@ model Sculpture {
 
 model Drawing {
   id            Int              @id @default(autoincrement())
-  type          String           @default("peinture")
+  type          String           @default("dessin")
   title         String
   date          DateTime
   technique     String           @db.LongText

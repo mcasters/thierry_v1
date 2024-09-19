@@ -5,10 +5,10 @@ import Image from "next/image";
 import { FiTrash2 } from "@react-icons/all-files/fi/FiTrash2";
 import toast from "react-hot-toast";
 import s from "@/styles/admin/Admin.module.css";
-import { ContentImage, Image as IImage, PostImage } from ".prisma/client";
+import { Image as IImage } from "@/lib/db/item";
 
 type Props = {
-  images: ContentImage[] | PostImage[] | IImage[];
+  images: IImage[];
   pathImage: string;
   apiForDelete?: string;
   onDelete?: (arg0: number) => void;
@@ -22,7 +22,7 @@ export default function Preview({
   onDelete,
   textLabel,
 }: Props) {
-  const [existantFilenames, setExistantfilenames] = useState<string[]>(
+  const [existantFilenames, setExistantFilenames] = useState<string[]>(
     images.map((i) => i.filename),
   );
 
@@ -33,7 +33,7 @@ export default function Preview({
           const tab = existantFilenames.filter((f) => {
             return f !== filename;
           });
-          setExistantfilenames(tab);
+          setExistantFilenames(tab);
           if (onDelete !== undefined) onDelete(tab.length);
           toast.success("Image supprimée");
         } else toast.error("Erreur à la suppression");

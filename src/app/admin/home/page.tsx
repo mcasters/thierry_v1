@@ -14,18 +14,20 @@ export default async function Home() {
     <div className={s.formContainer}>
       <h1 className={s.pageTitle}>Contenus de la page Home</h1>
       <TextAreaForm
-        content={getIntro(contents)}
+        textContent={getIntro(contents)}
         label={Label.INTRO}
         api="api/content/update"
         withImage={false}
         textLabel="Introduction (facultatif)"
       />
-      <Preview
-        images={sliderContent.images}
-        pathImage="/images/miscellaneous"
-        apiForDelete="api/content/delete-image"
-        textLabel="Slider (une ou plusieurs images)"
-      />
+      {sliderContent && (
+        <Preview
+          images={sliderContent.images}
+          pathImage="/images/miscellaneous"
+          apiForDelete="api/content/delete-image"
+          textLabel="Slider (une ou plusieurs images)"
+        />
+      )}
       <ImagesForm
         api="api/content/update"
         isMultiple={true}

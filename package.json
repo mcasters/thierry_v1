@@ -20,7 +20,7 @@
     "deploy-build": "prisma generate && dotenv -e .env.local -- prisma migrate deploy && next build"
   },
   "dependencies": {
-    "@prisma/client": "^5.19.0",
+    "@prisma/client": "^5.19.1",
     "@react-icons/all-files": "^4.1.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.5.5",
@@ -49,6 +49,6 @@
   },
   "devDependencies": {
     "prettier": "^3.3.3",
-    "prisma": "^5.19.0"
+    "prisma": "^5.19.1"
   }
 }

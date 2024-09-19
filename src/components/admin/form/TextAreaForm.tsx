@@ -2,7 +2,6 @@
 
 import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { ContentFull } from "@/app/api/content/content";
 import { Label } from "@prisma/client";
 import s from "@/styles/admin/Admin.module.css";
 import Images from "@/components/admin/form/imageForm/Images";
@@ -12,21 +11,21 @@ import CancelButton from "@/components/admin/form/CancelButton";
 
 interface Props {
   label: Label;
-  content: ContentFull;
+  textContent: string;
   api: string;
   textLabel?: string;
   withImage?: boolean;
 }
 export default function TextAreaForm({
   label,
-  content,
+  textContent,
   api,
   textLabel,
   withImage = false,
 }: Props) {
-  const [text, setText] = useState<ContentFull>(content);
+  const [text, setText] = useState<string>(textContent);
   const [isChanged, setIsChanged] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>();
   const resetImageRef = useRef<number>(0);
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -55,7 +54,7 @@ export default function TextAreaForm({
         {withImage && (
           <div>
             <Preview
-              images={text?.images}
+              images={textContent ? textContent.images : []}
               pathImage="/images/miscellaneous"
               apiForDelete="api/content/delete-image"
             />
@@ -72,13 +71,9 @@ export default function TextAreaForm({
           {textLabel}
           <textarea
             name="text"
-            value={text?.text}
+            value={text}
             onChange={(e) => {
-              setText(
-                Object.assign({}, text, {
-                  text: e.target.value,
-                }),
-              );
+              setText(e.target.value);
               setIsChanged(true);
             }}
           />

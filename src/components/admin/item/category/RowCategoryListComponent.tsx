@@ -4,11 +4,10 @@ import DeleteButton from "@/components/admin/form/DeleteButton";
 import UpdateButton from "@/components/admin/form/UpdateButton";
 import { TYPE } from "@/constants";
 import s from "../../../../styles/admin/AdminList.module.css";
-import { SculptureCategoryFull } from "@/app/api/sculpture/category/category";
-import { PaintingCategoryFull } from "@/app/api/peinture/category/category";
+import { Category } from "@/lib/db/item";
 
 interface Props {
-  category: SculptureCategoryFull | PaintingCategoryFull;
+  category: Category;
   type: string;
 }
 

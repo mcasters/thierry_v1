@@ -21,31 +21,14 @@ export async function POST(req: Request) {
       const id = Number(formData.get("id"));
       const oldPaint = await prisma.painting.findUnique({
         where: { id },
-        include: {
-          image: {
-            select: {
-              filename: true,
-            },
-          },
-        },
       });
 
       if (oldPaint) {
         let fileInfo = null;
-        let image = {};
         const newFile = formData.get("file") as File;
         if (newFile.size !== 0) {
-          deleteFile(dir, oldPaint.image.filename);
+          deleteFile(dir, oldPaint.imageFilename);
           fileInfo = await resizeAndSaveImage(newFile, dir);
-          if (fileInfo) {
-            image = {
-              create: {
-                filename: fileInfo.filename,
-                width: fileInfo.width,
-                height: fileInfo.height,
-              },
-            };
-          }
         }
 
         const category =
@@ -56,14 +39,14 @@ export async function POST(req: Request) {
                 },
               }
             : oldPaint.categoryId !== null
-            ? {
-                disconnect: {
-                  id: oldPaint.categoryId,
-                },
-              }
-            : {};
+              ? {
+                  disconnect: {
+                    id: oldPaint.categoryId,
+                  },
+                }
+              : {};
 
-        await prisma.painting.update({
+        const filename = await prisma.painting.update({
           where: { id: id },
           data: {
             title: formData.get("title") as string,
@@ -74,8 +57,10 @@ export async function POST(req: Request) {
             width: Number(formData.get("width")),
             isToSell: formData.get("isToSell") === "true",
             price: Number(formData.get("price")),
+            imageFilename: fileInfo !== null ? fileInfo.filename : undefined,
+            imageWidth: fileInfo !== null ? fileInfo.width : undefined,
+            imageHeight: fileInfo !== null ? fileInfo.height : undefined,
             category,
-            image,
           },
         });
       }

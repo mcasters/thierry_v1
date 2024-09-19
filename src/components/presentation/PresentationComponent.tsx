@@ -4,52 +4,53 @@ import s from "./PresentationComponent.module.css";
 import React from "react";
 import Image from "next/image";
 import { DEVICE } from "@/constants/image";
-import { ContentFull } from "@/app/api/content/content";
+import { ContentFull } from "@/lib/db/item";
 
 interface Props {
-  presentation: ContentFull;
-  demarche: ContentFull;
-  inspiration: ContentFull;
+  presentationContent: ContentFull | null;
+  demarcheText: string;
+  inspirationText: string;
 }
 export default function PresentationComponent({
-  presentation,
-  demarche,
-  inspiration,
+  presentationContent,
+  demarcheText,
+  inspirationText,
 }: Props) {
   return (
     <>
       <div className={s.contentWrapper}>
-        {presentation?.images.length > 0 && (
-          <div className={s.imageWrap}>
-            <Image
-              loader={({ src, width }) => {
-                const directory = width <= DEVICE.SMALL ? "sm" : "md";
-                return `/images/miscellaneous/${directory}/${src}`;
-              }}
-              src={`${presentation.images[0].filename}`}
-              sizes="(max-width: 768px) 80vw, 50vw"
-              fill
-              alt="Photographie de présentation de Thierry Casters"
-              style={{
-                objectFit: "contain",
-              }}
-              priority
-            />
-          </div>
-        )}
-        <p>{presentation?.text}</p>
+        {presentationContent?.images &&
+          presentationContent?.images.length > 0 && (
+            <div className={s.imageWrap}>
+              <Image
+                loader={({ src, width }) => {
+                  const directory = width <= DEVICE.SMALL ? "sm" : "md";
+                  return `/images/miscellaneous/${directory}/${src}`;
+                }}
+                src={`${presentationContent.images[0].filename}`}
+                sizes="(max-width: 768px) 80vw, 50vw"
+                fill
+                alt="Photographie de présentation de Thierry Casters"
+                style={{
+                  objectFit: "contain",
+                }}
+                priority
+              />
+            </div>
+          )}
+        <p>{presentationContent?.text}</p>
       </div>
 
-      {demarche && (
+      {demarcheText && (
         <div className={s.contentWrapper}>
           <h2>Démarche artistique</h2>
-          <p>{demarche.text}</p>
+          <p>{demarcheText}</p>
         </div>
       )}
-      {inspiration && (
+      {inspirationText && (
         <div className={s.contentWrapper}>
           <h2>Inspirations</h2>
-          <p>{inspiration.text}</p>
+          <p>{inspirationText}</p>
         </div>
       )}
     </>

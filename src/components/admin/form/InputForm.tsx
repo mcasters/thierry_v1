@@ -2,8 +2,6 @@
 
 import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
-
-import { ContentFull } from "@/app/api/content/content";
 import s from "@/styles/admin/Admin.module.css";
 import SubmitButton from "@/components/admin/form/SubmitButton";
 import CancelButton from "@/components/admin/form/CancelButton";
@@ -11,11 +9,16 @@ import CancelButton from "@/components/admin/form/CancelButton";
 interface Props {
   label: string;
   api: string;
-  content?: ContentFull;
+  textContent: string;
   textLabel?: string;
 }
-export default function InputForm({ label, api, content, textLabel }: Props) {
-  const [text, setText] = useState<string>(content?.text || "");
+export default function InputForm({
+  label,
+  api,
+  textContent,
+  textLabel,
+}: Props) {
+  const [text, setText] = useState<string>(textContent);
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
