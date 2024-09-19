@@ -39,7 +39,7 @@ export default async function RootLayout({
         <Providers session={session} theme={hexaTheme}>
           <StyledJsxRegistry>
             <Layout
-              introduction={getIntro(contents)?.text}
+              introduction={getIntro(contents)}
               paintingCategories={paintingCategories}
               sculptureCategories={sculptureCategories}
             >

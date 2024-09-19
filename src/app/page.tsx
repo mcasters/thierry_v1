@@ -18,7 +18,7 @@ export default async function Page() {
   //   next: { revalidate: 10 },
   // });
   const contents = await getContentsFull();
-  const sliderContent = getSliders(contents);
+  const sliderImages = getSliders(contents);
 
-  return <HomePage sliderImages={sliderContent} />;
+  return <HomePage sliderImages={sliderImages} />;
 }

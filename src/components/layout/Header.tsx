@@ -38,19 +38,19 @@ export default function Header({
     isSculpture || isPainting
       ? LAYOUT.ITEM_NAV
       : isHome && !titleDisappear
-      ? LAYOUT.HOME_NAV
-      : isHome && titleDisappear
-      ? LAYOUT.HOME_NAV_FIX
-      : LAYOUT.NAV;
+        ? LAYOUT.HOME_NAV
+        : isHome && titleDisappear
+          ? LAYOUT.HOME_NAV_FIX
+          : LAYOUT.NAV;
 
   const navType2 =
     isSculpture || isPainting
       ? LAYOUT.ITEM_NAV
       : isHome && !introDisappear
-      ? LAYOUT.HOME_NAV
-      : isHome && introDisappear
-      ? LAYOUT.HOME_NAV_FIX
-      : LAYOUT.NAV;
+        ? LAYOUT.HOME_NAV
+        : isHome && introDisappear
+          ? LAYOUT.HOME_NAV_FIX
+          : LAYOUT.NAV;
 
   return (
     <header className={s.container}>
@@ -71,19 +71,12 @@ export default function Header({
           height: LAYOUT.NAV_1_HEIGHT,
         }}
       />
-      {isHome && introduction && (
+      {isHome && (
         <div ref={introRef} className={s.intro}>
           <p>{introduction}</p>
         </div>
       )}
       <Nav_2 navType={navType2} />
-      <div
-        className={s.spaceNav2}
-        style={{
-          display: introDisappear ? "block" : "none",
-          height: LAYOUT.NAV_2_HEIGHT,
-        }}
-      />
       <style jsx>{`
         .title {
           color: ${theme.titleColor};

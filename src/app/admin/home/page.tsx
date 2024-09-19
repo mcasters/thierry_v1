@@ -9,7 +9,7 @@ import TextAreaForm from "@/components/admin/form/TextAreaForm";
 
 export default async function Home() {
   const contents = await getContentsFull();
-  const sliderContent = getSliders(contents);
+  const sliderImages = getSliders(contents);
   return (
     <div className={s.formContainer}>
       <h1 className={s.pageTitle}>Contenus de la page Home</h1>
@@ -20,9 +20,9 @@ export default async function Home() {
         withImage={false}
         textLabel="Introduction (facultatif)"
       />
-      {sliderContent && (
+      {sliderImages.length > 0 && (
         <Preview
-          images={sliderContent.images}
+          images={sliderImages}
           pathImage="/images/miscellaneous"
           apiForDelete="api/content/delete-image"
           textLabel="Slider (une ou plusieurs images)"

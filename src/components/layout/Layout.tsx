@@ -13,7 +13,7 @@ import { useTheme } from "@/app/context/themeProvider";
 import { hexToRgb } from "@/utils/commonUtils";
 
 interface Props {
-  introduction?: string;
+  introduction: string;
   paintingCategories: PaintingCategory[];
   sculptureCategories: SculptureCategory[];
   children: ReactNode;
