@@ -1,24 +1,24 @@
 import prisma from "@/lib/db/prisma";
-import { PaintingFull } from "@/app/api/peinture/painting";
 import "server-only";
+import { DrawingFull } from "@/app/api/dessin/drawing";
 
-export async function getPaintingsFull() {
-  const res = await prisma.painting.findMany({
+export async function getDrawingsFull() {
+  const res = await prisma.drawing.findMany({
     include: { category: true },
   });
   return JSON.parse(JSON.stringify(res));
 }
 
-export async function getPaintingsFullByCategory(categoryKey: string) {
+export async function getDrawingsFullByCategory(categoryKey: string) {
   const res =
     categoryKey === "no-category"
-      ? await prisma.painting.findMany({
+      ? await prisma.drawing.findMany({
           where: {
             category: null,
           },
           include: { category: true },
         })
-      : await prisma.painting.findMany({
+      : await prisma.drawing.findMany({
           where: {
             category: {
               key: categoryKey,
@@ -27,5 +27,5 @@ export async function getPaintingsFullByCategory(categoryKey: string) {
           include: { category: true },
         });
 
-  return JSON.parse(JSON.stringify(res)) as PaintingFull[];
+  return JSON.parse(JSON.stringify(res)) as DrawingFull[];
 }
