@@ -66,6 +66,9 @@ export default function Gallery({ images, title, alt }: Props) {
           closeOnPullDown: true,
           closeOnBackdropClick: true,
         }}
+        styles={{
+          slide: { padding: "1rem" },
+        }}
       />
     </>
   );

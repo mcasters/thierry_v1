@@ -74,7 +74,7 @@ export default function Lightbox({
               }}
               src={`${image.filename}`}
               fill
-              sizes="(max-width: 768px) 80vw, 50vw"
+              sizes="(max-width: 768px) 80vw, 60vw"
               style={{
                 objectFit: "contain",
               }}
@@ -94,6 +94,9 @@ export default function Lightbox({
           closeOnPullUp: true,
           closeOnPullDown: true,
           closeOnBackdropClick: true,
+        }}
+        styles={{
+          slide: { padding: "1rem" },
         }}
       />
     </div>

@@ -100,17 +100,6 @@ ColorPicker
     margin-right: 2em;
 }
 
-.popup {
-    position: absolute;
-    top: calc(100% + 2px);
-    left: -200px;
-    background: #f0f0f4;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    z-index: 2;
-    text-align: center;
-    padding-bottom: 1em;
-}
-
 .presetColorForm {
     margin-top: 1em;
 }

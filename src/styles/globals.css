@@ -304,23 +304,6 @@ label {
   }
 }
 
-.image-gallery {
-  width: auto;
-  height: 35vh;
-}
-
-.image-gallery-slide img {
-  width: auto;
-  height: 35vh;
-  object-fit: cover;
-  overflow: hidden;
-  object-position: center center;
-}
-
-.fullscreen .image-gallery-slide img {
-  height: 90vh;
-}
-
 .separate {
   width: 300px;
   border-bottom: 1px solid var(--color-dark);
