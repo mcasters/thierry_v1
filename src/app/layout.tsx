@@ -8,7 +8,7 @@ import "@/styles/globals.css";
 import { getContentsFull } from "@/app/api/content/getContents";
 import { getPaintingCategoriesForMenu } from "@/app/api/peinture/category/getCategories";
 import { getSculptureCategoriesForMenu } from "@/app/api/sculpture/category/getCategories";
-import { getIntro, themeToHexa } from "@/utils/commonUtils";
+import { getIntroText, themeToHexa } from "@/utils/commonUtils";
 import React from "react";
 import { getActiveTheme, getPresetColors } from "@/app/api/theme/getTheme";
 import StyledJsxRegistry from "./registry";
@@ -39,7 +39,7 @@ export default async function RootLayout({
         <Providers session={session} theme={hexaTheme}>
           <StyledJsxRegistry>
             <Layout
-              introduction={getIntro(contents)}
+              introduction={getIntroText(contents)}
               paintingCategories={paintingCategories}
               sculptureCategories={sculptureCategories}
             >

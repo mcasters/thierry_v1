@@ -1,8 +1,9 @@
 import { getContentsFull } from "@/app/api/content/getContents";
 import {
-  getDemarche,
-  getInspiration,
-  getPresentationContent,
+  getDemarcheText,
+  getInspirationText,
+  getPresentationImage,
+  getPresentationText,
 } from "@/utils/commonUtils";
 import s from "@/styles/admin/Admin.module.css";
 import { Label } from "@prisma/client";
@@ -16,20 +17,20 @@ export default async function Presentation() {
     <>
       <h1 className={s.pageTitle}>Contenus de la page Présentation</h1>
       <TextAreaForm
-        textContent={getPresentationContent(contents)}
+        textContent={getPresentationText(contents)}
         label={Label.PRESENTATION}
         api="api/content/update"
         textLabel="Présentation"
-        withImage={true}
+        images={getPresentationImage(contents)}
       />
       <TextAreaForm
-        textContent={getDemarche(contents)}
+        textContent={getDemarcheText(contents)}
         label={Label.DEMARCHE}
         api="api/content/update"
         textLabel="Démarche artistique"
       />
       <TextAreaForm
-        textContent={getInspiration(contents)}
+        textContent={getInspirationText(contents)}
         label={Label.INSPIRATION}
         api="api/content/update"
         textLabel="Inspiration"

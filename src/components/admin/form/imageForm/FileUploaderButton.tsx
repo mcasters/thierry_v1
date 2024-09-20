@@ -6,7 +6,11 @@ interface Props {
   isMultiple: boolean;
 }
 
-export const FileUploader = ({ handleFiles, isMultiple, name }: Props) => {
+export const FileUploaderButton = ({
+  handleFiles,
+  isMultiple,
+  name,
+}: Props) => {
   const hiddenFileInput = useRef<HTMLInputElement>(null);
 
   return (

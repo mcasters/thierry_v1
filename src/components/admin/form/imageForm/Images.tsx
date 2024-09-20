@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { FileUploader } from "@/components/admin/form/imageForm/FileUploader";
+import { FileUploaderButton } from "@/components/admin/form/imageForm/FileUploaderButton";
 import s from "@/styles/admin/Admin.module.css";
 
 interface Props {
@@ -38,7 +38,7 @@ export default function Images({ onAdd, reset, isMultiple, title }: Props) {
       <h5 className={s.imageTitle}>
         {title !== undefined ? title : isMultiple ? "Images :" : "Image :"}
       </h5>
-      <FileUploader
+      <FileUploaderButton
         name={isMultiple ? "files" : "file"}
         handleFiles={getAlbumPreview}
         isMultiple={isMultiple}
@@ -47,18 +47,16 @@ export default function Images({ onAdd, reset, isMultiple, title }: Props) {
         {newImages.length > 0 &&
           newImages.map((src) => (
             <div key={src} className={s.imageWrapper}>
-              <div key={src} className={s.imageContainer}>
-                <Image
-                  unoptimized={true}
-                  src={src}
-                  width={150}
-                  height={150}
-                  alt="Nouvelle image de l'item"
-                  style={{
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
+              <Image
+                unoptimized={true}
+                src={src}
+                width={150}
+                height={150}
+                alt="Nouvelle image de l'item"
+                style={{
+                  objectFit: "contain",
+                }}
+              />
             </div>
           ))}
       </div>

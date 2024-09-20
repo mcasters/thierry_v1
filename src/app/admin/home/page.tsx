@@ -1,5 +1,5 @@
 import { getContentsFull } from "@/app/api/content/getContents";
-import { getIntro, getSliders } from "@/utils/commonUtils";
+import { getIntroText, getSliders } from "@/utils/commonUtils";
 import { Label } from "@prisma/client";
 import Preview from "@/components/admin/form/imageForm/Preview";
 import s from "@/styles/admin/Admin.module.css";
@@ -14,10 +14,10 @@ export default async function Home() {
     <div className={s.formContainer}>
       <h1 className={s.pageTitle}>Contenus de la page Home</h1>
       <TextAreaForm
-        textContent={getIntro(contents)}
+        textContent={getIntroText(contents)}
         label={Label.INTRO}
         api="api/content/update"
-        withImage={false}
+        images={false}
         textLabel="Introduction (facultatif)"
       />
       {sliderImages.length > 0 && (

@@ -43,7 +43,7 @@ padding: 1em 0 2em;
     padding-bottom: 1em;
 }
 
-.formContainer .titleForm {
+.titleForm {
     margin: 0;
 }
 
@@ -82,7 +82,7 @@ padding: 1em 0 2em;
 }
 
 .imageWrapper {
-    padding: 1.5em 0.1em;
+    padding: 1.5em 0.2em;
     display: inline-block;
     text-align: center;
 }

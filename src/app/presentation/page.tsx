@@ -1,8 +1,8 @@
 import React from "react";
 import { getContentsFull } from "@/app/api/content/getContents";
 import {
-  getDemarche,
-  getInspiration,
+  getDemarcheText,
+  getInspirationText,
   getPresentationContent,
 } from "@/utils/commonUtils";
 import PresentationComponent from "@/components/presentation/PresentationComponent";
@@ -10,8 +10,8 @@ import PresentationComponent from "@/components/presentation/PresentationCompone
 export default async function Presentation() {
   const contents = await getContentsFull();
   const presentationContent = getPresentationContent(contents);
-  const demarche = getDemarche(contents);
-  const inspiration = getInspiration(contents);
+  const demarche = getDemarcheText(contents);
+  const inspiration = getInspirationText(contents);
 
   return (
     <PresentationComponent

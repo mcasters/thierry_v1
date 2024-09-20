@@ -1,8 +1,8 @@
 import {
-  getAddress,
-  getEmail,
-  getPhone,
-  getTextContact,
+  getAddressText,
+  getContactText,
+  getEmailText,
+  getPhoneText,
 } from "@/utils/commonUtils";
 import { getContentsFull } from "@/app/api/content/getContents";
 import s from "@/styles/admin/Admin.module.css";
@@ -18,7 +18,7 @@ export default async function Contact() {
     <>
       <h1 className={s.pageTitle}>Contenus de la page contact</h1>
       <TextAreaForm
-        textContent={getAddress(contents)}
+        textContent={getAddressText(contents)}
         label={Label.ADDRESS}
         api="api/content/update"
         textLabel="Adresse"
@@ -26,17 +26,17 @@ export default async function Contact() {
       <InputForm
         label={Label.PHONE}
         api="api/content/update"
-        textContent={getPhone(contents)}
+        textContent={getPhoneText(contents)}
         textLabel="Téléphone"
       />
       <InputForm
         label={Label.EMAIL}
         api="api/content/update"
-        textContent={getEmail(contents)}
+        textContent={getEmailText(contents)}
         textLabel="E-mail"
       />
       <TextAreaForm
-        textContent={getTextContact(contents)}
+        textContent={getContactText(contents)}
         label={Label.TEXT_CONTACT}
         api="api/content/update"
         textLabel="Texte d'accompagnement (facultatif)"
