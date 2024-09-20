@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import s from "@/styles/admin/AdminTheme.module.css";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
-import { OnlyString } from "@/app/api/theme/theme";
+import { OnlyString } from "@/lib/db/theme";
 import { Theme } from "@prisma/client";
 import { useAdminPresetColorsContext } from "@/app/context/adminPresetColorsProvider";
 

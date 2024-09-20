@@ -11,40 +11,51 @@ import Preview from "@/components/admin/form/imageForm/Preview";
 import CancelButton from "@/components/admin/form/CancelButton";
 import SubmitButton from "@/components/admin/form/SubmitButton";
 import { useRouter } from "next/navigation";
+import { TYPE } from "@/constants";
 
-interface Props {
-  item: SculptureFull | PaintingFull;
-  toggleModal?: () => void;
-  categories?: Category[];
-}
+type Props =
+  | {
+      item: SculptureFull | PaintingFull;
+      toggleModal?: () => void;
+      categories?: Category[];
+    }
+  | {
+      typeAdd: string;
+      categories?: Category[];
+    };
 
-export default function ItemForm({ item, toggleModal, categories }: Props) {
+export default function ItemForm({
+  item,
+  toggleModal,
+  categories,
+  typeAdd,
+}: Props) {
   const router = useRouter();
-  const isSculpture = isSculptureFull(item);
-  const isUpdate = item.id !== 0;
   const formRef = useRef<HTMLFormElement>();
   const resetImageRef = useRef<number>(0);
 
-  const [title, setTitle] = useState<string>(item.title);
-  const [date, setDate] = useState<Date>(new Date(item.date));
-  const [technique, setTechnique] = useState<string>(item.technique);
+  const isSculpture =
+    item?.type === TYPE.SCULPTURE || typeAdd === TYPE.SCULPTURE;
+  const [title, setTitle] = useState<string>(item?.title || "");
+  const [date, setDate] = useState<Date>(new Date(item?.date || new Date()));
+  const [technique, setTechnique] = useState<string>(item?.technique || "");
   const [description, setDescription] = useState<string>(
-    item.description || "",
+    item?.description || "",
   );
-  const [height, setHeight] = useState<string>(item.height.toString());
-  const [width, setWidth] = useState<string>(item.width.toString());
-  const [price, setPrice] = useState<string>(item.price?.toString() || "");
+  const [height, setHeight] = useState<string>(item?.height.toString() || "");
+  const [width, setWidth] = useState<string>(item?.width.toString() || "");
+  const [price, setPrice] = useState<string>(item?.price?.toString() || "");
   const [categoryId, setCategoryId] = useState<string>(
-    item.category?.id.toString() || "",
+    item?.category?.id.toString() || "",
   );
-  const [isToSell, setIsToSell] = useState<boolean>(item.isToSell);
+  const [isToSell, setIsToSell] = useState<boolean>(item?.isToSell || false);
   const [length, setLength] = useState<string>(
-    isSculptureFull(item) ? item.length.toString() : "",
+    !item ? "" : isSculptureFull(item) ? item.length.toString() : "",
   );
   const [countImages, setCountImages] = useState<number>(
-    !isUpdate ? 0 : isSculptureFull(item) ? item.images.length : 1,
+    !item ? 0 : isSculptureFull(item) ? item.images.length : 1,
   );
-  const api = isUpdate ? `api/${item.type}/update` : `api/${item.type}/add`;
+  const api = item ? `api/${item.type}/update` : `api/${typeAdd}/add`;
 
   const reset = () => {
     setTitle("");
@@ -68,9 +79,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
       fetch(api, { method: "POST", body: formData }).then((res) => {
         if (res.ok) {
           toggleModal ? toggleModal() : reset();
-          toast.success(
-            isUpdate ? `${item.type} modifiée` : `${item.type} ajoutée`,
-          );
+          toast.success(item ? `${item.type} modifiée` : `${typeAdd} ajoutée`);
           router.refresh();
         } else toast.error("Erreur à l'enregistrement");
       });
@@ -82,10 +91,8 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
   };
 
   return (
-    <div className={isUpdate ? s.wrapperModal : s.formContainer}>
-      <h2>
-        {isUpdate ? `Modifier une ${item.type}` : `Ajouter une ${item.type}`}
-      </h2>
+    <div className={item ? s.wrapperModal : s.formContainer}>
+      <h2>{item ? `Modifier une ${item.type}` : `Ajouter une ${typeAdd}`}</h2>
       <form ref={formRef} onSubmit={submit}>
         {item && <input type="hidden" name="id" value={item.id} />}
         <input type="hidden" name="isToSell" value={String(isToSell)} />
@@ -200,7 +207,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
           </label>
         )}
         <div className={s.imageFormContainer}>
-          {isUpdate && (
+          {item && (
             <Preview
               images={getImagesTab(item)}
               pathImage={`/images/${item.type}`}

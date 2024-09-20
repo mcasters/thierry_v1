@@ -7,7 +7,7 @@ import React from "react";
 import s from "@/styles/admin/AdminTheme.module.css";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
-import { OnlyString } from "@/app/api/theme/theme";
+import { OnlyString } from "@/lib/db/theme";
 import { colorNameToHex } from "@/utils/commonUtils";
 import ColorPickerPresetColor from "@/components/admin/theme/ColorPicketPresetPart";
 import toast from "react-hot-toast";
@@ -66,9 +66,9 @@ export default function ColorPicker({
               isOpen
                 ? s.swatchOpen
                 : workTheme[colorLabel as keyof OnlyString<Theme>].charAt(0) !==
-                  "#"
-                ? s.swatchFocus
-                : s.swatch
+                    "#"
+                  ? s.swatchFocus
+                  : s.swatch
             }
             style={{
               backgroundColor: colorNameToHex(

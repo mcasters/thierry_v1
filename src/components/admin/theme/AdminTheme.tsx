@@ -4,7 +4,6 @@ import React from "react";
 import themeStyle from "../../../styles/admin/AdminTheme.module.css";
 import toast from "react-hot-toast";
 import ThemeAdd from "@/components/admin/theme/ThemeAdd";
-import { Theme } from "@prisma/client";
 import { THEME } from "@/constants/database";
 import ThemeDashboard from "@/components/admin/theme/ThemeDashboard";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
@@ -12,6 +11,7 @@ import ThemeUpdate from "@/components/admin/theme/ThemeUpdate";
 import { NOTES } from "@/constants/admin";
 import CancelButton from "@/components/admin/form/CancelButton";
 import { useAdminThemesContext } from "@/app/context/adminThemesProvider";
+import { Theme } from "@prisma/client";
 
 export default function AdminTheme() {
   const { themes, setThemes } = useAdminThemesContext();
@@ -21,7 +21,7 @@ export default function AdminTheme() {
     const selectedTheme: Theme | undefined = themes.find(
       (t) => t.id.toString() === e.target.value,
     );
-    if (selectedTheme) setWorkTheme({ ...selectedTheme });
+    if (selectedTheme !== undefined) setWorkTheme({ ...selectedTheme });
   };
 
   const activateTheme = () => {
@@ -76,12 +76,12 @@ export default function AdminTheme() {
 
   const handleCancel = () => {
     const themeBeforeChange = themes.find((t: Theme) => t.id === workTheme.id);
-    if (themeBeforeChange) setWorkTheme({ ...themeBeforeChange });
+    if (themeBeforeChange !== undefined) setWorkTheme({ ...themeBeforeChange });
   };
 
   return (
     <>
-      <h1 className={themeStyle.pageTitle}>Gestion du thème</h1>
+      <h1>Gestion du thème</h1>
       <div className={themeStyle.themeContainer}>
         <h2>Liste des thèmes :</h2>
         <select name="name" value={workTheme.id} onChange={changeSelectedId}>

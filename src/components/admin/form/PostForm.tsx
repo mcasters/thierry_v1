@@ -19,19 +19,19 @@ interface Props {
 }
 
 export default function PostForm({ post, toggleModal }: Props) {
-  const isUpdate = post !== undefined;
   const formRef = useRef<HTMLFormElement>(null);
   const resetMainImageRef = useRef<number>(0);
   const resetImagesRef = useRef<number>(0);
   const router = useRouter();
-  const api = isUpdate ? `api/post/update` : `api/post/add`;
+  const api = post ? `api/post/update` : `api/post/add`;
 
   const [title, setTitle] = useState<string>(post?.title || "");
   const [date, setDate] = useState<Date>(
     post?.date ? new Date(post.date) : new Date(),
   );
   const [text, setText] = useState<string>(post?.text || "");
-  const mainImage = getMainImage(post);
+  let mainImage = null;
+  if (post) mainImage = getMainImage(post);
 
   const reset = () => {
     setTitle("");
@@ -49,7 +49,7 @@ export default function PostForm({ post, toggleModal }: Props) {
       fetch(api, { method: "POST", body: formData }).then((res) => {
         if (res.ok) {
           reset();
-          toast.success(isUpdate ? "Post modifié" : "Post ajouté");
+          toast.success(post ? "Post modifié" : "Post ajouté");
           router.refresh();
         } else toast.error("Erreur à l'enregistrement");
       });
@@ -57,10 +57,10 @@ export default function PostForm({ post, toggleModal }: Props) {
   };
 
   return (
-    <div className={isUpdate ? s.wrapperModal : s.formContainer}>
-      <h2>{isUpdate ? "Modifier un post" : "Ajouter un post"}</h2>
+    <div className={post ? s.wrapperModal : s.formContainer}>
+      <h2>{post ? "Modifier un post" : "Ajouter un post"}</h2>
       <form ref={formRef} onSubmit={submit}>
-        {isUpdate && <input type="hidden" name="id" value={post.id} />}
+        {post && <input type="hidden" name="id" value={post.id} />}
         <label className={s.formLabel}>
           Titre
           <input
@@ -96,7 +96,7 @@ export default function PostForm({ post, toggleModal }: Props) {
         </label>
 
         <div className={s.imageFormContainer}>
-          {isUpdate && (
+          {post && (
             <Preview
               images={mainImage ? [mainImage] : []}
               pathImage="/images/post"
@@ -110,7 +110,7 @@ export default function PostForm({ post, toggleModal }: Props) {
           reset={resetMainImageRef.current}
         />
         <div className={s.imageFormContainer}>
-          {isUpdate && (
+          {post && (
             <Preview
               images={post.images.filter((i) => !i.isMain) || []}
               pathImage="/images/post"

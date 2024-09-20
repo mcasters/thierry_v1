@@ -38,7 +38,9 @@ export default function PresentationComponent({
               />
             </div>
           )}
-        <p>{presentationContent?.text}</p>
+        <div className={s.contentWrapper}>
+          <p>{presentationContent?.text}</p>
+        </div>
       </div>
 
       {demarcheText && (
