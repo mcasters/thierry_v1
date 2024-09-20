@@ -3,11 +3,11 @@
 import RowCategoryListComponent from "./RowCategoryListComponent";
 import React from "react";
 import s from "../../../../styles/admin/AdminList.module.css";
-import { Category } from "@/lib/db/item";
+import { CategoryFull } from "@/lib/db/item";
 
 interface Props {
   type: string;
-  categories: Category[];
+  categories: CategoryFull[];
 }
 export default function CategoryListComponent({ type, categories }: Props) {
   const title = "Liste des catégories";

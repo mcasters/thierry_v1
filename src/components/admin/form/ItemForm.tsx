@@ -13,16 +13,12 @@ import SubmitButton from "@/components/admin/form/SubmitButton";
 import { useRouter } from "next/navigation";
 import { TYPE } from "@/constants";
 
-type Props =
-  | {
-      item: SculptureFull | PaintingFull;
-      toggleModal?: () => void;
-      categories?: Category[];
-    }
-  | {
-      typeAdd: string;
-      categories?: Category[];
-    };
+interface Props {
+  item?: SculptureFull | PaintingFull;
+  toggleModal?: () => void;
+  categories?: Category[];
+  typeAdd?: string;
+}
 
 export default function ItemForm({
   item,
@@ -31,7 +27,7 @@ export default function ItemForm({
   typeAdd,
 }: Props) {
   const router = useRouter();
-  const formRef = useRef<HTMLFormElement>();
+  const formRef = useRef<HTMLFormElement>(null);
   const resetImageRef = useRef<number>(0);
 
   const isSculpture =

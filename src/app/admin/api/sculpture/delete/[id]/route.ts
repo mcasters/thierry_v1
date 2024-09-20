@@ -26,7 +26,7 @@ export async function GET(
       if (sculpture) {
         for (const image of sculpture.images) {
           deleteFile(dir, image.filename);
-          await prisma.image.delete({
+          await prisma.sculptureImage.delete({
             where: {
               filename: image.filename,
             },

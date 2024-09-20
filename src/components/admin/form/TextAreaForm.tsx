@@ -26,7 +26,7 @@ export default function TextAreaForm({
 }: Props) {
   const [text, setText] = useState<string>(textContent);
   const [isChanged, setIsChanged] = useState(false);
-  const formRef = useRef<HTMLFormElement>();
+  const formRef = useRef<HTMLFormElement>(null);
   const resetImageRef = useRef<number>(0);
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {

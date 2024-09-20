@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth/next";
 import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
+import { OnlyString } from "@/lib/db/theme";
+import { Theme } from "@prisma/client";
 
 export async function GET(
   req: Request,
@@ -32,7 +34,7 @@ export async function GET(
               key !== "isActive"
             ) {
               isModified = true;
-              updatedTheme[key] = presetColor.color;
+              updatedTheme[key as keyof OnlyString<Theme>] = presetColor.color;
             }
           }
           if (isModified) updatedThemes.push(updatedTheme);

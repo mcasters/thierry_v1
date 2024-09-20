@@ -46,7 +46,7 @@ export async function POST(req: Request) {
                 }
               : {};
 
-        const filename = await prisma.painting.update({
+        await prisma.painting.update({
           where: { id: id },
           data: {
             title: formData.get("title") as string,
@@ -57,9 +57,9 @@ export async function POST(req: Request) {
             width: Number(formData.get("width")),
             isToSell: formData.get("isToSell") === "true",
             price: Number(formData.get("price")),
-            imageFilename: fileInfo !== null ? fileInfo.filename : undefined,
-            imageWidth: fileInfo !== null ? fileInfo.width : undefined,
-            imageHeight: fileInfo !== null ? fileInfo.height : undefined,
+            imageFilename: fileInfo ? fileInfo.filename : undefined,
+            imageWidth: fileInfo ? fileInfo.width : undefined,
+            imageHeight: fileInfo ? fileInfo.height : undefined,
             category,
           },
         });

@@ -1,15 +1,17 @@
 import prisma from "@/lib/db/prisma";
-import { SculptureFull } from "@/app/api/sculpture/sculpture";
 import "server-only";
+import { SculptureFull } from "@/lib/db/item";
 
-export async function getSculpturesFull() {
+export async function getSculpturesFull(): Promise<SculptureFull[]> {
   const res = await prisma.sculpture.findMany({
     include: { images: true, category: true },
   });
   return JSON.parse(JSON.stringify(res));
 }
 
-export async function getSculpturesFullByCategory(categoryKey: string) {
+export async function getSculpturesFullByCategory(
+  categoryKey: string,
+): Promise<SculptureFull[]> {
   const res =
     categoryKey === "no-category"
       ? await prisma.sculpture.findMany({
@@ -26,5 +28,5 @@ export async function getSculpturesFullByCategory(categoryKey: string) {
           },
           include: { images: true, category: true },
         });
-  return JSON.parse(JSON.stringify(res)) as SculptureFull[];
+  return JSON.parse(JSON.stringify(res));
 }

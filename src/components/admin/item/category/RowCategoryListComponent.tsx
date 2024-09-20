@@ -2,20 +2,15 @@
 
 import DeleteButton from "@/components/admin/form/DeleteButton";
 import UpdateButton from "@/components/admin/form/UpdateButton";
-import { TYPE } from "@/constants";
 import s from "../../../../styles/admin/AdminList.module.css";
-import { Category } from "@/lib/db/item";
+import { CategoryFull } from "@/lib/db/item";
 
 interface Props {
-  category: Category;
+  category: CategoryFull;
   type: string;
 }
 
 export default function RowCategoryListComponent({ category, type }: Props) {
-  const itemCount =
-    type === TYPE.SCULPTURE
-      ? category.sculptures.length
-      : category.paintings.length;
   return (
     <ul className={s.item}>
       <li className={s.itemTitle}>
@@ -23,7 +18,7 @@ export default function RowCategoryListComponent({ category, type }: Props) {
       </li>
       <li className={s.itemInfo}>
         <span>
-          {itemCount} {type}(s)
+          {category.count} {type}(s)
         </span>
       </li>
       <li className={s.itemIcon}>
@@ -32,7 +27,7 @@ export default function RowCategoryListComponent({ category, type }: Props) {
       <li className={s.itemIcon}>
         <DeleteButton
           api={`api/${type}/category/delete/${category.id}`}
-          disabled={itemCount > 0}
+          disabled={category.count > 0}
         />
       </li>
     </ul>

@@ -101,3 +101,10 @@ export type Category = {
   key: string;
   value: string;
 };
+
+export type CategoryFull = {
+  id: number;
+  key: string;
+  value: string;
+  count: number;
+};

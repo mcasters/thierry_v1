@@ -1,12 +1,4 @@
-import {
-  ContentImage,
-  Label,
-  Painting,
-  PresetColor,
-  Sculpture,
-  SculptureImage,
-  Theme,
-} from "@prisma/client";
+import { Label, PresetColor, Theme } from "@prisma/client";
 import { TYPE } from "@/constants";
 import { THEME } from "@/constants/database";
 import {
@@ -17,6 +9,7 @@ import {
   PostFull,
   SculptureFull,
 } from "@/lib/db/item";
+import { OnlyString } from "@/lib/db/theme";
 
 export const transformValueToKey = (value: string): string => {
   return value
@@ -36,10 +29,8 @@ export const transformValueToKey = (value: string): string => {
 
 export const getPresentationContent = (
   contents: ContentFull[],
-): ContentFull | undefined => {
-  return (
-    contents?.filter((c) => c.label === Label.PRESENTATION)[0] || undefined
-  );
+): ContentFull | null => {
+  return contents?.filter((c) => c.label === Label.PRESENTATION)[0] || null;
 };
 
 export const getPresentationText = (contents: ContentFull[]): string => {
@@ -100,87 +91,6 @@ export const isSculptureFull = (item: any): item is SculptureFull =>
 
 export const isPostFull = (item: any): item is PostFull =>
   Object.values(item).includes(TYPE.POST);
-
-export const getEmptySculptureImage = (): SculptureImage[] => {
-  return [
-    {
-      id: 0,
-      height: 0,
-      width: 0,
-      filename: "",
-      isMain: false,
-      sculptureId: null,
-    },
-  ];
-};
-
-export const getEmptyContentImage = (): ContentImage[] => {
-  return [
-    {
-      id: 0,
-      height: 0,
-      width: 0,
-      filename: "",
-      isMain: false,
-      contentId: null,
-    },
-  ];
-};
-
-export const getEmptyPainting = (): Painting => {
-  return {
-    id: 0,
-    type: TYPE.PAINTING,
-    title: "",
-    date: new Date(),
-    technique: "",
-    description: "",
-    height: 0,
-    width: 0,
-    isToSell: false,
-    sold: false,
-    price: null,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    imageFilename: "",
-    imageHeight: 0,
-    imageWidth: 0,
-    category: null,
-    categoryId: null,
-  };
-};
-
-export const getEmptyContent = (): ContentFull => {
-  return {
-    id: 0,
-    label: "",
-    title: "",
-    text: "",
-    images: getEmptyContentImage(),
-  };
-};
-
-export const getEmptySculpture = (): Sculpture => {
-  return {
-    id: 0,
-    type: TYPE.SCULPTURE,
-    title: "",
-    date: new Date(),
-    technique: "",
-    description: "",
-    height: 0,
-    width: 0,
-    length: 0,
-    isToSell: false,
-    sold: false,
-    price: null,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    images: getEmptySculptureImage(),
-    category: null,
-    categoryId: null,
-  };
-};
 
 export const getBaseThemeData = () => {
   return {

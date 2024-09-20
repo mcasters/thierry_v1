@@ -17,7 +17,6 @@ export default async function Home() {
         textContent={getIntroText(contents)}
         label={Label.INTRO}
         api="api/content/update"
-        images={false}
         textLabel="Introduction (facultatif)"
       />
       {sliderImages.length > 0 && (
