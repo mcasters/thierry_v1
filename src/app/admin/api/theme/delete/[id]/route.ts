@@ -4,7 +4,6 @@ import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
 import { THEME } from "@/constants/database";
-import { Theme } from "@prisma/client";
 
 export async function POST(
   req: Request,
@@ -15,7 +14,7 @@ export async function POST(
   if (session) {
     try {
       const id = parseInt(params.id);
-      let updatedThemes: Theme[] | null = null;
+      let updatedThemes = null;
 
       const themeToDelete = await prisma.theme.findUnique({
         where: {

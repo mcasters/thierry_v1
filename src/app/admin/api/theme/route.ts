@@ -4,14 +4,13 @@ import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
 import { getBaseThemeData } from "@/utils/commonUtils";
-import { Theme } from "@prisma/client";
 
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (session) {
     try {
-      let res: Theme[];
+      let res;
       res = await prisma.theme.findMany();
 
       if (res.length === 0) {

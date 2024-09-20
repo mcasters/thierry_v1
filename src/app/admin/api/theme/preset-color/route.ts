@@ -4,14 +4,13 @@ import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
 import { getBasePresetColorData } from "@/utils/commonUtils";
-import { PresetColor } from "@prisma/client";
 
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (session) {
     try {
-      let res: PresetColor[];
+      let res;
       res = await prisma.presetColor.findMany();
 
       if (res.length === 0) {

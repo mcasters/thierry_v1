@@ -3,8 +3,6 @@ import { getServerSession } from "next-auth/next";
 import prisma from "@/lib/db/prisma";
 import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
-import { Theme } from "@prisma/client";
-import { OnlyString } from "@/app/api/theme/theme";
 
 export async function GET(
   req: Request,
@@ -23,21 +21,21 @@ export async function GET(
 
       if (presetColor) {
         const themes = await prisma.theme.findMany();
-        const updatedThemes: Theme[] = [];
+        const updatedThemes = [];
         for await (const theme of themes) {
-          let updatedTheme: Theme = theme;
-          let isModidied = false;
+          let updatedTheme = theme;
+          let isModified = false;
           for await (const [key, value] of Object.entries(theme)) {
             if (
               value === presetColor.name &&
               key !== "name" &&
               key !== "isActive"
             ) {
-              isModidied = true;
-              updatedTheme[key as keyof OnlyString<Theme>] = presetColor.color;
+              isModified = true;
+              updatedTheme[key] = presetColor.color;
             }
           }
-          if (isModidied) updatedThemes.push(updatedTheme);
+          if (isModified) updatedThemes.push(updatedTheme);
         }
 
         for await (const theme of updatedThemes) {
