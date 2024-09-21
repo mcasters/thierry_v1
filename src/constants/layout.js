@@ -1,6 +1,6 @@
 const LAYOUT = {
-  LINE_HEIGHT: 4,
-  NAV_1_HEIGHT: 36,
+  LINE_HEIGHT: 6,
+  NAV_1_HEIGHT: 31,
   NAV_2_HEIGHT: 55,
   ITEM_NAV: "itemNav",
   HOME_NAV: "homeNav",

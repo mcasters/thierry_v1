@@ -87,11 +87,11 @@ export const ADMIN_MENU = [
     NAME: NAMES.POST,
   },
   {
-    PATH: ROUTES.A_CONTACT,
-    NAME: NAMES.CONTACT,
-  },
-  {
     PATH: ROUTES.A_PRESENTATION,
     NAME: NAMES.PRESENTATION,
+  },
+  {
+    PATH: ROUTES.A_CONTACT,
+    NAME: NAMES.CONTACT,
   },
 ];

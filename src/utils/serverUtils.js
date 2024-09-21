@@ -2,7 +2,6 @@ import { mkdir, stat, unlinkSync } from "fs";
 import sharp from "sharp";
 import { join } from "path";
 import { IMAGE_SIZE } from "@/constants/image";
-import { transformValueToKey } from "@/utils/commonUtils";
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
 
@@ -35,8 +34,7 @@ export const createDirIfNecessary = (dir) => {
 };
 
 export const resizeAndSaveImage = async (file, dir) => {
-  const filename = transformValueToKey(file.name);
-  const newFilename = `${filename}_${Date.now()}.jpeg`;
+  const newFilename = `${Date.now()}.jpeg`;
   const maxSize = 130000;
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);

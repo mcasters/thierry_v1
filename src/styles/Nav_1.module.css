@@ -2,7 +2,7 @@
     height: var(--nav-1-height);
     width: 100%;
     z-index: 2;
-    font-size: var(--font-size-plus);
+    font-size: var(--font-size-nav);
     font-variant: small-caps;
     font-family: var(--font-family-serif);
     border-bottom: 1px solid transparent;
@@ -15,6 +15,7 @@
     line-height: var(--nav-1-height);
     border-bottom: 1px solid var(--color-border-menu1);
     margin: auto;
+    width: 540px;
 }
 
 /* desktop */
@@ -38,7 +39,7 @@
 
 .homeNav li, .homeNavFix li, .nav li, .itemNav li {
   display: inline-block;
-  width: 100px;
+  width: 110px;
   margin: 0 auto;
 }
 
@@ -60,7 +61,7 @@ DropDown
 }
 
 .dropdown .link {
-    font-size: var(--font-size-plus);
+    font-size: var(--font-size-nav);
     font-variant: small-caps;
     font-family: var(--font-family-serif);
 }

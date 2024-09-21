@@ -5,18 +5,17 @@
 }
 
 .title {
-  font-size: 2.5em;
+  font-size: 34px;
+  font-feature-settings: "smcp";
   font-variant: small-caps;
   font-weight: lighter;
-  font-family: var(--font-family-serif);
-  letter-spacing: 4px;
   margin: 0;
-  height: 80px;
-  line-height: 80px;
+  height: 100px;
+  line-height: 100px;
 }
 
 .intro {
-  padding: 5em 2em;
+  padding: 5rem 2rem;
   white-space: pre-line;
   z-index: 2;
 }
@@ -24,6 +23,6 @@
 /* desktop */
 @media (min-width: 769px) {
   .intro {
-    padding: 5em 10em;
+    padding: 5rem 42rem;
   }
 }

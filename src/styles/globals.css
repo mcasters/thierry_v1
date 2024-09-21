@@ -11,9 +11,10 @@
   * ======================================================================== */
   --font-size-xtitle: 1.5rem;
   --font-size-title: 1.3rem;
-  --font-size-plus: 1rem;
-  --font-size: 0.9rem;
-  --font-size-min: 0.8rem;
+  --font-size-nav: 17px;
+  --font-size-plus: 15px;
+  --font-size: 13px;
+  --font-size-min: 12px;
 
   /*
    * Layout
@@ -25,7 +26,7 @@
   WARNING before to change : These two are also in constants JS (Layout)
    */
   --line-height: 6px;
-  --nav-1-height: 36px;
+  --nav-1-height: 31px;
 
   /*
    * Colors
@@ -62,13 +63,6 @@
 
   --color-border-menu1: var(--color-medium);
   --color-border-menu2: var(--color-medium);
-
-  /*
-   * Parallax
-   * ======================================================================== */
-  --scale: 0.1;
-  --space: 1vmin;
-
 }
 
 * {
@@ -77,13 +71,24 @@
   margin: 0;
 }
 
+html,
+h3,
+h4,
+h5,
+input,
+button,
+.button,
+select,
+textarea {
+  font-family: var(--font-family-serif);
+  -webkit-font-smoothing: antialiased;
+  font-size: var(--font-size);
+  color: var(--color-xdark);
+}
 
 body {
   overflow: visible;
   min-height: 100%;
-  font-family: var(--font-family-serif);
-  font-size: var(--font-size);
-  -webkit-font-smoothing: antialiased;
   line-height: 1.375;
 }
 
