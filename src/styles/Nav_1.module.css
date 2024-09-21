@@ -2,9 +2,6 @@
     height: var(--nav-1-height);
     width: 100%;
     z-index: 2;
-    font-size: var(--font-size-nav);
-    font-variant: small-caps;
-    font-family: var(--font-family-serif);
     border-bottom: 1px solid transparent;
     transition: all ease-in-out 0.2s;
     padding: 0;
@@ -14,12 +11,14 @@
     height: var(--nav-1-height);
     line-height: var(--nav-1-height);
     border-bottom: 1px solid var(--color-border-menu1);
-    margin: auto;
-    width: 540px;
 }
 
 /* desktop */
 @media (min-width: 769px) {
+    .menu{
+        width: 540px;
+        margin: auto;
+    }
 }
 
 .itemNav .menu {
@@ -27,9 +26,9 @@
 }
 
 .nav, .itemNav, .homeNavFix {
-  position: fixed;
-  top: var(--line-height);
-  transition: all ease-in-out 0.2s;
+    position: fixed;
+    top: var(--line-height);
+    transition: all ease-in-out 0.2s;
 }
 
 .nav, .homeNavFix {
@@ -37,13 +36,19 @@
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
-.homeNav li, .homeNavFix li, .nav li, .itemNav li {
-  display: inline-block;
-  width: 110px;
-  margin: 0 auto;
+.itemNav {
+    border-bottom: 1px solid var(--color-border-menu1-dark);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
-.nav .link, .itemNav .link {
+.homeNav li, .homeNavFix li, .nav li, .itemNav li {
+    display: inline-block;
+    padding: 0 25px;
+}
+
+.link {
+    font-variant: small-caps;
+    font-size: var(--font-size-title);
     display: inline-block;
 }
 
@@ -52,68 +57,4 @@
     border-bottom-width: 2px;
 }
 
-/*
-DropDown
- */
 
-.dropdown {
-    position: relative;
-}
-
-.dropdown .link {
-    font-size: var(--font-size-nav);
-    font-variant: small-caps;
-    font-family: var(--font-family-serif);
-}
-
-.dropdown .link.active  {
-    border-bottom-style: solid;
-    border-bottom-width: 2px;
-}
-
-.subMenu {
-    position: fixed;
-    left: 0;
-    width: 100vw;
-    list-style-type: none;
-    border-bottom: 1px solid grey;
-    border-left: 1px solid grey;
-    border-right: 1px solid grey;
-    text-align: left;
-    height: unset;
-    z-index: 2;
-}
-
-/* desktop */
-@media (min-width: 769px) {
-    .subMenu {
-        position: absolute;
-        left: -100px;
-        width: 300px;
-    }
-}
-
-.subMenu > li {
-    background-color: var(--color-xlight);
-    opacity: 0.9;
-    display: block;
-    width: unset;
-    transition: background-color 0.3s ease-in-out;
-    padding: 0 10px
-}
-
-.subMenu > li:hover {
-    background-color: var(--color-light);
-    transition: background-color 0.3s ease-in-out;
-}
-
-.subMenu .subLink {
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-    background: none;
-    border: none;
-    font: inherit;
-    cursor: pointer;
-    font-size: var(--font-size-plus);
-}

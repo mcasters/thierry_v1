@@ -4,14 +4,22 @@
   z-index: 1;
 }
 
+.siteTitle {
+  padding: 2rem 0 3rem;
+}
+
+/* desktop */
+@media (min-width: 769px) {
+  .siteTitle {
+    padding: 3rem 0 5rem;
+  }
+}
+
 .title {
   font-size: 34px;
-  font-feature-settings: "smcp";
   font-variant: small-caps;
   font-weight: lighter;
   margin: 0;
-  height: 100px;
-  line-height: 100px;
 }
 
 .intro {
@@ -23,6 +31,7 @@
 /* desktop */
 @media (min-width: 769px) {
   .intro {
-    padding: 5rem 42rem;
+    width: 550px;
+    margin: 0 auto;
   }
 }

@@ -9,12 +9,12 @@
   /*
   * Font size
   * ======================================================================== */
-  --font-size-xtitle: 1.5rem;
-  --font-size-title: 1.3rem;
-  --font-size-nav: 17px;
-  --font-size-plus: 15px;
-  --font-size: 13px;
-  --font-size-min: 12px;
+  --font-size-xtitle: 1.5em;
+  --font-size-title: 1.3em;
+  --font-size-nav: 1.2em;
+  --font-size-plus: 1em;
+  --font-size: 0.9em;
+  --font-size-min: 0.8em;
 
   /*
    * Layout
@@ -32,30 +32,21 @@
    * Colors
    * ======================================================================== */
 
+  --color-xxlight: #fafafa;
   --color-xlight: #f8f8f8;
-  --color-xlight-rgb: 248, 248, 248;
-  --color-light: #e7e7e7;
-  --color-medium: #cccccc;
+  --color-light: #dcdcdc;
+  --color-medium: #c4c3c3;
   --color-dark: #818181;
   --color-xdark: #333;
 
   --color-blue-xdark: #0f1f26;
-  --color-blue-xdark-rgb: 14, 29, 35;
   --color-blue-dark: #13262f;
-  --color-blue-dark-rgb: 21, 42, 54;
   --color-blue-medium: #1c3949;
-  --color-blue-medium-rgb: 28, 54, 73;
   --color-prussian-blue: #24445C;
-  --color-blue-rgb: 36, 68, 92;
   --color-blue-light: #2e6177;
   --color-blue-xlight: #4289a6;
   --color-blue-xxlight: #66c3d3;
   --color-blue-xxxlight: #b5d1d5;
-
-
-  --color-brown1: #a4874f;
-  --color-brown2: #72402b;
-  --color-brown: #5c3524;
 
   /*
   common home and other pages
@@ -63,6 +54,7 @@
 
   --color-border-menu1: var(--color-medium);
   --color-border-menu2: var(--color-medium);
+  --color-border-menu1-dark: var(--color-blue-xdark)
 }
 
 * {
@@ -100,7 +92,7 @@ body {
 button {
   cursor: pointer;
   font-family: var(--font-family-serif);
-  font-size: var(--font-size-min);
+  font-size: var(--font-size);
 }
 
 a, .buttonLink, .iconButton svg {

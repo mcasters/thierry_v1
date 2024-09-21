@@ -23,10 +23,6 @@
 
 /* desktop */
 @media (min-width: 769px) {
-    .grid, .sculptureGrid {
-        padding: 2rem;
-    }
-
     .grid {
         grid-template-columns: repeat(2, minmax(50%, auto));
     }
