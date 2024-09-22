@@ -1,48 +1,31 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-
-import { PaintingCategory, SculptureCategory } from "@prisma/client";
 import s from "./DropDown.module.css";
 import { useTheme } from "@/app/context/themeProvider";
-import LAYOUT from "@/constants/layout";
+import { Category } from "@/lib/db/item";
 
 interface Props {
-  menuItems: PaintingCategory[] | SculptureCategory[];
+  menuItems: Category[];
   path: string;
   name: string;
   isActive: boolean;
-  navType: string;
+  themeLink: string;
+  themeLinkHover: string;
+  themeBorderActive: string;
 }
 export default function Dropdown({
   menuItems,
   path,
   name,
   isActive,
-  navType,
+  themeLink,
+  themeLinkHover,
+  themeBorderActive,
 }: Props) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const themeLink = useMemo(() => {
-    return navType === LAYOUT.ITEM_NAV
-      ? theme.menu1LinkItemColor
-      : navType === LAYOUT.HOME_NAV
-        ? theme.menu1LinkHomeColor
-        : theme.menu1LinkColor;
-  }, [theme, navType]);
-  const themeLinkHover = useMemo(() => {
-    return navType === LAYOUT.ITEM_NAV
-      ? theme.menu1LinkHoverItemColor
-      : navType === LAYOUT.HOME_NAV
-        ? theme.menu1LinkHomeHoverColor
-        : theme.menu1LinkHoverColor;
-  }, [theme, navType]);
-  const themeBorderActive = useMemo(() => {
-    return navType === LAYOUT.ITEM_NAV
-      ? theme.menu1LinkItemColor
-      : theme.menu2LinkItemColor;
-  }, [theme, navType]);
 
   const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();

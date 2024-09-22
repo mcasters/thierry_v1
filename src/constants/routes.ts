@@ -37,18 +37,30 @@ export const NAMES = {
 
 export const MENU_1 = [
   {
-    BASE_PATH: BASE_PATH.PAINTING,
     NAME: NAMES.PAINTING,
   },
   {
-    BASE_PATH: BASE_PATH.SCULPTURE,
     NAME: NAMES.SCULPTURE,
   },
   {
-    BASE_PATH: BASE_PATH.POST,
     NAME: NAMES.POST,
   },
 ];
+
+export const MENU_1_ITEMS = {
+  [NAMES.PAINTING]: {
+    NAME: NAMES.PAINTING,
+    BASE_PATH: BASE_PATH.PAINTING,
+  },
+  [NAMES.SCULPTURE]: {
+    NAME: NAMES.SCULPTURE,
+    BASE_PATH: BASE_PATH.SCULPTURE,
+  },
+  [NAMES.POST]: {
+    NAME: NAMES.POST,
+    BASE_PATH: BASE_PATH.POST,
+  },
+};
 
 export const MENU_2 = [
   {
