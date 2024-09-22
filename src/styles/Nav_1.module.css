@@ -46,5 +46,4 @@
 
 .homeNav li, .homeNavFix li, .nav li, .itemNav li {
     flex: auto;
-    /*padding: 0 30px;*/
 }
