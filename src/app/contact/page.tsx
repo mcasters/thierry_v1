@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { SiInstagram } from "@react-icons/all-files/si/SiInstagram";
 
 import { getContentsFull } from "@/app/api/content/getContents";
 import s from "@/styles/contact.module.css";
@@ -9,6 +8,7 @@ import {
   getEmailText,
   getPhoneText,
 } from "@/utils/commonUtils";
+import InstagramIcon from "@/components/admin/icons/InstagramIcon";
 
 export default async function Contact() {
   const contents = await getContentsFull();
@@ -28,11 +28,10 @@ export default async function Contact() {
       </Link>
       <a
         href="https://www.instagram.com/thierrycasters/"
-        className={s.instagram}
         target="_blank"
         rel="noopener noreferrer"
       >
-        <SiInstagram />
+        <InstagramIcon />
       </a>
       <div className={s.text}>
         <p className={s.preLine}>{getContactText(contents)}</p>
