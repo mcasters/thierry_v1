@@ -1,26 +1,19 @@
-.contentWrapper {
-  padding: 2rem 1rem;
+.container {
+  white-space: pre-line;
+  padding: 2.5rem 1.5rem;
 }
 
 /* desktop */
 @media (min-width: 769px) {
-  .contentWrapper {
-    max-width: 42vw;
-    margin: auto;
+  .container {
+    padding: 3rem 5rem;
   }
 }
 
-.imageWrap {
-  position: relative;
-  display: inline-block;
+.title {
+  display: none;
+}
+
+.container h2 {
   padding: 2rem;
-  height: 30vh;
-  width: 100%;
-}
-
-/* desktop */
-@media (min-width: 769px) {
-  .imageWrap {
-    height: 40vh;
-  }
 }

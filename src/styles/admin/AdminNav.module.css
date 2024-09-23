@@ -7,7 +7,7 @@
     background-color: var(--color-blue-medium);
     border-bottom: solid var(--color-xdark) 1px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
-    font-size: 14px;
+    font-size: 1em;
     text-align: center;
     margin: 0.8em;
     padding-top: 0.6em;
@@ -15,10 +15,10 @@
 }
 
 .nav span {
-    color: var(--color-blue-light);
-    letter-spacing: 4px;
+    color: var(--color-dark);
+    letter-spacing: 6px;
     font-weight: bold;
-    font-size: var(--font-size-nav);
+    font-size: var(--font-size-title);
 }
 
 .navItems {
