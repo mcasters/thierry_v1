@@ -65,7 +65,7 @@ export default function Dropdown({
               <Link
                 href={`${path}/${menuItem.key}`}
                 legacyBehavior={false}
-                onClick={(e) => {
+                onClick={() => {
                   setOpen(false);
                 }}
                 className={s.subLink}

@@ -11,7 +11,7 @@ import {
   isPostFull,
   isSculptureFull,
 } from "@/utils/commonUtils";
-import UpdateIcon from "@/components/admin/icons/UpdateIcon";
+import UpdateIcon from "@/components/icons/UpdateIcon";
 
 type Props = {
   item: PaintingFull | SculptureFull | Category | PostFull;

@@ -8,7 +8,7 @@ import {
   getEmailText,
   getPhoneText,
 } from "@/utils/commonUtils";
-import InstagramIcon from "@/components/admin/icons/InstagramIcon";
+import InstagramIcon from "@/components/icons/InstagramIcon";
 
 export default async function Contact() {
   const contents = await getContentsFull();

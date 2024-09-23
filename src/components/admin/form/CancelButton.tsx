@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 
 interface Props {
   text?: string;
@@ -16,7 +15,6 @@ export default function CancelButton({
   disabled,
   onCancel,
 }: Props) {
-  const router = useRouter();
   return (
     <button
       onClick={(e) => {

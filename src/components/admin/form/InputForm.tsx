@@ -22,7 +22,6 @@ export default function InputForm({
   const [isChanged, setIsChanged] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const reset = () => setIsChanged(false);
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formRef.current && confirm("Tu confirmes ?")) {

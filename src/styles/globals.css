@@ -225,17 +225,6 @@ label {
 }
 
 /*
- * Browser upgrade prompt
- * ========================================================================== */
-
-:global(.browserupgrade) {
-  margin: 0.2rem 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2rem 0;
-}
-
-/*
  * Print s
  * Inlined to avoid the additional HTTP request:
  * http://www.phpied.com/delay-loading-your-print-css/
