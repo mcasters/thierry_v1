@@ -1,16 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useLightboxProps, useLightboxState } from "yet-another-react-lightbox";
 
 export default function NextJsImage({ slide, offset, rect }) {
-  const {
-    on: { click },
-    carousel: { imageFit },
-  } = useLightboxProps();
-
-  const { currentIndex } = useLightboxState();
-
   const width = Math.round(
     Math.min(rect.width, (rect.height / slide.height) * slide.width),
   );
