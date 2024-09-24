@@ -17,15 +17,16 @@ export default async function Contact() {
   return (
     <>
       <address>
-        <h1 className={s.title}>Contacter Thierry Casters</h1>
         <p>Thierry Casters</p>
         <p className={s.preLine}>{getAddressText(contents)}</p>
         <br />
-        <p>{getPhoneText(contents)}</p>
+        <Link href={`tel:+33${getPhoneText(contents)}`}>
+          {getPhoneText(contents)}
+        </Link>
+        <Link className={s.email} href={`mailto:${email}`}>
+          {email}
+        </Link>
       </address>
-      <Link className={s.email} href={`mailto:${email}`}>
-        {email}
-      </Link>
       <a
         href="https://www.instagram.com/thierrycasters/"
         target="_blank"
