@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { signIn, signOut, useSession } from 'next-auth/react';
-import Link from 'next/link';
+import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
-import s from './AuthStatus.module.css';
-import { ROUTES } from '@/constants/routes';
+import s from "./AuthStatus.module.css";
+import { ROUTES } from "@/constants/routes";
 
 export default function AuthStatus() {
   const { data: session } = useSession();
