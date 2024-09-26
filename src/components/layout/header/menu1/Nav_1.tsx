@@ -4,7 +4,7 @@ import { MENU_1, NAMES } from "@/constants/routes";
 import s from "@/styles/Nav_1.module.css";
 import { useTheme } from "@/app/context/themeProvider";
 import { Category } from "@/lib/db/item";
-import NavItem from "@/components/layout/menu1/NavItem";
+import NavItem from "@/components/layout/header/menu1/NavItem";
 
 interface Props {
   navLayout: string;

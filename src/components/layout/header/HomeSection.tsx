@@ -5,7 +5,7 @@ import { GENERAL } from "@/constants";
 import React, { useEffect, useRef, useState } from "react";
 
 interface Props {
-  handleDisappear: (boolean) => void;
+  handleDisappear: (arg0: boolean) => void;
   yLimit: number;
   text?: string;
 }
@@ -24,8 +24,10 @@ export default function HomeSection({
 
   useEffect(() => {
     function handleScroll() {
-      const _isGone = ref.current.getBoundingClientRect().bottom <= yLimit;
-      setIsGone(_isGone);
+      if (ref.current) {
+        const _isGone = ref.current.getBoundingClientRect().bottom <= yLimit;
+        setIsGone(_isGone);
+      }
     }
     document.addEventListener("scroll", handleScroll);
     return () => {

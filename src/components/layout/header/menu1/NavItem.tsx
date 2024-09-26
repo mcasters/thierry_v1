@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { MENU_1_ITEMS } from "@/constants/routes";
-import Dropdown from "@/components/layout/menu1/DropDown";
+import Dropdown from "@/components/layout/header/menu1/DropDown";
 import s from "./NavItem.module.css";
 import { useTheme } from "@/app/context/themeProvider";
 import { Category } from "@/lib/db/item";
