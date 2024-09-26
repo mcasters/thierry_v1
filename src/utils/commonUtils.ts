@@ -103,8 +103,8 @@ export const getBaseThemeData = () => {
     colorItem: "#a4874f",
     titleColor: "#2e6177",
 
-    linkColor: "#2e6177",
-    linkHoverColor: "#66c3d3",
+    linkColor: "#a4874f",
+    linkHoverColor: "#e5ca96",
     linkItemColor: "#2e6177",
     linkHoverItemColor: "#66c3d3",
 

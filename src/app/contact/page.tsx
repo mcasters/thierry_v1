@@ -20,20 +20,30 @@ export default async function Contact() {
         <p>Thierry Casters</p>
         <p className={s.preLine}>{getAddressText(contents)}</p>
         <br />
-        <Link href={`tel:+33${getPhoneText(contents)}`}>
-          {getPhoneText(contents)}
-        </Link>
-        <Link className={s.email} href={`mailto:${email}`}>
-          {email}
-        </Link>
+        <p>
+          <Link href={`tel:+33${getPhoneText(contents)}`}>
+            {getPhoneText(contents)}
+          </Link>
+        </p>
+        <br />
+
+        <p>
+          <Link className={s.email} href={`mailto:${email}`}>
+            {email}
+          </Link>
+        </p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <a
+          href="https://www.instagram.com/thierrycasters/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <InstagramIcon />
+        </a>
       </address>
-      <a
-        href="https://www.instagram.com/thierrycasters/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <InstagramIcon />
-      </a>
       <div className={s.text}>
         <p className={s.preLine}>{getContactText(contents)}</p>
       </div>

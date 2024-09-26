@@ -6,7 +6,6 @@ import Image from "next/image";
 import { MENU_2 } from "@/constants/routes";
 import s from "@/styles/Nav_2.module.css";
 import { useTheme } from "@/app/context/themeProvider";
-import LAYOUT from "@/constants/layout";
 
 interface Props {
   navLayout: string;
@@ -18,27 +17,13 @@ export default function Nav_2({ navLayout }: Props) {
 
   return (
     <>
-      <nav
-        className={
-          navLayout === LAYOUT.ITEM_NAV
-            ? `${s.itemNav} itemNav`
-            : navLayout === LAYOUT.HOME_NAV
-              ? `${s.homeNav} homeNav`
-              : navLayout === LAYOUT.HOME_NAV_FIX
-                ? `${s.homeNavFix} homeNavFix ${s.homeNav} homeNav`
-                : `${s.nav} nav`
-        }
-      >
+      <nav className={`${s[navLayout]} ${navLayout}`}>
         <ul className={s.menu}>
           {MENU_2.map((menuItem) => {
             if (menuItem.NAME === "Home")
               return (
                 <li key={menuItem.NAME} className={s.liHome}>
-                  <Link
-                    href={menuItem.PATH}
-                    key={menuItem.NAME}
-                    legacyBehavior={false}
-                  >
+                  <Link href={menuItem.PATH} key={menuItem.NAME}>
                     <Image
                       loader={({ src, width, quality }) => {
                         return `/${src}`;

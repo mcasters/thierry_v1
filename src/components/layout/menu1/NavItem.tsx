@@ -8,7 +8,7 @@ import { useTheme } from "@/app/context/themeProvider";
 import { Category } from "@/lib/db/item";
 import React, { useMemo } from "react";
 import LAYOUT from "@/constants/layout";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 interface Props {
   itemName: string;
@@ -19,7 +19,7 @@ interface Props {
 export default function NavItem({ itemName, navLayout, categories }: Props) {
   const theme = useTheme();
   const item = MENU_1_ITEMS[itemName];
-  const basePath = useSelectedLayoutSegment();
+  const basePath = usePathname().split("/")[1];
   const isActive = basePath === item.BASE_PATH;
 
   const themeLink = useMemo(() => {
