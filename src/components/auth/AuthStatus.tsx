@@ -14,9 +14,7 @@ export default function AuthStatus() {
       {!session && (
         <button
           className="buttonLink"
-          onClick={() => {
-            signIn(undefined, { callbackUrl: ROUTES.ADMIN });
-          }}
+          onClick={() => signIn(undefined, { callbackUrl: ROUTES.ADMIN })}
         >
           Admin in
         </button>
@@ -32,9 +30,7 @@ export default function AuthStatus() {
           <span className={s.separator}>-</span>
           <button
             className="buttonLink"
-            onClick={() => {
-              signOut({ callbackUrl: ROUTES.HOME });
-            }}
+            onClick={() => signOut({ callbackUrl: ROUTES.HOME })}
           >
             Admin out
           </button>

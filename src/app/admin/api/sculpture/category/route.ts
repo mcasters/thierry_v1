@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-
-import { authOptions } from "@/utils/authOptions";
 import { getSculptureCategoriesFull } from "@/app/api/sculpture/category/getCategories";
+import { auth } from "@/lib/auth";
 
 export async function GET() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (session) {
     const res = await getSculptureCategoriesFull();

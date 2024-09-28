@@ -1,17 +1,15 @@
 import { parse } from "date-fns";
-import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
-
 import {
   createDirIfNecessary,
   getPaintingDir,
   resizeAndSaveImage,
 } from "@/utils/serverUtils";
-import { authOptions } from "@/utils/authOptions";
 import prisma from "@/lib/db/prisma";
+import { auth } from "@/lib/auth";
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (session) {
     try {

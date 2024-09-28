@@ -1,15 +1,13 @@
-import { getServerSession } from "next-auth/next";
-
 import prisma from "@/lib/db/prisma";
-import { authOptions } from "@/utils/authOptions";
 import { NextResponse } from "next/server";
 import { THEME } from "@/constants/database";
+import { auth } from "@/lib/auth";
 
 export async function POST(
   req: Request,
   { params }: { params: { id: string } },
 ) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (session) {
     try {
