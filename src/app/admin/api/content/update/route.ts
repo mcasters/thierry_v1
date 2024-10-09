@@ -56,6 +56,7 @@ export async function POST(req: Request) {
                       filename: fileInfo.filename,
                       width: fileInfo.width,
                       height: fileInfo.height,
+                      isMain: formData.get("isMain") === "true",
                     },
                   },
                 },

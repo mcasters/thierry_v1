@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import ArrowNext from "@/components/icons/ArrowNext";
 import ArrowPrev from "@/components/icons/ArrowPrev";
+import useWindowSize from "@/components/hooks/useWindowSize";
+import { DEVICE } from "@/constants/image";
 
 type Props = {
   photos: Photo[];
@@ -15,6 +17,7 @@ type Props = {
 
 export default function Slider({ photos, autoPlay, index }: Props) {
   const [active, setActive] = useState(index | 0);
+  const window = useWindowSize();
 
   const onPrev = () => {
     if (active > 0) {
@@ -73,14 +76,16 @@ export default function Slider({ photos, autoPlay, index }: Props) {
           />
         </div>
       ))}
-      <div className={s.navigation}>
-        <button className={`${s.prev} iconButton`} onClick={onPrev}>
-          <ArrowPrev />
-        </button>
-        <button className={`${s.next} iconButton`} onClick={onNext}>
-          <ArrowNext />
-        </button>
-      </div>
+      {window.innerWidth > DEVICE.SMALL && (
+        <>
+          <button className={`${s.prev} iconButton`} onClick={onPrev}>
+            <ArrowPrev />
+          </button>
+          <button className={`${s.next} iconButton`} onClick={onNext}>
+            <ArrowNext />
+          </button>
+        </>
+      )}
     </>
   );
 }
