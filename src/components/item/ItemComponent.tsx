@@ -2,7 +2,7 @@
 
 import s from "./ItemComponent.module.css";
 import { getImagesTab, isSculptureFull } from "@/utils/commonUtils";
-import Lightbox from "@/components/image/Lightbox";
+import Lightbox from "@/components/image/lightbox/Lightbox";
 import { useMemo } from "react";
 import { DrawingFull, PaintingFull, SculptureFull } from "@/lib/db/item";
 
