@@ -8,6 +8,7 @@ import s from "@/styles/admin/Admin.module.css";
 import toast from "react-hot-toast";
 import SubmitButton from "@/components/admin/form/SubmitButton";
 import CancelButton from "@/components/admin/form/CancelButton";
+import { Label } from "@prisma/client";
 
 type Props = {
   isMultiple: boolean;
@@ -28,14 +29,32 @@ export default function ImagesForm({
   const [toUpdate, setToUpdate] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleFiles = (filesUploaded: FileList) => {
+  const handleFiles = async (filesUploaded: FileList) => {
     if (filesUploaded?.length > 0) {
       const files = Array.from(filesUploaded);
-
       const newFiles: string[] = [];
-      files.forEach((file) => {
-        newFiles.push(URL.createObjectURL(file));
-      });
+      let error = false;
+
+      for await (const file of files) {
+        const bmp = await createImageBitmap(file);
+        const { width, height } = bmp;
+        if (
+          (label === Label.SLIDER && width < 2000) ||
+          (label !== Label.SLIDER && width / height < 0.98 && height < 1200) ||
+          (label !== Label.SLIDER && width / height >= 0.98 && width < 2000)
+        ) {
+          toast.error(
+            `Erreur: les dimensions de l'image ${file.name} sont trop petites`,
+          );
+          bmp.close();
+          error = true;
+          break;
+        } else {
+          newFiles.push(URL.createObjectURL(file));
+          bmp.close();
+        }
+      }
+      if (error) return;
       setNewImages(newFiles);
       setToUpdate(true);
     }
@@ -63,9 +82,9 @@ export default function ImagesForm({
     <form ref={formRef} onSubmit={submit}>
       <input type="hidden" name="label" value={label} />
       <input type="hidden" name="isMain" value={isMain?.toString()} />
-      <h4 className={s.imageTitle}>
+      <p className={s.imageTitle}>
         {title !== undefined ? title : isMultiple ? "Images :" : "Image :"}
-      </h4>
+      </p>
       <FileUploaderButton
         name={isMultiple ? "files" : "file"}
         handleFiles={handleFiles}

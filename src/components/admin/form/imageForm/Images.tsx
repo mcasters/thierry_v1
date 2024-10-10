@@ -34,10 +34,22 @@ export default function Images({ onAdd, reset, isMultiple, title }: Props) {
   };
 
   return (
-    <div>
-      <h5 className={s.imageTitle}>
+    <>
+      <p className={s.imageTitle}>
         {title !== undefined ? title : isMultiple ? "Images :" : "Image :"}
-      </h5>
+      </p>
+      <details className={s.info}>
+        <summary className={s.imageTitle}>Détails</summary>
+        <p>
+          Fichier jpeg/jpg ou png.
+          <br />
+          <br />
+          <strong>Format paysage ou carré :</strong> minimum 2000 pixels de
+          largeur.
+          <br />
+          <strong>Formats portrait :</strong> minimum 1200 pixels de hauteur
+        </p>
+      </details>
       <FileUploaderButton
         name={isMultiple ? "files" : "file"}
         handleFiles={getAlbumPreview}
@@ -60,6 +72,6 @@ export default function Images({ onAdd, reset, isMultiple, title }: Props) {
             </div>
           ))}
       </div>
-    </div>
+    </>
   );
 }
