@@ -15,8 +15,8 @@ type Props = {
   index?: number;
 };
 
-export default function Slider({ photos, autoPlay, index }: Props) {
-  const [active, setActive] = useState(index | 0);
+export default function Slider({ photos, autoPlay, index = 0 }: Props) {
+  const [active, setActive] = useState(index);
   const window = useWindowSize();
 
   const onPrev = () => {
