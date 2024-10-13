@@ -259,27 +259,34 @@ export const getPhotoTab = (
 
   if (isPaintingFull(item) || isDrawingFull(item)) {
     for (const [key, value] of Object.entries(ImageSize)) {
-      photos[key].push({
+      photos[key as keyof PhotoTab].push({
         src: `/images/${item.type}${value.FOLDER}/${item.imageFilename}`,
-        width: value.WIDTH,
-        height: Math.round((value.WIDTH * item.imageHeight) / item.imageWidth),
+        width: key === "lg" ? item.imageWidth : value.WIDTH,
+        height:
+          key === "lg"
+            ? item.imageHeight
+            : Math.round((value.WIDTH * item.imageHeight) / item.imageWidth),
         isMain: false,
         ...restForPhotoTab(item),
       });
     }
   } else if (isSculptureFull(item) || isPostFull(item)) {
-    for (const i of item.images) {
-      for (const [key, value] of Object.entries(ImageSize)) {
+    for (const [key, value] of Object.entries(ImageSize)) {
+      for (const i of item.images) {
         const photo = {
           src: `/images/${item.type}${value.FOLDER}/${i.filename}`,
-          width: value.WIDTH,
-          height: Math.round((value.WIDTH * i.height) / i.width),
+          width: key === "lg" ? i.width : value.WIDTH,
+          height:
+            key === "lg"
+              ? i.height
+              : Math.round((value.WIDTH * i.height) / i.width),
           isMain: i.isMain,
           ...restForPhotoTab(item),
         };
 
-        if (splitMain && i.isMain) mainPhotos[key].push(photo);
-        else photos[key].push(photo);
+        if (splitMain && i.isMain)
+          mainPhotos[key as keyof PhotoTab].push(photo);
+        else photos[key as keyof PhotoTab].push(photo);
       }
     }
   }
