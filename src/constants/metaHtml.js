@@ -30,3 +30,8 @@ export const DOCUMENT_TITLE = {
   PRIVACY: "Détail de la politique de confidentialité du site",
   ADMIN: "Administration du site",
 };
+
+export const GENERAL = {
+  SITE_TITLE: "Thierry Casters",
+  ALT_PHOTO_PRESENTATION: "Photographie de présentation de Thierry Casters",
+};

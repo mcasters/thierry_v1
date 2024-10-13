@@ -33,7 +33,7 @@ export const createDirIfNecessary = (dir) => {
   });
 };
 
-export const resizeAndSaveImage = async (file, dir, isForHome = false) => {
+export const resizeAndSaveImage = async (file, dir) => {
   const newFilename = `${Date.now()}.jpeg`;
   const maxSize = 130000;
   const bytes = await file.arrayBuffer();
@@ -51,10 +51,9 @@ export const resizeAndSaveImage = async (file, dir, isForHome = false) => {
   };
 
   const width = 2000;
-  const height = isForHome ? null : 1200;
 
   const imageBuffer = await sharp(buffer)
-    .resize(width, height, {
+    .resize(width, null, {
       fit: sharp.fit.inside,
       withoutEnlargement: true,
     })
