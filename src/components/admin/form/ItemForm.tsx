@@ -215,7 +215,7 @@ export default function ItemForm({
             />
           )}
           <Images
-            onAdd={handleAdd}
+            onChange={handleAdd}
             isMultiple={isSculpture}
             title={isSculpture ? "1 photo minimum" : "1 seule photo"}
             reset={resetImageRef.current}

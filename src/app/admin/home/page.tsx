@@ -23,21 +23,10 @@ export default async function Home() {
         label={Label.INTRO}
         api="api/content/update"
       />
+      <div className="separate"></div>
       <div className={s.formContainer}>
-        <h2 className={s.noPadding}>Images affichées sur écran mobile</h2>
+        <h2 className={s.homepage}>Images affichées sur écran mobile</h2>
         <p>(le format portrait est plus adapté)</p>
-        <details className={s.info}>
-          <summary className={s.imageTitle}>Détails</summary>
-          <p>
-            Fichier jpeg/jpg ou png.
-            <br />
-            <br />
-            <strong>
-              Quelque soit le format (portrait, paysage ou carré) :{" "}
-            </strong>{" "}
-            minimum 2000 pixels de largeur.
-          </p>
-        </details>
         {portraitImages.length > 0 && (
           <Preview
             images={portraitImages}
@@ -53,21 +42,10 @@ export default async function Home() {
           isMain
         />
       </div>
+      <div className="separate"></div>
       <div className={s.formContainer}>
-        <h2 className={s.noPadding}>Images affichées sur écran ordinateur</h2>
+        <h2 className={s.homepage}>Images affichées sur écran ordinateur</h2>
         <p>(le format paysage ou carré est plus adapté)</p>
-        <details className={s.info}>
-          <summary className={s.imageTitle}>Détails</summary>
-          <p>
-            Fichier jpeg/jpg ou png.
-            <br />
-            <br />
-            <strong>
-              Quelque soit le format (portrait, paysage ou carré) :{" "}
-            </strong>{" "}
-            minimum 2000 pixels de largeur.
-          </p>
-        </details>
         {landscapeImages.length > 0 && (
           <Preview
             images={landscapeImages}

@@ -35,10 +35,10 @@ export const createDirIfNecessary = (dir) => {
 
 export const resizeAndSaveImage = async (file, dir) => {
   const newFilename = `${Date.now()}.jpeg`;
-  const maxSize = 130000;
+  const maxSize = 140000;
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
-  const constraintImage = async (buffer, quality = 90, drop = 10) => {
+  const constraintImage = async (buffer, quality = 90, drop = 5) => {
     const done = await sharp(buffer)
       .jpeg({
         quality: Math.trunc(quality),
@@ -50,10 +50,15 @@ export const resizeAndSaveImage = async (file, dir) => {
     return done;
   };
 
-  const width = 2000;
+  const image = await sharp(buffer);
+  const metadata = await image.metadata();
+  const ratio = metadata.width / metadata.height;
+  const isPortrait = ratio <= 1.02; // not landscape but also not square (to keep 2000px width for square images)
+  const width = !isPortrait ? 2000 : null;
+  const height = isPortrait ? 1500 : null;
 
   const imageBuffer = await sharp(buffer)
-    .resize(width, null, {
+    .resize(width, height, {
       fit: sharp.fit.inside,
       withoutEnlargement: true,
     })

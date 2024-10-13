@@ -1,14 +1,10 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import Image from "next/image";
-
-import { FileUploaderButton } from "@/components/admin/form/imageForm/FileUploaderButton";
-import s from "@/styles/admin/Admin.module.css";
 import toast from "react-hot-toast";
 import SubmitButton from "@/components/admin/form/SubmitButton";
 import CancelButton from "@/components/admin/form/CancelButton";
-import { Label } from "@prisma/client";
+import Images from "@/components/admin/form/imageForm/Images";
 
 type Props = {
   isMultiple: boolean;
@@ -25,40 +21,8 @@ export default function ImagesForm({
   title,
   isMain = false,
 }: Props) {
-  const [newImages, setNewImages] = useState<string[]>([]);
-  const [toUpdate, setToUpdate] = useState(false);
+  const [toUpdate, setToUpdate] = useState(0);
   const formRef = useRef<HTMLFormElement>(null);
-
-  const handleFiles = async (filesUploaded: FileList) => {
-    if (filesUploaded?.length > 0) {
-      const files = Array.from(filesUploaded);
-      const newFiles: string[] = [];
-      let error = false;
-
-      for await (const file of files) {
-        const bmp = await createImageBitmap(file);
-        const { width, height } = bmp;
-        if (
-          (label === Label.SLIDER && width < 2000) ||
-          (label !== Label.SLIDER && width / height < 0.98 && height < 1200) ||
-          (label !== Label.SLIDER && width / height >= 0.98 && width < 2000)
-        ) {
-          toast.error(
-            `Erreur: les dimensions de l'image ${file.name} sont trop petites`,
-          );
-          bmp.close();
-          error = true;
-          break;
-        } else {
-          newFiles.push(URL.createObjectURL(file));
-          bmp.close();
-        }
-      }
-      if (error) return;
-      setNewImages(newFiles);
-      setToUpdate(true);
-    }
-  };
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -82,32 +46,8 @@ export default function ImagesForm({
     <form ref={formRef} onSubmit={submit}>
       <input type="hidden" name="label" value={label} />
       <input type="hidden" name="isMain" value={isMain?.toString()} />
-      <p className={s.imageTitle}>
-        {title !== undefined ? title : isMultiple ? "Images :" : "Image :"}
-      </p>
-      <FileUploaderButton
-        name={isMultiple ? "files" : "file"}
-        handleFiles={handleFiles}
-        isMultiple={isMultiple}
-      />
-      <div>
-        {newImages.length > 0 &&
-          newImages.map((src) => (
-            <div key={src} className={s.imageWrapper}>
-              <Image
-                unoptimized={true}
-                src={src}
-                width={150}
-                height={150}
-                alt="Nouvelle image de l'item"
-                style={{
-                  objectFit: "contain",
-                }}
-              />
-            </div>
-          ))}
-      </div>
-      {toUpdate && (
+      <Images isMultiple={isMultiple} title={title} onChange={setToUpdate} />
+      {toUpdate > 0 && (
         <>
           <SubmitButton />
           <CancelButton />

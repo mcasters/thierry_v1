@@ -176,7 +176,8 @@ export default function ZoomImage({
         canvasRef.current.width = width;
         canvasRef.current.height = height;
         const context = canvasRef.current.getContext("2d");
-        context.drawImage(background, 0, 0, width, height);
+        if (context !== null)
+          context.drawImage(background, 0, 0, width, height);
         setZoom(scale);
         setZoomMin(scale);
       }
@@ -217,7 +218,8 @@ export default function ZoomImage({
         canvasRef.current.width = width;
         canvasRef.current.height = height;
         const context = canvasRef.current.getContext("2d");
-        context.drawImage(background, 0, 0, width, height);
+        if (context !== null)
+          context.drawImage(background, 0, 0, width, height);
         setZoom(scale);
         setZoomMin(scale);
       }
