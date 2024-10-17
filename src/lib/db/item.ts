@@ -1,3 +1,5 @@
+import { User } from ".prisma/client";
+
 export type SculptureFull = {
   id: number;
   type: Type.SCULPTURE;
@@ -136,4 +138,8 @@ export type CategoryFull = {
   key: string;
   value: string;
   count: number;
+};
+
+export type Session = {
+  user: User;
 };

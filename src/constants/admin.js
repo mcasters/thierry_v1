@@ -9,7 +9,7 @@ export const NOTES = {
   IMAGES:
     "J'ai implémenté une gestion totale des fichiers image. L'image est redimensionnée et optimisée pour garder le" +
     " plus de qualité possible. Il n'y a qu'une chose à te préoccuper, c'est de fournir une image qui fasse" +
-    " minimum 2000 pixels de large. En gros, À noter que ça prend aussi les fichiers png.",
+    " plus de 2000 pixels de large. À noter que ça prend aussi les fichiers png.",
   THEMES:
     "Pour la gestion des couleurs du site, il y a le thème de base que j'ai rendu impossible à changer. Cela te" +
     " permet d'avoir toujours cette base sur quoi partir pour modifier ensuite les couleurs et enregistrer sous un" +
