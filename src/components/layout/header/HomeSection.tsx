@@ -3,6 +3,7 @@
 import s from "../../../styles/Header.module.css";
 import { GENERAL } from "@/constants/metaHtml";
 import React, { useEffect, useRef, useState } from "react";
+import { useAlert } from "@/app/context/AlertProvider";
 
 interface Props {
   handleDisappear: (arg0: boolean) => void;
@@ -17,6 +18,7 @@ export default function HomeSection({
 }: Props) {
   const [isGone, setIsGone] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
+  const alert = useAlert();
 
   useEffect(() => {
     handleDisappear(isGone);

@@ -78,7 +78,7 @@ export const resizeAndSaveImage = async (file, dir) => {
       .withMetadata({
         exif: {
           IFD0: {
-            Copyright: "Marion Casters",
+            Copyright: "Thierry Casters",
           },
         },
       })
@@ -96,7 +96,7 @@ export const resizeAndSaveImage = async (file, dir) => {
       .withMetadata({
         exif: {
           IFD0: {
-            Copyright: "Marion Casters",
+            Copyright: "Thierry Casters",
           },
         },
       })
@@ -114,7 +114,7 @@ export const resizeAndSaveImage = async (file, dir) => {
       .withMetadata({
         exif: {
           IFD0: {
-            Copyright: "Marion Casters",
+            Copyright: "Thierry Casters",
           },
         },
       })

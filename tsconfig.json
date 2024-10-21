@@ -20,7 +20,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": ["node"],
     "paths": {
       "@/*": [
         "./src/*"

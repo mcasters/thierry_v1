@@ -5,6 +5,7 @@ import { DEVICE, IMAGE_SIZE } from "@/constants/image";
 import React, { useMemo } from "react";
 import { Image, Photo } from "@/lib/db/item";
 import Slideshow from "@/components/image/slideshow/Slideshow";
+import { useAlert } from "@/app/context/AlertProvider";
 
 export type Props = {
   portraitImages: Image[];
@@ -15,6 +16,7 @@ export default function HomePage({ portraitImages, landscapeImages }: Props) {
   const window = useWindowSize();
   const isSmall = window.innerWidth < DEVICE.SMALL;
   const needPortrait = window.innerWidth / window.innerHeight < 0.98;
+  const alert = useAlert();
 
   const portraitPhotos: Photo[] = useMemo(
     () =>
