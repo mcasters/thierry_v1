@@ -75,7 +75,7 @@ export default function ItemForm({
       fetch(api, { method: "POST", body: formData }).then((res) => {
         if (res.ok) {
           toggleModal ? toggleModal() : reset();
-          alert(item ? `${item.type} modifiée` : `${typeAdd} ajoutée`);
+          alert(item ? `${item.type} modifiée` : `${typeAdd} ajoutée`, false);
           router.refresh();
         } else alert("Erreur à l'enregistrment", true);
       });

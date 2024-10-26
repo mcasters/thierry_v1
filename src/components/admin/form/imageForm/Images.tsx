@@ -33,7 +33,7 @@ export default function Images({ onChange, reset, isMultiple, title }: Props) {
         const { width, height } = bmp;
         if (width < 2000) {
           alert(
-            `Dimensions de l'image ${file.name} trop petites : largeur de 2000 pixels minimum`,
+            `La dimension de l'image ${file.name} est trop petite. Largeur minimum : 2000 pixels`,
             true,
           );
           bmp.close();
