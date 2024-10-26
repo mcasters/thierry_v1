@@ -1,9 +1,9 @@
 "use server";
 
-import { jwtVerify, SignJWT } from "jose";
+import { JWTPayload, jwtVerify, SignJWT } from "jose";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
 import { User } from ".prisma/client";
+import { Session } from "@/lib/db/item";
 
 const secretKey = process.env.AUTH_SECRET;
 const key = new TextEncoder().encode(secretKey);
@@ -16,7 +16,7 @@ export async function encrypt(payload: any) {
     .sign(key);
 }
 
-export async function decrypt(input: string) {
+export async function decrypt(input: string): Promise<JWTPayload> {
   const { payload } = await jwtVerify(input, key, {
     algorithms: ["HS256"],
   });
@@ -41,25 +41,8 @@ export async function removeCookie() {
   cookieStore.delete("adminSession");
 }
 
-export async function getSession() {
+export async function getSession(): Promise<Session | null> {
   const cookieStore = await cookies();
-  const session = cookieStore.get("adminSession")?.value;
-  return session ? await decrypt(session) : null;
-}
-
-export async function updateSession() {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("adminSession")?.value;
-  if (!session) return;
-
-  const parsed = await decrypt(session);
-  parsed.expires = new Date(Date.now() + 60 * 60 * 4 * 1000); // 4h
-  const res = NextResponse.next();
-  res.cookies.set({
-    name: "adminSession",
-    value: await encrypt(parsed),
-    httpOnly: true,
-    expires: parsed.expires,
-  });
-  return res;
+  const encryptSession = cookieStore.get("adminSession")?.value;
+  return encryptSession ? ((await decrypt(encryptSession)) as Session) : null;
 }
