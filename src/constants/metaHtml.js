@@ -32,6 +32,7 @@ export const DOCUMENT_TITLE = {
 };
 
 export const GENERAL = {
-  SITE_TITLE: "Thierry Casters",
+  SITE_TITLE: "Artiste | Thierry Casters",
   ALT_PHOTO_PRESENTATION: "Photographie de présentation de Thierry Casters",
+  URL: "https://thierrycasters.fr",
 };

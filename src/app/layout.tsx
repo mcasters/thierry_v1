@@ -9,13 +9,21 @@ import { getIntroText, themeToHexa } from "@/utils/commonUtils";
 import React from "react";
 import { getActiveTheme, getPresetColors } from "@/app/api/theme/getTheme";
 import StyledJsxRegistry from "./registry";
-import { DESCRIPTION, DOCUMENT_TITLE, KEYWORDS } from "@/constants/metaHtml";
+import { DESCRIPTION, GENERAL, KEYWORDS } from "@/constants/metaHtml";
 import { getSession } from "@/app/lib/auth/lib";
 
 export const metadata: Metadata = {
-  title: DOCUMENT_TITLE.HOME,
+  title: GENERAL.SITE_TITLE,
   description: DESCRIPTION.HOME,
   keywords: KEYWORDS,
+  openGraph: {
+    title: GENERAL.SITE_TITLE,
+    description: DESCRIPTION.HOME,
+    url: GENERAL.URL,
+    siteName: GENERAL.SITE_TITLE,
+    locale: "fr",
+    type: "website",
+  },
 };
 
 export default async function RootLayout({
