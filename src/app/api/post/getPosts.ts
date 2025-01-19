@@ -4,6 +4,7 @@ import { PostFull } from "@/lib/db/item";
 
 export async function getPostsFull(): Promise<PostFull[]> {
   const res = await prisma.post.findMany({
+    orderBy: { date: "asc" },
     include: { images: true },
   });
   return JSON.parse(JSON.stringify(res));
