@@ -3,28 +3,15 @@
 import useModal from "@/components/admin/form/modal/useModal";
 import Modal from "@/components/admin/form/modal/Modal";
 import ItemForm from "@/components/admin/form/ItemForm";
-import CategoryForm from "@/components/admin/form/CategoryForm";
-import {
-  Category,
-  PaintingFull,
-  PostFull,
-  SculptureFull,
-  Type,
-} from "@/lib/db/item";
+import { CategoryFull, ItemFull, PostFull, Type } from "@/lib/db/item";
 import PostForm from "@/components/admin/form/PostForm";
-import {
-  isPaintingFull,
-  isPostFull,
-  isSculptureFull,
-} from "@/utils/commonUtils";
 import UpdateIcon from "@/components/icons/UpdateIcon";
 
 type Props = {
-  item: PaintingFull | SculptureFull | Category | PostFull;
-  type: Type;
-  categories?: Category[];
+  item: ItemFull | PostFull;
+  categories?: CategoryFull[];
 };
-export default function UpdateButton({ item, type, categories }: Props) {
+export default function UpdateItemButton({ item, categories }: Props) {
   const { isOpen, toggle } = useModal();
 
   return (
@@ -40,13 +27,13 @@ export default function UpdateButton({ item, type, categories }: Props) {
         <UpdateIcon />
       </button>
       <Modal isOpen={isOpen} toggle={toggle}>
-        {isPaintingFull(item) || isSculptureFull(item) ? (
+        {item.type === Type.DRAWING ||
+        item.type === Type.SCULPTURE ||
+        item.type === Type.PAINTING ? (
           <ItemForm item={item} toggleModal={toggle} categories={categories} />
-        ) : isPostFull(item) ? (
+        ) : item.type === Type.POST ? (
           <PostForm post={item} toggleModal={toggle} />
-        ) : (
-          <CategoryForm category={item} type={type} toggleModal={toggle} />
-        )}
+        ) : undefined}
       </Modal>
     </>
   );

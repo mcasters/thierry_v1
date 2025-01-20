@@ -1,33 +1,44 @@
 "use client";
 
 import DeleteButton from "@/components/admin/form/DeleteButton";
-import UpdateButton from "@/components/admin/form/UpdateButton";
 import s from "../../../../styles/admin/AdminList.module.css";
 import { CategoryFull, Type } from "@/lib/db/item";
+import UpdateCategoryButton from "@/components/admin/form/UpdateCategoryButton";
 
 interface Props {
   category: CategoryFull;
-  type: Type;
+  itemType: Type;
 }
 
-export default function RowCategoryListComponent({ category, type }: Props) {
+export default function RowCategoryListComponent({
+  category,
+  itemType,
+}: Props) {
   return (
     <ul className={s.item}>
       <li className={s.itemTitle}>
-        <span className={s.name}>{category.value}</span>
+        <span className={s.name}>
+          {category.value === "Sans catégorie"
+            ? "SANS CATÉGORIE"
+            : category.value}
+        </span>
       </li>
       <li className={s.itemInfo}>
         <span>
-          {category.count} {type}(s)
+          {category.count} {itemType}(s)
         </span>
       </li>
       <li className={s.itemIcon}>
-        <UpdateButton item={category} type={type} />
+        <UpdateCategoryButton
+          category={category}
+          itemType={itemType}
+          disabled={category.value === "Sans catégorie"}
+        />
       </li>
       <li className={s.itemIcon}>
         <DeleteButton
-          api={`api/${type}/category/delete/${category.id}`}
-          disabled={category.count > 0}
+          api={`api/${itemType}/category/delete/${category.id}`}
+          disabled={category.count > 0 || category.value === "Sans catégorie"}
         />
       </li>
     </ul>

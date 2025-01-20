@@ -3,8 +3,8 @@
 import React, { useRef, useState } from "react";
 import { parse } from "date-fns";
 import s from "@/styles/admin/Admin.module.css";
-import { Category, PaintingFull, SculptureFull, Type } from "@/lib/db/item";
-import { getImageTab, isSculptureFull } from "@/utils/commonUtils";
+import { CategoryFull, ItemFull, Type } from "@/lib/db/item";
+import { getImageTab } from "@/utils/commonUtils";
 import Images from "@/components/admin/form/imageForm/Images";
 import Preview from "@/components/admin/form/imageForm/Preview";
 import CancelButton from "@/components/admin/form/CancelButton";
@@ -13,9 +13,9 @@ import { useRouter } from "next/navigation";
 import { useAlert } from "@/app/context/AlertProvider";
 
 interface Props {
-  item?: SculptureFull | PaintingFull;
+  item?: ItemFull;
   toggleModal?: () => void;
-  categories?: Category[];
+  categories?: CategoryFull[];
   typeAdd?: Type;
 }
 
@@ -46,7 +46,7 @@ export default function ItemForm({
   );
   const [isToSell, setIsToSell] = useState<boolean>(item?.isToSell || false);
   const [length, setLength] = useState<string>(
-    !item ? "" : isSculptureFull(item) ? item.length.toString() : "",
+    item?.type === Type.SCULPTURE ? item.length.toString() : "",
   );
   const [filenamesToDelete, setFilenamesToDelete] = useState<string[]>([]);
   const api = item ? `api/${item.type}/update` : `api/${typeAdd}/add`;
@@ -72,8 +72,12 @@ export default function ItemForm({
       const formData = new FormData(formRef.current);
       fetch(api, { method: "POST", body: formData }).then((res) => {
         if (res.ok) {
-          toggleModal ? toggleModal() : reset();
-          alert(item ? `${item.type} modifiée` : `${typeAdd} ajoutée`, false);
+          if (toggleModal) {
+            toggleModal();
+          } else {
+            reset();
+          }
+          alert(item ? "item modifié" : "item ajouté", false);
           router.refresh();
         } else alert("Erreur à l'enregistrement", true);
       });
@@ -113,11 +117,14 @@ export default function ItemForm({
           >
             <option value="">-- Aucune catégorie --</option>
             {categories &&
-              categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.value}
-                </option>
-              ))}
+              categories.map((cat) => {
+                if (cat.value !== "Sans catégorie")
+                  return (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.value}
+                    </option>
+                  );
+              })}
           </select>
         </label>
         <label className={s.formLabel}>
