@@ -19,6 +19,7 @@ export const BASE_PATH = {
   PRESENTATION: "presentation",
   PAINTING: "peintures",
   SCULPTURE: "sculptures",
+  DRAWING: "dessins", // IMPORTANT TO KEEP FOR HEADER FUNCTIONALITY
   CONTACT: "contact",
   HOME: "",
   POST: "posts",
@@ -29,6 +30,7 @@ export const NAMES = {
   PRESENTATION: "Présentation",
   PAINTING: "Peintures",
   SCULPTURE: "Sculptures",
+  DRAWING: "Dessins", // IMPORTANT TO KEEP FOR HEADER FUNCTIONALITY
   HOME: "Home",
   PRIVACY_FRENCH: "Politique de confidentialité",
   ADMIN: "Général",

@@ -7,14 +7,15 @@ import s from "../../../styles/Header.module.css";
 import { BASE_PATH } from "@/constants/specific/routes";
 import { useTheme } from "@/app/context/themeProvider";
 import React, { useState } from "react";
-import { Category } from "@/lib/db/item";
+import { CategoryFull } from "@/lib/db/item";
 import HomeSection from "@/components/layout/header/HomeSection";
 
 interface Props {
   basePath: string | null;
   introduction?: string;
-  paintingCategories: Category[];
-  sculptureCategories: Category[];
+  paintingCategories: CategoryFull[];
+  sculptureCategories: CategoryFull[];
+  drawingCategories?: CategoryFull[];
 }
 
 export default function Header({
@@ -22,11 +23,13 @@ export default function Header({
   introduction,
   paintingCategories,
   sculptureCategories,
+  drawingCategories,
 }: Props) {
   const theme = useTheme();
   const isHome = basePath == BASE_PATH.HOME;
   const isPainting = basePath === BASE_PATH.PAINTING;
   const isSculpture = basePath === BASE_PATH.SCULPTURE;
+  const isDrawing = basePath === BASE_PATH.DRAWING;
   const [titleIsGone, setTitleIsGone] = useState<boolean>(false);
   const [introIsGone, setIntroIsGone] = useState<boolean>(false);
 
@@ -40,7 +43,7 @@ export default function Header({
       )}
       <Nav_1
         navLayout={
-          isSculpture || isPainting
+          isSculpture || isPainting || isDrawing
             ? LAYOUT.ITEM_NAV
             : isHome && !titleIsGone
               ? LAYOUT.HOME_NAV
@@ -50,6 +53,7 @@ export default function Header({
         }
         paintingCategories={paintingCategories}
         sculptureCategories={sculptureCategories}
+        drawingCategories={drawingCategories}
       />
       <div
         style={{
@@ -66,7 +70,7 @@ export default function Header({
       )}
       <Nav_2
         navLayout={
-          isSculpture || isPainting
+          isSculpture || isPainting || isDrawing
             ? LAYOUT.ITEM_NAV
             : isHome && !introIsGone
               ? LAYOUT.HOME_NAV

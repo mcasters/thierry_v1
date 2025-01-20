@@ -3,19 +3,21 @@
 import { MENU_1, NAMES } from "@/constants/specific/routes";
 import s from "@/styles/Nav_1.module.css";
 import { useTheme } from "@/app/context/themeProvider";
-import { Category } from "@/lib/db/item";
+import { CategoryFull } from "@/lib/db/item";
 import NavItem from "@/components/layout/header/menu1/NavItem";
 
 interface Props {
   navLayout: string;
-  paintingCategories: Category[];
-  sculptureCategories: Category[];
+  paintingCategories: CategoryFull[];
+  sculptureCategories: CategoryFull[];
+  drawingCategories?: CategoryFull[];
 }
 
 export default function Nav_1({
   navLayout,
   paintingCategories,
   sculptureCategories,
+  drawingCategories,
 }: Props) {
   const theme = useTheme();
 
@@ -36,7 +38,9 @@ export default function Nav_1({
                       ? sculptureCategories
                       : name === NAMES.PAINTING
                         ? paintingCategories
-                        : []
+                        : name === NAMES.DRAWING && drawingCategories
+                          ? drawingCategories
+                          : []
                   }
                 />
               </li>

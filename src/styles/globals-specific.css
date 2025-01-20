@@ -14,7 +14,7 @@
   --font-size-nav: 1.2em;
   --font-size-nav-minus: 1.1em;
   --font-size-plus: 1em;
-  --font-size: 0.95em;
+  --font-size: 0.9em;
   --font-size-min: 0.8em;
 
   /*
@@ -33,19 +33,14 @@
    * Colors
    * ======================================================================== */
 
-  --color-xxlight: #fafafa;
-  --color-xlight: #f8f8f8;
   --color-light: #dcdcdc;
   --color-medium: #c4c3c3;
   --color-dark: #818181;
   --color-xdark: #333;
 
   --color-blue-xdark: #0f1f26;
-  --color-blue-dark: #13262f;
   --color-blue-medium: #1c3949;
   --color-prussian-blue: #24445C;
-  --color-blue-light: #2e6177;
-  --color-blue-xlight: #4289a6;
   --color-blue-xxlight: #66c3d3;
   --color-blue-xxxlight: #b5d1d5;
 
@@ -75,6 +70,10 @@ textarea {
   font-family: var(--font-family-serif);
   -webkit-font-smoothing: antialiased;
   font-size: var(--font-size);
+}
+
+select {
+  background-color: var(--color-medium);
 }
 
 body {

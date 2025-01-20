@@ -5,15 +5,16 @@ import { MENU_1_ITEMS } from "@/constants/specific/routes";
 import Dropdown from "@/components/layout/header/menu1/DropDown";
 import s from "./NavItem.module.css";
 import { useTheme } from "@/app/context/themeProvider";
-import { Category } from "@/lib/db/item";
+import { CategoryFull } from "@/lib/db/item";
 import React, { useMemo } from "react";
 import LAYOUT from "@/constants/layout";
 import { usePathname } from "next/navigation";
+import { TEXTS } from "@/constants/specific";
 
 interface Props {
   itemName: string;
   navLayout: string;
-  categories: Category[];
+  categories: CategoryFull[];
 }
 
 export default function NavItem({ itemName, navLayout, categories }: Props) {
@@ -37,12 +38,17 @@ export default function NavItem({ itemName, navLayout, categories }: Props) {
         : theme.menu1LinkHoverColor;
   }, [theme, navLayout]);
   const themeBorderActive = useMemo(() => {
-    return navLayout === LAYOUT.ITEM_NAV
-      ? theme.menu1LinkItemColor
-      : theme.menu2LinkItemColor;
+    return TEXTS.TITLE === "Marion Casters"
+      ? theme.menu2LinkItemColor
+      : navLayout === LAYOUT.ITEM_NAV
+        ? theme.menu1LinkItemColor
+        : theme.menu2LinkItemColor;
   }, [theme, navLayout]);
 
-  if (categories.length > 0)
+  if (
+    categories.length > 1 ||
+    (categories.length === 1 && categories[0].value !== "Sans catégorie")
+  )
     return (
       <Dropdown
         itemName={item.NAME}
