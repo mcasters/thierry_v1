@@ -3,7 +3,7 @@
 import React, { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 
-import { BASE_PATH } from "@/constants/routes";
+import { BASE_PATH } from "@/constants/specific/routes";
 import Header from "./header/Header";
 import Main from "./Main";
 import Footer from "./Footer";

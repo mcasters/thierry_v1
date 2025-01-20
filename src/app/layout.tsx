@@ -9,7 +9,7 @@ import { getIntroText, themeToHexa } from "@/utils/commonUtils";
 import React from "react";
 import { getActiveTheme, getPresetColors } from "@/app/api/theme/getTheme";
 import StyledJsxRegistry from "./registry";
-import { DESCRIPTION, GENERAL, KEYWORDS } from "@/constants/metaHtml";
+import { DESCRIPTION, GENERAL, KEYWORDS } from "@/constants/specific/metaHtml";
 import { getSession } from "@/app/lib/auth/lib";
 
 export const metadata: Metadata = {

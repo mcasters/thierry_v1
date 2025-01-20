@@ -22,3 +22,7 @@ export const NOTES = {
     " s'il n'existe aucune catégorie, alors il n'y a pas de création automatique de catégorie," +
     " et on y accèdera directement par le menu racine (à même le menu 'peintures' ou 'sculptures').",
 };
+
+export const THEME = {
+  BASE_THEME: "Thème de base",
+};

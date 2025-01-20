@@ -41,6 +41,7 @@ notes/
 package-lock.json
 /public/assets
 /public/images
+loader.cjs
 
 # database
 /prisma/migrations

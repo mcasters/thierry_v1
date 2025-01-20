@@ -4,7 +4,7 @@ import LAYOUT from "@/constants/layout";
 import Nav_1 from "@/components/layout/header/menu1/Nav_1";
 import Nav_2 from "@/components/layout/header/Nav_2";
 import s from "../../../styles/Header.module.css";
-import { BASE_PATH } from "@/constants/routes";
+import { BASE_PATH } from "@/constants/specific/routes";
 import { useTheme } from "@/app/context/themeProvider";
 import React, { useState } from "react";
 import { Category } from "@/lib/db/item";

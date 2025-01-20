@@ -1,17 +1,17 @@
 import { Label, PresetColor, Theme } from "@prisma/client";
-import { THEME } from "@/constants/database";
 import { OnlyString } from "@/lib/db/theme";
 import {
   ContentFull,
-  DrawingFull,
   Image,
   ImageSize,
-  PaintingFull,
+  ItemFull,
+  Photo,
   PhotoTab,
   PostFull,
-  SculptureFull,
   Type,
 } from "@/lib/db/item";
+
+import { BASE_PRESET_COLOR, BASE_THEME, TEXTS } from "@/constants/specific";
 
 export const transformValueToKey = (value: string): string => {
   return value
@@ -65,8 +65,8 @@ export const getSlidersLandscapeAndPortait = (
   contents: ContentFull[],
 ): { portraitImages: Image[]; landscapeImages: Image[] } => {
   const images: Image[] = getSliders(contents);
-  let portraitImages: Image[] = [];
-  let landscapeImages: Image[] = [];
+  const portraitImages: Image[] = [];
+  const landscapeImages: Image[] = [];
   images.forEach((i) => {
     if (i.isMain) portraitImages.push(i);
     if (!i.isMain) landscapeImages.push(i);
@@ -94,72 +94,19 @@ export const getMainImage = (post: PostFull) => {
   return post?.images?.filter((i) => i.isMain)[0] || undefined;
 };
 
-export const getGalleryImages = (post: PostFull) => {
-  return post?.images?.filter((i) => !i.isMain) || undefined;
-};
-
-export const isPaintingFull = (item: any): item is PaintingFull =>
-  Object.values(item).includes(Type.PAINTING);
-
-export const isDrawingFull = (item: any): item is DrawingFull =>
-  Object.values(item).includes(Type.DRAWING);
-
-export const isSculptureFull = (item: any): item is SculptureFull =>
-  Object.values(item).includes(Type.SCULPTURE);
-
-export const isPostFull = (item: any): item is PostFull =>
-  Object.values(item).includes(Type.POST);
-
 export const getBaseThemeData = () => {
-  return {
-    name: THEME.BASE_THEME,
-    isActive: true,
-    lineColor: "#a4874f",
-    backgroundColor: "#f8f8f8",
-    backgroundColorItem: "#24445C",
-    color: "#2e6177",
-    colorItem: "#a4874f",
-    titleColor: "#2e6177",
-
-    linkColor: "#a4874f",
-    linkHoverColor: "#e5ca96",
-    linkItemColor: "#2e6177",
-    linkHoverItemColor: "#66c3d3",
-
-    menu1Color: "#e7e7e7",
-    menu1HomeColor: "#e7e7e7",
-    menu1ItemColor: "#0f1f26",
-    menu1LinkColor: "#2e6177",
-    menu1LinkHoverColor: "#a4874f",
-    menu1LinkHomeColor: "#2e6177",
-    menu1LinkHomeHoverColor: "#a4874f",
-    menu1LinkItemColor: "#66c3d3",
-    menu1LinkHoverItemColor: "#b5d1d5",
-
-    menu2Color: "#f8f8f8",
-    menu2HomeColor: "#f8f8f8",
-    menu2ItemColor: "#13262f",
-    menu2LinkColor: "#a4874f",
-    menu2LinkHoverColor: "#d9bf94",
-    menu2LinkHomeColor: "#a4874f",
-    menu2LinkHomeHoverColor: "#d9bf94",
-    menu2LinkItemColor: "#a4874f",
-    menu2LinkHoverItemColor: "#d9bf94",
-  };
+  return BASE_THEME;
 };
 
 export const getBasePresetColorData = () => {
-  return {
-    name: "Prussian blue",
-    color: "#24445C",
-  };
+  return BASE_PRESET_COLOR;
 };
 
 export const themeToHexa = (
   theme: Theme,
   presetColors: PresetColor[],
 ): Theme => {
-  let updatedTheme = theme;
+  const updatedTheme = theme;
   Object.entries(theme).forEach(([key, value]) => {
     if (typeof value === "string" && value.charAt(0) !== "#") {
       presetColors.find((p) => {
@@ -209,10 +156,8 @@ export function rgbToHex(r: number, g: number, b: number): string {
   return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 } // rgbToHex(0, 51, 255); // #0033ff
 
-export const getImageTab = (
-  item: SculptureFull | PaintingFull | DrawingFull,
-): Image[] => {
-  if (isSculptureFull(item)) {
+export const getImageTab = (item: ItemFull): Image[] => {
+  if (item.type === Type.SCULPTURE) {
     return item.images.map((i) => {
       return {
         id: i.id,
@@ -234,21 +179,19 @@ export const getImageTab = (
   ];
 };
 
-const restForPhotoTab = (
-  item: SculptureFull | PaintingFull | DrawingFull | PostFull,
-) => {
+const restForPhotoTab = (item: ItemFull | PostFull) => {
   return {
     alt:
       item.type === Type.POST
-        ? `${item.title} - photo d'un post de Thierry Casters`
-        : `${item.title} - ${item.type} de Thierry Casters`,
+        ? `${item.title} - photo d'un post de ${TEXTS.TITLE}`
+        : `${item.title} - ${item.type} de ${TEXTS.TITLE}`,
     title: item.title,
     date: item.date,
   };
 };
 
 export const getPhotoTab = (
-  item: SculptureFull | PaintingFull | DrawingFull | PostFull,
+  item: PostFull | ItemFull,
   splitMain: boolean = false,
 ): {
   mainPhotos: PhotoTab;
@@ -257,7 +200,7 @@ export const getPhotoTab = (
   const mainPhotos: PhotoTab = { sm: [], md: [], lg: [] };
   const photos: PhotoTab = { sm: [], md: [], lg: [] };
 
-  if (isPaintingFull(item) || isDrawingFull(item)) {
+  if (item.type === Type.PAINTING || item.type === Type.DRAWING) {
     for (const [key, value] of Object.entries(ImageSize)) {
       photos[key as keyof PhotoTab].push({
         src: `/images/${item.type}${value.FOLDER}/${item.imageFilename}`,
@@ -268,9 +211,9 @@ export const getPhotoTab = (
             : Math.round((value.WIDTH * item.imageHeight) / item.imageWidth),
         isMain: false,
         ...restForPhotoTab(item),
-      });
+      } as Photo);
     }
-  } else if (isSculptureFull(item) || isPostFull(item)) {
+  } else if (item.type === Type.SCULPTURE || item.type === Type.POST) {
     for (const [key, value] of Object.entries(ImageSize)) {
       for (const i of item.images) {
         const photo = {

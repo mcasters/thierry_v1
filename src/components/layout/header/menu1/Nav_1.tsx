@@ -1,6 +1,6 @@
 "use client";
 
-import { MENU_1, NAMES } from "@/constants/routes";
+import { MENU_1, NAMES } from "@/constants/specific/routes";
 import s from "@/styles/Nav_1.module.css";
 import { useTheme } from "@/app/context/themeProvider";
 import { Category } from "@/lib/db/item";

@@ -3,11 +3,10 @@
 import React from "react";
 import themeStyle from "../../../styles/admin/AdminTheme.module.css";
 import ThemeAdd from "@/components/admin/theme/ThemeAdd";
-import { THEME } from "@/constants/database";
 import ThemeDashboard from "@/components/admin/theme/ThemeDashboard";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import ThemeUpdate from "@/components/admin/theme/ThemeUpdate";
-import { NOTES } from "@/constants/admin";
+import { NOTES, THEME } from "@/constants/admin";
 import CancelButton from "@/components/admin/form/CancelButton";
 import { useAdminThemesContext } from "@/app/context/adminThemesProvider";
 import { Theme } from "@prisma/client";

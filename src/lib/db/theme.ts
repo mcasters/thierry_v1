@@ -1,7 +1,7 @@
 import { Theme } from "@prisma/client";
 import prisma from "@/lib/db/prisma";
-import { THEME } from "@/constants/database";
 import { getBaseThemeData } from "@/utils/commonUtils";
+import { THEME } from "@/constants/admin";
 
 export const getActivatedBaseTheme = async (): Promise<Theme> => {
   let theme = await prisma.theme.findUnique({

@@ -1,6 +1,6 @@
 import prisma from "@/lib/db/prisma";
 import "server-only";
-import { Category, CategoryFull } from "@/lib/db/item";
+import { CategoryFull } from "@/lib/db/item";
 
 export async function getPaintingCategoriesFull(): Promise<CategoryFull[]> {
   const res = await prisma.paintingCategory.findMany({
@@ -16,21 +16,21 @@ export async function getPaintingCategoriesFull(): Promise<CategoryFull[]> {
     return { count: _count.paintings, ...rest };
   });
 
-  return JSON.parse(JSON.stringify(updatedTab));
-}
-
-export async function getPaintingCategoriesForMenu(): Promise<Category[]> {
-  const categories = await prisma.paintingCategory.findMany();
-  const paintingWithoutCategory = await prisma.painting.findFirst({
+  const paintingWithoutCategory = await prisma.painting.findMany({
     where: {
       category: null,
     },
   });
-  if (categories.length > 0 && paintingWithoutCategory)
-    categories.push({
+
+  const paintingWithoutCategory_count = paintingWithoutCategory.length;
+  if (paintingWithoutCategory_count > 0) {
+    updatedTab.push({
+      count: paintingWithoutCategory_count,
       key: "no-category",
       value: "Sans catégorie",
       id: 0,
     });
-  return JSON.parse(JSON.stringify(categories));
+  }
+
+  return JSON.parse(JSON.stringify(updatedTab));
 }
