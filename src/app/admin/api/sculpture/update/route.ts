@@ -10,7 +10,6 @@ import prisma from "@/lib/db/prisma";
 export async function POST(req: Request) {
   try {
     const dir = getSculptureDir();
-
     const formData = await req.formData();
     const id = Number(formData.get("id"));
     const oldSculpt = await prisma.sculpture.findUnique({
@@ -29,7 +28,7 @@ export async function POST(req: Request) {
 
       const files = formData.getAll("files") as File[];
       const title = formData.get("title") as string;
-      let images = [];
+      const images = [];
       for (const file of files) {
         if (file.size > 0) {
           const fileInfo = await resizeAndSaveImage(file, title, dir);
