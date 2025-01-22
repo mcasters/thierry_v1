@@ -6,11 +6,11 @@ import ThemeAdd from "@/components/admin/theme/ThemeAdd";
 import ThemeDashboard from "@/components/admin/theme/ThemeDashboard";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import ThemeUpdate from "@/components/admin/theme/ThemeUpdate";
-import { NOTES, THEME } from "@/constants/admin";
 import CancelButton from "@/components/admin/form/CancelButton";
 import { useAdminThemesContext } from "@/app/context/adminThemesProvider";
 import { Theme } from "@prisma/client";
 import { useAlert } from "@/app/context/AlertProvider";
+import { THEME } from "@/constants/admin";
 
 export default function AdminTheme() {
   const { themes, setThemes } = useAdminThemesContext();
@@ -112,23 +112,6 @@ export default function AdminTheme() {
       </div>
       <div className={themeStyle.themeActionContainer}>
         <ThemeAdd />
-      </div>
-      <div className={themeStyle.noteContainer}>
-        <h2>NOTES</h2>
-        <div>
-          <h3>Images :</h3>
-          <p>{NOTES.IMAGES}</p>
-        </div>
-        <br />
-        <div>
-          <h3>Thèmes :</h3>
-          <p>{NOTES.THEMES}</p>
-        </div>
-        <br />
-        <div>
-          <h3>Peintures et sculptures :</h3>
-          <p>{NOTES.ITEMS}</p>
-        </div>
       </div>
     </>
   );

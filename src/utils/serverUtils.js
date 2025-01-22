@@ -3,6 +3,7 @@ import sharp from "sharp";
 import { join } from "path";
 import { IMAGE_SIZE } from "@/constants/image";
 import { transformValueToKey } from "@/utils/commonUtils";
+import { TEXTS } from "@/constants/specific";
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
 
@@ -20,6 +21,10 @@ export const getMiscellaneousDir = () => {
 
 export const getPostDir = () => {
   return join(`${serverLibraryPath}`, "post");
+};
+
+export const getDrawingDir = () => {
+  return join(`${serverLibraryPath}`, "dessin");
 };
 
 export const createDirIfNecessary = (dir) => {
@@ -80,7 +85,7 @@ export const resizeAndSaveImage = async (file, title = "", dir) => {
       .withMetadata({
         exif: {
           IFD0: {
-            Copyright: "Thierry Casters",
+            Copyright: TEXTS.TITLE,
           },
         },
       })
@@ -98,7 +103,7 @@ export const resizeAndSaveImage = async (file, title = "", dir) => {
       .withMetadata({
         exif: {
           IFD0: {
-            Copyright: "Thierry Casters",
+            Copyright: TEXTS.TITLE,
           },
         },
       })
@@ -116,7 +121,7 @@ export const resizeAndSaveImage = async (file, title = "", dir) => {
       .withMetadata({
         exif: {
           IFD0: {
-            Copyright: "Thierry Casters",
+            Copyright: TEXTS.TITLE,
           },
         },
       })
@@ -139,7 +144,9 @@ export const resizeAndSaveImage = async (file, title = "", dir) => {
         unlinkSync(`${dir}/sm/${newFilename}`);
         unlinkSync(`${dir}/md/${newFilename}`);
         unlinkSync(`${dir}/${newFilename}`);
-      } catch (e) {}
+      } catch (e) {
+        console.log(e);
+      }
     });
 };
 
@@ -150,6 +157,7 @@ export const deleteFile = (dir, filename) => {
     unlinkSync(`${dir}/${filename}`);
     return true;
   } catch (e) {
+    console.log(e);
     return false;
   }
 };

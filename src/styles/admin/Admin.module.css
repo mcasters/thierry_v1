@@ -13,7 +13,7 @@
 }
 
 .pageTitle {
-padding: 1em 0 2em;
+    padding: 1em 0 2em;
 }
 
 .formContainer {
@@ -48,12 +48,24 @@ padding: 1em 0 2em;
     height: 150px
 }
 
-.formContainer .formLabel, h2.formLabel {
+.formContainer .formLabel, h2.formLabel, .wrapperModal .formLabel {
     font-variant-caps: small-caps;
     letter-spacing: 3px;
     color: var(--color-dark);
     text-align: left;
-    font-size: 0.9em;
+    font-size: var(--font-size);
+    margin-top: 1rem;
+}
+
+.checkLabel {
+    display: inline;
+    margin-top: 1rem;
+}
+
+.checkInput {
+    display: inline;
+    margin-left: 30px;
+    width: 10px;
 }
 
 .message {
@@ -69,6 +81,12 @@ padding: 1em 0 2em;
 
 /* Image */
 
+.fileUploaderContainer {
+    width: 100%;
+    text-align: left;
+    padding: 1em 0 1em;
+}
+
 .imageTitle {
     font-variant-caps: small-caps;
     letter-spacing: 3px;
@@ -77,8 +95,24 @@ padding: 1em 0 2em;
     font-size: var(--font-size);
 }
 
+.inputButton {
+    padding: 0 0 5px;
+}
+
+.radioInput {
+    display: inline;
+    margin-left: 30px;
+    width: 20px;
+}
+
+.radioLabel {
+    display: inline;
+}
+
+/* End image */
+
 h2.homepage {
-   padding: 2em 0 0;
+    padding: 2em 0 0;
 }
 
 .info {

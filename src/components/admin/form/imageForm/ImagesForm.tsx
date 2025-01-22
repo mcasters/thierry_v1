@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import SubmitButton from "@/components/admin/form/SubmitButton";
 import CancelButton from "@/components/admin/form/CancelButton";
 import Images from "@/components/admin/form/imageForm/Images";
@@ -12,6 +12,7 @@ type Props = {
   label: string;
   title?: string;
   isMain?: boolean;
+  smallImage: boolean;
 };
 
 export default function ImagesForm({
@@ -20,10 +21,10 @@ export default function ImagesForm({
   label,
   title,
   isMain = false,
+  smallImage,
 }: Props) {
-  const [toUpdate, setToUpdate] = useState(0);
-  const formRef = useRef<HTMLFormElement>(null);
   const alert = useAlert();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +35,7 @@ export default function ImagesForm({
         body: formData,
       }).then((res) => {
         if (res.ok) {
-          alert("Contenu modifié");
+          alert("Contenu modifié", false);
           setTimeout(function () {
             window.location.reload();
           }, 1500);
@@ -47,13 +48,11 @@ export default function ImagesForm({
     <form ref={formRef} onSubmit={submit}>
       <input type="hidden" name="label" value={label} />
       <input type="hidden" name="isMain" value={isMain?.toString()} />
-      <Images isMultiple={isMultiple} title={title} onChange={setToUpdate} />
-      {toUpdate > 0 && (
-        <>
-          <SubmitButton />
-          <CancelButton />
-        </>
-      )}
+      <Images isMultiple={isMultiple} title={title} smallImage={smallImage} />
+      <>
+        <SubmitButton />
+        <CancelButton />
+      </>
     </form>
   );
 }

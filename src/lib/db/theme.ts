@@ -3,6 +3,32 @@ import prisma from "@/lib/db/prisma";
 import { getBaseThemeData } from "@/utils/commonUtils";
 import { THEME } from "@/constants/admin";
 
+export const resetDefaultTheme = async (): Promise<Theme> => {
+  let defaultTheme = await prisma.theme.findUnique({
+    where: {
+      name: THEME.BASE_THEME,
+    },
+  });
+
+  if (!defaultTheme) {
+    defaultTheme = await prisma.theme.create({
+      data: {
+        ...getBaseThemeData(),
+      },
+    });
+  } else {
+    defaultTheme = await prisma.theme.update({
+      where: {
+        id: defaultTheme.id,
+      },
+      data: {
+        ...getBaseThemeData(),
+      },
+    });
+  }
+  return defaultTheme;
+};
+
 export const getActivatedBaseTheme = async (): Promise<Theme> => {
   let theme = await prisma.theme.findUnique({
     where: {
@@ -39,6 +65,18 @@ export const activate = async (themeId: number): Promise<void> => {
     where: {
       isActive: true,
       id: { not: themeId },
+    },
+    data: {
+      isActive: false,
+    },
+  });
+};
+
+export const setInactiveExcept = async (idToExcept: number): Promise<void> => {
+  await prisma.theme.updateMany({
+    where: {
+      isActive: true,
+      id: { not: idToExcept },
     },
     data: {
       isActive: false,

@@ -1,70 +1,108 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-
-import { FileUploaderButton } from "@/components/admin/form/imageForm/FileUploaderButton";
 import s from "@/styles/admin/Admin.module.css";
 import { useAlert } from "@/app/context/AlertProvider";
 
 interface Props {
-  onChange?: (arg0: number) => void;
+  onNewImages?: (arg0: string[]) => void;
   reset?: number;
   isMultiple: boolean;
-  minWidth?: boolean;
+  smallImage: boolean;
   title?: string;
 }
 
 export default function Images({
-  onChange,
+  onNewImages,
   reset,
   isMultiple,
-  minWidth = true,
+  smallImage,
   title,
 }: Props) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [newImages, setNewImages] = useState<string[]>([]);
+  const [acceptSmallImage, setAcceptSmallImage] = useState<boolean>(false);
+
   const alert = useAlert();
 
   useEffect(() => {
-    if (reset !== undefined) setNewImages([]);
+    if (reset !== undefined) {
+      setNewImages([]);
+      setAcceptSmallImage(false);
+      if (inputRef.current) inputRef.current.value = "";
+    }
   }, [reset]);
 
-  const handleFiles = async (filesUploaded: FileList) => {
-    if (filesUploaded?.length > 0) {
+  const handleFiles = async () => {
+    if (
+      !inputRef.current ||
+      !inputRef.current.files ||
+      inputRef.current.files.length === 0
+    )
+      return;
+    const filesUploaded = inputRef.current.files;
+    if (filesUploaded.length > 0) {
       const files = Array.from(filesUploaded);
       const newFiles: string[] = [];
       let error = false;
 
       for await (const file of files) {
         const bmp = await createImageBitmap(file);
-        const { width, height } = bmp;
-        if (minWidth && width < 2000) {
+        const { width } = bmp;
+        if (!acceptSmallImage && width < 2000) {
           alert(
             `La dimension de l'image ${file.name} est trop petite. Largeur minimum : 2000 pixels`,
             true,
           );
           bmp.close();
           error = true;
-          break;
         } else {
           newFiles.push(URL.createObjectURL(file));
           bmp.close();
         }
       }
-      if (error) return;
-      setNewImages(newFiles);
-      if (onChange !== undefined) onChange(newFiles.length);
+      if (!error && newFiles.length > 0) {
+        setNewImages(newFiles);
+        if (onNewImages !== undefined) onNewImages(newFiles);
+      } else {
+        setNewImages([]);
+        setAcceptSmallImage(false);
+        inputRef.current.value = "";
+        if (onNewImages !== undefined) onNewImages([]);
+      }
     }
   };
 
   return (
-    <>
+    <div className={s.fileUploaderContainer}>
       <p className={s.imageTitle}>{title}</p>
-      <FileUploaderButton
-        name={isMultiple ? "files" : "file"}
-        handleFiles={handleFiles}
-        isMultiple={isMultiple}
-      />
+      <div>
+        <input
+          type="file"
+          name={isMultiple ? "files" : "file"}
+          onChange={handleFiles}
+          ref={inputRef}
+          multiple={isMultiple}
+          className={s.inputButton}
+        />
+      </div>
+      {smallImage && (
+        <div>
+          <input
+            type={"radio"}
+            id="small-image"
+            name="small-image"
+            checked={acceptSmallImage}
+            onClick={() => setAcceptSmallImage(!acceptSmallImage)}
+            onChange={handleFiles}
+            className={s.radioInput}
+          />
+          <label htmlFor="small-image" className={s.radioLabel}>
+            Accepter des images en dessous de 2000 px de large
+          </label>
+        </div>
+      )}
       <div>
         {newImages.length > 0 &&
           newImages.map((src) => (
@@ -82,6 +120,6 @@ export default function Images({
             </div>
           ))}
       </div>
-    </>
+    </div>
   );
 }

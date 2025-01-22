@@ -4,13 +4,13 @@
     display: inline-block;
 }
 
-.link.active, .link.active  {
+.link.active  {
     border-bottom-style: solid;
     border-bottom-width: 2px;
 }
 
 /*
-Dropdown
+DropDown
  */
 
 button.link {
@@ -48,7 +48,7 @@ button.link:hover, button.link:focus {
     z-index: 2;
 }
 
-/* Dropdown desktop */
+/* DropDown desktop */
 @media (min-width: 769px) {
     .subMenu {
         position: absolute;
@@ -81,3 +81,4 @@ button.link:hover, button.link:focus {
     font-size: var(--font-size-plus);
     font-variant: small-caps;
 }
+
