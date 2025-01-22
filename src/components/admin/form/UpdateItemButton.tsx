@@ -2,10 +2,11 @@
 
 import useModal from "@/components/admin/form/modal/useModal";
 import Modal from "@/components/admin/form/modal/Modal";
-import ItemForm from "@/components/admin/form/ItemForm";
 import { CategoryFull, ItemFull, PostFull, Type } from "@/lib/db/item";
 import PostForm from "@/components/admin/form/PostForm";
 import UpdateIcon from "@/components/icons/UpdateIcon";
+import ItemForm from "@/components/admin/form/ItemForm";
+import React from "react";
 
 type Props = {
   item: ItemFull | PostFull;
@@ -30,7 +31,7 @@ export default function UpdateItemButton({ item, categories }: Props) {
         {item.type === Type.DRAWING ||
         item.type === Type.SCULPTURE ||
         item.type === Type.PAINTING ? (
-          <ItemForm item={item} toggleModal={toggle} categories={categories} />
+          <ItemForm categories={categories} item={item} toggleModal={toggle} />
         ) : item.type === Type.POST ? (
           <PostForm post={item} toggleModal={toggle} />
         ) : undefined}
