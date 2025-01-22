@@ -52,7 +52,7 @@ export default function Images({
         const { width } = bmp;
         if (!acceptSmallImage && width < 2000) {
           alert(
-            `La dimension de l'image ${file.name} est trop petite. Largeur minimum : 2000 pixels`,
+            `La dimension de l'image est trop petite. Largeur minimum : 2000 pixels`,
             true,
           );
           bmp.close();

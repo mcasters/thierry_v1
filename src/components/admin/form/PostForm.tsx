@@ -53,7 +53,7 @@ export default function PostForm({ post, toggleModal }: Props) {
       fetch(api, { method: "POST", body: formData }).then((res) => {
         if (res.ok) {
           reset();
-          alert(post ? "Post modifié" : "Post ajouté");
+          alert(post ? "Post modifié" : "Post ajouté", false);
           router.refresh();
         } else alert("Erreur à l'enregistrement", true);
       });
@@ -123,9 +123,13 @@ export default function PostForm({ post, toggleModal }: Props) {
             />
           )}
         </div>
-        <Images isMultiple={false} reset={resetMainImageRef.current} />
+        <Images
+          isMultiple={false}
+          reset={resetMainImageRef.current}
+          smallImage={true}
+        />
         <div className={s.imageFormContainer}>
-          <h3>Album d'images (facultatif)</h3>
+          <h3>Album d&apos;images (facultatif)</h3>
           {post && (
             <Preview
               images={post.images.filter((i) => !i.isMain) || []}
@@ -135,7 +139,11 @@ export default function PostForm({ post, toggleModal }: Props) {
               }
             />
           )}
-          <Images isMultiple={true} reset={resetImagesRef.current} />
+          <Images
+            isMultiple={true}
+            reset={resetImagesRef.current}
+            smallImage={true}
+          />
         </div>
         <div className={s.buttonSection}>
           <SubmitButton disabled={!title || !date} />
