@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       const mainFilenameToDelete = formData.get(
         "mainFilenameToDelete",
       ) as string;
-      if (mainFilenameToDelete !== "") {
+      if (mainFilenameToDelete) {
         if (deleteFile(dir, mainFilenameToDelete)) {
           await prisma.postImage.delete({
             where: { filename: mainFilenameToDelete },
@@ -35,11 +35,13 @@ export async function POST(req: Request) {
         }
       }
       const filenamesToDelete = formData.get("filenamesToDelete") as string;
-      for await (const filename of filenamesToDelete.split(",")) {
-        if (deleteFile(dir, filename)) {
-          await prisma.postImage.delete({
-            where: { filename },
-          });
+      if (filenamesToDelete) {
+        for await (const filename of filenamesToDelete.split(",")) {
+          if (deleteFile(dir, filename)) {
+            await prisma.postImage.delete({
+              where: { filename },
+            });
+          }
         }
       }
 
