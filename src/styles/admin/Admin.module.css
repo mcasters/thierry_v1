@@ -57,6 +57,10 @@
     margin-top: 1rem;
 }
 
+.select {
+    background-color: unset;
+}
+
 .checkLabel {
     display: inline;
     margin-top: 1rem;
