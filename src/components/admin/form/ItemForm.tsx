@@ -37,6 +37,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
     if (toggleModal) toggleModal();
     else {
       setWorkItem(getEmptyItem(item.type));
+      setDate("");
       setFilenamesToDelete([]);
       setNewImages([]);
       resetImageRef.current = resetImageRef.current + 1;

@@ -1,5 +1,3 @@
-import { parse } from "date-fns";
-
 import {
   deleteFile,
   getPostDir,
@@ -90,7 +88,7 @@ export async function POST(req: Request) {
         where: { id },
         data: {
           title,
-          date: parse(formData.get("date") as string, "yyyy", new Date()),
+          date: new Date(Number(formData.get("date")), 1),
           text: formData.get("text") as string,
           images: {
             create: images,

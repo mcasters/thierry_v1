@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { parse } from "date-fns";
 import { useRouter } from "next/navigation";
 
 import Images from "@/components/admin/form/imageForm/Images";
@@ -27,8 +26,8 @@ export default function PostForm({ post, toggleModal }: Props) {
   const api = post ? `api/post/update` : `api/post/add`;
 
   const [title, setTitle] = useState<string>(post?.title || "");
-  const [date, setDate] = useState<Date>(
-    post?.date ? new Date(post.date) : new Date(),
+  const [date, setDate] = useState<string>(
+    post?.date ? new Date(post.date).getFullYear().toString() : "",
   );
   const [text, setText] = useState<string>(post?.text || "");
   const [mainFilenameToDelete, setMainFilenameToDelete] = useState<string>("");
@@ -38,12 +37,14 @@ export default function PostForm({ post, toggleModal }: Props) {
   if (post) mainImage = getMainImage(post);
 
   const reset = () => {
-    setTitle("");
-    setDate(new Date());
-    setText("");
-    resetMainImageRef.current = resetMainImageRef.current + 1;
-    resetImagesRef.current = resetImagesRef.current + 1;
     if (toggleModal) toggleModal();
+    else {
+      setTitle("");
+      setDate("");
+      setText("");
+      resetMainImageRef.current = resetMainImageRef.current + 1;
+      resetImagesRef.current = resetImagesRef.current + 1;
+    }
   };
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -94,12 +95,13 @@ export default function PostForm({ post, toggleModal }: Props) {
           Année
           <input
             onChange={(e) => {
-              const date = parse(e.currentTarget.value, "yyyy", new Date());
-              setDate(date);
+              setDate(e.target.value);
             }}
             name="date"
             type="number"
-            value={date.getFullYear()}
+            min={1980}
+            max={2100}
+            value={date}
             required
           />
         </label>
