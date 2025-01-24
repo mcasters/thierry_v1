@@ -42,6 +42,7 @@ package-lock.json
 /public/assets
 /public/images
 loader.cjs
+.editorconfig
 
 # database
 /prisma/migrations
