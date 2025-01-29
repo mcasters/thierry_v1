@@ -1,13 +1,13 @@
 import { Label, PresetColor, Theme } from "@prisma/client";
-import { OnlyString } from "@/lib/db/theme";
 import {
   ContentFull,
   Image,
   ItemFull,
+  OnlyString,
   PhotoTab,
   PostFull,
   Type,
-} from "@/lib/db/item";
+} from "@/lib/type";
 
 import { BASE_PRESET_COLOR, BASE_THEME, TEXTS } from "@/constants/specific";
 
@@ -72,6 +72,24 @@ export const getSlidersLandscapeAndPortait = (
   return { portraitImages, landscapeImages };
 };
 
+export const getSlidersLandscapeImages = (contents: ContentFull[]): Image[] => {
+  const images: Image[] = getSliders(contents);
+  const tab: Image[] = [];
+  images.forEach((i) => {
+    if (!i.isMain) tab.push(i);
+  });
+  return tab;
+};
+
+export const getSlidersPortraitImages = (contents: ContentFull[]): Image[] => {
+  const images: Image[] = getSliders(contents);
+  const tab: Image[] = [];
+  images.forEach((i) => {
+    if (i.isMain) tab.push(i);
+  });
+  return tab;
+};
+
 export const getAddressText = (contents: ContentFull[]): string => {
   return contents?.filter((c) => c.label === Label.ADDRESS)[0]?.text || "";
 };
@@ -112,6 +130,19 @@ export const themeToHexa = (
           updatedTheme[key as keyof OnlyString<Theme>] = p.color;
         }
       });
+    }
+  });
+  return updatedTheme;
+};
+
+export const oneColorThemeToHexa = (
+  theme: Theme,
+  presetColor: PresetColor,
+): Theme => {
+  const updatedTheme = theme;
+  Object.entries(theme).forEach(([key, value]) => {
+    if (value === presetColor.name && key !== "name") {
+      updatedTheme[key as keyof OnlyString<Theme>] = presetColor.color;
     }
   });
   return updatedTheme;
