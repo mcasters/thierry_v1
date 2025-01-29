@@ -1,30 +1,35 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useActionState, useEffect, useRef, useState } from "react";
 import s from "@/styles/admin/Admin.module.css";
-import { CategoryFull, ItemFull, Type } from "@/lib/db/item";
+import { CategoryFull, ItemFull, Type } from "@/lib/type";
 import { getEmptyItem } from "@/utils/commonUtils";
 import { useAlert } from "@/app/context/AlertProvider";
 import Preview from "@/components/admin/form/imageForm/Preview";
 import Images from "@/components/admin/form/imageForm/Images";
 import SubmitButton from "@/components/admin/form/SubmitButton";
 import CancelButton from "@/components/admin/form/CancelButton";
-import { useRouter } from "next/navigation";
 
 interface Props {
   item: ItemFull;
+  itemAction: (
+    prevState: { message: string; isError: boolean } | null,
+    formData: FormData,
+  ) => Promise<{ isError: boolean; message: string }>;
   toggleModal?: () => void;
   categories?: CategoryFull[];
 }
 
-export default function ItemForm({ item, toggleModal, categories }: Props) {
+export default function ItemForm({
+  item,
+  itemAction,
+  toggleModal,
+  categories,
+}: Props) {
   const isUpdate = item.id !== 0;
   const isSculpture = item.type === Type.SCULPTURE;
-  const api = isUpdate ? `api/${item.type}/update` : `api/${item.type}/add`;
   const alert = useAlert();
-  const router = useRouter();
   const resetImageRef = useRef<number>(0);
-  const formRef = useRef<HTMLFormElement>(null);
 
   const [workItem, setWorkItem] = useState<ItemFull>(item);
   const [date, setDate] = useState<string>(
@@ -32,6 +37,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
   );
   const [filenamesToDelete, setFilenamesToDelete] = useState<string[]>([]);
   const [newImages, setNewImages] = useState<string[]>([]);
+  const [state, action] = useActionState(itemAction, null);
 
   const reset = () => {
     if (toggleModal) toggleModal();
@@ -44,26 +50,19 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
     }
   };
 
-  const submit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (formRef.current && confirm("Tu confirmes ?")) {
-      const formData = new FormData(formRef.current);
-      fetch(api, { method: "POST", body: formData }).then((res) => {
-        if (res.ok) {
-          reset();
-          alert(isUpdate ? "item modifié" : "item ajouté", false);
-          router.refresh();
-        } else alert("Erreur à l'enregistrement", true);
-      });
+  useEffect(() => {
+    if (state) {
+      if (!state.isError) reset();
+      alert(state.message, state.isError);
     }
-  };
+  }, [state]);
 
   return (
     <div className={isUpdate ? s.wrapperModal : s.formContainer}>
       <h2>
         {`${isUpdate ? "Modifier" : "Ajouter"} ${item.type === Type.DRAWING ? "un" : "une"} ${item.type}`}
       </h2>
-      <form ref={formRef} onSubmit={submit}>
+      <form action={action}>
         {isUpdate && <input type="hidden" name="id" value={item.id} />}
         {isUpdate && (
           <input

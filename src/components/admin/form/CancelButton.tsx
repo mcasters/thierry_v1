@@ -19,11 +19,11 @@ export default function CancelButton({
     <button
       onClick={(e) => {
         e.preventDefault();
-        onCancel
-          ? onCancel()
-          : setTimeout(function () {
-              window.location.reload();
-            }, 0);
+        if (onCancel) onCancel();
+        else
+          setTimeout(() => {
+            window.location.reload();
+          }, 0);
       }}
       className={`${classname ? classname : ""} adminButton`}
       disabled={disabled ? disabled : false}

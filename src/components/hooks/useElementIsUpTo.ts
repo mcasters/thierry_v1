@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 function useElementIsUpTo(yLimit: number) {
   const [isUpTo, setIsUpTo] = useState<boolean>(false);
@@ -18,10 +18,10 @@ function useElementIsUpTo(yLimit: number) {
   }, [isUpTo, ref, yLimit]);
 
   useEffect(() => {
-    document.addEventListener("scroll", handleScroll);
+    document.addEventListener('scroll', handleScroll, true);
 
     return () => {
-      document.removeEventListener("scroll", handleScroll);
+      document.removeEventListener('scroll', handleScroll, true);
     };
   }, [handleScroll]);
 

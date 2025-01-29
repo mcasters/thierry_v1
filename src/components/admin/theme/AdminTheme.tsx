@@ -1,64 +1,46 @@
 "use client";
 
-import React from "react";
+import React, { useState, useTransition } from "react";
 import themeStyle from "../../../styles/admin/AdminTheme.module.css";
 import ThemeAdd from "@/components/admin/theme/ThemeAdd";
 import ThemeDashboard from "@/components/admin/theme/ThemeDashboard";
-import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import ThemeUpdate from "@/components/admin/theme/ThemeUpdate";
 import CancelButton from "@/components/admin/form/CancelButton";
-import { useAdminThemesContext } from "@/app/context/adminThemesProvider";
-import { Theme } from "@prisma/client";
+import { PresetColor, Theme } from "@prisma/client";
 import { useAlert } from "@/app/context/AlertProvider";
 import { THEME } from "@/constants/admin";
 import s from "@/styles/admin/Admin.module.css";
+import { activateTheme, deleteTheme } from "@/app/actions/theme/admin";
+import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
+import PresetColorDashboard from "@/components/admin/theme/presetColor/PresetColorDashboard";
 
-export default function AdminTheme() {
-  const { themes, setThemes } = useAdminThemesContext();
+type Props = {
+  themes: Theme[];
+  presetColors: PresetColor[];
+};
+
+export default function AdminTheme({ themes, presetColors }: Props) {
   const { workTheme, setWorkTheme } = useAdminWorkThemeContext();
+  const [deletedPresetColor, setDeletedPresetColor] =
+    useState<PresetColor | null>(null);
   const alert = useAlert();
+  const [, startTransition] = useTransition();
+  const savedWorkTheme = themes.find((t) => t.id === workTheme.id);
 
-  const activateTheme = () => {
-    fetch(`admin/api/theme/activate/${workTheme.id}`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        const activatedTheme = json.activatedTheme;
-        if (activatedTheme) {
-          alert(`Thème "${activatedTheme.name}" actif`);
-          setTimeout(function () {
-            window.location.reload();
-          }, 1500);
-        } else alert("Erreur à l'activation du thème", true);
-      });
+  const onDeleteTheme = () => {
+    startTransition(async () => {
+      const res = await deleteTheme(workTheme.id);
+      const theme = themes.find((t) => t.isActive);
+      if (theme) setWorkTheme(theme);
+      alert(res.message, res.isError);
+    });
   };
 
-  const DeleteTheme = () => {
-    if (confirm(`Supprimer le thème "${workTheme.name} ?`)) {
-      fetch(`admin/api/theme/delete/${workTheme.id}`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          if (json.updatedThemes) {
-            alert(`Thème "${workTheme.name}" supprimé`);
-
-            setTimeout(function () {
-              window.location.reload();
-            }, 1500);
-          }
-        })
-        .catch((e) => {
-          alert("Erreur à la suppression du thème", true);
-        });
-    }
+  const onActivateTheme = () => {
+    startTransition(async () => {
+      const res = await activateTheme(workTheme.id);
+      alert(res.message, res.isError);
+    });
   };
 
   const handleCancel = () => {
@@ -70,15 +52,14 @@ export default function AdminTheme() {
     <>
       <h1>Gestion du thème</h1>
       <div className={themeStyle.themeContainer}>
-        <h2>Liste des thèmes :</h2>
+        <h2>Thèmes :</h2>
         <select
           name="name"
           value={workTheme.id}
           onChange={(e) => {
-            const theme = themes.find(
-              (t) => t.id?.toString() === e.target.value,
+            setWorkTheme(
+              themes.find((t) => t.id?.toString() === e.target.value) as Theme,
             );
-            if (theme) setWorkTheme(theme);
           }}
           className={s.select}
         >
@@ -89,27 +70,50 @@ export default function AdminTheme() {
               </option>
             ))}
         </select>
-        <button onClick={activateTheme} className="adminButton">
+        <button onClick={onActivateTheme} className="adminButton">
           Activer
         </button>
         <button
           disabled={workTheme.name === THEME.BASE_THEME}
-          onClick={DeleteTheme}
+          onClick={onDeleteTheme}
           className="adminButton"
         >
           Supprimer
         </button>
       </div>
       <div className={themeStyle.themeContainer}>
-        <h2>Thème sélectionné :</h2>
-        <ThemeDashboard />
+        <h2>Détail du thème sélectionné :</h2>
+        <ThemeDashboard
+          presetColors={presetColors}
+          deletedPresetColor={deletedPresetColor}
+          isToUpdate={
+            workTheme.name != THEME.BASE_THEME &&
+            savedWorkTheme !== undefined &&
+            Object.entries(workTheme).sort().toString() !=
+              Object.entries(savedWorkTheme).sort().toString()
+          }
+        />
       </div>
-      <div className={themeStyle.themeActionContainer}>
-        <ThemeUpdate />
-        <CancelButton onCancel={handleCancel} text="Annuler les changements" />
+      <div className={themeStyle.actionContainer}>
+        <div className={themeStyle.actionPartContainer}>
+          <ThemeAdd themes={themes} />
+        </div>
+        <div className={themeStyle.actionPartContainer}>
+          <ThemeUpdate />
+        </div>
+        <div className={themeStyle.actionPartContainer}>
+          <CancelButton
+            onCancel={handleCancel}
+            text="Annuler les changements"
+          />
+        </div>
       </div>
-      <div className={themeStyle.themeActionContainer}>
-        <ThemeAdd />
+      <div className={themeStyle.themeContainer}>
+        <h2>Couleurs personnalisées</h2>
+        <PresetColorDashboard
+          presetColors={presetColors}
+          onDeletePresetColor={setDeletedPresetColor}
+        />
       </div>
     </>
   );
