@@ -2,17 +2,18 @@ import { Metadata } from "next";
 import Layout from "@/components/layout/Layout";
 import Providers from "./context/providers";
 import "@/styles/globals-specific.css";
-import { getContentsFull } from "@/app/api/content/getContents";
-import { getPaintingCategoriesFull } from "@/app/api/peinture/category/getCategories";
-import { getSculptureCategoriesFull } from "@/app/api/sculpture/category/getCategories";
 import { getIntroText, themeToHexa } from "@/utils/commonUtils";
 import React from "react";
-import { getActiveTheme, getPresetColors } from "@/app/api/theme/getTheme";
 import StyledJsxRegistry from "./registry";
 import { DESCRIPTION, GENERAL, KEYWORDS } from "@/constants/specific/metaHtml";
-import { getSession } from "@/app/lib/auth/lib";
-import { getDrawingCategoriesFull } from "@/app/api/dessin/category/getCategories";
+import { getSession } from "@/app/lib/auth";
 import { TEXTS } from "@/constants/specific";
+
+import { getSculptureCategoriesFull } from "@/app/actions/sculptures";
+import { getPaintingCategoriesFull } from "@/app/actions/paintings";
+import { getDrawingCategoriesFull } from "@/app/actions/drawings";
+import { getContentsFull } from "@/app/actions/contents";
+import { getActiveTheme, getPresetColors } from "@/app/actions/theme";
 
 export const metadata: Metadata = {
   title: GENERAL.SITE_TITLE,

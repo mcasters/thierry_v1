@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { getContentsFull } from "@/app/api/content/getContents";
 import s from "@/styles/contact.module.css";
 import {
   getAddressText,
@@ -8,6 +7,8 @@ import {
   getEmailText,
   getPhoneText,
 } from "@/utils/commonUtils";
+import { getContentsFull } from "@/app/actions/contents";
+import { TEXTS } from "@/constants/specific";
 import InstagramIcon from "@/components/icons/InstagramIcon";
 
 export default async function Contact() {
@@ -17,7 +18,7 @@ export default async function Contact() {
   return (
     <>
       <address>
-        <p>Thierry Casters</p>
+        <p>{TEXTS.TITLE}</p>
         <p className={s.preLine}>{getAddressText(contents)}</p>
         <br />
         <p>
@@ -26,23 +27,26 @@ export default async function Contact() {
           </Link>
         </p>
         <br />
-
         <p>
           <Link className={s.email} href={`mailto:${email}`}>
             {email}
           </Link>
         </p>
-        <br />
-        <br />
-        <br />
-        <br />
-        <a
-          href="https://www.instagram.com/thierrycasters/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <InstagramIcon />
-        </a>
+        {TEXTS.TITLE === "Thierry Casters" && (
+          <>
+            <br />
+            <br />
+            <br />
+            <br />
+            <a
+              href="https://www.instagram.com/thierrycasters/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <InstagramIcon />
+            </a>
+          </>
+        )}
       </address>
       <div className={s.text}>
         <p className={s.preLine}>{getContactText(contents)}</p>
