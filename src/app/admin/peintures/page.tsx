@@ -1,15 +1,16 @@
 import ItemListComponent from "@/components/admin/item/ItemListComponent";
 import CategoryComponent from "@/components/admin/item/category/CategoryComponent";
-import {
-  getPaintingsFull,
-  getYearsForPainting,
-} from "@/app/api/peinture/getPaintings";
-import { getPaintingCategoriesFull } from "@/app/api/peinture/category/getCategories";
 import s from "@/styles/admin/Admin.module.css";
 import React from "react";
-import { Type } from "@/lib/db/item";
+import { Type } from "@/lib/type";
 import { getEmptyItem } from "@/utils/commonUtils";
 import ItemForm from "@/components/admin/form/ItemForm";
+import {
+  getPaintingCategoriesFull,
+  getPaintingsFull,
+  getYearsForPainting,
+} from "@/app/actions/paintings";
+import { createPainting } from "@/app/actions/paintings/admin";
 
 export default async function Peintures() {
   const paintings = await getPaintingsFull();
@@ -24,7 +25,11 @@ export default async function Peintures() {
         categories={categories}
         years={years}
       />
-      <ItemForm categories={categories} item={getEmptyItem(Type.PAINTING)} />
+      <ItemForm
+        categories={categories}
+        item={getEmptyItem(Type.PAINTING)}
+        itemAction={createPainting}
+      />
       <CategoryComponent itemType={Type.PAINTING} categories={categories} />
     </>
   );

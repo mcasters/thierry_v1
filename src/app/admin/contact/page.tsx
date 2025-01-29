@@ -4,12 +4,12 @@ import {
   getEmailText,
   getPhoneText,
 } from "@/utils/commonUtils";
-import { getContentsFull } from "@/app/api/content/getContents";
 import s from "@/styles/admin/Admin.module.css";
 import { Label } from "@prisma/client";
 import TextAreaForm from "@/components/admin/form/TextAreaForm";
 import React from "react";
 import InputForm from "@/components/admin/form/InputForm";
+import { getContentsFull } from "@/app/actions/contents";
 
 export default async function Contact() {
   const contents = await getContentsFull();
@@ -20,19 +20,16 @@ export default async function Contact() {
       <TextAreaForm
         textContent={getAddressText(contents)}
         label={Label.ADDRESS}
-        api="api/content/update"
         textLabel="Adresse"
       />
       <InputForm
         label={Label.PHONE}
-        api="api/content/update"
         textContent={getPhoneText(contents)}
         textLabel="Téléphone"
         isPhone
       />
       <InputForm
         label={Label.EMAIL}
-        api="api/content/update"
         textContent={getEmailText(contents)}
         textLabel="E-mail"
         isEmail
@@ -40,7 +37,6 @@ export default async function Contact() {
       <TextAreaForm
         textContent={getContactText(contents)}
         label={Label.TEXT_CONTACT}
-        api="api/content/update"
         textLabel="Texte d'accompagnement (facultatif)"
       />
     </>
