@@ -63,7 +63,7 @@ export default function Images({
         if (!acceptSmallImage && width < 2000) {
           error = true;
           alert(
-            `La dimension de l'image ${file.name} est trop petite. Largeur minimum : 2000 pixels`,
+            `La dimension de l'image ${file.name} est trop petite.\nLargeur ou hauteur minimum : 2000 pixels`,
             true,
           );
           bmp.close();

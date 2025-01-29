@@ -38,19 +38,22 @@
   --color-dark: #818181;
   --color-xdark: #333;
 
-  --color-blue-xdark: #0f1f26;
-  --color-blue-medium: #1c3949;
+
+  --link-color-xdark: #0f1f26;
+  --link-color-dark: #1c3949;
+  --link-color-light: #457eb4;
+  --link-color-xlight: #9bcff8;
   --color-prussian-blue: #24445C;
-  --color-blue-xxlight: #66c3d3;
-  --color-blue-xxxlight: #b5d1d5;
 
   /*
   common home and other pages
    */
 
+  --color-auth-status: var(--link-color-xlight);
+  --color-border-auth-status: var(--link-color-xdark);
   --color-border-menu1: var(--color-medium);
   --color-border-menu2: var(--color-medium);
-  --color-border-menu1-dark: var(--color-blue-xdark)
+  --color-border-menu1-dark: var(--link-color-xdark)
 }
 
 * {
