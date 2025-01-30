@@ -227,7 +227,7 @@ export default function ThemeDashboard({
           deletedPresetColor={deletedPresetColor}
         />
       </section>
-      <p>* lorsque la souris survole le texte</p>
+      <p className={s.ps}>* lorsque la souris survole le texte</p>
       {isToUpdate && <span>Thème modifié (à sauvegarder)</span>}
     </div>
   );

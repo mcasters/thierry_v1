@@ -6,6 +6,7 @@
   background-color: rgba(0, 0, 0, 0.2);
   text-align: left;
   white-space: pre-wrap;
+  margin-top: 2rem;
   padding: 2rem;
 }
 
@@ -28,9 +29,6 @@
   text-align: left;
 }
 
-.note {
-}
-
 .flex {
   display: flex;
   flex-wrap: wrap;
@@ -43,7 +41,7 @@
   grid-template-columns: repeat(3, 1fr);
   flex-wrap: wrap;
   gap: 3rem;
-  padding: 1rem 2rem;
+  padding: 2rem 2rem;
 }
 
 .themeContainer section {
