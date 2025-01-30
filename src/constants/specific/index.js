@@ -48,19 +48,40 @@ export const BASE_PRESET_COLOR = {
 };
 
 export const NOTES = {
-  IMAGES:
+  Images:
     "J'ai implémenté une gestion totale des fichiers image. L'image est redimensionnée et optimisée pour garder le" +
-    " plus de qualité possible. Il n'y a qu'une chose à te préoccuper, c'est de fournir une image qui fasse" +
-    " plus de 2000 pixels de large. À noter que ça prend aussi les fichiers png.",
-  THEMES:
+    " plus de qualité possible. " +
+    " Il n'y a qu'une chose" +
+    " à te" +
+    " préoccuper, c'est de" +
+    " fournir une" +
+    " image qui fasse" +
+    " plus de 2000 pixels de large. Néanmoins, j'ai quand même proposé une option pour enlever cette contrainte de" +
+    " 2000 pixels," +
+    " si jamais tu n'as pas de photo si grande, ou par exemple pour la" +
+    " photo" +
+    " de présentation qui n'a pas besoin d'être grande puisqu'on ne peux pas la zoomer.\n" +
+    "Ne te préoccupes pas du poids du fichier, mieux vaut lui fournir trop de qualité que" +
+    " pas assez. Par sécurité, j'ai mis une limite de 20Mo par upload, donc si tu" +
+    " veux uploader plusieurs images (pour une sculpture par exemple), il faudra peut-être t'y prendre en" +
+    " plusieurs fois selon le poids de tes fichiers (tu ajouteras alors l'item avec quelques photos et tu le modifies" +
+    " pour" +
+    " ajouter les autres fichiers)\n" +
+    "\nLes" +
+    " fichiers pris en charge sont le jpeg (ou" +
+    " jpg) et le png. Si tu en veux d'autre, dis-le.",
+  Themes:
     "Pour la gestion des couleurs du site, il y a le thème de base que j'ai rendu impossible à changer. Cela te" +
     " permet d'avoir toujours cette base sur quoi partir pour modifier ensuite les couleurs et enregistrer sous un" +
     " autre thème. Tu peux créer (c'est toujours à partir d'un thème existant), modifier et supprimer autant de" +
     " thèmes que tu veux. Ça te permet par exemple de les comparer en les activant à tour de rôle.",
-  ITEMS:
+  Items:
     "Lorsqu'il existe des catégories, si des items (peintures ou sculptures) sont créés sans être rangés dans une" +
     " catégorie, alors une" +
     " catégorie intitulée 'sans catégorie' se crée dans le menu pour y ranger les items en question. En revanche," +
-    " s'il n'existe aucune catégorie, alors il n'y a pas de création automatique de catégorie," +
-    " et on y accèdera directement par le menu racine (à même le menu 'peintures' ou 'sculptures').",
+    " s'il n'existe aucune catégorie, alors aucune catégorie 'sans catégorie' ne se crée dans le menu,",
+  Surtout:
+    "N'hésite pas à m'appeler quand tu t'y mets, histoire de ne pas galérer, et parce que je me" +
+    " ferais un plaisir de te présenter comment ça fonctionne !! :)\n\nEt bien sûr, rapporte-moi tout problème ou" +
+    " toute modification que tu aurais besoin que je fasse !",
 };

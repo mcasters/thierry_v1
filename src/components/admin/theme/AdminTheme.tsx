@@ -13,6 +13,7 @@ import s from "@/styles/admin/Admin.module.css";
 import { activateTheme, deleteTheme } from "@/app/actions/theme/admin";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import PresetColorDashboard from "@/components/admin/theme/presetColor/PresetColorDashboard";
+import { NOTES } from "@/constants/specific";
 
 type Props = {
   themes: Theme[];
@@ -114,6 +115,19 @@ export default function AdminTheme({ themes, presetColors }: Props) {
           presetColors={presetColors}
           onDeletePresetColor={setDeletedPresetColor}
         />
+      </div>
+      <div className={themeStyle.noteContainer}>
+        <h2>Notes</h2>
+        <div className={themeStyle.grid}>
+          {Object.entries(NOTES).map(([key, value]) => {
+            return (
+              <section key={key}>
+                <h3 className={themeStyle.sectionTitle}>{key}</h3>
+                <p>{value}</p>
+              </section>
+            );
+          })}
+        </div>
       </div>
     </>
   );

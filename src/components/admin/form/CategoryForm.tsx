@@ -5,7 +5,6 @@ import React, { useActionState, useEffect, useState } from "react";
 import s from "@/styles/admin/Admin.module.css";
 import SubmitButton from "@/components/admin/form/SubmitButton";
 import CancelButton from "@/components/admin/form/CancelButton";
-import { useAlert } from "@/app/context/AlertProvider";
 import { Category } from "@/lib/type";
 
 interface Props {
@@ -23,7 +22,6 @@ export default function CategoryForm({
 }: Props) {
   const isUpdate = category !== undefined;
   const [text, setText] = useState<string>(category?.value || "");
-  const alert = useAlert();
   const [state, action] = useActionState(categoryAction, null);
 
   const reset = () => (toggleModal ? toggleModal() : setText(""));
@@ -31,7 +29,6 @@ export default function CategoryForm({
   useEffect(() => {
     if (state) {
       if (!state.isError) reset();
-      alert(state.message, state.isError);
     }
   }, [state]);
 
