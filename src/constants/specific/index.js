@@ -48,6 +48,7 @@ export const BASE_PRESET_COLOR = {
 };
 
 export const NOTES = {
+  Date: "03 février 2025",
   Images:
     "J'ai implémenté une gestion totale des fichiers image. L'image est redimensionnée et optimisée pour garder le" +
     " plus de qualité possible. " +
@@ -117,6 +118,17 @@ export const NOTES = {
     " ton site, pense d'ailleurs à te déconnecter, quitter ton site en restant connecté constitue en effet une faille" +
     " de" +
     " sécurité, même si je l'ai rendu mineure...",
+  Logo:
+    "Comme tu peux le constater, j'ai créé un logo provisoire 'TC', lequel constitue le lien vers la page home," +
+    " dans le second menu." +
+    " Si cette idée te plait, alors il faudrait que tu me fournisses le dessin" +
+    " de ta signature pour que je puisse en faire un fichier icon. J'utilise aussi cette image pour la fournir à" +
+    " Google et aux diverses applications qui demandent l'image d'un logo. Cette icon est par exemple utilisé par" +
+    " les" +
+    " réseaux sociaux lorsque tu mets le lien vers ton site. Ou encore, c'est utilisé par les navigateurs : lorsque" +
+    " tu es sur un site, tu as peut-être remarqué qu'il y a souvent une petite image affichée sur l'onglet. Mais ce" +
+    " n'était qu'une idéé soumise, et si tu préfères autre chose, pas de problème bien sûr. On peut par exemple" +
+    " mettre simplement la mention 'Home' pour ce lien, ou mettre une tout autre image.",
   Surtout:
     "N'hésite pas à m'appeler quand tu t'y mets, histoire de ne pas galérer, et parce que je me" +
     " ferais un plaisir de te présenter comment ça fonctionne !! :)\n\nEt bien sûr, rapporte-moi tout problème ou" +
