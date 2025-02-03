@@ -6,6 +6,7 @@ import s from "@/styles/admin/Admin.module.css";
 import SubmitButton from "@/components/admin/form/SubmitButton";
 import CancelButton from "@/components/admin/form/CancelButton";
 import { Category } from "@/lib/type";
+import { useAlert } from "@/app/context/AlertProvider";
 
 interface Props {
   categoryAction: (
@@ -23,12 +24,14 @@ export default function CategoryForm({
   const isUpdate = category !== undefined;
   const [text, setText] = useState<string>(category?.value || "");
   const [state, action] = useActionState(categoryAction, null);
+  const alert = useAlert();
 
   const reset = () => (toggleModal ? toggleModal() : setText(""));
 
   useEffect(() => {
     if (state) {
       if (!state.isError) reset();
+      else alert(state.message, true);
     }
   }, [state]);
 
