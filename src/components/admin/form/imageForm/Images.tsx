@@ -63,7 +63,7 @@ export default function Images({
         if (!acceptSmallImage && width < 2000) {
           error = true;
           alert(
-            `La dimension de l'image ${file.name} est trop petite.\nLargeur ou hauteur minimum : 2000 pixels`,
+            `La dimension de l'image ${file.name} est trop petite. Largeur minimum : 2000 pixels`,
             true,
           );
           bmp.close();
@@ -87,8 +87,24 @@ export default function Images({
 
   return (
     <div className={s.fileUploaderContainer}>
-      <p className={s.imageTitle}>{title}</p>
+      {title && <p className={s.imageTitle}>{title}</p>}
       <div>
+        {smallImage && (
+          <div>
+            <input
+              type={"radio"}
+              id="small-image"
+              name="small-image"
+              checked={acceptSmallImage}
+              onClick={() => setAcceptSmallImage(!acceptSmallImage)}
+              onChange={handleFiles}
+              className={s.radioInput}
+            />
+            <label htmlFor="small-image" className={s.radioLabel}>
+              Accepter des images en dessous de 2000 px de large
+            </label>
+          </div>
+        )}
         <input
           type="file"
           name={isMultiple ? "files" : "file"}
@@ -98,22 +114,6 @@ export default function Images({
           className={s.inputButton}
         />
       </div>
-      {smallImage && (
-        <div>
-          <input
-            type={"radio"}
-            id="small-image"
-            name="small-image"
-            checked={acceptSmallImage}
-            onClick={() => setAcceptSmallImage(!acceptSmallImage)}
-            onChange={handleFiles}
-            className={s.radioInput}
-          />
-          <label htmlFor="small-image" className={s.radioLabel}>
-            Accepter des images en dessous de 2000 px de large
-          </label>
-        </div>
-      )}
       <div>
         {newImages.length > 0 &&
           newImages.map((src) => (
