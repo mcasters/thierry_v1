@@ -1,14 +1,23 @@
-import ItemComponent from "@/components/item/ItemComponent";
-import { ItemFull } from "@/lib/type";
-import { getSculpturesFull } from "@/app/actions/sculptures";
+import { ItemFull, Type } from "@/lib/type";
+import {
+  getFilledSculptureCategories,
+  getSculpturesFull,
+  getYearsForSculpture,
+} from "@/app/actions/sculptures";
+import ItemPageComponent from "@/components/item/ItemPageComponent";
 
 export default async function Page() {
-  const sculptures: ItemFull[] = await getSculpturesFull();
+  const categories = await getFilledSculptureCategories();
+  let items: ItemFull[] = [];
+  if (categories.length === 0) items = await getSculpturesFull();
+  const years = await getYearsForSculpture();
 
   return (
-    sculptures.length > 0 &&
-    sculptures.map((sculpture: ItemFull) => (
-      <ItemComponent key={sculpture.id} item={sculpture} />
-    ))
+    <ItemPageComponent
+      categories={categories}
+      type={Type.SCULPTURE}
+      itemsWhenNoCategory={items}
+      years={years}
+    />
   );
 }
