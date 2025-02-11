@@ -1,48 +1,26 @@
 "use client";
 
-import { MENU_1, NAMES } from "@/constants/specific/routes";
+import { MENU_1_ITEMS } from "@/constants/specific/routes";
 import s from "@/styles/Nav_1.module.css";
 import { useTheme } from "@/app/context/themeProvider";
-import { CategoryFull } from "@/lib/type";
 import NavItem from "@/components/layout/header/menu1/NavItem";
 
 interface Props {
   navLayout: string;
-  paintingCategories: CategoryFull[];
-  sculptureCategories: CategoryFull[];
-  drawingCategories?: CategoryFull[];
 }
 
-export default function Nav_1({
-  navLayout,
-  paintingCategories,
-  sculptureCategories,
-  drawingCategories,
-}: Props) {
+export default function Nav_1({ navLayout }: Props) {
   const theme = useTheme();
 
   return (
     <>
       <nav className={`${s[navLayout]} ${navLayout}`}>
         <ul className={s.ul}>
-          {MENU_1.map((item) => {
-            const name = item.NAME;
-
+          {Object.entries(MENU_1_ITEMS).map((item) => {
+            const tag = item[0];
             return (
-              <li key={name}>
-                <NavItem
-                  itemName={name}
-                  navLayout={navLayout}
-                  categories={
-                    name === NAMES.SCULPTURE
-                      ? sculptureCategories
-                      : name === NAMES.PAINTING
-                        ? paintingCategories
-                        : name === NAMES.DRAWING && drawingCategories
-                          ? drawingCategories
-                          : []
-                  }
-                />
+              <li key={tag}>
+                <NavItem itemTag={tag} navLayout={navLayout} />
               </li>
             );
           })}

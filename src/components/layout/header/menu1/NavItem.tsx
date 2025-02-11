@@ -2,26 +2,23 @@
 
 import Link from "next/link";
 import { MENU_1_ITEMS } from "@/constants/specific/routes";
-import Dropdown from "@/components/layout/header/menu1/DropDown";
 import s from "./NavItem.module.css";
 import { useTheme } from "@/app/context/themeProvider";
-import { CategoryFull } from "@/lib/type";
 import React, { useMemo } from "react";
 import LAYOUT from "@/constants/layout";
 import { usePathname } from "next/navigation";
 import { TEXTS } from "@/constants/specific";
 
 interface Props {
-  itemName: string;
+  itemTag: string;
   navLayout: string;
-  categories: CategoryFull[];
 }
 
-export default function NavItem({ itemName, navLayout, categories }: Props) {
+export default function NavItem({ itemTag, navLayout }: Props) {
   const theme = useTheme();
-  const item = MENU_1_ITEMS[itemName];
-  const basePath = usePathname().split("/")[1];
-  const isActive = basePath === item.BASE_PATH;
+  const item = MENU_1_ITEMS[itemTag];
+  const path = usePathname();
+  const isActive = path === item.ROUTE;
 
   const themeLink = useMemo(() => {
     return navLayout === LAYOUT.ITEM_NAV
@@ -45,29 +42,15 @@ export default function NavItem({ itemName, navLayout, categories }: Props) {
         : theme.menu2LinkItemColor;
   }, [theme, navLayout]);
 
-  if (
-    categories.length > 1 ||
-    (categories.length === 1 && categories[0].value !== "Sans catégorie")
-  )
-    return (
-      <Dropdown
-        itemName={item.NAME}
-        menuItems={categories}
-        themeLink={themeLink}
-        themeLinkHover={themeLinkHover}
-        themeBorderActive={themeBorderActive}
-      />
-    );
-
   return (
     <>
-      <Link href={`/${item.BASE_PATH}`} legacyBehavior>
+      <Link href={item.ROUTE} legacyBehavior>
         <a
           className={
             isActive ? `${s.link} ${s.active} link active` : `${s.link} link`
           }
         >
-          {item.NAME}
+          {item.TAG}
         </a>
       </Link>
       <style jsx>{`
