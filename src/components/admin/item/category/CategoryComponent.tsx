@@ -7,6 +7,7 @@ import { CategoryFull, Type } from "@/lib/type";
 import { createCategorySculpture } from "@/app/actions/sculptures/admin";
 import { createCategoryDrawing } from "@/app/actions/drawings/admin";
 import { createCategoryPainting } from "@/app/actions/paintings/admin";
+import { getEmptyCategory } from "@/utils/commonUtils";
 
 interface Props {
   categories: CategoryFull[];
@@ -20,11 +21,16 @@ export default function CategoryComponent({ categories, itemType }: Props) {
       : itemType === Type.DRAWING
         ? createCategoryDrawing
         : createCategoryPainting;
+
   return (
     <div className={s.listContainer}>
       <h2>{title}</h2>
       <CategoryListComponent itemType={itemType} categories={categories} />
-      <CategoryForm categoryAction={action} />
+      <CategoryForm
+        category={getEmptyCategory()}
+        type={itemType}
+        categoryAction={action}
+      />
     </div>
   );
 }

@@ -89,7 +89,7 @@ export default function ItemForm({
           Catégorie (facultatif)
           <select
             name="categoryId"
-            value={workItem.category?.id}
+            value={workItem.categoryId?.toString()}
             onChange={(e) => {
               setWorkItem(
                 Object.assign({}, workItem, {
@@ -229,7 +229,7 @@ export default function ItemForm({
           )}
           <Images
             isMultiple={isSculpture}
-            title={isSculpture ? "1 photo minimum" : "1 seule photo"}
+            title={isSculpture ? "Une photo minimum" : "Une seule photo"}
             reset={resetImageRef.current}
             onNewImages={setNewImages}
             smallImage={true}
