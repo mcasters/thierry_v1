@@ -6,25 +6,19 @@ import { Type } from "@/lib/type";
 import { getEmptyItem } from "@/utils/commonUtils";
 import ItemForm from "@/components/admin/form/ItemForm";
 import {
-  getSculptureCategoriesFull,
-  getSculpturesFull,
+  getAdminSculptureCategories,
   getYearsForSculpture,
 } from "@/app/actions/sculptures";
 import { createSculpture } from "@/app/actions/sculptures/admin";
 
 export default async function Sculptures() {
-  const sculptures = await getSculpturesFull();
-  const categories = await getSculptureCategoriesFull();
+  const categories = await getAdminSculptureCategories();
   const years = await getYearsForSculpture();
 
   return (
     <>
       <h1 className={s.pageTitle}>Contenus des pages Sculptures</h1>
-      <ItemListComponent
-        items={sculptures}
-        categories={categories}
-        years={years}
-      />
+      <ItemListComponent categories={categories} years={years} />
       <ItemForm
         categories={categories}
         item={getEmptyItem(Type.SCULPTURE)}
