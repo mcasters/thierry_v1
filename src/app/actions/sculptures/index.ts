@@ -1,36 +1,13 @@
 "use server";
 import prisma from "@/lib/prisma";
 import { CategoryFull, ItemFull } from "@/lib/type";
+import { getEmptyContent } from "@/utils/commonUtils";
 
 export async function getSculpturesFull(): Promise<ItemFull[]> {
   const res = await prisma.sculpture.findMany({
     orderBy: { date: "asc" },
-    include: { images: true, category: true },
+    include: { images: true },
   });
-  return JSON.parse(JSON.stringify(res));
-}
-
-export async function getSculpturesFullByCategory(
-  categoryKey: string,
-): Promise<ItemFull[]> {
-  const res =
-    categoryKey === "no-category"
-      ? await prisma.sculpture.findMany({
-          where: {
-            category: null,
-          },
-          orderBy: { date: "asc" },
-          include: { images: true, category: true },
-        })
-      : await prisma.sculpture.findMany({
-          where: {
-            category: {
-              key: categoryKey,
-            },
-          },
-          orderBy: { date: "asc" },
-          include: { images: true, category: true },
-        });
   return JSON.parse(JSON.stringify(res));
 }
 
@@ -54,37 +31,98 @@ export async function getYearsForSculpture(): Promise<number[]> {
   return JSON.parse(JSON.stringify(uniqYears));
 }
 
-export async function getSculptureCategoriesFull(): Promise<CategoryFull[]> {
-  const res = await prisma.sculptureCategory.findMany({
+export async function getFilledSculptureCategories(): Promise<CategoryFull[]> {
+  let updatedCategories: CategoryFull[] = [];
+
+  const categories = await prisma.sculptureCategory.findMany({
     include: {
-      _count: {
-        select: {
-          sculptures: true,
-        },
+      content: true,
+      sculptures: {
+        include: { images: true },
       },
     },
   });
 
-  const updatedTab = res.map((categorie) => {
-    const { _count, ...rest } = categorie;
-    return { count: _count.sculptures, ...rest };
-  });
+  if (categories.length > 0) {
+    let itemsInCategory = false;
+    categories.forEach((categorie) => {
+      if (categorie.sculptures.length > 0) {
+        itemsInCategory = true;
+        const { sculptures, ...rest } = categorie;
+        updatedCategories.push({
+          items: sculptures,
+          count: 0,
+          ...rest,
+        } as CategoryFull);
+      }
+    });
 
-  const sculptureWithoutCategory = await prisma.sculpture.findMany({
-    where: {
-      category: null,
+    if (itemsInCategory) {
+      const sculptureWithNoCategory = await prisma.sculpture.findMany({
+        where: {
+          category: null,
+        },
+        include: { images: true },
+      });
+
+      if (sculptureWithNoCategory.length > 0) {
+        updatedCategories.push({
+          id: 0,
+          key: "no-category",
+          value: "Sans catégorie",
+          count: 0,
+          content: getEmptyContent(),
+          items: sculptureWithNoCategory as ItemFull[],
+        });
+      }
+    }
+  }
+
+  return JSON.parse(JSON.stringify(updatedCategories));
+}
+
+// Categories with also no Items inside
+export async function getAdminSculptureCategories(): Promise<CategoryFull[]> {
+  let updatedCategories: CategoryFull[] = [];
+
+  const categories = await prisma.sculptureCategory.findMany({
+    include: {
+      content: true,
+      sculptures: {
+        include: { images: true },
+      },
     },
   });
 
-  const sculptureWithoutCategory_count = sculptureWithoutCategory.length;
-  if (sculptureWithoutCategory_count > 0) {
-    updatedTab.push({
-      count: sculptureWithoutCategory_count,
-      key: "no-category",
-      value: "Sans catégorie",
-      id: 0,
+  if (categories.length > 0) {
+    updatedCategories = categories.map((categorie) => {
+      const { sculptures, ...rest } = categorie;
+      return {
+        count: sculptures.length,
+        items: sculptures,
+        ...rest,
+      } as CategoryFull;
     });
+
+    const sculptureWithNoCategory = await prisma.sculpture.findMany({
+      where: {
+        category: null,
+      },
+      include: { images: true },
+    });
+
+    const count = sculptureWithNoCategory.length;
+    if (count > 0) {
+      updatedCategories.push({
+        id: 0,
+        key: "no-category",
+        value: "Sans catégorie",
+        count,
+        content: getEmptyContent(),
+        items: sculptureWithNoCategory as ItemFull[],
+      });
+    }
   }
 
-  return JSON.parse(JSON.stringify(updatedTab));
+  return JSON.parse(JSON.stringify(updatedCategories));
 }

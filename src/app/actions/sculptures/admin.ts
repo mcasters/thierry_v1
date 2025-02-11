@@ -77,9 +77,9 @@ export async function updateSculpture(
   const rawFormData = Object.fromEntries(formData);
   const id = Number(rawFormData.id);
   try {
-    const id = Number(rawFormData.id);
     const oldSculpt = await prisma.sculpture.findUnique({
       where: { id },
+      include: { category: true },
     });
 
     if (oldSculpt) {
@@ -116,7 +116,7 @@ export async function updateSculpture(
                 id: Number(rawFormData.categoryId),
               },
             }
-          : oldSculpt.categoryId !== null
+          : oldSculpt.categoryId
             ? {
                 disconnect: {
                   id: oldSculpt.categoryId,
@@ -188,9 +188,22 @@ export async function deleteSculpture(id: number) {
 
 export async function deleteCategorySculpture(id: number) {
   try {
-    await prisma.sculptureCategory.delete({
+    const cat = await prisma.sculptureCategory.findUnique({
       where: { id },
     });
+
+    if (cat) {
+      const contentId = cat.categoryContentId;
+      if (contentId) {
+        await prisma.categoryContent.delete({
+          where: { id: contentId },
+        });
+      }
+
+      await prisma.sculptureCategory.delete({
+        where: { id },
+      });
+    }
     revalidatePath("/admin/sculptures");
     return { message: "Catégorie supprimée", isError: false };
   } catch (e) {
@@ -202,16 +215,26 @@ export async function createCategorySculpture(
   prevState: { message: string; isError: boolean } | null,
   formData: FormData,
 ) {
-  try {
-    const value = formData.get("text") as string;
-    const key = transformValueToKey(value);
+  const rawFormData = Object.fromEntries(formData);
+  const value = rawFormData.value as string;
 
+  try {
     await prisma.sculptureCategory.create({
       data: {
-        key,
+        key: transformValueToKey(value),
         value,
+        content: {
+          create: {
+            title: rawFormData.title as string,
+            text: rawFormData.text as string,
+            imageFilename: rawFormData.filename as string,
+            imageWidth: Number(rawFormData.width),
+            imageHeight: Number(rawFormData.height),
+          },
+        },
       },
     });
+
     revalidatePath("/admin/sculptures");
     return { message: "Catégorie ajoutée", isError: false };
   } catch (e) {
@@ -223,19 +246,44 @@ export async function updateCategorySculpture(
   prevState: { message: string; isError: boolean } | null,
   formData: FormData,
 ) {
+  const rawFormData = Object.fromEntries(formData);
+  const id = Number(rawFormData.id);
+  const value = rawFormData.value as string;
   try {
-    const rawFormData = Object.fromEntries(formData);
-    const id = Number(rawFormData.id);
-    const value = rawFormData.text as string;
-    const key = transformValueToKey(value);
-
-    await prisma.sculptureCategory.update({
+    const oldCat = await prisma.sculptureCategory.findUnique({
       where: { id },
-      data: {
-        key,
-        value,
-      },
+      include: { content: true },
     });
+
+    if (oldCat) {
+      let content;
+      const data = {
+        title: rawFormData.title as string,
+        text: rawFormData.text as string,
+        imageFilename: rawFormData.filename as string,
+        imageWidth: Number(rawFormData.width),
+        imageHeight: Number(rawFormData.height),
+      };
+
+      if (!oldCat.content) {
+        content = {
+          create: data,
+        };
+      } else {
+        content = {
+          update: data,
+        };
+      }
+
+      await prisma.sculptureCategory.update({
+        where: { id },
+        data: {
+          key: transformValueToKey(value),
+          value,
+          content,
+        },
+      });
+    }
     revalidatePath("/admin/sculpture");
     return { message: "Catégorie modifiée", isError: false };
   } catch (e) {
