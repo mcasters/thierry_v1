@@ -54,26 +54,21 @@ export default function Slideshow({ photos, autoPlay, isSmall }: Props) {
     photos.length > 0 && (
       <div style={{ position: "relative" }}>
         {photos.map((p, i) => (
-          <div
+          <Image
             key={i}
+            alt={p.alt}
+            src={p.src}
+            width={p.width}
+            height={p.height}
             className={`${s.slide} ${i === active ? s.active : ""}`}
+            loading="eager"
+            draggable={false}
             style={{
-              aspectRatio: p.width / p.height,
+              objectFit: "contain",
             }}
-          >
-            <Image
-              fill
-              alt={p.alt}
-              src={p.src}
-              loading="eager"
-              draggable={false}
-              style={{
-                objectFit: "contain",
-              }}
-              unoptimized
-              priority
-            />
-          </div>
+            unoptimized
+            priority
+          />
         ))}
         {!isSmall && (
           <>
