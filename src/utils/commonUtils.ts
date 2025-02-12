@@ -1,5 +1,6 @@
 import { Label, PresetColor, Theme } from "@prisma/client";
 import {
+  CategoryFull,
   ContentFull,
   Image,
   ItemFull,
@@ -30,6 +31,12 @@ export const getPresentationContent = (
   contents: ContentFull[],
 ): ContentFull | null => {
   return contents?.filter((c) => c.label === Label.PRESENTATION)[0] || null;
+};
+
+export const getSliderContent = (
+  contents: ContentFull[],
+): ContentFull | null => {
+  return contents?.filter((c) => c.label === Label.SLIDER)[0] || null;
 };
 
 export const getPresentationText = (contents: ContentFull[]): string => {
@@ -157,7 +164,7 @@ export const getEmptyItem = (
     price: undefined,
     sold: false,
     images: [],
-    category: undefined,
+    categoryId: null,
   };
 };
 
@@ -170,4 +177,42 @@ export const getEmptyPost = (): PostFull => {
     text: "",
     images: [],
   };
+};
+
+export const getEmptyImage = (): Image => {
+  return {
+    filename: "",
+    width: 0,
+    height: 0,
+    isMain: false,
+  };
+};
+
+export const getEmptyContent = () => {
+  return {
+    title: "",
+    text: "",
+    image: getEmptyImage(),
+  };
+};
+
+export const getEmptyCategory = (): CategoryFull => {
+  return {
+    id: 0,
+    key: "",
+    value: "",
+    count: 0,
+    content: getEmptyContent(),
+    items: [],
+  };
+};
+
+export const getItemsFromCategories = (
+  categories: CategoryFull[],
+): ItemFull[] => {
+  let items: ItemFull[] = [];
+  categories.forEach((category) => {
+    items = items.concat(category.items);
+  });
+  return items;
 };

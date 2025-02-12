@@ -1,9 +1,9 @@
 import { mkdir, stat, unlinkSync } from "fs";
 import sharp from "sharp";
 import { join } from "path";
-import { IMAGE } from "@/constants/image";
 import { transformValueToKey } from "@/utils/commonUtils";
 import { TEXTS } from "@/constants/specific";
+import { IMAGE } from "@/constants/image";
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
 
