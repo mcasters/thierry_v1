@@ -15,22 +15,11 @@ export const ROUTES = {
   A_PRESENTATION: "/admin/presentation",
 };
 
-export const BASE_PATH = {
-  PRESENTATION: "presentation",
-  PAINTING: "peintures",
-  SCULPTURE: "sculptures",
-  DRAWING: "dessins", // IMPORTANT TO KEEP FOR HEADER FUNCTIONALITY
-  CONTACT: "contact",
-  HOME: "",
-  POST: "posts",
-  ADMIN: "admin",
-};
-
-export const NAMES = {
+export const TAGS = {
   PRESENTATION: "Présentation",
   PAINTING: "Peintures",
   SCULPTURE: "Sculptures",
-  DRAWING: "Dessins", // IMPORTANT TO KEEP FOR HEADER FUNCTIONALITY
+  DRAWING: "Dessins",
   HOME: "Home",
   PRIVACY_FRENCH: "Politique de confidentialité",
   ADMIN: "Général",
@@ -38,75 +27,63 @@ export const NAMES = {
   CONTACT: "Contact",
 };
 
-export const MENU_1 = [
-  {
-    NAME: NAMES.PAINTING,
-  },
-  {
-    NAME: NAMES.SCULPTURE,
-  },
-  {
-    NAME: NAMES.POST,
-  },
-];
-
 export const MENU_1_ITEMS = {
-  [NAMES.PAINTING]: {
-    NAME: NAMES.PAINTING,
-    BASE_PATH: BASE_PATH.PAINTING,
+  [TAGS.PAINTING]: {
+    TAG: TAGS.PAINTING,
+    ROUTE: ROUTES.PAINTING,
   },
-  [NAMES.SCULPTURE]: {
-    NAME: NAMES.SCULPTURE,
-    BASE_PATH: BASE_PATH.SCULPTURE,
+  [TAGS.SCULPTURE]: {
+    TAG: TAGS.SCULPTURE,
+    ROUTE: ROUTES.SCULPTURE,
   },
-  [NAMES.POST]: {
-    NAME: NAMES.POST,
-    BASE_PATH: BASE_PATH.POST,
+  [TAGS.POST]: {
+    TAG: TAGS.POST,
+    ROUTE: ROUTES.POST,
   },
 };
 
 export const MENU_2 = [
   {
-    PATH: ROUTES.PRESENTATION,
-    NAME: NAMES.PRESENTATION,
+    TAG: TAGS.PRESENTATION,
+    ROUTE: ROUTES.PRESENTATION,
   },
   {
-    PATH: ROUTES.HOME,
-    NAME: NAMES.HOME,
+    TAG: TAGS.HOME,
+    ROUTE: ROUTES.HOME,
   },
   {
-    PATH: ROUTES.CONTACT,
-    NAME: NAMES.CONTACT,
+    TAG: TAGS.CONTACT,
+    ROUTE: ROUTES.CONTACT,
   },
 ];
 
 export const ADMIN_MENU = [
   {
-    PATH: ROUTES.ADMIN,
-    NAME: NAMES.ADMIN,
+    ROUTE: ROUTES.ADMIN,
+    TAG: TAGS.ADMIN,
   },
   {
-    PATH: ROUTES.A_HOME,
-    NAME: NAMES.HOME,
+    ROUTE: ROUTES.A_HOME,
+    TAG: TAGS.HOME,
   },
   {
-    PATH: ROUTES.A_PAINTING,
-    NAME: NAMES.PAINTING,
+    ROUTE: ROUTES.A_PAINTING,
+    TAG: TAGS.PAINTING,
   },
   {
-    PATH: ROUTES.A_SCULPTURE,
-    NAME: NAMES.SCULPTURE,
+    ROUTE: ROUTES.A_SCULPTURE,
+    TAG: TAGS.SCULPTURE,
   },
   {
-    PATH: ROUTES.A_POST,
-    NAME: NAMES.POST,
+    ROUTE: ROUTES.A_POST,
+    TAG: TAGS.POST,
   },
   {
-    PATH: ROUTES.A_PRESENTATION,
-    NAME: NAMES.PRESENTATION,
+    ROUTE: ROUTES.A_PRESENTATION,
+    TAG: TAGS.PRESENTATION,
   },
   {
-    PATH: ROUTES.A_CONTACT,
-    NAME: NAMES.CONTACT,
+    ROUTE: ROUTES.A_CONTACT,
+    TAG: TAGS.CONTACT,
   },
 ];

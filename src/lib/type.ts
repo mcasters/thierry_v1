@@ -20,7 +20,7 @@ export type ItemFull = {
   price: number | undefined;
   sold: boolean;
   images: Image[];
-  category: Category | undefined;
+  categoryId: number | null;
 };
 
 export type PostFull = {
@@ -41,7 +41,6 @@ export type ContentFull = {
 };
 
 export type Image = {
-  id: number;
   filename: string;
   width: number;
   height: number;
@@ -71,17 +70,17 @@ export enum Type {
   DRAWING = "dessin",
 }
 
-export type Category = {
-  id: number;
-  key: string;
-  value: string;
-};
-
 export type CategoryFull = {
   id: number;
   key: string;
   value: string;
   count: number;
+  content: {
+    title: string;
+    text: string;
+    image: Image;
+  };
+  items: ItemFull[];
 };
 
 export type Session = {
