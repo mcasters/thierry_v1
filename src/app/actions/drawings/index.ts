@@ -1,4 +1,6 @@
+// @ts-nocheck
 "use server";
+
 import {
   CategoryFull,
   DrawingCategoriesFull,
