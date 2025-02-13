@@ -1,22 +1,15 @@
-import { ItemFull, Type } from "@/lib/type";
-import {
-  getFilledPaintingCategories,
-  getPaintingsFull,
-  getYearsForPainting,
-} from "@/app/actions/paintings";
-import ItemPageComponent from "@/components/item/ItemPageComponent";
+import { Type } from "@/lib/type";
+import { getPaintCategories, getYearsForPaint } from "@/app/actions/paintings";
+import ItemHomeComponent from "@/components/item/ItemHomeComponent";
 
 export default async function Page() {
-  const categories = await getFilledPaintingCategories();
-  let items: ItemFull[] = [];
-  if (categories.length === 0) items = await getPaintingsFull();
-  const years = await getYearsForPainting();
+  const categories = await getPaintCategories();
+  const years = await getYearsForPaint();
 
   return (
-    <ItemPageComponent
-      categories={categories}
+    <ItemHomeComponent
       type={Type.PAINTING}
-      itemsWhenNoCategory={items}
+      categories={categories}
       years={years}
     />
   );
