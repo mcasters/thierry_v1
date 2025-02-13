@@ -50,10 +50,45 @@ export async function getPaintCategories(): Promise<CategoryFull[]> {
           some: {},
         },
       },
-      include: {
-        content: true,
-      },
+      include: { content: true },
     });
+
+  /* TODO
+  Remove when played in prod
+   */
+  let updatedCategories: PaintingCategoriesFull = [];
+  for await (const category of categories) {
+    if (!category.content) {
+      await prisma.paintingCategory.update({
+        where: { id: category.id },
+        data: {
+          content: {
+            create: {
+              title: "",
+              text: "",
+              imageFilename: "",
+              imageWidth: 0,
+              imageHeight: 0,
+            },
+          },
+        },
+        include: { content: true },
+      });
+
+      const updatedCategory = await prisma.paintingCategory.findMany({
+        where: {
+          paintings: {
+            some: {},
+          },
+        },
+        include: { content: true },
+      });
+
+      updatedCategories.push(updatedCategory);
+    } else {
+      updatedCategories.push(category);
+    }
+  }
 
   const paintingWithNoCategory: PaintingsFull = await prisma.painting.findMany({
     where: {
@@ -63,7 +98,7 @@ export async function getPaintCategories(): Promise<CategoryFull[]> {
 
   const count = paintingWithNoCategory.length;
   if (count > 0) {
-    categories.push({
+    updatedCategories.push({
       id: 0,
       key: "no-category",
       value: "Sans catégorie",
@@ -73,7 +108,7 @@ export async function getPaintCategories(): Promise<CategoryFull[]> {
     });
   }
 
-  return JSON.parse(JSON.stringify(categories));
+  return JSON.parse(JSON.stringify(updatedCategories));
 }
 
 export async function getPaintCategoryByKey(
@@ -108,30 +143,6 @@ export async function getPaintCategoryByKey(
         },
       },
     });
-
-    if (category && !category.content) {
-      const id = category.id;
-      category = await prisma.paintingCategory.update({
-        where: { id },
-        data: {
-          content: {
-            create: {
-              title: "",
-              text: "",
-              imageFilename: "",
-              imageWidth: 0,
-              imageHeight: 0,
-            },
-          },
-        },
-        include: {
-          content: true,
-          paintings: {
-            orderBy: { date: "asc" },
-          },
-        },
-      });
-    }
   }
 
   return JSON.parse(JSON.stringify(category));

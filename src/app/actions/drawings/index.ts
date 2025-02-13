@@ -50,10 +50,45 @@ export async function getDrawCategories(): Promise<CategoryFull[]> {
           some: {},
         },
       },
-      include: {
-        content: true,
-      },
+      include: { content: true },
     });
+
+  /* TODO
+ Remove when played in prod
+  */
+  let updatedCategories: DrawingCategoriesFull = [];
+  for await (const category of categories) {
+    if (!category.content) {
+      await prisma.drawingCategory.update({
+        where: { id: category.id },
+        data: {
+          content: {
+            create: {
+              title: "",
+              text: "",
+              imageFilename: "",
+              imageWidth: 0,
+              imageHeight: 0,
+            },
+          },
+        },
+        include: { content: true },
+      });
+
+      const updatedCategory = await prisma.drawingCategory.findMany({
+        where: {
+          drawings: {
+            some: {},
+          },
+        },
+        include: { content: true },
+      });
+
+      updatedCategories.push(updatedCategory);
+    } else {
+      updatedCategories.push(category);
+    }
+  }
 
   const drawingWithNoCategory: DrawingsFull = await prisma.drawing.findMany({
     where: {
@@ -63,7 +98,7 @@ export async function getDrawCategories(): Promise<CategoryFull[]> {
 
   const count = drawingWithNoCategory.length;
   if (count > 0) {
-    categories.push({
+    updatedCategories.push({
       id: 0,
       key: "no-category",
       value: "Sans catégorie",
@@ -73,7 +108,7 @@ export async function getDrawCategories(): Promise<CategoryFull[]> {
     });
   }
 
-  return JSON.parse(JSON.stringify(categories));
+  return JSON.parse(JSON.stringify(updatedCategories));
 }
 
 export async function getDrawCategoryByKey(
@@ -107,30 +142,6 @@ export async function getDrawCategoryByKey(
         },
       },
     });
-
-    if (category && !category.content) {
-      const id = category.id;
-      category = await prisma.drawingCategory.update({
-        where: { id },
-        data: {
-          content: {
-            create: {
-              title: "",
-              text: "",
-              imageFilename: "",
-              imageWidth: 0,
-              imageHeight: 0,
-            },
-          },
-        },
-        include: {
-          content: true,
-          drawings: {
-            orderBy: { date: "asc" },
-          },
-        },
-      });
-    }
   }
 
   return JSON.parse(JSON.stringify(category));

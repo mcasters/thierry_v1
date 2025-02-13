@@ -51,10 +51,45 @@ export async function getSculptCategories(): Promise<CategoryFull[]> {
           some: {},
         },
       },
-      include: {
-        content: true,
-      },
+      include: { content: true },
     });
+
+  /* TODO
+  Remove when played in prod
+   */
+  let updatedCategories: SculptureCategoriesFull = [];
+  for await (const category of categories) {
+    if (!category.content) {
+      await prisma.sculptureCategory.update({
+        where: { id: category.id },
+        data: {
+          content: {
+            create: {
+              title: "",
+              text: "",
+              imageFilename: "",
+              imageWidth: 0,
+              imageHeight: 0,
+            },
+          },
+        },
+        include: { content: true },
+      });
+
+      const updatedCategory = await prisma.sculptureCategory.findMany({
+        where: {
+          sculptures: {
+            some: {},
+          },
+        },
+        include: { content: true },
+      });
+
+      updatedCategories.push(updatedCategory);
+    } else {
+      updatedCategories.push(category);
+    }
+  }
 
   const sculptureWithNoCategory: SculpturesFull =
     await prisma.sculpture.findMany({
@@ -65,7 +100,7 @@ export async function getSculptCategories(): Promise<CategoryFull[]> {
 
   const count = sculptureWithNoCategory.length;
   if (count > 0) {
-    categories.push({
+    updatedCategories.push({
       id: 0,
       key: "no-category",
       value: "Sans catégorie",
@@ -75,7 +110,7 @@ export async function getSculptCategories(): Promise<CategoryFull[]> {
     });
   }
 
-  return JSON.parse(JSON.stringify(categories));
+  return JSON.parse(JSON.stringify(updatedCategories));
 }
 
 export async function getSculptCategoryByKey(
@@ -112,31 +147,6 @@ export async function getSculptCategoryByKey(
         },
       },
     });
-
-    if (category && !category.content) {
-      const id = category.id;
-      category = await prisma.sculptureCategory.update({
-        where: { id },
-        data: {
-          content: {
-            create: {
-              title: "",
-              text: "",
-              imageFilename: "",
-              imageWidth: 0,
-              imageHeight: 0,
-            },
-          },
-        },
-        include: {
-          content: true,
-          sculptures: {
-            include: { images: true },
-            orderBy: { date: "asc" },
-          },
-        },
-      });
-    }
   }
 
   return JSON.parse(JSON.stringify(category));
