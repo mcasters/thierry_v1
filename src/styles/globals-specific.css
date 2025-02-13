@@ -43,6 +43,7 @@
   --link-color-xlight: #9bcff8;
   --color-prussian-blue: #24445c;
 
+  --overlayer: hsla(5, 15%, 5%, 0.3);
   /*
   common home and other pages
    */
@@ -52,6 +53,7 @@
   --color-border-menu1: var(--color-medium);
   --color-border-menu2: var(--color-medium);
   --color-border-menu1-dark: var(--link-color-xdark);
+  --color-background-item: var(--overlayer);
 }
 
 * {
