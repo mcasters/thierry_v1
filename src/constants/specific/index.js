@@ -38,14 +38,18 @@ export const TEXTS = {
       " créés et qu'il suffit d'activer pour les voir appliqués dans le site. Ça permet de comparer.",
     Items:
       "Surtout n'aie pas peur de créer des items (peintures, sculptures ou post) car tu peux de toute façon à tout" +
-      " moment les modifier ou les supprimer.\n" +
-      "Lorsqu'il existe des catégories, si des items (peintures ou sculptures) sont créés sans être rangés dans une" +
-      " catégorie, alors un" +
-      " sous-menu intitulé 'sans catégorie' se crée dans le menu pour y ranger les items en question. En revanche," +
-      " s'il n'existe aucune catégorie, alors aucun sous-menu ne se crée et on" +
-      " accède à tous les items directement depuis le menu 'peinture' ou 'sculpture'\nTu verras par ailleurs que j'ai" +
-      " ajouté dans le menu 'peinture' et 'sculpture' la possibilité d'obtenir les items selon leur année. Si un autre" +
-      " type de filtre te semble pertinent, fais m'en part, c'est pas compliqué à faire !",
+      " moment les modifier ou les supprimer. C'est d'ailleurs valable pour l'ensemble : tout est modifiable ou" +
+      " supprimable.\n" +
+      "Pour les peintures et les sculptures, j'ai ajouté la possibilité de les classer dans des catégories. Tu peux" +
+      " avoir des items qui sont classés et d'autres pas, ou aucun qui ne sont classés, ou tous qui sont" +
+      " classés.\nTu verras donc que quand on clique sur le menu 'Peintures' ou 'sculptures', on tombe maintenant sur" +
+      " une page où les diverses catégories sont proposées, avec la possibilité d'ailleurs d'y faire figurer la" +
+      " photo d'une des œuvres qui y sont classées, pour se faire une idée du type d'œuvres de la catégorie. Pour les" +
+      " items qui ne sont pas classés, il sont alors rangés dans une pseudo catégorie intitulée" +
+      " 'Sans catégorie'. Dans cette page d'accueil des peintures ou sculptures, sous cette liste de catégories, j'ai" +
+      " ajouté également la possibilité de filtrer les œuvres selon leur année. On accède alors aux items non plus" +
+      " classés par catégorie, mais par l'année choisie.\nSi un autre type de filtre te semble pertinent, fais m'en" +
+      " part, c'est pas compliqué à faire !",
     Connexion:
       "Ton site n'est pas un site statique, c'est une application, c'est-à-dire que ses utilisateurs peuvent" +
       " modifier son contenu. Pour la" +
