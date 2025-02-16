@@ -28,7 +28,9 @@ export default function ItemTagComponent({ tag, category, items }: Props) {
           )}
       </div>
       {_items &&
-        _items.map((item) => <ItemComponent key={item.id} item={item} />)}
+        _items.map((item, index) => (
+          <ItemComponent key={item.id} item={item} priority={index < 1} />
+        ))}
     </>
   );
 }

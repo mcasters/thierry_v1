@@ -66,16 +66,25 @@ export default function Slideshow({ photos, autoPlay, isSmall }: Props) {
             style={{
               objectFit: "contain",
             }}
-            unoptimized
-            priority
+            priority={i < 0}
           />
         ))}
         {!isSmall && (
           <>
-            <button className={`${s.prev} iconButton`} onClick={onPrev}>
+            <button
+              className={`${s.prev} iconButton`}
+              onClick={onPrev}
+              aria-label="Image précédente"
+              title="Image précédente"
+            >
               <ArrowPrev />
             </button>
-            <button className={`${s.next} iconButton`} onClick={onNext}>
+            <button
+              className={`${s.next} iconButton`}
+              onClick={onNext}
+              aria-label="Image suivante"
+              title="Image suivante"
+            >
               <ArrowNext />
             </button>
           </>

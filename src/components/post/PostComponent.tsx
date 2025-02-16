@@ -17,7 +17,7 @@ export default function PostComponent({ post }: Props) {
     <>
       <article className={s.postContainer}>
         {mainPhotos.sm.length > 0 && (
-          <Lightbox photos={mainPhotos} isCentered={true} />
+          <Lightbox photos={mainPhotos} priority={true} />
         )}
         <div className={s.info}>
           <h2>{post.title}</h2>

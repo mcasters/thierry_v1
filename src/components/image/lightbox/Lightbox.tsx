@@ -11,10 +11,10 @@ import LightboxContent from "@/components/image/lightbox/LightboxContent";
 
 type Props = {
   photos: PhotoTab;
-  isCentered?: boolean;
+  priority: boolean;
 };
 
-export default function Lightbox({ photos, isCentered = false }: Props) {
+export default function Lightbox({ photos, priority = false }: Props) {
   const window = useWindowSize();
   const isSmall = window.innerWidth < DEVICE.SMALL;
   const isMultiple = photos.sm.length > 1;
@@ -35,7 +35,7 @@ export default function Lightbox({ photos, isCentered = false }: Props) {
                 src={p.src}
                 width={p.width}
                 height={p.height}
-                priority={isCentered}
+                priority={priority}
                 style={{ objectFit: "contain" }}
                 alt={p.alt}
                 unoptimized
@@ -43,6 +43,7 @@ export default function Lightbox({ photos, isCentered = false }: Props) {
                 onClick={() => {
                   setIndex(index);
                 }}
+                title="Agrandir"
               />
             </div>
           );
@@ -53,7 +54,7 @@ export default function Lightbox({ photos, isCentered = false }: Props) {
               src={p.src}
               width={p.width}
               height={p.height}
-              priority={isCentered}
+              priority={priority}
               style={{ objectFit: "contain" }}
               alt={p.alt}
               unoptimized
@@ -61,6 +62,7 @@ export default function Lightbox({ photos, isCentered = false }: Props) {
               onClick={() => {
                 setIndex(index);
               }}
+              title="Agrandir"
             />
           );
       })}

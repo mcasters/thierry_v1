@@ -8,14 +8,15 @@ import { getPhotoTab } from "@/utils/imageUtils";
 
 interface Props {
   item: ItemFull;
+  priority: boolean;
 }
-export default function ItemComponent({ item }: Props) {
+export default function ItemComponent({ item, priority }: Props) {
   const { photos } = useMemo(() => getPhotoTab(item), [item]);
 
   return (
     <article id={`${item.id}`} className={s.article}>
       <figure>
-        <Lightbox photos={photos} />
+        <Lightbox photos={photos} priority={priority} />
       </figure>
       <figcaption className={s.infoContainer}>
         <h2>{item.title}</h2>
