@@ -8,7 +8,7 @@ import {
 import prisma from "@/lib/prisma";
 
 export const getItemData = (
-  type: string,
+  type: Type.PAINTING | Type.SCULPTURE | Type.DRAWING,
   formData: FormData,
   oldItem: ItemFull | null,
 ) => {
@@ -18,7 +18,7 @@ export const getItemData = (
 };
 
 const getPaintOrDrawData = async (
-  type: string,
+  type: Type.PAINTING | Type.DRAWING,
   formData: FormData,
   oldItem: ItemFull | null,
 ) => {
@@ -26,7 +26,7 @@ const getPaintOrDrawData = async (
   const file = rawFormData.file as File;
   const title = rawFormData.title as string;
   const category = getCategoryData(rawFormData.categoryId as string, oldItem);
-  const fileInfo = await resizeAndSaveImage(file, title, getItemDir(type));
+  const fileInfo = await handlePaintOrDrawImages(type, file, title, oldItem);
 
   return {
     title,
@@ -52,7 +52,6 @@ const getSculptData = async (formData: FormData, oldItem: ItemFull | null) => {
   const images = await handleSculptImages(
     files,
     title,
-    getSculptureDir(),
     rawFormData.filenamesToDelete as string,
   );
 
@@ -73,12 +72,25 @@ const getSculptData = async (formData: FormData, oldItem: ItemFull | null) => {
   };
 };
 
+const handlePaintOrDrawImages = async (
+  type: Type.PAINTING | Type.DRAWING,
+  file: File,
+  title: string,
+  oldItem: ItemFull | null,
+) => {
+  const dir = getItemDir(type);
+  if (file.size > 0) {
+    if (oldItem) deleteFile(getItemDir(type), oldItem.images[0].filename);
+    return await resizeAndSaveImage(file, title, dir);
+  } else return null;
+};
+
 const handleSculptImages = async (
   files: File[],
   title: string,
-  dir: string,
   filenamesToDelete: string,
 ) => {
+  const dir = getSculptureDir();
   if (filenamesToDelete !== "") {
     for await (const filename of filenamesToDelete.split(",")) {
       deleteFile(dir, filename);

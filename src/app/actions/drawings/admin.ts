@@ -11,7 +11,13 @@ export async function createItem(
   prevState: { message: string; isError: boolean } | null,
   formData: FormData,
 ) {
-  const type = formData.get("type") as string;
+  const typeString = formData.get("type") as string;
+  const type =
+    typeString === Type.PAINTING
+      ? Type.PAINTING
+      : typeString === Type.SCULPTURE
+        ? Type.SCULPTURE
+        : Type.DRAWING;
 
   try {
     const data = await getItemData(type, formData, null);
