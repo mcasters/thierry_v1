@@ -1,14 +1,16 @@
 import { ItemFull, Type } from "@/lib/type";
 import {
+  deleteFile,
   getItemDir,
   getSculptureDir,
   resizeAndSaveImage,
 } from "@/utils/serverUtils";
+import prisma from "@/lib/prisma";
 
 export const getItemData = (
   type: string,
   formData: FormData,
-  oldItem?: ItemFull,
+  oldItem: ItemFull | null,
 ) => {
   if (type === Type.PAINTING || type === Type.DRAWING)
     return getPaintOrDrawData(type, formData, oldItem);
@@ -18,13 +20,13 @@ export const getItemData = (
 const getPaintOrDrawData = async (
   type: string,
   formData: FormData,
-  oldItem?: ItemFull,
+  oldItem: ItemFull | null,
 ) => {
   const rawFormData = Object.fromEntries(formData);
   const file = rawFormData.file as File;
   const title = rawFormData.title as string;
+  const category = getCategoryData(rawFormData.categoryId as string, oldItem);
   const fileInfo = await resizeAndSaveImage(file, title, getItemDir(type));
-  const category = getCategoryData(rawFormData, oldItem);
 
   return {
     title,
@@ -42,11 +44,17 @@ const getPaintOrDrawData = async (
   };
 };
 
-const getSculptData = async (formData: FormData, oldItem?: ItemFull) => {
+const getSculptData = async (formData: FormData, oldItem: ItemFull | null) => {
   const rawFormData = Object.fromEntries(formData);
   const files = formData.getAll("files") as File[];
   const title = rawFormData.title as string;
-  const images = await handleSculptImages(files, title, getSculptureDir());
+  const category = getCategoryData(rawFormData.categoryId as string, oldItem);
+  const images = await handleSculptImages(
+    files,
+    title,
+    getSculptureDir(),
+    rawFormData.filenamesToDelete as string,
+  );
 
   return {
     title,
@@ -58,21 +66,29 @@ const getSculptData = async (formData: FormData, oldItem?: ItemFull) => {
     length: Number(rawFormData.length),
     isToSell: rawFormData.isToSell === "true",
     price: Number(rawFormData.price),
-    category:
-      rawFormData.categoryId === ""
-        ? {}
-        : {
-            connect: {
-              id: Number(rawFormData.categoryId),
-            },
-          },
+    category,
     images: {
       create: images,
     },
   };
 };
 
-const handleSculptImages = async (files: File[], title, dir) => {
+const handleSculptImages = async (
+  files: File[],
+  title: string,
+  dir: string,
+  filenamesToDelete: string,
+) => {
+  if (filenamesToDelete !== "") {
+    for await (const filename of filenamesToDelete.split(",")) {
+      if (deleteFile(dir, filename)) {
+        await prisma.sculptureImage.delete({
+          where: { filename },
+        });
+      }
+    }
+  }
+
   let images = [];
   for (const file of files) {
     if (file.size > 0) {
@@ -88,11 +104,14 @@ const handleSculptImages = async (files: File[], title, dir) => {
   return images;
 };
 
-export const getCategoryData = (rawFormData, oldItem?: ItemFull) => {
-  return rawFormData.categoryId !== ""
+export const getCategoryData = (
+  categoryId: string,
+  oldItem: ItemFull | null,
+) => {
+  return categoryId !== ""
     ? {
         connect: {
-          id: Number(rawFormData.categoryId),
+          id: Number(categoryId),
         },
       }
     : oldItem && oldItem.categoryId

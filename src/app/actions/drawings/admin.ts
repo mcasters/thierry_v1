@@ -1,15 +1,10 @@
 "use server";
 
-import {
-  deleteFile,
-  getDrawingDir,
-  getItemDir,
-  resizeAndSaveImage,
-} from "@/utils/serverUtils";
+import { deleteFile, getDrawingDir } from "@/utils/serverUtils";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { transformValueToKey } from "@/utils/commonUtils";
-import { getCategoryData, getItemData } from "@/app/actions/drawings/utils";
+import { getItemData } from "@/app/actions/drawings/utils";
 import { Type } from "@/lib/type";
 
 export async function createItem(
@@ -19,7 +14,7 @@ export async function createItem(
   const type = formData.get("type") as string;
 
   try {
-    const data = await getItemData(type, formData);
+    const data = await getItemData(type, formData, null);
     if (type === Type.PAINTING) await prisma.painting.create({ data });
     if (type === Type.DRAWING) await prisma.drawing.create({ data });
     if (type === Type.SCULPTURE) await prisma.sculpture.create({ data });
@@ -35,10 +30,8 @@ export async function updateItem(
   prevState: { message: string; isError: boolean } | null,
   formData: FormData,
 ) {
-  const rawFormData = Object.fromEntries(formData);
-  const id = Number(rawFormData.id);
-  const type = rawFormData.type as string;
-  const dir = getItemDir(type);
+  const id = Number(formData.get("id"));
+  const type = formData.get("type") as string;
   try {
     const oldItem =
       type === Type.PAINTING
@@ -56,29 +49,23 @@ export async function updateItem(
             : null;
 
     if (oldItem) {
-      if (type === Type.PAINTING || type === Type.DRAWING) {
-        let fileInfo = null;
-        const newFile = rawFormData.file as File;
-        const title = rawFormData.title as string;
-        if (newFile.size !== 0) {
-          deleteFile(dir, oldItem.imageFilename);
-          fileInfo = await resizeAndSaveImage(newFile, title, dir);
-        }
-
-        const category = getCategoryData(oldItem, rawFormData);
-
-        if (type === Type.PAINTING)
-          await prisma.painting.update({
-            where: { id: id },
-            data: getItemData(type, rawFormData, fileInfo),
-          });
-        if (type === Type.DRAWING)
-          await prisma.drawing.update({
-            where: { id: id },
-            data: getItemData(type, rawFormData, fileInfo),
-          });
+      const data = await getItemData(type, formData, oldItem);
+      if (type === Type.PAINTING)
+        await prisma.painting.update({
+          where: { id: id },
+          data,
+        });
+      if (type === Type.SCULPTURE) {
+        await prisma.sculpture.update({
+          where: { id: id },
+          data,
+        });
       }
-    } else if (type === Type.SCULPTURE) {
+      if (type === Type.DRAWING)
+        await prisma.drawing.update({
+          where: { id: id },
+          data,
+        });
     }
     revalidatePath(`/admin/${type}s`);
     return { message: "Item modifié", isError: false };
