@@ -5,35 +5,21 @@ import prisma from "@/lib/prisma";
 type StringKeys<T> = {
   [k in keyof T]: T[k] extends string ? k : never;
 }[keyof T];
-
 export type OnlyString<T> = { [k in StringKeys<T>]: boolean };
 
-export type PaintingFull = Prisma.Result<typeof prisma.painting, {}, any>;
-export type SculptureFull = Prisma.Result<typeof prisma.sculpture, {}, any>;
-export type DrawingFull = Prisma.Result<typeof prisma.drawing, {}, any>;
-
-export type PaintingCategoryFull = Prisma.Result<
-  typeof prisma.paintingCategory,
-  {},
-  any
->;
-export type DrawingCategoryFull = Prisma.Result<
-  typeof prisma.drawingCategory,
-  {},
-  any
->;
-export type SculptureCategoryFull = Prisma.Result<
-  typeof prisma.sculptureCategory,
-  {},
-  any
->;
+type PaintingFull = Prisma.Result<typeof prisma.painting, {}, any>;
+type SculptureFull = Prisma.Result<typeof prisma.sculpture, {}, any>;
+type DrawingFull = Prisma.Result<typeof prisma.drawing, {}, any>;
+type CategoryContent = Prisma.Result<typeof prisma.categoryContent, {}, any>;
 
 export type ItemFull = PaintingFull | SculptureFull | DrawingFull;
 
-export type CategoryFull =
-  | PaintingCategoryFull
-  | SculptureCategoryFull
-  | DrawingCategoryFull;
+export type Category = {
+  id: number;
+  key: string;
+  value: string;
+  content: CategoryContent;
+};
 
 export enum Type {
   PAINTING = "peinture",
@@ -60,6 +46,7 @@ export type ContentFull = {
 };
 
 export type Image = {
+  id: number;
   filename: string;
   width: number;
   height: number;
