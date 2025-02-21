@@ -12,7 +12,7 @@ type Props = {
   onChange: (image: IImage) => void;
 };
 
-export default function SelectImageForm({ items, value, onChange }: Props) {
+export default function SelectImageList({ items, value, onChange }: Props) {
   const [filenameSelected, setFilenameSelected] = useState<string>(
     value.filename,
   );
