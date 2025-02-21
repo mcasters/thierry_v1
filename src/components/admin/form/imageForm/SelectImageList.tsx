@@ -5,6 +5,7 @@ import s from "@/styles/admin/Admin.module.css";
 import Image from "next/image";
 import { Image as IImage, ItemFull } from "@/lib/type";
 import { getEmptyImage } from "@/utils/commonUtils";
+import { useTheme } from "@/app/context/themeProvider";
 
 type Props = {
   items: ItemFull[];
@@ -13,6 +14,8 @@ type Props = {
 };
 
 export default function SelectImageList({ items, value, onChange }: Props) {
+  const theme = useTheme();
+  const [selectedColor, setSelectedColor] = React.useState(theme.linkColor);
   const [filenameSelected, setFilenameSelected] = useState<string>(
     value.filename,
   );
@@ -27,35 +30,60 @@ export default function SelectImageList({ items, value, onChange }: Props) {
       <label className={s.formLabel}>Image de la catégorie (facultative)</label>
       <div className={s.selectList}>
         <div
-          className={`${s.option} ${filenameSelected === "" ? s.imageSelected : ""}`}
           onClick={() => onSelectImage(getEmptyImage())}
+          className={s.option}
+          onMouseEnter={() =>
+            filenameSelected === ""
+              ? setSelectedColor(theme.linkHoverColor)
+              : ""
+          }
+          onMouseLeave={() =>
+            filenameSelected === "" ? setSelectedColor(theme.linkColor) : ""
+          }
+          style={
+            filenameSelected === "" ? { background: `${selectedColor}` } : {}
+          }
         >
           -- Aucune image --
         </div>
         {items.length > 0 &&
           items.map((item) => {
-            return (
-              <div
-                key={item.id}
-                className={`${s.option} ${item.images[0].filename === filenameSelected ? s.imageSelected : ""}`}
-                onClick={() => onSelectImage(item.images[0])}
-              >
-                <Image
-                  loader={({ src }) => {
-                    return `/images/${item.type}/sm/${src}`;
-                  }}
-                  src={`${item.images[0].filename}`}
-                  width={80}
-                  height={80}
-                  alt="Image de l'item"
-                  style={{
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-            );
+            return item.images.map((image) => {
+              const isSelected = image.filename === filenameSelected;
+              return (
+                <div
+                  key={image.id}
+                  className={s.option}
+                  onClick={() => onSelectImage(image)}
+                  onMouseEnter={() =>
+                    isSelected ? setSelectedColor(theme.linkHoverColor) : ""
+                  }
+                  onMouseLeave={() =>
+                    isSelected ? setSelectedColor(theme.linkColor) : ""
+                  }
+                  style={isSelected ? { background: `${selectedColor}` } : {}}
+                >
+                  <Image
+                    src={`/images/${item.type}/sm/${image.filename}`}
+                    width={120}
+                    height={120}
+                    alt="Image de l'item"
+                    style={{
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+              );
+            });
           })}
       </div>
+      Les images sont ici tronquées au carré, comme elles le sont dans la
+      pastille de la catégorie qu'elle représente.
+      <style jsx>{`
+        .line {
+          background-color: ${theme.lineColor};
+        }
+      `}</style>
     </>
   );
 }

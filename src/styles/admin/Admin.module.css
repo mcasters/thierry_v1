@@ -75,11 +75,6 @@ h2.formLabel,
   border: var(--color-medium) solid 1px;
 }
 
-.checkLabel {
-  display: inline;
-  margin-top: 1rem;
-}
-
 .checkInput {
   display: inline;
   margin-left: 30px;
@@ -97,18 +92,8 @@ h2.formLabel,
 
 /* Image */
 
-.fileUploaderContainer {
-  width: 100%;
-  text-align: left;
-  padding: 2em 0 1em;
-}
-
-.imageTitle {
-  font-variant-caps: small-caps;
-  letter-spacing: 3px;
-  padding-bottom: 1em;
-  color: var(--color-dark);
-  font-size: var(--font-size);
+.imagesContainer {
+  margin-top: 1em;
 }
 
 .imageInputContainer {
