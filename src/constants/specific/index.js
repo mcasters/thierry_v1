@@ -20,14 +20,13 @@ export const TEXTS = {
       " photo" +
       " de présentation qui n'a pas besoin d'être grande puisqu'on ne peux pas la zoomer.\n" +
       "Ne te préoccupes pas du poids du fichier, mieux vaut lui fournir trop de qualité que" +
-      " pas assez.\nPar sécurité, j'ai mis une limite de 20Mo par upload, donc si tu" +
-      " veux uploader plusieurs images (pour une sculpture par exemple), il faudra peut-être t'y prendre en" +
-      " plusieurs fois selon le poids de tes fichiers (tu ajoutes alors la sculpture avec quelques photos et tu le" +
-      " modifies" +
+      " pas assez.\nPar sécurité, j'ai mis une limite de 30Mo par upload, donc si tu" +
+      " veux uploader plusieurs images lourdes, il faudra peut-être t'y prendre en" +
+      " plusieurs fois (tu ajoutes jusqu'à 30Mo et tu" +
+      " modifies ensuite" +
       " pour" +
-      " ajouter les autres fichiers)\n" +
-      "\nLes" +
-      " fichiers pris en charge sont le jpeg (ou" +
+      " ajouter les autres fichiers). Mais dis-moi si ça t'embête, j'augmenterai la limite, où je l'enlèverai.\n" +
+      "Les fichiers pris en charge sont le jpeg (ou" +
       " jpg) et le png. Si tu en veux d'autre, dis-le.",
     Themes:
       "Pour la gestion des couleurs du site, il y a le thème de base que j'ai rendu impossible à changer. Cela te" +
