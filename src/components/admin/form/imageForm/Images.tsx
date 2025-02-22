@@ -29,7 +29,6 @@ export default function Images({
   const inputRef = useRef<HTMLInputElement>(null);
   const [newImages, setNewImages] = useState<string[]>([]);
   const [acceptSmallImage, setAcceptSmallImage] = useState<boolean>(false);
-
   const alert = useAlert();
 
   useEffect(() => {
