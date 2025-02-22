@@ -17,8 +17,6 @@ export default function Preview({ images, pathImage, onDelete }: Props) {
     images.map((i) => i.filename),
   );
 
-  console.log(images);
-
   return (
     <>
       {existantFilenames.map((filename) => (

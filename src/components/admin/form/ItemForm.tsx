@@ -215,6 +215,7 @@ export default function ItemForm({
         )}
         <div className={s.imagesContainer}>
           <Images
+            type={item.type}
             reset={resetImageRef.current}
             isMultiple={isSculpture}
             smallImage={true}
@@ -222,7 +223,7 @@ export default function ItemForm({
             onDelete={(filename) => {
               setFilenamesToDelete([...filenamesToDelete, filename]);
             }}
-            item={item}
+            images={item.images}
             title={isSculpture ? "Une photo minimum :" : "Une seule photo :"}
           />
         </div>
