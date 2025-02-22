@@ -21,16 +21,18 @@ export default function CategoryListComponent({
   return (
     <div className={s.listContainer}>
       <h3>{title}</h3>
-      <div className={`${s.list} ${s.categoryList}`}>
+      <div className={s.list}>
         {categories.map((category) => {
-          const itemsTab = items.filter(
-            (item) => item.categoryId === category.id,
-          );
+          let itemTab;
+          if (category.key === "no-category")
+            itemTab = items.filter((item) => item.categoryId === null);
+          else
+            itemTab = items.filter((item) => item.categoryId === category.id);
           return (
             <RowCategoryListComponent
               key={category.id}
               category={category}
-              items={itemsTab}
+              items={itemTab}
               type={type}
             />
           );
