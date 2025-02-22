@@ -43,7 +43,7 @@ export default function RowCategoryListComponent({
       <li className={s.categoryCount}>
         {countItems} {type}(s)
       </li>
-      <li className={s.categoryIcon}>
+      <li className={s.icon}>
         <UpdateCategoryButton
           category={category}
           items={items}
@@ -51,7 +51,7 @@ export default function RowCategoryListComponent({
           disabled={category.value === "Sans catégorie"}
         />
       </li>
-      <li className={s.categoryIcon}>
+      <li className={s.icon}>
         <DeleteButton
           id={category.id}
           type={type}

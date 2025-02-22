@@ -73,7 +73,6 @@ export default function ItemForm({
         <label className={s.formLabel}>
           Titre
           <input
-            autoFocus
             onChange={(e) =>
               setWorkItem({ ...workItem, title: e.target.value })
             }

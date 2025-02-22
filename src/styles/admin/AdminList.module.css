@@ -3,8 +3,8 @@
 }
 
 .filter {
-  width: 40%;
-  padding: 1rem;
+  width: 50%;
+  padding: 0 0.5em 2em;
 }
 
 /* desktop */
@@ -37,7 +37,8 @@
 }
 
 .itemList,
-.categoryList {
+.categoryList,
+.postList {
   border-bottom: 1px dotted var(--color-light);
   padding-left: 1em;
   display: flex;
@@ -46,7 +47,8 @@
 }
 
 .itemList li,
-.categoryList li {
+.categoryList li,
+.postList li {
   display: block;
   height: 50px;
   line-height: 50px;
@@ -54,7 +56,8 @@
 }
 
 .itemTitle,
-.categoryTitle {
+.categoryTitle,
+.postTitle {
   font-weight: bold;
   text-align: left;
   flex: 30%;
@@ -69,13 +72,13 @@
 }
 
 .itemYear,
-.categoryImage {
+.categoryImage,
+.postImage {
   flex: 10%;
 }
 
 .itemImage,
-.itemIcon,
-.categoryIcon {
+.icon {
 flex: 6%;
 }
 

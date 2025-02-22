@@ -73,7 +73,6 @@ export default function PostForm({ post, toggleModal }: Props) {
         <label className={s.formLabel}>
           Titre
           <input
-            autoFocus
             onChange={(e) =>
               setWorkPost({ ...workPost, title: e.target.value })
             }

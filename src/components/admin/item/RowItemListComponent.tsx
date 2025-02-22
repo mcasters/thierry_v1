@@ -38,10 +38,10 @@ export default function RowItemListComponent({ item, categories }: Props) {
           />
         )}
       </li>
-      <li className={s.itemIcon}>
+      <li className={s.icon}>
         <UpdateItemButton item={item} categories={categories} />
       </li>
-      <li className={s.itemIcon}>
+      <li className={s.icon}>
         <DeleteButton id={item.id} type={item.type} isCategory={false} />
       </li>
     </ul>
