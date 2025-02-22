@@ -22,11 +22,9 @@ export default function RowCategoryListComponent({
   return (
     <ul className={s.categoryList}>
       <li className={s.categoryTitle}>
-        <span className={s.name}>
-          {category.value === "Sans catégorie"
-            ? "SANS CATÉGORIE"
-            : category.value}
-        </span>
+        {category.value === "Sans catégorie"
+          ? "SANS CATÉGORIE"
+          : category.value}
       </li>
       <li className={s.categoryImage}>
         {items.length > 0 && category.content.image.filename !== "" && (
@@ -42,10 +40,8 @@ export default function RowCategoryListComponent({
           />
         )}
       </li>
-      <li className={s.categoryInfo}>
-        <span>
-          {countItems} {type}(s)
-        </span>
+      <li className={s.categoryCount}>
+        {countItems} {type}(s)
       </li>
       <li className={s.categoryIcon}>
         <UpdateCategoryButton

@@ -50,35 +50,33 @@
   display: block;
   height: 50px;
   line-height: 50px;
+  overflow: hidden;
 }
 
 .itemTitle,
 .categoryTitle {
+  font-weight: bold;
   text-align: left;
   flex: 30%;
 }
 
 .itemCategory {
-  flex: 10%;
+  flex: 30%;
 }
-.itemYear {
-  flex: 8%;
+
+.categoryCount {
+  flex: 20%;
+}
+
+.itemYear,
+.categoryImage {
+  flex: 10%;
 }
 
 .itemImage,
-.categoryImage,
-.categoryInfo {
-flex: 10%;
-}
-
 .itemIcon,
 .categoryIcon {
-  flex: 5%;
-}
-
-.title,
-.name {
-  font-weight: bold;
+flex: 6%;
 }
 
 .listContainer p {
