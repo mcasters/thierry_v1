@@ -5,6 +5,7 @@ import { ROUTES } from "@/constants/specific/routes";
 import { TEXTS } from "@/constants/specific";
 import { useSession } from "@/app/context/sessionProvider";
 import Link from "next/link";
+import { useTheme } from "@/app/context/themeProvider";
 
 type Props = {
   path: string | null;
@@ -12,6 +13,7 @@ type Props = {
 
 export default function Footer({ path }: Props) {
   const session = useSession();
+  const theme = useTheme();
   const isPainting = path === ROUTES.PAINTING;
   const isSculpture = path === ROUTES.SCULPTURE;
   const isDrawing =
@@ -21,7 +23,10 @@ export default function Footer({ path }: Props) {
 
   return (
     <>
-      <footer className={isDark ? `${s.footer} ${s.dark}` : s.footer}>
+      <footer
+        className={isDark ? `${s.footer} ${s.dark}` : s.footer}
+        style={isDark ? { color: theme.colorItem } : { color: theme.color }}
+      >
         <div className={s.center}>
           <p>{text}</p>
           <br />
