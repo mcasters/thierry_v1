@@ -1,9 +1,10 @@
 "use client";
 
 import React from "react";
-import { Message, PresetColor, Theme } from "@prisma/client";
+import { PresetColor, Theme } from "@prisma/client";
 import Messages from "@/components/admin/messages";
 import AdminTheme from "@/components/admin/theme/AdminTheme";
+import { Message } from "@/lib/type";
 
 type Props = {
   themes: Theme[];

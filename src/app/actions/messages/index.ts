@@ -1,8 +1,9 @@
 "use server";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { Message } from "@/lib/type";
 
-export async function getMessages() {
+export async function getMessages(): Promise<Message[]> {
   const res = await prisma.message.findMany({ include: { author: true } });
   return JSON.parse(JSON.stringify(res));
 }

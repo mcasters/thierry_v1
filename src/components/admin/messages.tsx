@@ -2,10 +2,10 @@
 
 import React, { useActionState } from "react";
 import s from "../../styles/admin/Admin.module.css";
-import { Message } from "@prisma/client";
 import { addMessage } from "@/app/actions/messages";
 import { useSession } from "@/app/context/sessionProvider";
 import { useTheme } from "@/app/context/themeProvider";
+import { Message } from "@/lib/type";
 
 type Props = {
   dbMessages: Message[];
