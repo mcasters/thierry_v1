@@ -8,8 +8,8 @@ import {
   getPhoneText,
 } from "@/utils/commonUtils";
 import { getContentsFull } from "@/app/actions/contents";
-import { TEXTS } from "@/constants/specific";
 import InstagramIcon from "@/components/icons/InstagramIcon";
+import { TEXTS } from "@/constants/specific";
 
 export default async function Contact() {
   const contents = await getContentsFull();
