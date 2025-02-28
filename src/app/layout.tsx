@@ -9,6 +9,7 @@ import { DESCRIPTION, GENERAL, KEYWORDS } from "@/constants/specific/metaHtml";
 import { getSession } from "@/app/lib/auth";
 import { getContentsFull } from "@/app/actions/contents";
 import { getActiveTheme, getPresetColors } from "@/app/actions/theme";
+import { getMetas } from "@/app/actions/meta";
 
 export const metadata: Metadata = {
   title: GENERAL.SITE_TITLE,
@@ -33,6 +34,7 @@ export default async function RootLayout({
   const contents = await getContentsFull();
   const theme = await getActiveTheme();
   const presetColors = await getPresetColors();
+  const metas = await getMetas();
   const hexaTheme = themeToHexa(theme, presetColors);
 
   return (
@@ -40,7 +42,9 @@ export default async function RootLayout({
       <body>
         <Providers session={session} theme={hexaTheme}>
           <StyledJsxRegistry>
-            <Layout introduction={getIntroText(contents)}>{children}</Layout>
+            <Layout introduction={getIntroText(contents)} metas={metas}>
+              {children}
+            </Layout>
           </StyledJsxRegistry>
         </Providers>
       </body>
