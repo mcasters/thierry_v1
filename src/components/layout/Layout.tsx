@@ -9,18 +9,16 @@ import Main from "./Main";
 import Footer from "./Footer";
 import s from "@/styles/Layout.module.css";
 import { useTheme } from "@/app/context/themeProvider";
-import { getMetasMap, hexToRgb } from "@/utils/commonUtils";
+import { hexToRgb } from "@/utils/commonUtils";
 import AuthStatus from "@/components/auth/AuthStatus";
 import { useSession } from "@/app/context/sessionProvider";
-import { Meta } from ".prisma/client";
 
 interface Props {
   introduction: string;
-  metas: Meta[];
   children: ReactNode;
 }
 
-export default function Layout({ introduction, metas, children }: Props) {
+export default function Layout({ introduction, children }: Props) {
   const theme = useTheme();
   const path = `/${usePathname().split("/")[1]}`;
   const session = useSession();
@@ -34,7 +32,6 @@ export default function Layout({ introduction, metas, children }: Props) {
   const gradientRgbObject = hexToRgb(theme.menu1HomeColor);
   const gradientRgb = `${gradientRgbObject?.r},${gradientRgbObject?.g},${gradientRgbObject?.b}`;
 
-  const metaMap = getMetasMap(metas);
   return (
     <div
       className={
@@ -49,14 +46,14 @@ export default function Layout({ introduction, metas, children }: Props) {
       {isAdminPage && (
         <>
           {children}
-          <Footer path={path} metas={metas} />
+          <Footer path={path} />
         </>
       )}
       {!isAdminPage && (
         <>
           <Header path={path} introduction={introduction} />
           <Main isHome={isHome}>{children}</Main>
-          <Footer path={path} metaMap={metaMap} />
+          <Footer path={path} />
         </>
       )}
       <style jsx global>{`

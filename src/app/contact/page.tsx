@@ -23,10 +23,10 @@ export const metadata: Metadata = {
 
 export default async function Contact() {
   const contents = await getContentsFull();
-  const metaMap = getMetasMap(await getMetas());
+  const metas = getMetasMap(await getMetas());
   const email = getEmailText(contents);
   const contactText = getContactText(contents);
-  const siteTitle = metaMap[META.SITE_TITLE];
+  const siteTitle = metas[META.SITE_TITLE];
 
   return (
     <div className={s.container}>
@@ -53,7 +53,7 @@ export default async function Contact() {
             <br />
             <br />
             <a
-              href={metaMap[META.INSTAGRAM]}
+              href={metas[META.INSTAGRAM]}
               target="_blank"
               rel="noopener noreferrer"
             >

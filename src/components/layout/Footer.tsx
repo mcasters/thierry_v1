@@ -6,19 +6,20 @@ import { META } from "@/constants/specific";
 import { useSession } from "@/app/context/sessionProvider";
 import Link from "next/link";
 import { useTheme } from "@/app/context/themeProvider";
+import { useMetas } from "@/app/context/metaProvider";
 
 type Props = {
   path: string | null;
-  metaMap: { [index: string]: string };
 };
 
-export default function Footer({ path, metaMap }: Props) {
+export default function Footer({ path }: Props) {
   const session = useSession();
+  const metas = useMetas();
   const theme = useTheme();
   const isPainting = path === ROUTES.PAINTING;
   const isSculpture = path === ROUTES.SCULPTURE;
   const isDrawing =
-    metaMap[META.SITE_TITLE] === "Marion Casters"
+    metas[META.SITE_TITLE] === "Marion Casters"
       ? path === ROUTES.DRAWING
       : false;
   const isDark = isPainting || isSculpture || isDrawing;
@@ -29,7 +30,7 @@ export default function Footer({ path, metaMap }: Props) {
         className={isDark ? `${s.footer} ${s.dark}` : s.footer}
         style={isDark ? { color: theme.colorItem } : { color: theme.color }}
       >
-        <p>{metaMap[META.FOOTER]}</p>
+        <p>{metas[META.FOOTER]}</p>
         <br />
         <br />
         {!session?.user && <Link href={ROUTES.LOGIN}>Admin</Link>}
