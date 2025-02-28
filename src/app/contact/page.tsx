@@ -14,6 +14,7 @@ import { TEXTS } from "@/constants/specific";
 export default async function Contact() {
   const contents = await getContentsFull();
   const email = getEmailText(contents);
+  const contactText = getContactText(contents);
 
   return (
     <>
@@ -48,9 +49,11 @@ export default async function Contact() {
           </>
         )}
       </address>
-      <div className={s.text}>
-        <p className={s.preLine}>{getContactText(contents)}</p>
-      </div>
+      {contactText !== "" && (
+        <div className={s.text}>
+          <p className={s.preLine}>{getContactText(contents)}</p>
+        </div>
+      )}
     </>
   );
 }
