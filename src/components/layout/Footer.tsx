@@ -27,16 +27,10 @@ export default function Footer({ path }: Props) {
         className={isDark ? `${s.footer} ${s.dark}` : s.footer}
         style={isDark ? { color: theme.colorItem } : { color: theme.color }}
       >
-        <div className={s.center}>
-          <p>{text}</p>
-          <br />
-          <br />
-          {!session?.user && (
-            <Link href={ROUTES.LOGIN} className={s.link}>
-              Admin
-            </Link>
-          )}
-        </div>
+        <p>{text}</p>
+        <br />
+        <br />
+        {!session?.user && <Link href={ROUTES.LOGIN}>Admin</Link>}
       </footer>
     </>
   );
