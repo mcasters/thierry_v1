@@ -19,8 +19,15 @@
   cursor: pointer;
 }
 
-.pageTitle {
+.title {
   padding: 1em 0 2em;
+  font-size: 2rem;
+}
+
+.adminWrapper h3 {
+  text-align: left;
+  font-size: 1.3rem;
+  padding-bottom: 1em;
 }
 
 .formContainer,

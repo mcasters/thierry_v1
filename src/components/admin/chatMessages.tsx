@@ -34,7 +34,7 @@ export default function ChatMessages({ dbMessages }: Props) {
   return (
     <section className={s.messagesContainer}>
       <div className={s.messagesHeader}>
-        <h2>Messages</h2>
+        <h2 className={s.title}>Messages</h2>
         <div className={s.shadow} />
       </div>
 
