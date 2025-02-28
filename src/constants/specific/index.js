@@ -1,9 +1,13 @@
 import { THEME } from "../admin";
 
+export const META = {
+  SITE_TITLE: "siteTitle",
+  SITE_EMAIL: "siteEmail",
+  FOOTER: "footerContent",
+  INSTAGRAM: "instagram",
+};
+
 export const TEXTS = {
-  TITLE: "Thierry Casters",
-  FOOTER:
-    "Images and site content copyright © 2025 Thierry Casters. All rights reserved",
   NOTES: {
     Date: "03 février 2025",
     Images:

@@ -5,7 +5,7 @@ import React, { useActionState, useEffect, useRef, useState } from "react";
 import Images from "@/components/admin/form/imageForm/Images";
 import { PostFull, Type } from "@/lib/type";
 import s from "@/styles/admin/Admin.module.css";
-import { getEmptyPost, getMainImage } from "@/utils/commonUtils";
+import { getEmptyPost } from "@/utils/commonUtils";
 import CancelButton from "@/components/admin/form/CancelButton";
 import SubmitButton from "@/components/admin/form/SubmitButton";
 import { useAlert } from "@/app/context/AlertProvider";
@@ -28,7 +28,6 @@ export default function PostForm({ post, toggleModal }: Props) {
   );
   const [mainFilenameToDelete, setMainFilenameToDelete] = useState<string>("");
   const [filenamesToDelete, setFilenamesToDelete] = useState<string[]>([]);
-  const mainImage = getMainImage(post);
   const [state, action] = useActionState(
     isUpdate ? updatePost : createPost,
     null,
