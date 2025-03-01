@@ -19,7 +19,10 @@ export default async function Page() {
   //   next: { revalidate: 10 },
   // });
   const contents = await getContentsFull();
-  const { photos, mainPhotos } = getContentPhotoTab(getSliderContent(contents));
+  const { photos, mainPhotos } = getContentPhotoTab(
+    getSliderContent(contents),
+    `Œuvre de ${process.env.TITLE}`,
+  );
 
   return <HomePage portraitPhotos={mainPhotos} landscapePhotos={photos} />;
 }
