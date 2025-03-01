@@ -23,8 +23,6 @@ export default function ChatMessages({ dbMessages }: Props) {
     null,
   );
 
-  console.log(action);
-
   useEffect(() => {
     if (state) {
       if (!state.isError) setMessageToUpdate(undefined);
@@ -60,7 +58,9 @@ export default function ChatMessages({ dbMessages }: Props) {
           placeholder="Ton message"
           value={messageToUpdate?.text}
           onChange={(e) =>
-            setMessageToUpdate({ ...messageToUpdate, text: e.target.value })
+            setMessageToUpdate(
+              Object.assign({}, messageToUpdate, { text: e.target.value }),
+            )
           }
           className={s.textArea}
           rows={5}
