@@ -50,9 +50,9 @@ export default function AdminTheme({ themes, presetColors }: Props) {
 
   return (
     <>
-      <h2 className={s.title}>Gestion du thème</h2>
+      <h2 className={s.title2}>Gestion du thème</h2>
       <div className={themeStyle.themeContainer}>
-        <h3>Thèmes :</h3>
+        <h3 className={s.title3}>Thèmes :</h3>
         <select
           name="name"
           value={workTheme.id}
@@ -82,7 +82,7 @@ export default function AdminTheme({ themes, presetColors }: Props) {
         </button>
       </div>
       <div className={themeStyle.themeContainer}>
-        <h3>Détail du thème sélectionné :</h3>
+        <h3 className={s.title3}>Détail du thème sélectionné :</h3>
         <ThemeDashboard
           presetColors={presetColors}
           deletedPresetColor={deletedPresetColor}
@@ -109,7 +109,7 @@ export default function AdminTheme({ themes, presetColors }: Props) {
         </div>
       </div>
       <div className={themeStyle.themeContainer}>
-        <h3>Couleurs personnalisées</h3>
+        <h3 className={s.title3}>Couleurs personnalisées</h3>
         <PresetColorDashboard
           presetColors={presetColors}
           onDeletePresetColor={setDeletedPresetColor}
