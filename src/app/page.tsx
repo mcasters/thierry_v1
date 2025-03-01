@@ -1,4 +1,4 @@
-import HomePage from "../components/home/HomePage";
+import HomePage from "@/components/home/HomePage";
 import { getContentsFull } from "@/app/actions/contents";
 import { getContentPhotoTab } from "@/utils/imageUtils";
 import { getSliderContent } from "@/utils/commonUtils";
