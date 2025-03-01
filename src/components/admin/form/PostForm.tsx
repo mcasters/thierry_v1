@@ -51,8 +51,10 @@ export default function PostForm({ post, toggleModal }: Props) {
   }, [state]);
 
   return (
-    <div className={isUpdate ? s.wrapperModal : s.formContainer}>
-      <h2>{isUpdate ? "Modifier un post" : "Ajouter un post"}</h2>
+    <div className={isUpdate ? s.modalContainer : s.container}>
+      <h2 className={isUpdate ? s.modalTitle : s.title2}>
+        {isUpdate ? "Modifier un post" : "Ajouter un post"}
+      </h2>
       <form action={action}>
         {isUpdate && (
           <>
