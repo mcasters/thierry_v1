@@ -1,6 +1,6 @@
 "use client";
 
-import React, { RefObject, useActionState, useEffect, useState } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 import s from "../../styles/admin/Admin.module.css";
 import { addMessage, updateMessage } from "@/app/actions/messages";
 import { useSession } from "@/app/context/sessionProvider";
@@ -23,15 +23,6 @@ export default function ChatMessages({ dbMessages }: Props) {
     messageToUpdate?.id !== undefined ? updateMessage : addMessage,
     null,
   );
-
-  const handleMenuOpen = (ref: RefObject<Element>) => {
-    if (menuOpenRef) {
-      console.log("alreadyMenu");
-      menuOpenRef.current.classList.toggle("hidden");
-    }
-    ref.current.classList.toggle("hidden");
-    setMenuOpenRef(ref);
-  };
 
   useEffect(() => {
     if (state) {
