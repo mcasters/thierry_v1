@@ -16,8 +16,6 @@ export const DESCRIPTION = {
   PRESENTATION: "Description de Thierry Casters et de sa démarche artistique",
   CONTACT:
     "Contacter Thierry Casters pour obtenir des renseignements sur ses œuvres",
-  PRIVACY: "Détail de la politique de confidentialité du site",
-  ADMIN: "Administration du site",
 };
 
 export const DOCUMENT_TITLE = {
@@ -27,12 +25,10 @@ export const DOCUMENT_TITLE = {
   HOME: "Bienvenue sur le site de présentation des oeuvres de l'artiste peintre Thierry Casters",
   PRESENTATION: "Présentation de Thierry Casters",
   CONTACT: "Contacter Thierry Casters",
-  PRIVACY: "Détail de la politique de confidentialité du site",
-  ADMIN: "Administration du site",
+  AUTHENTICATION: "Authentification",
 };
 
 export const GENERAL = {
-  SITE_TITLE: "Artiste | Thierry Casters",
-  ALT_PHOTO_PRESENTATION: "Photographie de présentation de Thierry Casters",
+  SITE_TITLE: "Artiste | Thierry Casters, Paris, France",
   URL: "https://thierrycasters.fr",
 };
