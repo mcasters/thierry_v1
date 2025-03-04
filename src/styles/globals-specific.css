@@ -145,6 +145,7 @@ a:focus,
 
 ::selection {
   background: var(--color-prussian-blue);
+  color: var(--link-color-xlight);
   text-shadow: none;
 }
 
