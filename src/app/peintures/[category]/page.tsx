@@ -8,7 +8,13 @@ import { getMetaMap } from "@/utils/commonUtils";
 import { getMetas } from "@/app/actions/meta";
 import { META } from "@/constants/specific";
 
-export async function generateMetadata({ params }): Promise<Metadata> {
+type Props = {
+  params: Promise<{ category: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata | undefined> {
   const metas = getMetaMap(await getMetas());
   const session = await getSession();
   const categoryKey = (await params).category;
@@ -33,10 +39,6 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     };
   }
 }
-
-type Props = {
-  params: Promise<{ category: string }>;
-};
 
 export default async function Page({ params }: Props) {
   const categoryKey = (await params).category;

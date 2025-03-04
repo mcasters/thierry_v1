@@ -8,7 +8,13 @@ import { getMetas } from "@/app/actions/meta";
 import { Metadata } from "next";
 import { META } from "@/constants/specific";
 
-export async function generateMetadata({ params }): Promise<Metadata> {
+type Props = {
+  params: Promise<{ year: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata | undefined> {
   const metas = getMetaMap(await getMetas());
   const year = (await params).year;
   if (metas) {
@@ -26,10 +32,6 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     };
   }
 }
-
-type Props = {
-  params: Promise<{ year: string }>;
-};
 
 export default async function Page({ params }: Props) {
   const year = (await params).year;

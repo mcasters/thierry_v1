@@ -156,6 +156,10 @@ img:focus {
   background: none;
 }
 
+textarea, input {
+  user-select: text;
+}
+
 /*
  * Remove the gap between audio, canvas, iframes,
  * images, videos and the bottom of their containers:
