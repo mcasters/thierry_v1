@@ -10,6 +10,19 @@ import { getContentsFull } from "@/app/actions/contents";
 import { getActiveTheme, getPresetColors } from "@/app/actions/theme";
 import { getMetas } from "@/app/actions/meta";
 import { META } from "@/constants/specific";
+import { Cormorant, Cormorant_SC } from "next/font/google";
+
+const cormorant = Cormorant({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-serif-cormorant",
+});
+
+const cormorantSC = Cormorant_SC({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-serif-cormorant-caps",
+});
 
 export async function generateMetadata(): Promise<Metadata | undefined> {
   const metas = getMetaMap(await getMetas());
@@ -43,7 +56,7 @@ export default async function RootLayout({
   const metaMap = getMetaMap(await getMetas());
 
   return (
-    <html lang="fr">
+    <html lang="fr" className={`${cormorant.variable} ${cormorantSC.variable}`}>
       <body>
         <Providers session={session} theme={hexaTheme} metaMap={metaMap}>
           <StyledJsxRegistry>
