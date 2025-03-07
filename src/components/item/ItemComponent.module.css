@@ -1,9 +1,14 @@
-.article, .sculptureArticle {
+.doubleArticle, .monoArticle, .multipleArticle, .sculptureArticle {
   padding: 0 0 3em;
+}
+
+.doubleArticle, .sculptureArticle {
+  line-height: 1;
 }
 
 .infoContainer h2 {
   font-size: var(--font-size);
+  padding-bottom: 0.3em;
 }
 
 .infoContainer {
@@ -16,7 +21,33 @@
 
 /* desktop */
 @media (min-width: 769px) {
-  .article {
+  .sculptureArticle, .doubleArticle {
+    padding: 0 0 5em;
+  }
+
+.monoArticle {
     padding: 0;
+  }
+
+  .monoArticle .imageContainer {
+    display: inline-block;
+    text-align: right;
+    width: 70%;
+  }
+
+  .monoArticle .infoContainer {
+    display: inline-block;
+    width: 29%;
+    vertical-align: top;
+    text-align: left;
+    padding-left: 1em;
+    line-height: 2;
+  }
+
+  .monoArticle h2 {
+    font-family: var( --font-family-serif-caps);
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #999999;
   }
 }

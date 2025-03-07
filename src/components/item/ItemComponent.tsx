@@ -2,21 +2,22 @@
 
 import s from "./ItemComponent.module.css";
 import Lightbox from "@/components/image/lightbox/Lightbox";
-import { ItemFull, Type } from "@/lib/type";
+import { ItemFull, ItemLayout, Type } from "@/lib/type";
 import { useMemo } from "react";
-import { getPhotoTab } from "@/utils/imageUtils";
+import { getItemPhotoTab } from "@/utils/imageUtils";
 import { useMetas } from "@/app/context/metaProvider";
 import { META } from "@/constants/specific";
 
 interface Props {
   item: ItemFull;
   priority: boolean;
+  layout: ItemLayout;
 }
-export default function ItemComponent({ item, priority }: Props) {
+export default function ItemComponent({ item, priority, layout }: Props) {
   const metas = useMetas();
   const { photos } = useMemo(
     () =>
-      getPhotoTab(
+      getItemPhotoTab(
         item,
         `${item.title} - ${item.type} de ${metas.get(META.SITE_TITLE)}`,
       ),
@@ -25,10 +26,17 @@ export default function ItemComponent({ item, priority }: Props) {
 
   return (
     <article
-      id={`${item.id}`}
-      className={item.type === Type.SCULPTURE ? s.sculptureArticle : s.article}
+      className={
+        layout === ItemLayout.DOUBLE
+          ? s.doubleArticle
+          : layout === ItemLayout.MONO
+            ? s.monoArticle
+            : layout === ItemLayout.SCULPTURE
+              ? s.sculptureArticle
+              : s.multipleArticle
+      }
     >
-      <figure>
+      <figure className={s.imageContainer}>
         <Lightbox photos={photos} priority={priority} />
       </figure>
       <figcaption className={s.infoContainer}>
