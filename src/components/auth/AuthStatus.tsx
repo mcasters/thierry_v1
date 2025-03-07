@@ -15,11 +15,9 @@ export default function AuthStatus({ email }: Props) {
     <div className={s.authStatusWrapper}>
       <div className={s.container}>
         <p>
-          <small>
-            Signed in as :
-            <br />
-            <strong>{email}</strong>
-          </small>
+          <small>Signed in as :</small>
+          <br />
+          <strong>{email}</strong>
         </p>
         <br />
         <Link href={ROUTES.ADMIN}>Administration du site</Link>
