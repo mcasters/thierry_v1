@@ -1,8 +1,7 @@
-import ItemTagComponent from "@/components/item/ItemTagComponent";
-import s from "@/styles/ItemPage.module.css";
+import ItemsComponent from "@/components/item/ItemsComponent";
 import { getSession } from "@/app/lib/auth";
 import { getCategory, getItemsByCategory } from "@/app/actions/items";
-import { Type } from "@/lib/type";
+import { ItemLayout, Type } from "@/lib/type";
 import { Metadata } from "next";
 import { getMetaMap } from "@/utils/commonUtils";
 import { getMetas } from "@/app/actions/meta";
@@ -47,14 +46,15 @@ export default async function Page({ params }: Props) {
   const items = await getItemsByCategory(categoryKey, Type.SCULPTURE, !session);
 
   return (
-    <div className={s.sculptureContent}>
+    <>
       {category && (
-        <ItemTagComponent
+        <ItemsComponent
           tag={category.value}
           category={category}
           items={items}
+          layout={ItemLayout.SCULPTURE}
         />
       )}
-    </div>
+    </>
   );
 }
