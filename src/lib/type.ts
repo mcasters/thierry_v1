@@ -38,6 +38,13 @@ export enum Type {
   DRAWING = "dessin",
 }
 
+export enum ItemLayout {
+  MONO,
+  DOUBLE,
+  MULTIPLE,
+  SCULPTURE,
+}
+
 export type PostFull = {
   id: number;
   type: Type.POST;
@@ -77,6 +84,20 @@ export type PhotoTab = {
   sm: Photo[];
   md: Photo[];
   lg: Photo[];
+};
+
+export type PhotoEnhanced = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  item: ItemFull;
+};
+
+export type PhotoTabEnhanced = {
+  sm: PhotoEnhanced[];
+  md: PhotoEnhanced[];
+  lg: PhotoEnhanced[];
 };
 
 export type Session = {
