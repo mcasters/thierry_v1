@@ -17,7 +17,7 @@ interface Props {
   item: ItemFull;
   priority: boolean;
 }
-export default function MonoLayoutComponent({ item, priority, layout }: Props) {
+export default function MonoLayoutComponent({ item, priority }: Props) {
   const metas = useMetas();
   const window = useWindowSize();
   const isSmall = window.innerWidth < DEVICE.SMALL;
