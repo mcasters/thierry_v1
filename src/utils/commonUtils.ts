@@ -223,7 +223,7 @@ export const getNoCategory = (): Category => {
 };
 
 export const getItemLayout = (
-  metas: Map<String, string>,
+  metas: Map<string, string>,
   type: Type.PAINTING | Type.SCULPTURE | Type.DRAWING,
 ): ItemLayout => {
   switch (type) {
