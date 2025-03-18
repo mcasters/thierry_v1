@@ -7,7 +7,7 @@ import PostForm from "@/components/admin/form/PostForm";
 import ItemForm from "@/components/admin/form/ItemForm";
 import React from "react";
 import { createItem } from "@/app/actions/items/admin";
-import s from "@/styles/admin/Admin.module.css";
+import s from "@/styles/admin/admin.module.css";
 
 type Props = {
   item: ItemFull | PostFull;
@@ -15,7 +15,6 @@ type Props = {
 };
 export default function AddItemButton({ item, categories }: Props) {
   const { isOpen, toggle } = useModal();
-  const action = createItem;
 
   return (
     <>
@@ -37,7 +36,7 @@ export default function AddItemButton({ item, categories }: Props) {
             categories={categories}
             item={item}
             toggleModal={toggle}
-            itemAction={action}
+            itemAction={createItem}
           />
         ) : item.type === Type.POST ? (
           <PostForm post={item} toggleModal={toggle} />

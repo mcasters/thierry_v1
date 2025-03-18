@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState } from "react";
 import themeStyle from "../../../styles/admin/AdminTheme.module.css";
 import ThemeAdd from "@/components/admin/theme/ThemeAdd";
 import ThemeDashboard from "@/components/admin/theme/ThemeDashboard";
@@ -9,7 +9,7 @@ import CancelButton from "@/components/admin/form/CancelButton";
 import { PresetColor, Theme } from "@prisma/client";
 import { useAlert } from "@/app/context/AlertProvider";
 import { THEME } from "@/constants/admin";
-import s from "@/styles/admin/Admin.module.css";
+import s from "@/styles/admin/admin.module.css";
 import { activateTheme, deleteTheme } from "@/app/actions/theme/admin";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import PresetColorDashboard from "@/components/admin/theme/presetColor/PresetColorDashboard";
@@ -25,23 +25,19 @@ export default function AdminTheme({ themes, presetColors }: Props) {
   const [deletedPresetColor, setDeletedPresetColor] =
     useState<PresetColor | null>(null);
   const alert = useAlert();
-  const [, startTransition] = useTransition();
   const dbTheme = themes.find((t) => t.id === workTheme.id);
 
-  const onDeleteTheme = () => {
-    startTransition(async () => {
-      const res = await deleteTheme(workTheme.id);
-      const theme = themes.find((t) => t.isActive);
-      if (theme) setWorkTheme(theme);
-      alert(res.message, res.isError);
-    });
+  const onDeleteTheme = async () => {
+    const res = await deleteTheme(workTheme.id);
+    const theme = themes.find((t) => t.isActive);
+    if (theme) setWorkTheme(theme);
+    alert(res.message, res.isError);
   };
 
-  const onActivateTheme = () => {
-    startTransition(async () => {
-      const res = await activateTheme(workTheme.id);
-      alert(res.message, res.isError);
-    });
+  const onActivateTheme = async () => {
+    setWorkTheme({ ...workTheme, isActive: true } as Theme);
+    const res = await activateTheme(workTheme.id);
+    alert(res.message, res.isError);
   };
 
   const handleCancel = () => {
@@ -98,7 +94,7 @@ export default function AdminTheme({ themes, presetColors }: Props) {
         />
         <div className={themeStyle.actionContainer}>
           <div className={themeStyle.actionPartContainer}>
-            <ThemeAdd themes={themes} />
+            <ThemeAdd />
           </div>
           <div className={themeStyle.actionPartContainer}>
             <ThemeUpdate />
