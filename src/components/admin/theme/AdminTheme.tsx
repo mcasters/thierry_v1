@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import themeStyle from "../../../styles/admin/AdminTheme.module.css";
+import themeStyle from "./adminTheme.module.css";
 import ThemeAdd from "@/components/admin/theme/ThemeAdd";
 import ThemeDashboard from "@/components/admin/theme/ThemeDashboard";
 import ThemeUpdate from "@/components/admin/theme/ThemeUpdate";
@@ -9,7 +9,7 @@ import CancelButton from "@/components/admin/form/CancelButton";
 import { PresetColor, Theme } from "@prisma/client";
 import { useAlert } from "@/app/context/AlertProvider";
 import { THEME } from "@/constants/admin";
-import s from "@/styles/admin/admin.module.css";
+import s from "@/components/admin/admin.module.css";
 import { activateTheme, deleteTheme } from "@/app/actions/theme/admin";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import PresetColorDashboard from "@/components/admin/theme/presetColor/PresetColorDashboard";
@@ -86,7 +86,7 @@ export default function AdminTheme({ themes, presetColors }: Props) {
             dbTheme !== undefined &&
             Object.entries(removeProperty("isActive", workTheme))
               .sort()
-              .toString() !=
+              .toString() !==
               Object.entries(removeProperty("isActive", dbTheme))
                 .sort()
                 .toString()

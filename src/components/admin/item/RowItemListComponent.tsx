@@ -3,10 +3,11 @@
 import Image from "next/image";
 
 import DeleteButton from "@/components/admin/form/DeleteButton";
-import UpdateItemButton from "@/components/admin/form/UpdateItemButton";
-import s from "../../../styles/admin/AdminList.module.css";
+import UpdateItemButton from "@/components/admin/form/item/UpdateItemButton";
+import s from "../adminList.module.css";
 import { Category, ItemFull } from "@/lib/type";
 import { useMemo } from "react";
+import { deleteItem } from "@/app/actions/items/admin";
 
 interface Props {
   item: ItemFull;
@@ -42,7 +43,7 @@ export default function RowItemListComponent({ item, categories }: Props) {
         <UpdateItemButton item={item} categories={categories} />
       </li>
       <li className={s.icon}>
-        <DeleteButton id={item.id} type={item.type} isCategory={false} />
+        <DeleteButton action={() => deleteItem(item.id, item.type)} />
       </li>
     </ul>
   );

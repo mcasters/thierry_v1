@@ -1,0 +1,138 @@
+.themeContainer {
+  margin: 0 0 4em;
+}
+
+.sectionTitle {
+  font-family: var( --font-family-serif-caps);
+  letter-spacing: 3px;
+  padding-bottom: 1em;
+  font-size: 1.1em;
+  text-align: left;
+}
+
+.flex {
+  padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.themeContainer section {
+  width: 270px;
+}
+
+.colorContainer {
+  display: flex;
+  text-align: left;
+}
+
+.label {
+  flex: auto;
+  vertical-align: top;
+  height: 30px;
+  line-height: 30px;
+  padding-right: 1em;
+}
+
+.toUpdate {
+  border: #dc3908 solid 3px;
+}
+
+.toUpdate span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #dc3908;
+}
+
+/*
+ColorPicker
+ */
+
+.colorPickerContainer {
+  position: relative;
+}
+
+.colorPicker {
+  text-align: center;
+  width: 400px;
+  max-height: 90vh;
+  padding: 1.5em 1em 1em;
+}
+
+.subtitle {
+  font-size: 1.2em;
+}
+
+.picker {
+  margin: 15px auto 15px;
+  width: 250px;
+}
+
+.swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 1px;
+  border: 1px solid #aaa;
+  cursor: pointer;
+  margin: 4px;
+}
+
+.focus {
+  outline: solid #1196c7 2px;
+  outline-offset: 2px;
+}
+
+.open {
+  outline: solid #204c5d 3px;
+  outline-offset: 2px;
+}
+
+.presetColor {
+  margin-right: 2em;
+}
+
+.presetColorForm {
+  margin-top: 1em;
+}
+
+.pickerSwatches {
+  display: flex;
+  padding: 2px 2px 20px;
+  flex-wrap: wrap;
+}
+
+.presetColorContainer {
+  width: 50px;
+  padding: 0 1px;
+  font-family: var(--font-family-sans);
+  font-size: 11px;
+  word-break: break-word;
+}
+
+.halfWidth {
+  display: inline-block;
+  width: 45%;
+  height: 36px;
+  line-height: 36px;
+  vertical-align: top;
+  margin: 0.3em;
+  padding: 0 0.4em;
+}
+
+.actionContainer {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.actionPartContainer {
+  flex: auto;
+}
+
+.actionPartContainer button {
+  width: 260px;
+}
+
+.actionPartContainer input {
+  width: 200px;
+}

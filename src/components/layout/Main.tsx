@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import s from "@/styles/Layout.module.css";
+import s from "@/components/layout/layout.module.css";
 
 export type Props = {
   isHome: boolean;

@@ -1,0 +1,42 @@
+.nav,
+.itemNav,
+.homeNav,
+.homeNavFix {
+  height: var(--nav-1-height);
+  width: 100%;
+  z-index: 2;
+  border-bottom: 1px solid transparent;
+  transition: all ease-in-out 0.2s;
+  padding: 0;
+  user-select: none;
+}
+
+.nav,
+.itemNav,
+.homeNavFix {
+  position: fixed;
+  top: var(--line-height);
+  transition: all ease-in-out 0.2s;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.ul {
+  display: flex;
+  height: var(--nav-1-height);
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+}
+
+.ul li {
+  flex: auto;
+}
+
+/* desktop */
+@media (min-width: 600px) {
+  .ul {
+    display: inline-flex;
+    width: 540px;
+    padding: 0 4em;
+  }
+}

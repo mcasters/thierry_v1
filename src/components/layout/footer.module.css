@@ -1,0 +1,21 @@
+.footer {
+  text-align: center;
+  font-size: var(--font-size-min);
+  padding: 2em 0.5em;
+}
+
+.footer a {
+  text-decoration: underline;
+  display: inline-block;
+}
+
+/* desktop */
+@media (min-width: 769px) {
+  .footer {
+    padding: 4em;
+  }
+}
+
+.dark {
+  background-color: var(--link-color-xdark);
+}

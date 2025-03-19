@@ -1,10 +1,11 @@
 "use client";
 
 import DeleteButton from "@/components/admin/form/DeleteButton";
-import s from "../../../../styles/admin/AdminList.module.css";
+import s from "../../adminList.module.css";
 import { Category, ItemFull, Type } from "@/lib/type";
-import UpdateCategoryButton from "@/components/admin/form/UpdateCategoryButton";
+import UpdateCategoryButton from "@/components/admin/form/category/UpdateCategoryButton";
 import Image from "next/image";
+import { deleteCategory } from "@/app/actions/items/admin";
 
 interface Props {
   category: Category;
@@ -53,9 +54,7 @@ export default function RowCategoryListComponent({
       </li>
       <li className={s.icon}>
         <DeleteButton
-          id={category.id}
-          type={type}
-          isCategory={true}
+          action={() => deleteCategory(category.id, type)}
           disabled={countItems > 0 || category.value === "Sans catégorie"}
         />
       </li>
