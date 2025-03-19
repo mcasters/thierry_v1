@@ -4,11 +4,11 @@ import {
   getPresentationImage,
   getPresentationText,
 } from "@/utils/commonUtils";
-import s from "@/styles/admin/admin.module.css";
+import s from "@/components/admin/admin.module.css";
 import { Label } from "@prisma/client";
 import React from "react";
-import TextAreaForm from "@/components/admin/form/TextAreaForm";
-import ImagesForm from "@/components/admin/form/imageForm/ImagesForm";
+import TextAreaForm from "@/components/admin/form/content/TextAreaForm";
+import ImagesForm from "@/components/admin/form/image/ImagesForm";
 import { getContentsFull } from "@/app/actions/contents";
 
 export default async function Presentation() {
