@@ -150,8 +150,10 @@ a:focus,
 button::selection,
 img::selection,
 button:focus,
-img:focus {
+img:focus,
+label::selection {
   background: none;
+  color: unset;
 }
 
 textarea, input {
@@ -189,7 +191,7 @@ figure {
 
 .area,
 textarea,
-input:not([type="radio"], [type="checkbox"]),
+input:not([type="checkbox"]),
 select {
   width: 100%;
   background-color: white;
