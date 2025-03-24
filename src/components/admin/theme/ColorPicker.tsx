@@ -1,70 +1,49 @@
 "use client";
 
-import { Theme } from "@prisma/client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import s from "@/components/admin/theme/adminTheme.module.css";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import { colorNameToHex } from "@/utils/commonUtils";
-import { useAlert } from "@/app/context/alertProvider";
-import { createPresetColor } from "@/app/actions/theme/admin";
 
 interface Props {
-  label: string;
   color: string;
+  onColorChange: (color: string) => void;
+  onCreatePresetColor: (nameColor: string, hexColor: string) => void;
   onClose: () => void;
-  colorLabel: string;
-  pageTypeName: string;
+  onCancel: () => void;
+  title: string;
 }
 
 export default function ColorPicker({
-  label, // what is displayed
   color,
+  onColorChange,
+  onCreatePresetColor,
   onClose,
-  colorLabel,
-  pageTypeName,
+  onCancel,
+  title,
 }: Props) {
-  const { workTheme, setWorkTheme, presetColors, setPresetColors } =
-    useAdminWorkThemeContext();
-  const alert = useAlert();
+  const { workTheme, presetColors } = useAdminWorkThemeContext();
   const isPresetColor = !color.startsWith("#");
   const hexColor = colorNameToHex(color, presetColors);
-  const colorRef = useRef("");
   const [_nameColor, set_nameColor] = useState<string>("");
   const [isColorChanged, setIsColorChanged] = useState<boolean>(false);
-
-  useEffect(() => {
-    colorRef.current = color;
-  }, []);
 
   useEffect(() => {
     set_nameColor(isPresetColor ? color : "");
   }, [workTheme]);
 
-  const handleCreatePresetColor = async () => {
-    const res = await createPresetColor(_nameColor, hexColor);
-    if (res.newPresetColor) {
-      setPresetColors([...presetColors, res.newPresetColor]);
-      setWorkTheme({ ...workTheme, [colorLabel]: _nameColor } as Theme);
-    }
-    alert(res.message, res.isError);
-  };
-
   const handleColorChange = (color: string) => {
-    setWorkTheme({
-      ...workTheme,
-      [colorLabel]: color,
-    } as Theme);
     if (color.startsWith("#")) {
       set_nameColor("");
       setIsColorChanged(true);
     } else setIsColorChanged(false);
+    onColorChange(color);
   };
 
   return (
     <div className={s.colorPicker}>
-      <h2>{pageTypeName} :</h2>
-      <p className={s.subtitle}>{label}</p>
+      <h2>{title}</h2>
       <div className={s.picker}>
         <HexColorPicker
           color={hexColor}
@@ -93,7 +72,7 @@ export default function ColorPicker({
           onChange={(e) => set_nameColor(e.target.value)}
         />
         <button
-          onClick={handleCreatePresetColor}
+          onClick={() => onCreatePresetColor(_nameColor, hexColor)}
           className={s.halfWidth}
           disabled={
             _nameColor === "" ||
@@ -123,16 +102,7 @@ export default function ColorPicker({
       <button className={s.halfWidth} onClick={onClose}>
         OK
       </button>
-      <button
-        onClick={() => {
-          setWorkTheme({
-            ...workTheme,
-            [colorLabel]: colorRef.current,
-          } as Theme);
-          onClose();
-        }}
-        className={s.halfWidth}
-      >
+      <button onClick={onCancel} className={s.halfWidth}>
         Annuler
       </button>
     </div>

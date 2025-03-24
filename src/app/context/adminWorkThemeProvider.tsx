@@ -28,6 +28,7 @@ export function AdminWorkThemeProvider({
 }: Props) {
   const [themes, setThemes] = useState<Theme[]>(defaultThemes);
   const activeTheme = themes.find((t) => t.isActive);
+  // @ts-expect-error : Query themes in database create activeTheme if not exist
   const [workTheme, setWorkTheme] = useState<Theme>(activeTheme);
   const [presetColors, setPresetColors] =
     useState<PresetColor[]>(defaultPresetColors);
