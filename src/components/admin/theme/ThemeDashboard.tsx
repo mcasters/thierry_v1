@@ -1,37 +1,28 @@
 "use client";
 
-import ColorPicker from "@/components/admin/theme/colorPicker";
 import React from "react";
 import s from "./adminTheme.module.css";
-import { PresetColor } from "@prisma/client";
 import { PAGE_TYPE, THEME_DATAS } from "@/constants/admin";
+import ColorSwatch from "@/components/admin/theme/colorSwatch";
 
 type Props = {
-  presetColors: PresetColor[];
-  deletedPresetColor: PresetColor | null;
   isToUpdate: boolean;
 };
 
-export default function ThemeDashboard({
-  presetColors,
-  deletedPresetColor,
-  isToUpdate,
-}: Props) {
+export default function ThemeDashboard({ isToUpdate }: Props) {
   return (
     <div className={`${s.flex} ${isToUpdate ? s.toUpdate : ""}`}>
       <section>
         <h4 className={s.sectionTitle}>{PAGE_TYPE.GENERAL}</h4>
         {Object.entries(THEME_DATAS).map(
-          ([colorLabel, { label, pageType }], i) => {
+          ([dbLabel, { label, pageType }], i) => {
             if (pageType === PAGE_TYPE.GENERAL)
               return (
-                <ColorPicker
+                <ColorSwatch
                   key={i}
                   label={label}
-                  colorLabel={colorLabel}
+                  dbLabel={dbLabel}
                   pageTypeName={pageType}
-                  presetColors={presetColors}
-                  deletedPresetColor={deletedPresetColor}
                 />
               );
           },
@@ -43,13 +34,11 @@ export default function ThemeDashboard({
           ([colorLabel, { label, pageType }], i) => {
             if (pageType === PAGE_TYPE.HOME)
               return (
-                <ColorPicker
+                <ColorSwatch
                   key={i}
                   label={label}
-                  colorLabel={colorLabel}
+                  dbLabel={colorLabel}
                   pageTypeName={pageType}
-                  presetColors={presetColors}
-                  deletedPresetColor={deletedPresetColor}
                 />
               );
           },
@@ -61,13 +50,11 @@ export default function ThemeDashboard({
           ([colorLabel, { label, pageType }], i) => {
             if (pageType === PAGE_TYPE.OTHERS)
               return (
-                <ColorPicker
+                <ColorSwatch
                   key={i}
                   label={label}
-                  colorLabel={colorLabel}
+                  dbLabel={colorLabel}
                   pageTypeName={pageType}
-                  presetColors={presetColors}
-                  deletedPresetColor={deletedPresetColor}
                 />
               );
           },
@@ -79,13 +66,11 @@ export default function ThemeDashboard({
           ([colorLabel, { label, pageType }], i) => {
             if (pageType === PAGE_TYPE.ITEM)
               return (
-                <ColorPicker
+                <ColorSwatch
                   key={i}
                   label={label}
-                  colorLabel={colorLabel}
+                  dbLabel={colorLabel}
                   pageTypeName={pageType}
-                  presetColors={presetColors}
-                  deletedPresetColor={deletedPresetColor}
                 />
               );
           },

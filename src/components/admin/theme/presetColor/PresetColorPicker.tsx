@@ -1,7 +1,7 @@
 "use client";
 
 import s from "@/components/admin/theme/adminTheme.module.css";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import Modal from "@/components/admin/form/modal/modal";
 import useModal from "@/components/admin/form/modal/useModal";
@@ -13,30 +13,48 @@ import {
   updatePresetColor,
 } from "@/app/actions/theme/admin";
 import { BASE_PRESET_COLOR } from "@/constants/specific";
+import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 
 interface Props {
   presetColor: PresetColor;
-  onDelete: Dispatch<SetStateAction<PresetColor | null>>;
 }
 
-export default function PresetColorPicker({ presetColor, onDelete }: Props) {
+export default function PresetColorPicker({ presetColor }: Props) {
+  const { setThemes, presetColors, setPresetColors, workTheme, setWorkTheme } =
+    useAdminWorkThemeContext();
+
   const { isOpen, toggle } = useModal();
   const alert = useAlert();
   const [color, setColor] = useState<string>(presetColor.color);
 
   const onDeletePresetColor = async () => {
     const res = await deletePresetColor(presetColor.id);
+    if (res.updatedPresetColors && res.updatedThemes) {
+      setPresetColors(res.updatedPresetColors);
+      setThemes(res.updatedThemes);
+      const updatedWorkTheme = res.updatedThemes.find(
+        (t) => t.id === workTheme.id,
+      );
+      setWorkTheme(updatedWorkTheme);
+    }
     alert(res.message, res.isError);
-    onDelete(presetColor);
   };
 
   const onUpdatePresetColor = async () => {
-    const res = await updatePresetColor({
+    const updatedPresetColor: PresetColor = {
       ...presetColor,
       color,
-    } as PresetColor);
+    } as PresetColor;
+    const res = await updatePresetColor(updatedPresetColor);
+    if (!res.isError) {
+      const updatedPresetColors = presetColors.map((p) => {
+        if (p.id === updatedPresetColor.id) return updatedPresetColor;
+        else return p;
+      });
+      setPresetColors(updatedPresetColors);
+      if (!res.isError) toggle();
+    }
     alert(res.message, res.isError);
-    if (!res.isError) toggle();
   };
 
   return (
@@ -44,7 +62,7 @@ export default function PresetColorPicker({ presetColor, onDelete }: Props) {
       <p className={s.label}>{presetColor.name}</p>
       <div className={s.colorPickerContainer}>
         <button
-          className={`${s.swatch} ${s.focus} ${s.presetColor}`}
+          className={`${s.swatch} ${s.isPresetColor} ${s.presetColor}`}
           style={{
             backgroundColor: color,
           }}
@@ -58,8 +76,7 @@ export default function PresetColorPicker({ presetColor, onDelete }: Props) {
           <div className={s.colorPicker}>
             <h3>Modification : {presetColor.name}</h3>
             <p>
-              (s&apos;applique à toutes les utilisations de &quot;
-              {presetColor.name}&quot;)
+              {`S'applique à toutes les utilisations de "${presetColor.name}"`}
             </p>
             <div className={s.picker}>
               <HexColorPicker color={color} onChange={setColor} />
