@@ -67,7 +67,6 @@
 
 .metaForm button{
   margin: 0;
-  height: min-content;
   width: auto;
   align-self: end;
 }
