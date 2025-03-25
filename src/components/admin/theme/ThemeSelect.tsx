@@ -12,17 +12,18 @@ export default function ThemeSelect() {
       name="name"
       value={workTheme.id}
       onChange={(e) => {
-        setWorkTheme(
-          themes.find((t) => t.id?.toString() === e.target.value) as Theme,
-        );
+        const selectedWorkTheme = themes.find(
+          (t) => t.id === Number(e.target.value),
+        ) as Theme;
+        setWorkTheme(selectedWorkTheme);
       }}
+      autoComplete="true"
     >
-      {themes &&
-        themes.map((t: Theme) => (
-          <option key={t.id} value={t.id}>
-            {`${t.name} ${t.isActive ? `(ACTIF)` : ""}`}
-          </option>
-        ))}
+      {themes.map((t: Theme) => (
+        <option key={t.id} value={t.id.toString()}>
+          {`${t.name} ${t.isActive ? `(ACTIF)` : ""}`}
+        </option>
+      ))}
     </select>
   );
 }

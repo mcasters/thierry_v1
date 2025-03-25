@@ -7,22 +7,25 @@ import { THEME } from "@/constants/admin";
 import { updateTheme } from "@/app/actions/theme/admin";
 
 export default function ThemeUpdate() {
-  const { workTheme, themes, setThemes } = useAdminWorkThemeContext();
+  const { workTheme, setIsUpdated, themes, setThemes } =
+    useAdminWorkThemeContext();
   const alert = useAlert();
+
+  const handleUpdate = async () => {
+    const res = await updateTheme(workTheme);
+    if (!res.isError) {
+      const updatedThemes = themes.map((t) =>
+        t.id === workTheme.id ? workTheme : t,
+      );
+      setThemes(updatedThemes);
+      setIsUpdated(true);
+    }
+    alert(res.message, res.isError);
+  };
 
   return (
     <button
-      onClick={async () => {
-        const res = await updateTheme(workTheme);
-        if (!res.isError) {
-          const updatedThemes = themes.map((t) => {
-            if (t.id === workTheme.id) return workTheme;
-            else return t;
-          });
-          setThemes(updatedThemes);
-        }
-        alert(res.message, res.isError);
-      }}
+      onClick={handleUpdate}
       className="adminButton"
       disabled={workTheme.name === THEME.BASE_THEME}
     >

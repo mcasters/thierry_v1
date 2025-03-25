@@ -5,6 +5,8 @@ import { PresetColor, Theme } from "@prisma/client";
 export interface AdminWorkThemeContextType {
   workTheme: Theme;
   setWorkTheme: React.Dispatch<React.SetStateAction<Theme>>;
+  isUpdated: boolean;
+  setIsUpdated: React.Dispatch<React.SetStateAction<boolean>>;
   themes: Theme[];
   setThemes: React.Dispatch<React.SetStateAction<Theme[]>>;
   presetColors: PresetColor[];
@@ -16,20 +18,21 @@ const AdminWorkThemeContext = createContext<AdminWorkThemeContextType>(
 );
 
 interface Props {
+  defaultWorkTheme: Theme;
   defaultThemes: Theme[];
   defaultPresetColors: PresetColor[];
   children: ReactNode;
 }
 
 export function AdminWorkThemeProvider({
+  defaultWorkTheme,
   defaultThemes,
   defaultPresetColors,
   children,
 }: Props) {
+  const [workTheme, setWorkTheme] = useState<Theme>(defaultWorkTheme);
+  const [isUpdated, setIsUpdated] = useState<boolean>(true);
   const [themes, setThemes] = useState<Theme[]>(defaultThemes);
-  const activeTheme = themes.find((t) => t.isActive);
-  // @ts-expect-error : Query themes in database create activeTheme if not exist
-  const [workTheme, setWorkTheme] = useState<Theme>(activeTheme);
   const [presetColors, setPresetColors] =
     useState<PresetColor[]>(defaultPresetColors);
 
@@ -38,6 +41,8 @@ export function AdminWorkThemeProvider({
       value={{
         workTheme,
         setWorkTheme,
+        isUpdated,
+        setIsUpdated,
         themes,
         setThemes,
         presetColors,

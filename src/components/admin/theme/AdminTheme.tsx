@@ -8,7 +8,6 @@ import ThemeUpdate from "@/components/admin/theme/themeUpdate";
 import s from "@/components/admin/admin.module.css";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import PresetColorDashboard from "@/components/admin/theme/presetColor/presetColorDashboard";
-import { removeProperty } from "@/utils/commonUtils";
 import ThemeCancel from "@/components/admin/theme/themeCancel";
 import ThemeActivate from "@/components/admin/theme/themeActivate";
 import ThemeDelete from "@/components/admin/theme/themeDelete";
@@ -16,7 +15,6 @@ import ThemeSelect from "@/components/admin/theme/ThemeSelect";
 
 export default function AdminTheme() {
   const { workTheme, themes } = useAdminWorkThemeContext();
-  const dbTheme = themes.find((t) => t.id === workTheme.id);
 
   return (
     <>
@@ -29,17 +27,7 @@ export default function AdminTheme() {
       </div>
       <div className={themeStyle.themeContainer}>
         <h3 className={s.title3}>Détail du thème sélectionné :</h3>
-        <ThemeDashboard
-          isToUpdate={
-            dbTheme !== undefined &&
-            Object.entries(removeProperty("isActive", workTheme))
-              .sort()
-              .toString() !==
-              Object.entries(removeProperty("isActive", dbTheme))
-                .sort()
-                .toString()
-          }
-        />
+        <ThemeDashboard />
         <div className={themeStyle.actionContainer}>
           <ThemeAdd />
           <ThemeUpdate />

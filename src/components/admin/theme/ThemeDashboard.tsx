@@ -4,14 +4,13 @@ import React from "react";
 import s from "./adminTheme.module.css";
 import { PAGE_TYPE, THEME_DATAS } from "@/constants/admin";
 import ColorSwatch from "@/components/admin/theme/colorSwatch";
+import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 
-type Props = {
-  isToUpdate: boolean;
-};
+export default function ThemeDashboard() {
+  const { isUpdated } = useAdminWorkThemeContext();
 
-export default function ThemeDashboard({ isToUpdate }: Props) {
   return (
-    <div className={`${s.flex} ${isToUpdate ? s.toUpdate : ""}`}>
+    <div className={`${s.flex} ${isUpdated ? "" : s.toUpdate}`}>
       <section>
         <h4 className={s.sectionTitle}>{PAGE_TYPE.GENERAL}</h4>
         {Object.entries(THEME_DATAS).map(
@@ -77,7 +76,7 @@ export default function ThemeDashboard({ isToUpdate }: Props) {
         )}
       </section>
       <p>* lorsque la souris survole le texte</p>
-      {isToUpdate && <span>Thème modifié (à sauvegarder)</span>}
+      {isUpdated && <span>Thème modifié (à sauvegarder)</span>}
     </div>
   );
 }
