@@ -146,14 +146,12 @@ a:focus,
   text-shadow: none;
 }
 
-.button,
 button::selection,
 img::selection,
-button:focus,
-img:focus,
 label::selection {
-  background: none;
-  color: unset;
+  user-select: none;
+  background: transparent;
+  color: initial;
 }
 
 textarea, input {
@@ -236,7 +234,6 @@ input::file-selector-button {
   padding: 0;
   margin: 0.5em;
   height: 50px;
-  line-height: 50px;
   box-shadow: inset 0 0.8em 1em 0 #efefef;
   border: 1px solid #bdbdbd;
   outline: none;

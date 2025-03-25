@@ -55,7 +55,11 @@ export async function updateTheme(theme: Theme) {
   }
 }
 
-export async function deleteTheme(id: number) {
+export async function deleteTheme(id: number): Promise<{
+  message: string;
+  isError: boolean;
+  updatedThemes: Theme[] | null;
+}> {
   try {
     const themeToDelete = await prisma.theme.findUnique({
       where: {
@@ -68,6 +72,7 @@ export async function deleteTheme(id: number) {
         return {
           message: "le thème par défaut ne peut pas être supprimé",
           isError: true,
+          updatedThemes: null,
         };
       }
       if (themeToDelete.isActive) {
@@ -84,10 +89,16 @@ export async function deleteTheme(id: number) {
         where: { id },
       });
     }
+    const updatedThemes = await prisma.theme.findMany();
+
     revalidatePath("/admin");
-    return { message: "Thème supprimé", isError: false };
+    return { message: "Thème supprimé", isError: false, updatedThemes };
   } catch (e) {
-    return { message: "Erreur à la suppression", isError: true };
+    return {
+      message: "Erreur à la suppression",
+      isError: true,
+      updatedThemes: null,
+    };
   }
 }
 

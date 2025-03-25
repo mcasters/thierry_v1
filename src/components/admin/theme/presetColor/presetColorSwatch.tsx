@@ -32,7 +32,7 @@ export default function PresetColorSwatch({ presetColor }: Props) {
       setPresetColors(updatedPresetColors);
       setThemes(updatedThemes);
       const updatedWorkTheme = updatedThemes.find((t) => t.id === workTheme.id);
-      setWorkTheme(updatedWorkTheme || updatedThemes[0]);
+      if (updatedWorkTheme !== undefined) setWorkTheme(updatedWorkTheme);
     }
     alert(message, isError);
   };
@@ -42,16 +42,16 @@ export default function PresetColorSwatch({ presetColor }: Props) {
       ...presetColor,
       color,
     } as PresetColor;
-    const res = await updatePresetColor(updatedPresetColor);
-    if (!res.isError) {
+    const { message, isError } = await updatePresetColor(updatedPresetColor);
+    if (!isError) {
       const updatedPresetColors = presetColors.map((p) => {
         if (p.id === updatedPresetColor.id) return updatedPresetColor;
         else return p;
       });
       setPresetColors(updatedPresetColors);
-      if (!res.isError) toggle();
+      if (!isError) toggle();
     }
-    alert(res.message, res.isError);
+    alert(message, isError);
   };
 
   return (

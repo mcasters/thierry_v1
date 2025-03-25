@@ -23,24 +23,33 @@ export default function ColorSwatch({
   dbLabel,
   pageTypeName,
 }: Props) {
-  const { workTheme, setWorkTheme, presetColors, setPresetColors } =
-    useAdminWorkThemeContext();
+  const {
+    workTheme,
+    setWorkTheme,
+    isUpdated,
+    setIsUpdated,
+    presetColors,
+    setPresetColors,
+  } = useAdminWorkThemeContext();
   const alert = useAlert();
   const { isOpen, toggle } = useModal();
-  const colorRef = useRef("");
   const color: string = workTheme[dbLabel as keyof OnlyString<Theme>];
-  const isPresetColor = !color.startsWith("#");
-  const hexColor = colorNameToHex(color, presetColors);
+  const initialColor = useRef("");
+  const initialIsUpdated = useRef(true);
 
   useEffect(() => {
-    colorRef.current = color;
-  }, []);
+    if (isOpen) {
+      initialColor.current = color;
+      initialIsUpdated.current = isUpdated;
+    }
+  }, [isOpen]);
 
   const handleColorChange = (color: string) => {
     setWorkTheme({
       ...workTheme,
       [dbLabel]: color,
     } as Theme);
+    setIsUpdated(false);
   };
 
   const handleCreatePresetColor = async (
@@ -51,14 +60,16 @@ export default function ColorSwatch({
     if (res.newPresetColor) {
       setPresetColors([...presetColors, res.newPresetColor]);
       setWorkTheme({ ...workTheme, [dbLabel]: nameColor } as Theme);
+      setIsUpdated(false);
     }
     alert(res.message, res.isError);
   };
 
   const handleCancel = () => {
+    setIsUpdated(initialIsUpdated.current);
     setWorkTheme({
       ...workTheme,
-      [dbLabel]: colorRef.current,
+      [dbLabel]: initialColor.current,
     } as Theme);
     toggle();
   };
@@ -70,12 +81,12 @@ export default function ColorSwatch({
           className={
             isOpen
               ? `${s.swatch} ${s.open}`
-              : isPresetColor
+              : !color.startsWith("#")
                 ? `${s.swatch} ${s.isPresetColor}`
                 : s.swatch
           }
           style={{
-            backgroundColor: hexColor,
+            backgroundColor: colorNameToHex(color, presetColors),
           }}
           onClick={(e) => {
             e.preventDefault();
