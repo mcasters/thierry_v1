@@ -247,5 +247,5 @@ export const getItemLayout = (
 };
 
 export const getHomeLayout = (metas: Map<string, string>): HomeLayout => {
-  return parseInt(metas.get(META.HOME_LAYOUT) || "1");
+  return parseInt(metas.get(META.HOME_LAYOUT) || "0");
 };
