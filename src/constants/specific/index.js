@@ -8,6 +8,7 @@ export const BASE_THEME = {
   lineColor: "#a4874f",
   backgroundColor: "#f8f8f8",
   titleColor: "#2e6177",
+  introColor: "#2e6177",
   color: "#2e6177",
   linkColor: "#a4874f",
   linkHoverColor: "#f1d8a8",
