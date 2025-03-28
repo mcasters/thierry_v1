@@ -1,6 +1,6 @@
 import { THEME } from "../admin";
 
-export const BASE_THEME = {
+export const BASE_THEME_OLD = {
   name: THEME.BASE_THEME,
   isActive: true,
 
@@ -60,11 +60,11 @@ export const BASE_THEME = {
   menu2LinkHoverItemColor: "#f1d8a8",
 };
 
-export const THEME_NEW = {
+export const BASE_THEME = {
   name: THEME.BASE_THEME,
   isActive: true,
-  lineColor_gen: "#a4874f",
-  titleColor_gen: "#2e6177",
+  lineColor: "#a4874f",
+  titleColor: "#2e6177",
 
   // homePage
   menu1_background_home: "#e7e7e7",
