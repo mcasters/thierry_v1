@@ -17,7 +17,7 @@ export const BASE_THEME = {
   menu2_link_home: "#a4874f",
   menu2_linkHover_home: "#f1d8a8",
 
-  main_background_home: "",
+  main_background_home: "#f8f8f8",
   main_text_home: "#2e6177",
   main_link_home: "",
   main_linkHover_home: "",
