@@ -3,8 +3,8 @@ import { THEME } from "../admin";
 export const BASE_THEME = {
   name: THEME.BASE_THEME,
   isActive: true,
-  lineColor: "#a4874f",
-  titleColor: "#2e6177",
+  lineColor_general: "#a4874f",
+  titleColor_general: "#2e6177",
 
   // homePage
   menu1_background_home: "#e7e7e7",
