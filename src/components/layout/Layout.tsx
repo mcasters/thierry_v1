@@ -34,7 +34,7 @@ export default function Layout({ introduction, children }: Props) {
     path === ROUTES.PAINTING ||
     path === ROUTES.SCULPTURE ||
     path === ROUTES.DRAWING;
-  const isAdminPage = path === ROUTES.ADMIN;
+  const isAdmin = path === ROUTES.ADMIN;
 
   const gradientRgbObject = hexToRgb(theme.home.menu1.background);
   const gradientRgb = `${gradientRgbObject?.r},${gradientRgbObject?.g},${gradientRgbObject?.b}`;
@@ -42,7 +42,11 @@ export default function Layout({ introduction, children }: Props) {
   return (
     <div
       className={
-        isItem ? `${s.itemWrapper} itemWrapper` : `${s.wrapper} wrapper`
+        isItem
+          ? `${s.wrapper} itemWrapper`
+          : isHome
+            ? `${s.wrapper} homeWrapper`
+            : `${s.wrapper} wrapper`
       }
     >
       <div className={`${s.line} line`}></div>
@@ -50,7 +54,7 @@ export default function Layout({ introduction, children }: Props) {
       {isHome && !isPlainHomeLayout && (
         <div className={`${s.gradient} gradient`}></div>
       )}
-      {isAdminPage ? (
+      {isAdmin ? (
         <AdminNav />
       ) : (
         <Header
@@ -60,14 +64,22 @@ export default function Layout({ introduction, children }: Props) {
         />
       )}
       <Main isHome={isHome}>{children}</Main>
-      <Footer path={path} />
+      <Footer isItem={isItem} isHome={isHome} />
       <style jsx global>{`
         .line {
           background-color: ${theme.lineColor};
         }
         .wrapper {
-          background-color: ${theme.backgroundColor};
-          color: ${theme.color};
+          background-color: ${theme.other.main.background};
+          color: ${theme.other.main.text};
+        }
+        .itemWrapper {
+          background-color: ${theme.item.main.background};
+          color: ${theme.item.main.text};
+        }
+        .homeWrapper {
+          background-color: ${theme.home.main.background};
+          color: ${theme.home.main.text};
         }
         .gradient {
           background: linear-gradient(
@@ -91,39 +103,39 @@ export default function Layout({ introduction, children }: Props) {
           );
         }
         .wrapper a,
+        .homeWrapper a,
         .wrapper .buttonLink,
+        .homeWrapper .buttonLink,
         .iconButton,
         .linkColor {
-          color: ${theme.linkColor};
+          color: ${theme.other.main.link};
         }
         .wrapper .icon {
-          fill: ${theme.linkColor};
+          fill: ${theme.other.main.link};
         }
         .wrapper a:hover,
+        .homeWrapper a:hover,
         .wrapper .buttonLink:hover,
+        .homeWrapper .buttonLink:hover,
         .iconButton:hover {
-          color: ${theme.linkHoverColor};
+          color: ${theme.other.main.linkHover};
         }
         .wrapper .icon:hover {
-          fill: ${theme.linkHoverColor};
-        }
-        .itemWrapper {
-          background-color: ${theme.backgroundColorItem};
-          color: ${theme.colorItem};
+          fill: ${theme.other.main.linkHover};
         }
         .itemWrapper a,
         .itemWrapper .buttonLink {
-          color: ${theme.linkItemColor};
+          color: ${theme.item.main.link};
         }
         .itemWrapper .icon {
-          fill: ${theme.linkItemColor};
+          fill: ${theme.item.main.link};
         }
         .itemWrapper a:hover,
         .itemWrapper .buttonLink:hover {
-          color: ${theme.linkHoverItemColor};
+          color: ${theme.item.main.linkHover};
         }
         .itemWrapper .icon:hover {
-          fill: ${theme.linkHoverItemColor};
+          fill: ${theme.item.main.linkHover};
         }
       `}</style>
     </div>
