@@ -9,17 +9,23 @@ export const PAGE_TYPE = {
   HOME: "Page home",
 };
 
-export const THEME_LABEL = {
-  lineColor: "Ligne au top",
-  titleColor: "Titre du site",
+export const THEME_PAGE_PART_LABEL = {
   menu1: "Menu 1",
   menu2: "Menu 2",
   main: "Corps",
   footer: "Pied de page",
+};
+
+export const THEME_TARGET_LABEL = {
   background: "Fond",
   text: "Texte",
   link: "Lien",
   linkHover: "Lien pointé",
+};
+
+export const THEME_ENHANCED_LABEL = {
+  lineColor: "Ligne au top",
+  titleColor: "Titre du site",
 };
 
 export const COOKIE_NAME = "adminSession";
