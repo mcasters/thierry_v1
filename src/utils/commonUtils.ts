@@ -11,20 +11,6 @@ import {
 } from "@/lib/type";
 import { Meta } from ".prisma/client";
 import { META } from "@/constants/admin";
-import { unstable_cache } from "next/cache";
-
-export async function cacheDatas<S>(
-  fn: () => S,
-  isAdmin: boolean,
-  key: string,
-): Promise<S> {
-  const query = isAdmin
-    ? fn
-    : unstable_cache(async () => fn(), [key], {
-        revalidate: 60 * 5,
-      });
-  return query();
-}
 
 export const getItemType = (
   typeString: string,
