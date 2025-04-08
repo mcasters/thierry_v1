@@ -25,7 +25,6 @@ export default function PostForm({ post, formAction, toggleModal }: Props) {
   const [date, setDate] = useState<string>(
     new Date(post.date).getFullYear().toString(),
   );
-  const [mainFilenameToDelete, setMainFilenameToDelete] = useState<string>("");
   const [filenamesToDelete, setFilenamesToDelete] = useState<string[]>([]);
   const [state, action] = useActionState(formAction, null);
 
@@ -36,13 +35,12 @@ export default function PostForm({ post, formAction, toggleModal }: Props) {
     }
   }, [state]);
 
-  const handleOnDelete = (filename: string, isMain: boolean) => {
+  const handleOnDelete = (filename: string) => {
     const images = workPost.images.filter(
       (i: Image) => i.filename !== filename,
     );
     setWorkPost({ ...workPost, images });
-    if (isMain) setMainFilenameToDelete(filename);
-    else setFilenamesToDelete([...filenamesToDelete, filename]);
+    setFilenamesToDelete([...filenamesToDelete, filename]);
   };
 
   return (
@@ -51,14 +49,10 @@ export default function PostForm({ post, formAction, toggleModal }: Props) {
         {isUpdate ? "Modifier un post" : "Ajouter un post"}
       </h2>
       <form action={action}>
+        <input type="hidden" name="type" value={Type.POST} />
         {isUpdate && (
           <>
             <input type="hidden" name="id" value={post.id} />
-            <input
-              type="hidden"
-              name="mainFilenameToDelete"
-              value={mainFilenameToDelete}
-            />
             <input
               type="hidden"
               name="filenamesToDelete"
@@ -108,7 +102,15 @@ export default function PostForm({ post, formAction, toggleModal }: Props) {
           type={Type.POST}
           isMultiple={false}
           acceptSmallImage={true}
-          onDelete={(filename) => handleOnDelete(filename, true)}
+          onDelete={(filename) => handleOnDelete(filename)}
+          onAdd={() => {
+            const oldMainFilename = workPost.images.find((i) => i.isMain);
+            if (oldMainFilename)
+              setFilenamesToDelete([
+                ...filenamesToDelete,
+                oldMainFilename.filename,
+              ]);
+          }}
           title="Image principale (facultative)"
         />
         <br />
@@ -119,7 +121,7 @@ export default function PostForm({ post, formAction, toggleModal }: Props) {
           type={Type.POST}
           isMultiple={true}
           acceptSmallImage={true}
-          onDelete={(filename) => handleOnDelete(filename, false)}
+          onDelete={(filename) => handleOnDelete(filename)}
           title="Album d'images (facultatif)"
         />
         <div className={s.buttonSection}>

@@ -49,14 +49,23 @@ export default function ItemForm({
         {`${isUpdate ? "Modifier" : "Ajouter"} ${item.type === Type.DRAWING ? "un" : "une"} ${item.type}`}
       </h2>
       <form action={action}>
-        {isUpdate && <input type="hidden" name="id" value={item.id} />}
         <input type="hidden" name="type" value={item.type} />
+        {isUpdate && (
+          <>
+            <input type="hidden" name="id" value={item.id} />
+            <input
+              type="hidden"
+              name="filenamesToDelete"
+              value={filenamesToDelete}
+            />
+          </>
+        )}
+        <input type="hidden" name="isToSell" value={String(item.isToSell)} />
         <input
           type="hidden"
-          name="filenamesToDelete"
-          value={filenamesToDelete}
+          name="oldCategoryId"
+          value={String(item.categoryId)}
         />
-        <input type="hidden" name="isToSell" value={String(item.isToSell)} />
         <label className={s.formLabel}>
           Titre
           <input
