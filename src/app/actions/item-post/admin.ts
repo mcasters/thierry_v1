@@ -2,11 +2,14 @@
 // @ts-nocheck
 "use server";
 
-import { deleteFile, getDir } from "@/utils/serverUtils";
-import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { getData, getItemModel } from "@/app/actions/items/utils";
-import { ItemFull, Type } from "@/lib/type";
+import {
+  deleteImages,
+  getData,
+  getFilenameList,
+  getItemModel,
+} from "@/app/actions/item-post/utils";
+import { Type } from "@/lib/type";
 
 export async function createItem(
   prevState: { message: string; isError: boolean } | null,
@@ -14,16 +17,17 @@ export async function createItem(
 ) {
   const type = formData.get("type") as Type;
   const model = getItemModel(type);
+  console.log("model// ", model);
 
   try {
     await model.create({
-      data: await getData(type, formData, null),
+      data: await getData(type, formData),
     });
 
     revalidatePath(`/admin/${type}s`);
     return { message: `Item ajouté`, isError: false };
   } catch (e) {
-    return { message: `Erreur à l'enregistrement`, isError: true };
+    return { message: `Erreur à l'enregistrement : ${e}`, isError: true };
   }
 }
 
@@ -36,16 +40,11 @@ export async function updateItem(
   const model = getItemModel(type);
 
   try {
-    const oldItem: ItemFull = await model.findUnique({
+    await model.update({
       where: { id },
+      data: await getData(type, formData),
     });
 
-    if (oldItem) {
-      await model.update({
-        where: { id },
-        data: await getData(type, formData, oldItem),
-      });
-    }
     revalidatePath(`/admin/${type}s`);
     return { message: "Item modifié", isError: false };
   } catch (e) {
@@ -53,20 +52,14 @@ export async function updateItem(
   }
 }
 
-export async function deleteItem(
-  id: number,
-  type: Type,
-): Promise<{
-  message: string;
-  isError: boolean;
-}> {
+export async function deleteItem(id: number, type: Type) {
   const model = getItemModel(type);
 
   try {
-    const item: ItemFull = await model.findUnique({
+    const item = await model.findUnique({
       where: { id },
       include:
-        type === Type.SCULPTURE
+        type === Type.SCULPTURE || type === Type.POST
           ? {
               images: {
                 select: {
@@ -76,22 +69,11 @@ export async function deleteItem(
             }
           : undefined,
     });
+    await deleteImages(getFilenameList(item.images), type);
+    await model.delete({
+      where: { id },
+    });
 
-    if (item) {
-      const dir = getDir(type);
-      for (const image of item.images) {
-        deleteFile(dir, image.filename);
-        if (type === Type.SCULPTURE)
-          await prisma.sculptureImage.delete({
-            where: {
-              filename: image.filename,
-            },
-          });
-      }
-      await model.delete({
-        where: { id },
-      });
-    }
     revalidatePath(`/admin/${type}s`);
     return { message: `Item supprimé`, isError: false };
   } catch (e) {
