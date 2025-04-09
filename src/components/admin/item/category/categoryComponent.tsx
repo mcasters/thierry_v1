@@ -13,11 +13,7 @@ interface Props {
   categories: Category[];
   items: ItemFull[];
 }
-export default function CategoryListComponent({
-  type,
-  categories,
-  items,
-}: Props) {
+export default function CategoryComponent({ type, categories, items }: Props) {
   const message = `Une catégorie ne peut être supprimée que lorsqu'il n'y a pas ou plus de ${type} qui y est classée.`;
 
   return (
