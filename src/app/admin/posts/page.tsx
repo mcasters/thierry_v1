@@ -1,8 +1,9 @@
-import PostListComponent from "@/components/admin/post/postListComponent";
 import s from "@/components/admin/admin.module.css";
 import React from "react";
-
 import { getPostsFull } from "@/app/actions/item-post";
+import { getEmptyPost } from "@/utils/commonUtils";
+import AddUpdateButton from "@/components/admin/form/addUpdateButton";
+import ListComponent from "@/components/admin/form/item/listComponent";
 
 export default async function Sculptures() {
   const posts = await getPostsFull();
@@ -10,7 +11,11 @@ export default async function Sculptures() {
   return (
     <>
       <h1 className={s.title1}>Les posts</h1>
-      <PostListComponent posts={posts} />
+      <div className={s.container}>
+        <h2 className={s.title2}>Liste des posts</h2>
+        <ListComponent items={posts} />
+        <AddUpdateButton item={getEmptyPost()} />
+      </div>
     </>
   );
 }
