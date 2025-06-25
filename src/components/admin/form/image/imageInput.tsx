@@ -1,51 +1,47 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import s from "@/components/admin/admin.module.css";
+import React, { useRef, useState } from "react";
 import { useAlert } from "@/app/context/alertProvider";
+import s from "@/components/admin/admin.module.css";
 import Preview from "@/components/admin/form/image/preview";
+import { constraintImage } from "@/components/admin/form/formUtils";
 
-interface Props {
+type Props = {
   isMultiple: boolean;
   acceptSmallImage: boolean;
-  resetFlag?: number;
-  onNewImages?: (filenames: string[]) => void;
-  info?: string;
-}
+  setResizedFiles: React.Dispatch<React.SetStateAction<File[]>>;
+};
 
-export default function AddImages({
+export default function ImageInput({
   isMultiple,
   acceptSmallImage,
-  resetFlag,
-  onNewImages,
-  info,
+  setResizedFiles,
 }: Props) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [newFilenames, setNewFilenames] = useState<string[]>([]);
-  const [smallImageSelected, setSmallImageSelected] = useState<boolean>(false);
   const alert = useAlert();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [smallImageSelected, setSmallImageSelected] = useState<boolean>(false);
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
 
-  useEffect(() => {
-    setNewFilenames([]);
+  const handleReset = () => {
+    setResizedFiles([]);
+    setPreviewImages([]);
     setSmallImageSelected(false);
     if (inputRef.current) inputRef.current.value = "";
-  }, [resetFlag]);
+  };
 
   const handleFiles = async () => {
-    if (
-      !inputRef.current ||
-      !inputRef.current.files ||
-      inputRef.current.files.length === 0
-    )
-      return;
-    const filesUploaded = inputRef.current.files;
-    if (filesUploaded.length > 0) {
-      const files = Array.from(filesUploaded);
-      const newFiles: string[] = [];
+    const fileList = inputRef.current?.files;
+    if (fileList && fileList.length > 0) {
+      if (!isMultiple) {
+        setResizedFiles([]);
+        setPreviewImages([]);
+      }
+
+      const files = Array.from(fileList);
       let error = false;
       let weight = 0;
 
-      for await (const file of files) {
+      for (const file of files) {
         weight += file.size;
         if (weight > 30000000) {
           error = true;
@@ -56,7 +52,6 @@ export default function AddImages({
           );
           break;
         }
-
         const bmp = await createImageBitmap(file);
         const { width } = bmp;
         if (!smallImageSelected && width < 2000) {
@@ -69,32 +64,27 @@ export default function AddImages({
           bmp.close();
           break;
         }
-        newFiles.push(URL.createObjectURL(file));
-        bmp.close();
-      }
 
-      if (!error && newFiles.length > 0) {
-        setNewFilenames(newFiles);
-        if (onNewImages) onNewImages(newFiles);
-      } else {
-        setNewFilenames([]);
-        setSmallImageSelected(false);
-        inputRef.current.value = "";
-        if (onNewImages) onNewImages([]);
+        const resizedFile = await constraintImage(file);
+        setResizedFiles((prevState) => [...prevState, resizedFile]);
+        setPreviewImages((prevState) => [
+          ...prevState,
+          URL.createObjectURL(resizedFile),
+        ]);
       }
+      if (error) handleReset();
     }
   };
 
   return (
     <>
-      {info && <label className={s.formLabel}>{info}</label>}
       <div className={s.imageInputContainer}>
         <input
           type="file"
-          name={isMultiple ? "files" : "file"}
           onChange={handleFiles}
           ref={inputRef}
           multiple={isMultiple}
+          accept="image/png, image/jpeg"
         />
         {acceptSmallImage && (
           <label className={s.checkLabel}>
@@ -109,8 +99,8 @@ export default function AddImages({
         )}
       </div>
       <div className={s.previewAddContainer}>
-        {newFilenames.length > 0 && (
-          <Preview filenames={newFilenames} pathImage={""} />
+        {previewImages.length > 0 && (
+          <Preview filenames={previewImages} pathImage="" />
         )}
       </div>
     </>
