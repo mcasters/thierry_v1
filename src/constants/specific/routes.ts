@@ -29,20 +29,20 @@ export const TAGS = {
   META: "Métadonnées",
 };
 
-export const MENU_1_ITEMS = {
-  [TAGS.PAINTING]: {
+export const MENU_1_ITEMS = [
+  {
     TAG: TAGS.PAINTING,
     ROUTE: ROUTES.PAINTING,
   },
-  [TAGS.SCULPTURE]: {
+  {
     TAG: TAGS.SCULPTURE,
     ROUTE: ROUTES.SCULPTURE,
   },
-  [TAGS.POST]: {
+  {
     TAG: TAGS.POST,
     ROUTE: ROUTES.POST,
   },
-};
+];
 
 export const MENU_2 = [
   {
