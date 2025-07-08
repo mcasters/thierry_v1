@@ -23,6 +23,7 @@ export const TAGS = {
   SCULPTURE: "Sculptures",
   DRAWING: "Dessins",
   HOME: "Home",
+  PRIVACY_FRENCH: "Politique de confidentialité",
   ADMIN: "Général",
   POST: "Posts",
   CONTACT: "Contact",
