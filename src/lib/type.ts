@@ -1,9 +1,8 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 /* eslint-disable  @typescript-eslint/no-empty-object-type */
 
-import { User } from ".prisma/client";
-import { Prisma } from "@prisma/client";
-import prisma from "@/lib/prisma";
+import { Prisma, User } from "../../prisma/generated/client";
+import prisma from "@/lib/script.ts";
 
 type StringKeys<T> = {
   [k in keyof T]: T[k] extends string ? k : never;
@@ -19,20 +18,12 @@ export enum Type {
 }
 
 type PaintingFull = Prisma.Result<typeof prisma.painting, {}, any>; // With Image[] field
-type SculptureFull = Prisma.Result<typeof prisma.sculpture, {}, any>;
 type DrawingFull = Prisma.Result<typeof prisma.drawing, {}, any>; // With Image[] field
 type CategoryContent = Prisma.Result<typeof prisma.categoryContent, {}, any>; // With Image field
+type SculptureFull = Prisma.Result<typeof prisma.sculpture, {}, any>; // No change - just to uniformise name
+export type PostFull = Prisma.Result<typeof prisma.post, {}, any>; // No change - just to uniformise name
 
 export type WorkFull = PaintingFull | SculptureFull | DrawingFull;
-
-export type PostFull = {
-  id: number;
-  type: Type.POST;
-  title: string;
-  date: Date;
-  text: string;
-  images: Image[];
-};
 
 export type Category = {
   id: number;
@@ -130,6 +121,7 @@ export type ThemeTarget = {
 export type ThemeGeneralTarget = {
   lineColor: string;
   titleColor: string;
+  lightbox: string;
 };
 
 export type ThemePagePart = {
