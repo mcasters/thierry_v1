@@ -47,8 +47,8 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
     const formData = new FormData(e.currentTarget);
     resizedFiles.forEach((file) => formData.append("files", file));
     const { message, isError } = isUpdate
-      ? await updateItem(null, formData)
-      : await createItem(null, formData);
+      ? await updateItem(formData)
+      : await createItem(formData);
     alert(message, isError);
     if (!isError) toggleModal();
   };
@@ -76,8 +76,7 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
           name="oldCategoryId"
           value={String(item.categoryId)}
         />
-        <label className={s.formLabel}>
-          Titre
+        <div className={s.column}>
           <input
             onChange={(e) =>
               setWorkItem({ ...workItem, title: e.target.value })
@@ -85,11 +84,10 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             name="title"
             type="text"
             value={workItem.title}
+            autoFocus
             required
+            placeholder="Titre"
           />
-        </label>
-        <label className={s.formLabel}>
-          Catégorie (facultatif)
           <select
             name="categoryId"
             value={workItem.categoryId?.toString()}
@@ -112,9 +110,6 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
                   );
               })}
           </select>
-        </label>
-        <label className={s.formLabel}>
-          Date
           <input
             onChange={(e) => {
               setDate(e.target.value);
@@ -123,10 +118,8 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             type="date"
             value={date}
             required
+            placeholder="Date"
           />
-        </label>
-        <label className={s.formLabel}>
-          Technique
           <input
             onChange={(e) =>
               setWorkItem({ ...workItem, technique: e.target.value })
@@ -135,10 +128,70 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             type="text"
             value={workItem.technique}
             required
+            placeholder="Technique"
           />
-        </label>
-        <label className={s.formLabel}>
-          Description (facultatif)
+          <div className={s.dimensions}>
+            <input
+              onChange={(e) =>
+                setWorkItem({ ...workItem, height: Number(e.target.value) })
+              }
+              name="height"
+              type="number"
+              value={workItem.height === 0 ? "" : workItem.height.toString()}
+              required
+              placeholder="Hauteur (cm)"
+            />
+            <input
+              onChange={(e) =>
+                setWorkItem({ ...workItem, width: Number(e.target.value) })
+              }
+              name="width"
+              type="number"
+              value={workItem.width === 0 ? "" : workItem.width.toString()}
+              required
+              placeholder="Largeur (cm)"
+            />
+            {isSculpture && (
+              <input
+                onChange={(e) =>
+                  setWorkItem({ ...workItem, length: Number(e.target.value) })
+                }
+                name="length"
+                type="number"
+                value={workItem.length === 0 ? "" : workItem.length.toString()}
+                required
+                placeholder="Profondeur (cm)"
+              />
+            )}
+          </div>
+          <div className={s.checkTextForm}>
+            <label className={s.check}>
+              À vendre :
+              <input
+                onChange={(e) =>
+                  setWorkItem({ ...workItem, isToSell: e.target.checked })
+                }
+                name="isToSell"
+                type="checkbox"
+                defaultChecked={workItem.isToSell}
+              />
+            </label>
+            {workItem.isToSell && (
+              <input
+                onChange={(e) =>
+                  setWorkItem({ ...workItem, price: Number(e.target.value) })
+                }
+                name="price"
+                type="number"
+                value={
+                  !workItem.price || workItem.price === 0
+                    ? ""
+                    : workItem.price.toString()
+                }
+                placeholder="Prix (facultatif)"
+              />
+            )}
+          </div>
           <textarea
             onChange={(e) =>
               setWorkItem({ ...workItem, description: e.target.value })
@@ -146,75 +199,33 @@ export default function ItemForm({ item, toggleModal, categories }: Props) {
             name="description"
             rows={3}
             value={workItem.description}
+            placeholder="Description (facultative)"
           />
-        </label>
-        <label className={s.formLabel}>
-          Hauteur (cm)
-          <input
-            onChange={(e) =>
-              setWorkItem({ ...workItem, height: Number(e.target.value) })
-            }
-            name="height"
-            type="number"
-            value={workItem.height === 0 ? "" : workItem.height.toString()}
-            required
-          />
-        </label>
-        <label className={s.formLabel}>
-          Largeur (cm)
-          <input
-            onChange={(e) =>
-              setWorkItem({ ...workItem, width: Number(e.target.value) })
-            }
-            name="width"
-            type="number"
-            value={workItem.width === 0 ? "" : workItem.width.toString()}
-            required
-          />
-        </label>
-        {isSculpture && (
-          <label className={s.formLabel}>
-            Profondeur (cm)
-            <input
-              onChange={(e) =>
-                setWorkItem({ ...workItem, length: Number(e.target.value) })
-              }
-              name="length"
-              type="number"
-              value={workItem.length === 0 ? "" : workItem.length.toString()}
-              required
-            />
-          </label>
-        )}
-        <label className={`${s.formLabel} ${s.checkLabel}`}>
-          À vendre :
-          <input
-            onChange={(e) =>
-              setWorkItem({ ...workItem, isToSell: e.target.checked })
-            }
-            name="isToSell"
-            type="checkbox"
-            defaultChecked={workItem.isToSell}
-            className={s.checkInput}
-          />
-        </label>
-        {workItem.isToSell && (
-          <label className={s.formLabel}>
-            Prix
-            <input
-              onChange={(e) =>
-                setWorkItem({ ...workItem, price: Number(e.target.value) })
-              }
-              name="price"
-              type="number"
-              value={
-                !workItem.price || workItem.price === 0
-                  ? ""
-                  : workItem.price.toString()
-              }
-            />
-          </label>
-        )}
+          <div className={s.checkTextForm}>
+            <label className={s.check}>
+              Sortie :
+              <input
+                onChange={(e) =>
+                  setWorkItem({ ...workItem, isOut: e.target.checked })
+                }
+                name="isOut"
+                type="checkbox"
+                defaultChecked={workItem.isOut}
+              />
+            </label>
+            {workItem.isOut && (
+              <textarea
+                onChange={(e) =>
+                  setWorkItem({ ...workItem, outInformation: e.target.value })
+                }
+                name="outInformation"
+                rows={3}
+                value={workItem.outInformation}
+                placeholder="Information de sortie (facultative)"
+              />
+            )}
+          </div>
+        </div>
         <div className={s.imagesContainer}>
           <Preview
             filenames={workItem.images.map((i: Image) => i.filename)}

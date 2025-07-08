@@ -1,8 +1,3 @@
-.filter {
-  width: 50%;
-  padding: 0 0.5em 2em;
-}
-
 .listWrapper {
   font-size: var(--font-size-min);
   overflow: scroll;
@@ -33,29 +28,20 @@
   overflow: hidden;
 }
 
-.itemTitle,
-.categoryTitle {
+.itemTitle {
   font-weight: bold;
   text-align: left;
-  flex: 30%;
+  flex: 25%;
 }
 
-.itemCategory {
-  flex: 30%;
-}
-
-.categoryCount {
-  flex: 20%;
+.itemInfo {
+  flex: 25%;
 }
 
 .itemYear,
-.categoryImage {
-  flex: 10%;
-}
-
 .itemImage,
-.icon {
-flex: 8%;
+.itemIcon {
+flex: 10%;
 }
 
 .listContainer p {

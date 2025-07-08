@@ -1,6 +1,6 @@
 "use client";
 
-import { Theme } from "@prisma/client";
+import { Theme } from "../../../../../prisma/generated/client";
 import useModal from "@/components/admin/form/modal/useModal";
 import React, { useEffect, useRef } from "react";
 import s from "@/components/admin/theme/adminTheme.module.css";
@@ -106,6 +106,7 @@ export default function ColorSwatch({ page, pagePart, target }: Props) {
             e.preventDefault();
             toggle();
           }}
+          title={color}
         />
         <Modal isOpen={isOpen} toggle={toggle}>
           <ColorPicker
