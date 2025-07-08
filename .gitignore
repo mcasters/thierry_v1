@@ -44,4 +44,4 @@ loader.cjs
 .editorconfig
 
 # database
-/prisma/migrations
+/prisma/generated
