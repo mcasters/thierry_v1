@@ -1,17 +1,17 @@
-import { Label } from "@prisma/client";
+import { Label, Meta } from "../../prisma/generated/client/";
 import {
   Category,
   CategoryFull,
   ContentFull,
   HomeLayout,
   Image,
+  Item,
   ItemDarkBackground,
   ItemLayout,
   PostFull,
   Type,
   WorkFull,
 } from "@/lib/type";
-import { Meta } from ".prisma/client";
 import { META } from "@/constants/admin";
 
 export const transformValueToKey = (value: string): string =>
@@ -83,8 +83,24 @@ export const getMetaMap = (metas: Meta[]): Map<string, string> => {
   return map;
 };
 
-export const getMainImage = (post: PostFull) => {
-  return post?.images?.filter((i) => i.isMain)[0] || undefined;
+export const getImageSrc = (item: Item) => {
+  let src;
+  if (item.type === Type.CATEGORY) {
+    src =
+      item.content.image.filename !== ""
+        ? `/images/${item.workType}/sm/${item.content.image.filename}`
+        : "";
+  } else if (item.type === Type.POST) {
+    let image = item.images.filter((i: Image) => i.isMain)[0];
+    if (!image) {
+      image = item.images[0];
+    }
+    src = image ? `/images/post/${image.filename}` : "";
+  } else {
+    src = `/images/${item.type}/${item.images[0].filename}`;
+  }
+
+  return src;
 };
 
 export const getEmptyItem = (
@@ -203,4 +219,14 @@ export const getCategoriesFull = (
     categoryMap.count += 1;
   });
   return [...map.values()];
+};
+
+export const getYearsFromItems = (items: WorkFull[]): number[] => {
+  const years: number[] = [];
+  items.forEach((item) => {
+    const date = new Date(item.date);
+    years.push(date.getFullYear());
+  });
+
+  return [...new Set(years)];
 };
