@@ -1,5 +1,5 @@
 import { Type } from "@/lib/type";
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/script.ts";
 import { deleteFile, getDir, resizeAndSaveImage } from "@/utils/serverUtils";
 
 export const getItemModel = (type: Type) => {
@@ -89,6 +89,8 @@ export const createDataAndHandleFiles = async (
       length: isSculpture ? Number(rawFormData.length) : undefined,
       isToSell: rawFormData.isToSell === "on",
       price: Number(rawFormData.price),
+      isOut: rawFormData.isOut === "on",
+      outInformation: rawFormData.outInformation as string,
       category: getCategory(formData),
       imageFilename:
         !isSculpture && newImages ? newImages[0].filename : undefined,

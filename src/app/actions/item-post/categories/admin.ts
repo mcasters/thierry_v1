@@ -8,7 +8,7 @@ import {
   getCategoryData,
   getCategoryModel,
 } from "@/app/actions/item-post/categories/utils";
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/script.ts";
 
 export async function createCategory(
   prevState: { message: string; isError: boolean } | null,
@@ -79,6 +79,6 @@ export async function deleteCategory(
     revalidatePath(`/admin/${type}s`);
     return { message: "Catégorie supprimée", isError: false };
   } catch (e) {
-    return { message: `Erreur à la suppression ${e}`, isError: true };
+    return { message: "Erreur à la suppression", isError: true };
   }
 }
