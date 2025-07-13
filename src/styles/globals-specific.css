@@ -14,7 +14,7 @@
   --font-size-nav1: 19px;
   --font-size-nav2: 17px;
   --font-size: 17px;
-  --font-size-min: 14px;
+  --font-size-min: 15px;
 
   /*
    * Layout
@@ -78,20 +78,17 @@ body {
   text-align: center;
 }
 
-input,
-button,
-.button,
-.buttonLink,
-select,
-textarea {
-  font-family: var(--font-family-serif);
-  -webkit-font-smoothing: antialiased;
-  font-size: var(--font-size);
+.hidden {
+  display: none;
 }
 
-button {
-  cursor: pointer;
+.separate {
+  padding: 3em 0;
 }
+
+/*
+ * Link
+ */
 
 .iconButton {
   border: none;
@@ -117,10 +114,6 @@ a,
   transition: color 0.4s ease;
 }
 
-.icon {
-  transition: fill 0.4s ease;
-}
-
 a:hover,
 a:focus,
 .buttonLink:hover,
@@ -128,8 +121,14 @@ a:focus,
   transition: color 0.4s ease;
 }
 
+.icon, .homeIcon {
+  transition: fill 0.4s ease;
+}
+
 .icon:hover,
-.icon:focus {
+.homeIcon:hover,
+.icon:focus,
+.homeIcon:focus {
   transition: fill 0.4s ease;
 }
 
@@ -147,10 +146,6 @@ li::selection {
   user-select: none;
   background: transparent;
   color: initial;
-}
-
-textarea, input {
-  user-select: text;
 }
 
 /*
@@ -182,6 +177,25 @@ figure {
   margin: 0 !important;
 }
 
+/*
+ * Forms
+ */
+
+input,
+button,
+.button,
+select,
+textarea,
+label, .label {
+  font-family: var(--font-family-serif);
+  -webkit-font-smoothing: antialiased;
+  font-size: var(--font-size-min);
+}
+
+input, select, textarea, button {
+  padding: 5px;
+}
+
 .area,
 textarea,
 input:not([type="file"], [type="checkbox"]),
@@ -190,21 +204,23 @@ select {
   background-color: white;
   border: 1px solid #d9d9d9;
   border-radius: unset;
+  user-select: text;
 }
 
-input,
+input:not([type="checkbox"]),
 select {
   height: 40px;
   line-height: 40px;
-  padding: 5px;
-  margin: 8px 0;
 }
 
 textarea {
-  line-height: 20px;
+  line-height: 1.5;
   resize: vertical;
-  padding: 5px;
-  margin: 8px 0;
+}
+
+input[type="checkbox"] {
+  height: unset;
+  margin-right: 8px;
 }
 
 input[type="file"] {
@@ -213,35 +229,22 @@ input[type="file"] {
   padding: 0;
 }
 
-input[type="checkbox"] {
-  height: unset;
-  margin: 3px 10px;
-}
-
 .adminButton,
 input::file-selector-button {
   font-family: var(--font-family-serif);
   width: 220px;
-  padding: 0;
-  margin: 0.5em;
-  height: 40px;
+  min-height: 40px;
   box-shadow: inset 0 0.8em 1em 0 #efefef;
   border: 1px solid #bdbdbd;
   background-color: #e2e2e2;
 }
 
+.adminButton {
+  margin: 0.5em;
+}
+
 input::file-selector-button {
   width: 150px;
-  padding: 0;
-  margin: 0;
-}
-
-.hidden {
-  display: none;
-}
-
-.separate {
-  padding: 3em 0;
 }
 
 /*
