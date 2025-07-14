@@ -2,15 +2,12 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
 
 # testing
 /coverage
 
 # next.js
 /.next/
-/out/
 
 # production
 /build
@@ -40,7 +37,6 @@ notes/
 .idea
 package-lock.json
 /public/images
-loader.cjs
 .editorconfig
 
 # database
