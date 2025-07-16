@@ -3,7 +3,8 @@
 import Image from "next/image";
 
 import DeleteButton from "@/components/admin/form/deleteButton";
-import s from "../../adminList.module.css";
+import s from "@/components/admin/adminList.module.css";
+import modalStyle from "@/components/admin/modal.module.css";
 import React from "react";
 import { Category, Item, Type } from "@/lib/type.ts";
 import { getImageSrc } from "@/utils/commonUtils.ts";
@@ -18,28 +19,35 @@ import useModal from "@/components/admin/form/modal/useModal.tsx";
 type Props = {
   item: Item;
   isSelected: boolean;
-  isOutside: boolean;
+  mouseOutside: boolean;
   categories?: Category[];
+  noDoubleClick?: boolean;
 };
 
 export default function RowListComponent({
   item,
   isSelected,
-  isOutside,
+  mouseOutside,
   categories,
+  noDoubleClick = false,
 }: Props) {
   const { isOpen, toggle } = useModal();
   const isCategory = item.type === Type.CATEGORY;
   const isPost = item.type === Type.POST;
   const isWork = !isCategory && !isPost;
   const imageSrc = getImageSrc(item);
+  const title = "Modifier "
+    .concat(
+      item.type === Type.DRAWING || item.type === Type.POST ? "un " : "une ",
+    )
+    .concat(item.type);
 
   return (
     <>
       <ul
         className={`${isSelected && !isOpen ? "selected" : undefined} ${s.itemList}`}
-        style={isOutside && isSelected ? { opacity: "60%" } : undefined}
-        onDoubleClick={toggle}
+        style={mouseOutside && isSelected ? { opacity: "60%" } : undefined}
+        onDoubleClick={noDoubleClick ? undefined : toggle}
       >
         <li className={s.itemTitle}>{isCategory ? item.value : item.title}</li>
         <li className={s.itemInfo}>
@@ -90,11 +98,18 @@ export default function RowListComponent({
         </li>
       </ul>
       <Modal isOpen={isOpen} toggle={toggle}>
-        {!isPost && !isCategory && (
-          <ItemForm item={item} toggleModal={toggle} categories={categories} />
-        )}
-        {isPost && <PostForm post={item} toggleModal={toggle} />}
-        {isCategory && <CategoryForm category={item} toggleModal={toggle} />}
+        <div className={modalStyle.modalContainer}>
+          <h2 className={modalStyle.modalTitle}>{title}</h2>
+          {!isPost && !isCategory && (
+            <ItemForm
+              item={item}
+              toggleModal={toggle}
+              categories={categories}
+            />
+          )}
+          {isPost && <PostForm post={item} toggleModal={toggle} />}
+          {isCategory && <CategoryForm category={item} toggleModal={toggle} />}
+        </div>
       </Modal>
     </>
   );
