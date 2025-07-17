@@ -1,12 +1,11 @@
 import Link from "next/link";
 
-import s from "@/styles/contactPage.module.css";
 import {
-  getAddressText,
+  getAddress,
   getContactText,
-  getEmailText,
+  getEmail,
   getMetaMap,
-  getPhoneText,
+  getPhone,
 } from "@/utils/commonUtils";
 import { getContentsFull } from "@/app/actions/contents";
 import InstagramIcon from "@/components/icons/instagramIcon";
@@ -16,27 +15,25 @@ import { META } from "@/constants/admin";
 export default async function Contact() {
   const contents = await getContentsFull();
   const metas = getMetaMap(await getMetas());
-  const email = getEmailText(contents);
+  const email = getEmail(contents);
   const contactText = getContactText(contents);
   const owner = metas.get(META.SITE_TITLE);
   const instagram = metas.get(META.INSTAGRAM);
 
   return (
     <>
-      <address>
+      <address style={{ padding: "4em 0" }}>
         <p>{owner}</p>
-        <p className={s.preLine}>{getAddressText(contents)}</p>
+        <p className="preLine">{getAddress(contents)}</p>
         <br />
         <p>
-          <Link href={`tel:+33${getPhoneText(contents)}`}>
-            {getPhoneText(contents)}
+          <Link href={`tel:+33${getPhone(contents)}`}>
+            {getPhone(contents)}
           </Link>
         </p>
         <br />
         <p>
-          <Link className={s.email} href={`mailto:${email}`}>
-            {email}
-          </Link>
+          <Link href={`mailto:${email}`}>{email}</Link>
         </p>
         {owner?.startsWith("T") && instagram && (
           <>
@@ -51,8 +48,8 @@ export default async function Contact() {
         )}
       </address>
       {contactText !== "" && (
-        <div className={s.text}>
-          <p className={s.preLine}>{getContactText(contents)}</p>
+        <div style={{ padding: "2em 0 6em" }}>
+          <p className="preline">{contactText}</p>
         </div>
       )}
     </>
