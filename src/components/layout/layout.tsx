@@ -62,7 +62,7 @@ export default function Layout({ introduction, children }: Props) {
           introduction={introduction}
         />
       )}
-      <main className={!isHome && s.main}>{children}</main>
+      <main className={isHome ? undefined : s.main}>{children}</main>
       <Footer isItem={isItem} isHome={isHome} />
       <style jsx global>{`
         .line {
