@@ -2,10 +2,10 @@ export const THEME = {
   BASE_THEME: "Thème de base",
 };
 
-export const THEME_ENHANCED_LABEL = {
+export const THEME_PAGE_LABEL = {
   general: "Général",
   home: "Page home",
-  item: "Pages d'items",
+  work: "Pages d'items",
   other: "Autres pages",
 };
 
@@ -20,6 +20,7 @@ export const THEME_GENERAL_TARGET_LABEL = {
   lineColor: "Ligne au top",
   titleColor: "Titre du site",
   lightbox: "Fond de la lightbox",
+  lightboxText: "Texte de la lightbox",
 };
 
 export const THEME_TARGET_LABEL = {

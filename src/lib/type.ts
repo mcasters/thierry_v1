@@ -118,10 +118,11 @@ export type ThemeTarget = {
   linkHover: string;
 };
 
-export type ThemeGeneralTarget = {
+export type ThemeGenTarget = {
   lineColor: string;
   titleColor: string;
   lightbox: string;
+  lightboxText: string;
 };
 
 export type ThemePagePart = {
@@ -132,8 +133,8 @@ export type ThemePagePart = {
 };
 
 export type StructuredTheme = {
-  general: ThemeGeneralTarget;
+  general: ThemeGenTarget;
   home: ThemePagePart;
-  item: ThemePagePart;
+  work: ThemePagePart;
   other: ThemePagePart;
 };
