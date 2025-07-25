@@ -75,4 +75,5 @@ export const BASE_THEME = {
 export const BASE_PRESET_COLOR = {
   name: "Prussian blue",
   color: "#24445C",
+  displayOrder: 0,
 };
