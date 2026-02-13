@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { COOKIE_NAME } from "@/constants/admin";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const currentUser = request.cookies.get(COOKIE_NAME)?.value;
 
   if (!currentUser && request.nextUrl.pathname.startsWith("/admin")) {
