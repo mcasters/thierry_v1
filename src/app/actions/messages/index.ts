@@ -11,52 +11,61 @@ export async function getMessages(): Promise<Message[]> {
   return JSON.parse(JSON.stringify(res));
 }
 
-export async function addMessage(
-  prevState: { message: string; isError: boolean } | null,
-  formData: FormData,
-) {
+export async function addMessage(formData: FormData) {
   const rawFormData = Object.fromEntries(formData);
-  const text = rawFormData.text as string;
-  const userEmail = rawFormData.userEmail as string;
+  if (rawFormData.id === "0") {
+    const text = rawFormData.text as string;
+    const userEmail = rawFormData.userEmail as string;
 
-  try {
-    await prisma.message.create({
-      data: {
-        date: new Date(),
-        text,
-        author: { connect: { email: userEmail } },
-      },
-    });
-    revalidatePath(`/admin`);
-    return { message: "Message ajouté", isError: false };
-  } catch (e) {
-    return { message: `Erreur à l'enregistrement`, isError: true };
+    try {
+      await prisma.message.create({
+        data: {
+          date: new Date(),
+          text,
+          author: { connect: { email: userEmail } },
+        },
+      });
+      revalidatePath(`/admin`);
+      return { message: "Message ajouté", isError: false };
+    } catch (e) {
+      return { message: `Erreur à l'enregistrement`, isError: true };
+    }
   }
 }
 
-export async function updateMessage(
-  prevState: { message: string; isError: boolean } | null,
-  formData: FormData,
-) {
+export async function updateMessage(formData: FormData) {
   const rawFormData = Object.fromEntries(formData);
   const id = Number(rawFormData.id);
   const text = rawFormData.text as string;
-  const userEmail = rawFormData.userEmail as string;
 
-  try {
-    await prisma.message.update({
-      where: { id },
-      data: {
-        date: new Date(),
-        text,
-        author: { connect: { email: userEmail } },
-      },
-    });
-    revalidatePath(`/admin`);
-    return { message: "Message modifié", isError: false };
-  } catch (e) {
-    return { message: `Erreur à l'enregistrement`, isError: true };
+  const messageToUpdate = await prisma.message.findUnique({
+    where: { id },
+  });
+
+  if (messageToUpdate) {
+    const date = new Date();
+    const dateUpdated =
+      messageToUpdate.date.getFullYear() === date.getFullYear() &&
+      messageToUpdate.date.getMonth() === date.getMonth() &&
+      messageToUpdate.date.getDay() === date.getDay()
+        ? null
+        : date;
+
+    try {
+      await prisma.message.update({
+        where: { id },
+        data: {
+          text,
+          dateUpdated,
+        },
+      });
+      revalidatePath(`/admin`);
+      return { message: "Message modifié", isError: false };
+    } catch (e) {
+      return { message: `Erreur à l'enregistrement`, isError: true };
+    }
   }
+  return { message: `Erreur à l'enregistrement`, isError: true };
 }
 
 export async function deleteMessage(id: number) {
