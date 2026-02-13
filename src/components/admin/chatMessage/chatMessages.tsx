@@ -1,13 +1,19 @@
 "use client";
 
-import React, { useActionState, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import style from "@/components/admin/admin.module.css";
 import s from "./chatMessage.module.css";
-import { addMessage, updateMessage } from "@/app/actions/messages";
+import {
+  addMessage,
+  deleteMessage,
+  updateMessage,
+} from "@/app/actions/messages";
 import { useSession } from "@/app/context/sessionProvider";
 import { useTheme } from "@/app/context/themeProvider";
 import { Message } from "@/lib/type";
 import ChatMessage from "@/components/admin/chatMessage/chatMessage";
+import { getEmptyMessage } from "@/lib/utils/commonUtils.ts";
+import useMenuManagement from "@/components/hooks/useMenuManagement.ts";
 
 type Props = {
   dbMessages: Message[];
@@ -16,22 +22,29 @@ type Props = {
 export default function ChatMessages({ dbMessages }: Props) {
   const session = useSession();
   const theme = useTheme();
-  const [message, setMessage] = useState<Message | undefined>(undefined);
-  const [menuOpenIndex, setMenuOpenIndex] = useState<number>(-1);
-  const [state, action] = useActionState(
-    message?.id !== undefined ? updateMessage : addMessage,
-    null,
-  );
+  const textAreaRef = useRef<HTMLTextAreaElement>(null!);
+  const [editMessage, setEditMessage] = useState<Message>(getEmptyMessage());
+  const { indexOpen, toggle } = useMenuManagement();
 
-  useEffect(() => {
-    if (state) {
-      if (!state.isError) setMessage(undefined);
+  const onUpdate = (msg: Message) => {
+    setEditMessage(msg);
+    toggle(-1);
+    textAreaRef.current.focus();
+  };
+
+  const onDelete = async (msg: Message) => {
+    await deleteMessage(msg.id);
+    setEditMessage(getEmptyMessage());
+    toggle(-1);
+  };
+
+  const addUpdateAction = async (formData: FormData) => {
+    if (editMessage.text !== "") {
+      const action = editMessage?.id !== 0 ? updateMessage : addMessage;
+      await action(formData);
+      setEditMessage(getEmptyMessage());
     }
-  }, [state]);
-
-  useEffect(() => {
-    if (menuOpenIndex !== -1) setMenuOpenIndex(-1);
-  }, [message]);
+  };
 
   return (
     <section className={style.container}>
@@ -40,29 +53,39 @@ export default function ChatMessages({ dbMessages }: Props) {
       </div>
       <div className={`${s.messages} area`}>
         {dbMessages &&
-          dbMessages.map((msg, index) => (
-            <ChatMessage
-              key={index}
-              message={msg}
-              onUpdate={setMessage}
-              onClickMenu={() => {
-                if (menuOpenIndex === index) setMenuOpenIndex(-1);
-                else setMenuOpenIndex(index);
-              }}
-              isMenuOpen={menuOpenIndex === index}
-            />
-          ))}
+          dbMessages.map((msg, index) => {
+            const isOwner = msg.author.email === session?.user.email;
+
+            return (
+              <ChatMessage
+                key={index}
+                message={msg}
+                editMessage={
+                  isOwner
+                    ? {
+                        onUpdate: () => onUpdate(msg),
+                        onDelete: () => onDelete(msg),
+                        onOpenMenu: () => toggle(index),
+                        onCloseMenu: () => toggle(-1),
+                        isOpen: index === indexOpen,
+                      }
+                    : undefined
+                }
+              />
+            );
+          })}
       </div>
       <br />
-      <form action={action}>
+      <form action={addUpdateAction}>
         <input type="hidden" name="userEmail" value={session?.user.email} />
-        {message?.id && <input type="hidden" name="id" value={message.id} />}
+        <input type="hidden" name="id" value={editMessage.id} />
         <textarea
+          ref={textAreaRef}
           name="text"
           placeholder="Ton message"
-          value={message?.text}
+          value={editMessage.text}
           onChange={(e) =>
-            setMessage(Object.assign({}, message, { text: e.target.value }))
+            setEditMessage({ ...editMessage, text: e.target.value })
           }
           className={s.textArea}
           rows={5}
@@ -73,10 +96,10 @@ export default function ChatMessages({ dbMessages }: Props) {
           className={s.chatButton}
           style={{ backgroundColor: theme.other.main.text }}
         >
-          {message?.id ? "Mettre à jour" : "Envoyer"}
+          {editMessage.id !== 0 ? "Mettre à jour" : "Envoyer"}
         </button>
         <button
-          onClick={() => setMessage(undefined)}
+          onClick={() => setEditMessage(getEmptyMessage())}
           className={s.chatButton}
           style={{ backgroundColor: theme.other.main.text }}
         >

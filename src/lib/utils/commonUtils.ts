@@ -1,6 +1,7 @@
 import { Label, Meta } from "../../../prisma/generated/client";
 import {
   Category,
+  CategoryContentFull,
   CategoryFull,
   ContentFull,
   DragListElement,
@@ -10,6 +11,7 @@ import {
   Item,
   ItemDarkBackground,
   Layout,
+  Message,
   PostFull,
   Type,
   WorkFull,
@@ -142,7 +144,7 @@ export const getEmptyImage = (): Image => {
   };
 };
 
-export const getEmptyContent = () => {
+export const getEmptyCategoryContent = (): CategoryContentFull => {
   return {
     id: 0,
     title: "",
@@ -161,7 +163,7 @@ export const getEmptyCategoryFull = (
     type: Type.CATEGORY,
     count: 0,
     workType,
-    content: getEmptyContent(),
+    content: getEmptyCategoryContent(),
     images: [getEmptyImage()],
   };
 };
@@ -171,7 +173,22 @@ export const getNoCategory = (): Category => {
     id: 0,
     key: "no-category",
     value: "Sans catégorie",
-    content: getEmptyContent(),
+    content: getEmptyCategoryContent(),
+  };
+};
+
+export const getEmptyMessage = (): Message => {
+  return {
+    id: 0,
+    date: new Date(),
+    dateUpdated: null,
+    text: "",
+    author: {
+      id: 0,
+      email: "",
+      password: "",
+      isAdmin: false,
+    },
   };
 };
 

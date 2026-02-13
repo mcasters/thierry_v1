@@ -20,10 +20,10 @@ export function AlertProvider({ children }: Props) {
   const [time, setTime] = useState(2000);
   const [isOpen, setIsOpen] = useState(false);
 
-  const alert = (message: string, isError: boolean, time?: number) => {
+  const alert = (message: string, isError: boolean, time: number = 2000) => {
     setMessage(message);
     setIsError(isError);
-    if (time) setTime(time);
+    setTime(time);
     setIsOpen(true);
   };
 

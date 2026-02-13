@@ -8,10 +8,14 @@ const useOnClickOutside = (onClickOutside?: () => void) => {
 
   useEffect(() => {
     const listener = (e: MouseEvent | TouchEvent) => {
-      if (!ref.current.contains(e.target as Node)) {
-        if (onClickOutside) onClickOutside();
-        setIsOutside(true);
-      } else setIsOutside(false);
+      if (ref && ref.current) {
+        if (ref.current.contains(e.target as Node)) {
+          setIsOutside(false);
+        } else {
+          if (onClickOutside) onClickOutside();
+          setIsOutside(true);
+        }
+      }
     };
 
     document.addEventListener("mousedown", listener);

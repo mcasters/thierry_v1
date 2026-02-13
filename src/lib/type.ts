@@ -20,17 +20,19 @@ export enum Type {
 
 type PaintingFull = Prisma.Result<typeof prisma.painting, {}, any>; // With Image[] field
 type DrawingFull = Prisma.Result<typeof prisma.drawing, {}, any>; // With Image[] field
-type CategoryContent = Prisma.Result<typeof prisma.categoryContent, {}, any>; // With Image field
 type SculptureFull = Prisma.Result<typeof prisma.sculpture, {}, any>; // No change - just to uniformise name
+export type CategoryContentFull = Prisma.Result<
+  typeof prisma.categoryContent,
+  {},
+  any
+>; // With Image field
 export type PostFull = Prisma.Result<typeof prisma.post, {}, any>; // No change - just to uniformise name
-
-export type WorkFull = PaintingFull | SculptureFull | DrawingFull;
 
 export type Category = {
   id: number;
   key: string;
   value: string;
-  content: CategoryContent;
+  content: CategoryContentFull;
 };
 
 export type CategoryFull = Category & {
@@ -40,11 +42,14 @@ export type CategoryFull = Category & {
   count: number;
 };
 
+export type WorkFull = PaintingFull | SculptureFull | DrawingFull;
+
 export type Item = WorkFull | PostFull | CategoryFull;
 
 export type Message = {
   id: number;
   date: Date;
+  dateUpdated: Date | null;
   text: string;
   author: User;
 };
