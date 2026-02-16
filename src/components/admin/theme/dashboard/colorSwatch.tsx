@@ -1,6 +1,6 @@
 "use client";
 
-import { Theme } from "../../../../../prisma/generated/client";
+import { Theme } from "@@/prisma/generated/client";
 import React, { useRef } from "react";
 import s from "@/components/admin/theme/adminTheme.module.css";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";

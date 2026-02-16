@@ -3,7 +3,7 @@
 import s from "@/components/admin/theme/adminTheme.module.css";
 import React from "react";
 import Modal from "@/components/admin/form/modal.tsx";
-import { PresetColor } from "../../../../../../prisma/generated/client";
+import { PresetColor } from "@@/prisma/generated/client";
 import DeleteIcon from "@/components/icons/deleteIcon";
 import { useAlert } from "@/app/context/alertProvider";
 import {

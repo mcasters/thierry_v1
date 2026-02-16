@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Label } from "../../../../../prisma/generated/client";
+import { Label } from "@@/prisma/generated/client";
 import SubmitButton from "@/components/admin/form/submitButton";
 import CancelButton from "@/components/admin/form/cancelButton";
 import { useAlert } from "@/app/context/alertProvider";

@@ -1,6 +1,6 @@
 "use client";
 
-import { PresetColor } from "../../../../../../prisma/generated/client";
+import { PresetColor } from "@@/prisma/generated/client";
 import { useAdminWorkThemeContext } from "@/app/context/adminWorkThemeProvider";
 import PresetColorSwatch from "@/components/admin/theme/dashboard/presetColor/presetColorSwatch";
 import DragList from "@/components/admin/form/dragList/dragList.tsx";
