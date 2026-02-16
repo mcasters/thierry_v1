@@ -8,7 +8,7 @@ import {
   getCategoryData,
   getCategoryModel,
 } from "@/app/actions/item-post/categories/utils";
-import prisma from "@/lib/script.ts";
+import prisma from "../../../../lib/prisma.ts";
 
 export async function createCategory(
   prevState: { message: string; isError: boolean } | null,

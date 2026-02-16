@@ -1,5 +1,5 @@
 "use server";
-import prisma from "@/lib/script.ts";
+import prisma from "../../../lib/prisma.ts";
 import { revalidatePath } from "next/cache";
 import { Message } from "@/lib/type";
 
