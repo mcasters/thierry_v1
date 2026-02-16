@@ -18,12 +18,12 @@ export enum Type {
   CATEGORY = "catégorie",
 }
 
-type PaintingFull = Prisma.Result<typeof prisma.painting, {}, any>; // With Image[] field
-type DrawingFull = Prisma.Result<typeof prisma.drawing, {}, any>; // With Image[] field
-type SculptureFull = typeof prisma.sculpture; // No change - just to uniformise name
-export type WorkFull = PaintingFull | SculptureFull | DrawingFull;
+type Painting = Prisma.Result<typeof prisma.painting, {}, any>; // With Image[] field
+type Drawing = Prisma.Result<typeof prisma.drawing, {}, any>; // With Image[] field
+type Sculpture = typeof prisma.sculpture; // No change - just to uniformise name
+export type Work = Painting | Sculpture | Drawing;
 
-export type CategoryContentFull = Prisma.Result<
+export type CategoryContent = Prisma.Result<
   typeof prisma.categoryContent,
   {},
   any
@@ -32,7 +32,7 @@ export type Category = {
   id: number;
   key: string;
   value: string;
-  content: CategoryContentFull;
+  content: CategoryContent;
 };
 export type CategoryFull = Category & {
   type: Type.CATEGORY;
@@ -41,9 +41,9 @@ export type CategoryFull = Category & {
   count: number;
 };
 
-export type PostFull = Prisma.Result<typeof prisma.post, {}, any>; // No change - just to uniformise name
+export type Post = Prisma.Result<typeof prisma.post, {}, any>; // No change - just to uniformise name
 
-export type Item = WorkFull | PostFull | CategoryFull;
+export type Item = Work | Post | CategoryFull;
 
 export type Message = {
   id: number;
@@ -103,7 +103,7 @@ export type PhotoTab = {
 };
 
 export interface PhotoEnhanced extends Photo {
-  item: WorkFull;
+  item: Work;
 }
 
 export type PhotoTabEnhanced = {

@@ -30,7 +30,7 @@ export default function AddButton({ item, categories, disabled }: Props) {
       >
         Ajouter
       </button>
-      <Modal isOpen={isOpen} title="Ajout">
+      <Modal isOpen={isOpen} title={`Ajout de ${item.type}`}>
         {item.type === Type.CATEGORY ? (
           <CategoryForm category={item} onClose={toggle} />
         ) : item.type === Type.POST ? (

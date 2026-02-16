@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import s from "@/components/admin/admin.module.css";
-import { Category, Image, Type, WorkFull } from "@/lib/type";
+import { Category, Image, Type, Work } from "@/lib/type";
 import { useAlert } from "@/app/context/alertProvider";
 import SubmitButton from "@/components/admin/form/submitButton";
 import CancelButton from "@/components/admin/form/cancelButton";
@@ -12,7 +12,7 @@ import ImageInput from "@/components/admin/form/image/imageInput.tsx";
 import { format } from "date-fns/format";
 
 interface Props {
-  item: WorkFull;
+  item: Work;
   onClose: () => void;
   categories?: Category[];
 }
@@ -21,7 +21,7 @@ export default function WorkForm({ item, onClose, categories }: Props) {
   const isUpdate = item.id !== 0;
   const isSculpture = item.type === Type.SCULPTURE;
   const alert = useAlert();
-  const [workItem, setWorkItem] = useState<WorkFull>(item);
+  const [workItem, setWorkItem] = useState<Work>(item);
   const [date, setDate] = useState<string>(
     format(new Date(item.date), "yyyy-MM-dd"),
   );

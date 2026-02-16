@@ -3,9 +3,9 @@ import {
   Image,
   PhotoTab,
   PhotoTabEnhanced,
-  PostFull,
+  Post,
   Type,
-  WorkFull,
+  Work,
 } from "@/lib/type.ts";
 import { IMAGE } from "@/constants/image.ts";
 import { getSliderContent, getSliders } from "@/lib/utils/commonUtils.ts";
@@ -92,7 +92,7 @@ const getSplitMainPhotosFromImages = (
 };
 
 const getPhotosEnhancedFromImages = (
-  item: WorkFull,
+  item: Work,
   alt: string,
   photos: PhotoTabEnhanced,
 ): PhotoTabEnhanced => {
@@ -174,7 +174,7 @@ export const getSliderPhotoTab = (
 };
 
 export const getPostPhotoTab = (
-  post: PostFull,
+  post: Post,
   alt: string,
 ): { mainPhotos: PhotoTab; photos: PhotoTab } => {
   const folder = "post";
@@ -187,7 +187,7 @@ export const getPostPhotoTab = (
   );
 };
 
-export const getItemPhotoTab = (item: WorkFull, alt: string): PhotoTab => {
+export const getItemPhotoTab = (item: Work, alt: string): PhotoTab => {
   const folder =
     item.type === Type.PAINTING
       ? "peinture"
@@ -198,7 +198,7 @@ export const getItemPhotoTab = (item: WorkFull, alt: string): PhotoTab => {
 };
 
 export const getItemsPhotoTabEnhanced = (
-  items: WorkFull[],
+  items: Work[],
   alt: string,
 ): PhotoTabEnhanced => {
   let photosEnhanced = getEmptyPhotoTabEnhanced();

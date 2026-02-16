@@ -1,7 +1,7 @@
 "use client";
 
 import s from "./itemLayout.module.css";
-import { Layout, WorkFull } from "@/lib/type.ts";
+import { Layout, Work } from "@/lib/type.ts";
 import React, { useMemo, useState } from "react";
 import { getItemPhotoTab } from "@/lib/utils/imageUtils.ts";
 import { useMetas } from "@/app/context/metaProvider.tsx";
@@ -13,7 +13,7 @@ import { DEVICE, IMAGE_INFO } from "@/constants/image.ts";
 import useWindowRect from "@/components/hooks/useWindowRect.ts";
 
 interface Props {
-  item: WorkFull;
+  item: Work;
   layout: Layout.MONO | Layout.DOUBLE | Layout.SCULPTURE;
   priority: boolean;
 }

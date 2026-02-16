@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Image, PostFull, Type } from "@/lib/type";
+import { Image, Post, Type } from "@/lib/type";
 import s from "@/components/admin/admin.module.css";
 import { useAlert } from "@/app/context/alertProvider";
 import Preview from "@/components/admin/form/image/preview.tsx";
@@ -11,7 +11,7 @@ import CancelButton from "@/components/admin/form/cancelButton";
 import ImageInput from "@/components/admin/form/image/imageInput.tsx";
 
 interface Props {
-  post: PostFull;
+  post: Post;
   onClose: () => void;
 }
 
@@ -19,7 +19,7 @@ export default function PostForm({ post, onClose }: Props) {
   const isUpdate = post.id !== 0;
   const alert = useAlert();
 
-  const [workPost, setWorkPost] = useState<PostFull>(post);
+  const [workPost, setWorkPost] = useState<Post>(post);
   const [date, setDate] = useState<string>(
     new Date(post.date).getFullYear().toString(),
   );

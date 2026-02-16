@@ -1,11 +1,11 @@
 "use client";
 
-import { Photo, WorkFull } from "@/lib/type";
+import { Photo, Work } from "@/lib/type";
 import { Fragment } from "react";
 import { getSizeText } from "@/lib/utils/commonUtils.ts";
 
 interface Props {
-  item: WorkFull | undefined;
+  item: Work | undefined;
   photo?: Photo;
   isForLightbox?: boolean;
   isMono?: boolean;
@@ -43,7 +43,7 @@ const ShortInfo = ({ title, year }: { title: string; year: number }) => (
 );
 
 // For item in double and sculpture layout
-const LongInfo = ({ item }: { item: WorkFull }) => {
+const LongInfo = ({ item }: { item: Work }) => {
   return (
     <>
       <h2>{item.title}</h2>
@@ -71,7 +71,7 @@ const LongInfo = ({ item }: { item: WorkFull }) => {
 };
 
 // For lightbox of item in gallery layout
-const LongInfoLightbox = ({ item }: { item: WorkFull }) => (
+const LongInfoLightbox = ({ item }: { item: Work }) => (
   <p>
     <span>
       <strong>{item.title}</strong>
@@ -84,7 +84,7 @@ const LongInfoLightbox = ({ item }: { item: WorkFull }) => (
 );
 
 // For item in mono layout
-const LongInfoMono = ({ item }: { item: WorkFull }) => (
+const LongInfoMono = ({ item }: { item: Work }) => (
   <>
     <h2>{item.title}</h2>
     <p>{item.technique}</p>

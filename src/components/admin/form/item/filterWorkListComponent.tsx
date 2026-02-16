@@ -2,20 +2,20 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import s from "@/components/admin/admin.module.css";
-import { Category, Filter, WorkFull } from "@/lib/type.ts";
-import { filterWorkFulls, getYearsFromItems } from "@/lib/utils/commonUtils.ts";
+import { Category, Filter, Work } from "@/lib/type.ts";
+import { filterWorks, getYearsFromWorks } from "@/lib/utils/commonUtils.ts";
 
 interface Props {
-  items: WorkFull[];
+  items: Work[];
   categories: Category[];
-  onFilteredItems: (items: WorkFull[]) => void;
+  onFilteredItems: (items: Work[]) => void;
 }
 export default function FilterWorkListComponent({
   items,
   categories,
   onFilteredItems,
 }: Props) {
-  const years = useMemo(() => getYearsFromItems(items), [items]);
+  const years = useMemo(() => getYearsFromWorks(items), [items]);
   const [filter, setFilter] = useState({
     categoryFilter: -1,
     yearFilter: -1,
@@ -37,7 +37,7 @@ export default function FilterWorkListComponent({
   const handleChange = (filterName: keyof Filter, value: number) => {
     const _filter = { ...filter, [filterName]: value };
     setFilter(_filter);
-    onFilteredItems(filterWorkFulls(items, _filter));
+    onFilteredItems(filterWorks(items, _filter));
   };
 
   return (

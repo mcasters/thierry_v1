@@ -12,27 +12,33 @@ import PostForm from "@/components/admin/form/item/postForm.tsx";
 import Modal from "@/components/admin/form/modal.tsx";
 import useKeyboard from "@/components/hooks/useKeyboard.ts";
 import useListSelection from "@/components/hooks/useListSelection.ts";
+import { worksIsEmpty } from "@/lib/utils/commonUtils.ts";
 
 interface Props {
   items: Item[];
-  type: Type;
   categories?: Category[];
 }
 
-export default function ListComponent({ items, type, categories }: Props) {
+export default function ListComponent({ items, categories }: Props) {
   const { ref, isOutside } = useOnClickOutside();
-  const noFilter = type === Type.CATEGORY || type === Type.POST;
   const { selectedIndex, decrease, increase, setSelectedIndex } =
     useListSelection(items);
   useKeyboard("ArrowUp", decrease, !isOutside);
   useKeyboard("ArrowDown", increase, !isOutside);
-  const [itemsToDisplay, setItemsToDisplay] = useState<Item[]>(items);
+
+  const type = items[0].type;
+  const filter = !!categories;
+  const isEmpty = worksIsEmpty(items);
+  const [itemsToDisplay, setItemsToDisplay] = useState<Item[]>(
+    isEmpty ? [] : items,
+  );
+
   const [openedItem, setOpenedItem] = useState<Item>(null);
-  if (noFilter && items !== itemsToDisplay) setItemsToDisplay(items);
+  // if (filter && items !== itemsToDisplay) setItemsToDisplay(items);
 
   const updateModal = useMemo(() => {
     return (
-      <Modal isOpen={openedItem} title="Modification">
+      <Modal isOpen={openedItem} title={`Modification de ${type}}`}>
         {type === Type.CATEGORY ? (
           <CategoryForm
             category={openedItem}
@@ -53,7 +59,7 @@ export default function ListComponent({ items, type, categories }: Props) {
 
   return (
     <>
-      {!!categories && (
+      {!isEmpty && filter && (
         <>
           <FilterWorkListComponent
             items={items}
@@ -69,7 +75,7 @@ export default function ListComponent({ items, type, categories }: Props) {
         className={`${type === Type.CATEGORY ? s.categoryListWrapper : s.itemListWrapper} ${s.listWrapper} area`}
       >
         {itemsToDisplay.map((item, i) => {
-          const isNoCategory =
+          const noCategory =
             type === Type.CATEGORY && item.key === "no-category";
           return (
             <RowListComponent
@@ -80,7 +86,7 @@ export default function ListComponent({ items, type, categories }: Props) {
               categories={categories}
               onClick={() => setSelectedIndex(i)}
               onDoubleClick={
-                isNoCategory ? undefined : (item: Item) => setOpenedItem(item)
+                noCategory ? undefined : (item: Item) => setOpenedItem(item)
               }
             />
           );

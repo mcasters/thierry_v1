@@ -15,7 +15,7 @@ type Props = {
   isSelected: boolean;
   mouseOutside: boolean;
   categories?: Category[];
-  onClick?: () => void;
+  onClick: () => void;
   onDoubleClick?: (item: Item) => void;
 };
 
@@ -40,7 +40,7 @@ export default function RowListComponent({
           opacity: mouseOutside && isSelected ? "60%" : undefined,
           cursor: onDoubleClick ? "pointer" : undefined,
         }}
-        onClick={onClick ? onClick : undefined}
+        onClick={onClick}
         onDoubleClick={() => (onDoubleClick ? onDoubleClick(item) : undefined)}
         title={onDoubleClick ? "Modifier" : undefined}
         role={onDoubleClick ? "button" : undefined}
@@ -85,11 +85,7 @@ export default function RowListComponent({
                 ? () => deleteCategory(item.id, item.workType)
                 : () => deleteItem(item.id, item.type)
             }
-            disabled={
-              isCategory
-                ? item.count > 0 || item.key === "no-category"
-                : undefined
-            }
+            disabled={!onDoubleClick}
           />
         </li>
       </ul>

@@ -1,16 +1,10 @@
 "use client";
 
-import {
-  Category,
-  ItemDarkBackground,
-  Layout,
-  Type,
-  WorkFull,
-} from "@/lib/type";
+import { Category, ItemDarkBackground, Layout, Type, Work } from "@/lib/type";
 import React from "react";
 import s from "@/components/item/itemsPage.module.css";
 import { useMetas } from "@/app/context/metaProvider.tsx";
-import { getItemLayout } from "@/lib/utils/commonUtils.ts";
+import { getWorkLayout } from "@/lib/utils/commonUtils.ts";
 import ItemLayout from "@/components/item/itemLayout.tsx";
 import { getItemsPhotoTabEnhanced } from "@/lib/utils/imageUtils.ts";
 import { META } from "@/constants/admin.ts";
@@ -18,13 +12,13 @@ import Gallery from "@/components/image/gallery/gallery.tsx";
 
 interface Props {
   tag: string;
-  items: WorkFull[];
+  items: Work[];
   category?: Category;
   type: Type.PAINTING | Type.SCULPTURE | Type.DRAWING;
 }
 export default function ItemPage({ tag, items, category, type }: Props) {
   const metas = useMetas();
-  const [itemLayout, itemDarkBackground] = getItemLayout(metas, type);
+  const [itemLayout, itemDarkBackground] = getWorkLayout(metas, type);
   const photosEnhanced =
     itemLayout === Layout.MULTIPLE
       ? getItemsPhotoTabEnhanced(

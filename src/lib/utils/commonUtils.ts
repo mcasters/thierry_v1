@@ -2,7 +2,7 @@ import { Meta } from "@@/prisma/generated/client";
 import { Label } from "@@/prisma/generated/enums";
 import {
   Category,
-  CategoryContentFull,
+  CategoryContent,
   CategoryFull,
   ContentFull,
   DragListElement,
@@ -13,9 +13,9 @@ import {
   ItemDarkBackground,
   Layout,
   Message,
-  PostFull,
+  Post,
   Type,
-  WorkFull,
+  Work,
 } from "@/lib/type.ts";
 import { META } from "@/constants/admin.ts";
 
@@ -84,6 +84,7 @@ export const getMetaMap = (metas: Meta[]): Map<string, string> => {
 };
 
 export const getImageSrc = (item: Item) => {
+  if (item.id === 0) return "";
   let src;
   if (item.type === Type.CATEGORY) {
     src =
@@ -103,9 +104,9 @@ export const getImageSrc = (item: Item) => {
   return src;
 };
 
-export const getEmptyItem = (
+export const getEmptyWork = (
   type: Type.SCULPTURE | Type.DRAWING | Type.PAINTING,
-): WorkFull => {
+): Work => {
   return {
     id: 0,
     type,
@@ -124,7 +125,7 @@ export const getEmptyItem = (
   };
 };
 
-export const getEmptyPost = (): PostFull => {
+export const getEmptyPost = (): Post => {
   return {
     id: 0,
     type: Type.POST,
@@ -145,7 +146,7 @@ export const getEmptyImage = (): Image => {
   };
 };
 
-export const getEmptyCategoryContent = (): CategoryContentFull => {
+export const getEmptyCategoryContent = (): CategoryContent => {
   return {
     id: 0,
     title: "",
@@ -193,7 +194,7 @@ export const getEmptyMessage = (): Message => {
   };
 };
 
-export const getItemLayout = (
+export const getWorkLayout = (
   metas: Map<string, string>,
   type: Type.PAINTING | Type.SCULPTURE | Type.DRAWING,
 ): [Layout, ItemDarkBackground] => {
@@ -214,20 +215,20 @@ export const getHomeLayout = (metas: Map<string, string>): HomeLayout => {
 
 export const getCategoriesFull = (
   categories: Category[],
-  items: WorkFull[],
-  type: Type.PAINTING | Type.SCULPTURE | Type.DRAWING,
+  items: Work[],
 ): CategoryFull[] => {
   const map = new Map();
   categories.forEach((category) => {
     map.set(category.id, {
       ...category,
       type: "catégorie",
-      workType: type,
+      workType: items[0].type,
       images: [],
       count: 0,
     });
   });
   items.forEach((item) => {
+    if (item.id === 0) return [...map.values()];
     const categoryMap =
       item.categoryId === null ? map.get(0) : map.get(item.categoryId);
     categoryMap.images.push(...item.images);
@@ -236,7 +237,7 @@ export const getCategoriesFull = (
   return [...map.values()];
 };
 
-export const getYearsFromItems = (items: WorkFull[]): number[] => {
+export const getYearsFromWorks = (items: Work[]): number[] => {
   const years: number[] = [];
   items.forEach((item) => {
     const date = new Date(item.date);
@@ -249,7 +250,7 @@ export const getYearsFromItems = (items: WorkFull[]): number[] => {
 const dotToComma = (number: number): string =>
   number.toString().replace(".", ",");
 
-export const getSizeText = (item: WorkFull): string =>
+export const getSizeText = (item: Work): string =>
   item.type === Type.SCULPTURE
     ? `${dotToComma(item.height)} x ${dotToComma(item.width)} x ${dotToComma(item.length)} cm`
     : `${dotToComma(item.height)} x ${dotToComma(item.width)} cm`;
@@ -263,25 +264,25 @@ export const sortDragList = (
   return dragList.toSorted(compare);
 };
 
-export const filterWorkFulls = (
-  workFulls: WorkFull[],
-  filter: Filter,
-): WorkFull[] => {
-  function filterByCategory(list: WorkFull[]) {
+export const worksIsEmpty = (works: Work[]): boolean =>
+  works.length === 1 && works[0].id === 0;
+
+export const filterWorks = (workFulls: Work[], filter: Filter): Work[] => {
+  function filterByCategory(list: Work[]) {
     return filter.categoryFilter === -1
       ? list
       : filter.categoryFilter === 0
         ? list.filter((i) => !i.categoryId)
         : list.filter((i) => i.categoryId === filter.categoryFilter);
   }
-  function filterByYear(list: WorkFull[]) {
+  function filterByYear(list: Work[]) {
     return filter.yearFilter === -1
       ? list
       : list.filter(
           (i) => new Date(i.date).getFullYear() === filter.yearFilter,
         );
   }
-  function filterByIsOut(list: WorkFull[]) {
+  function filterByIsOut(list: Work[]) {
     return filter.isOutFilter === -1
       ? list
       : filter.isOutFilter === 0
