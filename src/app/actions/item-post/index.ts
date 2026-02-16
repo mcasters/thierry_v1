@@ -1,10 +1,10 @@
 "use server";
 
-import { Category, PostFull, Type, WorkFull } from "@/lib/type";
+import { Category, Post, Type, Work } from "@/lib/type";
 import {
   KEYS,
   queryAllCategories,
-  queryAllItems,
+  queryAllWorks,
   queryCategories,
   queryCategory,
   queryItemsByCategory,
@@ -12,7 +12,12 @@ import {
   queryNoCategory,
   queryYears,
 } from "@/app/actions/item-post/queries";
-import { getNoCategory } from "@/lib/utils/commonUtils";
+import {
+  getEmptyCategoryFull,
+  getEmptyPost,
+  getEmptyWork,
+  getNoCategory,
+} from "@/lib/utils/commonUtils";
 
 import { cacheDatas } from "@/lib/utils/serverUtils";
 import prisma from "../../../lib/prisma.ts";
@@ -45,7 +50,7 @@ export async function getCategories(
 export async function getItemsByYear(
   year: string,
   type: Type.PAINTING | Type.SCULPTURE | Type.DRAWING,
-): Promise<WorkFull[]> {
+): Promise<Work[]> {
   const items = await cacheDatas(
     () => queryItemsByYear(type, year),
     `${KEYS[type].itemsByYear}-${year}`,
@@ -74,7 +79,7 @@ export async function getCategory(
 export async function getItemsByCategory(
   categoryKey: string,
   type: Type.PAINTING | Type.SCULPTURE | Type.DRAWING,
-): Promise<WorkFull[]> {
+): Promise<Work[]> {
   const items = await cacheDatas(
     () => queryItemsByCategory(type, categoryKey),
     `${KEYS[type].itemsByCategory}-${categoryKey}`,
@@ -83,7 +88,7 @@ export async function getItemsByCategory(
   return JSON.parse(JSON.stringify(items));
 }
 
-export async function getPostsFull(): Promise<PostFull[]> {
+export async function getPosts(): Promise<Post[]> {
   const posts = await cacheDatas(
     async () =>
       await prisma.post.findMany({
@@ -96,8 +101,22 @@ export async function getPostsFull(): Promise<PostFull[]> {
   return JSON.parse(JSON.stringify(posts));
 }
 
-// FOR ADMIN : Categories with also no Items inside
-export async function getAllCategories(
+export async function getAdminPosts(): Promise<Post[]> {
+  const posts = await cacheDatas(
+    async () =>
+      await prisma.post.findMany({
+        include: { images: true },
+        orderBy: { title: "desc" },
+      }),
+    "posts",
+  );
+
+  if (posts.length === 0) posts.push(getEmptyPost());
+
+  return JSON.parse(JSON.stringify(posts));
+}
+
+export async function getAdminCategories(
   type: Type.PAINTING | Type.SCULPTURE | Type.DRAWING,
 ): Promise<Category[]> {
   const res = await queryAllCategories(type);
@@ -105,14 +124,17 @@ export async function getAllCategories(
 
   if (noCategory) res.push(noCategory);
 
+  if (res.length === 0) res.push(getEmptyCategoryFull(type));
+
   return JSON.parse(JSON.stringify(res));
 }
 
-// FOR ADMIN
-export async function getAllItems(
+export async function getAdminWorks(
   type: Type.PAINTING | Type.SCULPTURE | Type.DRAWING,
-): Promise<WorkFull[]> {
-  const items = await queryAllItems(type);
+): Promise<Work[]> {
+  const items = await queryAllWorks(type);
+
+  if (items.length === 0) items.push(getEmptyWork(type));
 
   return JSON.parse(JSON.stringify(items));
 }

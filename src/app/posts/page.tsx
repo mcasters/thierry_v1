@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
-import { PostFull } from "@/lib/type";
+import { Post } from "@/lib/type";
 
-import { getPostsFull } from "@/app/actions/item-post";
+import { getPosts } from "@/app/actions/item-post";
 import { Metadata } from "next";
 import { getMetaMap } from "@/lib/utils/commonUtils.ts";
 import { getMetas } from "@/app/actions/meta";
@@ -30,13 +30,13 @@ export async function generateMetadata(): Promise<Metadata | undefined> {
 }
 
 export default async function Posts() {
-  const posts = await getPostsFull();
+  const posts = await getPosts();
 
   return (
     <>
       <h1 className="hidden">Posts</h1>
       {posts.length > 0 &&
-        posts.map((post: PostFull) => {
+        posts.map((post: Post) => {
           const photoTab = getPostPhotoTab(
             post,
             `Photo du post "${post.title}" de ${process.env.TITLE}`,
