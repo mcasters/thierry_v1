@@ -1,18 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "lib": [
-      "es2020",
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "ES2023",
+    "lib": ["ES2023", "dom", "dom.iterable", "esnext"],
     "sourceMap": true,
     "outDir": "dist",
     "allowJs": true,
-    "module": "esnext",
+    "module": "ESNext",
     "skipLibCheck": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -23,9 +18,8 @@
     "resolveJsonModule": true,
     "incremental": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"],
+      "@@/*": ["./*"]
     },
     "plugins": [
       {
@@ -40,7 +34,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

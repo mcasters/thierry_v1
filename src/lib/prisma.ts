@@ -1,7 +1,11 @@
-import { PrismaClient } from "../../prisma/generated/client";
+import { PrismaClient } from "@@/prisma/generated/client";
+import { PrismaMariaDb } from "@prisma/adapter-mariadb";
+
+const adapter = new PrismaMariaDb(process.env.DATABASE_URL as string);
 
 const prismaClientSingleton = () => {
   return new PrismaClient({
+    adapter,
     omit: {
       painting: { imageFilename: true, imageWidth: true, imageHeight: true },
       drawing: { imageFilename: true, imageWidth: true, imageHeight: true },

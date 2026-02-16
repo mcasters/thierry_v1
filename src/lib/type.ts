@@ -1,8 +1,8 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 /* eslint-disable  @typescript-eslint/no-empty-object-type */
 
-import { Prisma, User } from "../../prisma/generated/client";
-import prisma from "@/lib/script.ts";
+import { Prisma, User } from "@@/prisma/generated/client";
+import prisma from "./prisma.ts";
 import { JSX } from "react";
 
 type StringKeys<T> = {
@@ -20,21 +20,20 @@ export enum Type {
 
 type PaintingFull = Prisma.Result<typeof prisma.painting, {}, any>; // With Image[] field
 type DrawingFull = Prisma.Result<typeof prisma.drawing, {}, any>; // With Image[] field
-type SculptureFull = Prisma.Result<typeof prisma.sculpture, {}, any>; // No change - just to uniformise name
+type SculptureFull = typeof prisma.sculpture; // No change - just to uniformise name
+export type WorkFull = PaintingFull | SculptureFull | DrawingFull;
+
 export type CategoryContentFull = Prisma.Result<
   typeof prisma.categoryContent,
   {},
   any
 >; // With Image field
-export type PostFull = Prisma.Result<typeof prisma.post, {}, any>; // No change - just to uniformise name
-
 export type Category = {
   id: number;
   key: string;
   value: string;
   content: CategoryContentFull;
 };
-
 export type CategoryFull = Category & {
   type: Type.CATEGORY;
   workType: Type.PAINTING | Type.SCULPTURE | Type.DRAWING;
@@ -42,7 +41,7 @@ export type CategoryFull = Category & {
   count: number;
 };
 
-export type WorkFull = PaintingFull | SculptureFull | DrawingFull;
+export type PostFull = Prisma.Result<typeof prisma.post, {}, any>; // No change - just to uniformise name
 
 export type Item = WorkFull | PostFull | CategoryFull;
 

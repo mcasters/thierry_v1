@@ -8,6 +8,7 @@
   "author": "Marion Casters",
   "license": "ISC",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "dev": "NODE_ENV=development node server.js",
     "build": "next build",
@@ -20,7 +21,8 @@
     "deploy-build": "prisma generate && dotenv -e .env.local -- prisma migrate deploy && next build"
   },
   "dependencies": {
-    "@prisma/client": "^6.19.2",
+    "@prisma/adapter-mariadb": "^7.4.0",
+    "@prisma/client": "^7.4.0",
     "bcryptjs": "^3.0.3",
     "cross-env": "^10.1.0",
     "date-fns": "^4.1.0",
@@ -39,14 +41,15 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/bcryptjs": "^3.0.0",
-    "@types/node": "^22",
+    "@types/node": "^22.19.11",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.8.1",
-    "prisma": "^6.19.2",
-    "typescript": "^5"
+    "prisma": "^7.4.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }
