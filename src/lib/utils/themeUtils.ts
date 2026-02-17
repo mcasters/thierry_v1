@@ -1,4 +1,4 @@
-import { PresetColor, Theme } from "../../../prisma/generated/client";
+import { PresetColor, Theme } from "@@/prisma/generated/client";
 import { DragListElement, OnlyString, StructTheme } from "@/lib/type.ts";
 
 import { BASE_PRESET_COLOR, BASE_THEME } from "@/constants/specific";

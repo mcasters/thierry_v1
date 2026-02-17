@@ -1,7 +1,7 @@
 import { Type } from "@/lib/type";
 import s from "@/components/admin/admin.module.css";
 import React from "react";
-import { getAdminCategories, getAdminWorks } from "../../actions/item-post";
+import { getAdminCategories, getAdminWorks } from "@/app/actions/item-post";
 import ItemLayoutForm from "@/components/admin/form/item/itemLayoutForm.tsx";
 import AddButton from "@/components/admin/form/addButton.tsx";
 import {

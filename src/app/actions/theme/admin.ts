@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "../../../lib/prisma.ts";
+import prisma from "@/lib/prisma.ts";
 import { revalidatePath } from "next/cache";
 import { PresetColor, Theme } from "@@/prisma/generated/client";
 import { THEME } from "@/constants/admin";

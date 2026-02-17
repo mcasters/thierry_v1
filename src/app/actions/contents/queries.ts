@@ -1,5 +1,5 @@
 import { ContentFull } from "@/lib/type";
-import prisma from "../../../lib/prisma.ts";
+import prisma from "@/lib/prisma.ts";
 import { Label } from "@@/prisma/generated/client";
 import {
   getMiscellaneousDir,

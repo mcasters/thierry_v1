@@ -1,4 +1,4 @@
-import { getCategory, getItemsByCategory } from "../../actions/item-post";
+import { getCategory, getItemsByCategory } from "@/app/actions/item-post";
 import { Type } from "@/lib/type";
 import { Metadata } from "next";
 import { getMetaMap } from "@/lib/utils/commonUtils";

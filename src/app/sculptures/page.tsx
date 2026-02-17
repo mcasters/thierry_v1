@@ -1,6 +1,6 @@
 import { Type } from "@/lib/type";
 import ItemHome from "@/components/item/itemHome.tsx";
-import { getCategories, getYears } from "../actions/item-post";
+import { getCategories, getYears } from "@/app/actions/item-post";
 import { Metadata } from "next";
 import { getMetaMap } from "@/lib/utils/commonUtils.ts";
 import { getMetas } from "@/app/actions/meta";

@@ -8,7 +8,7 @@ import {
   getCategoryData,
   getCategoryModel,
 } from "@/app/actions/item-post/categories/utils";
-import prisma from "../../../../lib/prisma.ts";
+import prisma from "@/lib/prisma.ts";
 
 export async function createCategory(
   prevState: { message: string; isError: boolean } | null,
@@ -20,15 +20,39 @@ export async function createCategory(
   const model = getCategoryModel(type);
 
   try {
-    const alreadyExists = await model.findUnique({
-      where: { value },
-    });
-    if (alreadyExists)
-      return {
-        message: "Erreur : nom de catégorie déjà existant",
-        isError: true,
-      };
-    await model.create({ data });
+    if (type === Type.PAINTING) {
+      const alreadyExists = await model.findUnique({
+        where: { value },
+      });
+      if (alreadyExists)
+        return {
+          message: "Erreur : nom de catégorie déjà existant",
+          isError: true,
+        };
+      await prisma.paintingCategory.create({ data });
+    }
+    if (type === Type.SCULPTURE) {
+      const alreadyExists = await model.findUnique({
+        where: { value },
+      });
+      if (alreadyExists)
+        return {
+          message: "Erreur : nom de catégorie déjà existant",
+          isError: true,
+        };
+      await prisma.sculptureCategory.create({ data });
+    }
+    if (type === Type.DRAWING) {
+      const alreadyExists = await model.findUnique({
+        where: { value },
+      });
+      if (alreadyExists)
+        return {
+          message: "Erreur : nom de catégorie déjà existant",
+          isError: true,
+        };
+      await prisma.drawingCategory.create({ data });
+    }
 
     revalidatePath(`/admin/${type}s`);
     return { message: "Catégorie ajoutée", isError: false };

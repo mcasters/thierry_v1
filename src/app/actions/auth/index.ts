@@ -1,7 +1,7 @@
 "use server";
 
 import { removeCookie, setCookie } from "@/app/actions/auth/utils.ts";
-import prisma from "../../../lib/prisma.ts";
+import prisma from "@/lib/prisma.ts";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 

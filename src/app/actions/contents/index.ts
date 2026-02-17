@@ -1,5 +1,5 @@
 "use server";
-import prisma from "../../../lib/prisma.ts";
+import prisma from "@/lib/prisma.ts";
 import { ContentFull } from "@/lib/type";
 import { cacheDatas } from "@/lib/utils/serverUtils";
 
