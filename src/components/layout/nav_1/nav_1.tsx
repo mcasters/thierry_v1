@@ -8,6 +8,9 @@ import { getDarkerColor } from "@/lib/utils/themeUtils.ts";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import React from "react";
+import { HomeLayout } from "@/lib/type.ts";
+import { getHomeLayout } from "@/lib/utils/commonUtils.ts";
+import { useMetas } from "@/app/context/metaProvider.tsx";
 
 type Props = {
   fixed: boolean;
@@ -15,6 +18,8 @@ type Props = {
 };
 
 export default function Nav_1({ fixed, themePage }: Props) {
+  const metas = useMetas();
+  const isPlainHomeLayout = getHomeLayout(metas) === HomeLayout.PLAIN;
   const theme = useTheme();
   const path = `/${usePathname().split("/")[1]}`;
 
@@ -24,31 +29,36 @@ export default function Nav_1({ fixed, themePage }: Props) {
       style={{
         backgroundColor: fixed ? theme[themePage].menu1.background : undefined,
         borderBottomColor: fixed
-          ? getDarkerColor(theme[themePage].menu1.background, -10)
+          ? getDarkerColor(theme[themePage].menu1.background, -40)
           : undefined,
       }}
     >
-      <ul
-        className={s.ul}
-        style={{
-          borderBottomColor: !fixed
-            ? getDarkerColor(theme.home.menu1.background, -10)
-            : undefined,
-        }}
-      >
-        {MENU_1_ITEMS.map((item) => {
-          return (
-            <li key={item.TAG}>
-              <Link
-                href={item.ROUTE}
-                className={item.ROUTE === path ? "active" : undefined}
-              >
-                {item.TAG}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+      <div className={s.parent}>
+        <ul
+          className={s.ul}
+          style={{
+            borderBottomColor: fixed
+              ? undefined
+              : getDarkerColor(theme.home.menu1.background, -20),
+          }}
+        >
+          {MENU_1_ITEMS.map((item) => {
+            return (
+              <li key={item.TAG}>
+                <Link
+                  href={item.ROUTE}
+                  className={item.ROUTE === path ? "active" : undefined}
+                >
+                  {item.TAG}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        {themePage === "home" && !isPlainHomeLayout && (
+          <div className={s.shadow} />
+        )}
+      </div>
       <style jsx global>{`
         .nav1 a {
           color: ${theme[themePage].menu1.link};

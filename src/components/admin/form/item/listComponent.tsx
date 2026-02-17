@@ -34,7 +34,6 @@ export default function ListComponent({ items, categories }: Props) {
   );
 
   const [openedItem, setOpenedItem] = useState<Item>(null);
-  // if (filter && items !== itemsToDisplay) setItemsToDisplay(items);
 
   const updateModal = useMemo(() => {
     return (
