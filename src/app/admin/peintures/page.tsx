@@ -1,22 +1,19 @@
+"use server";
+
 import s from "@/components/admin/admin.module.css";
 import React from "react";
 import { Type } from "@/lib/type";
-import { getAdminCategories, getAdminWorks } from "@/app/actions/item-post";
-import ItemLayoutForm from "@/components/admin/form/item/itemLayoutForm.tsx";
-import AddButton from "@/components/admin/form/addButton.tsx";
+import ItemLayoutForm from "@/components/admin/item/form/itemLayoutForm.tsx";
 import {
-  getCategoriesFull,
-  getEmptyCategoryFull,
-  getEmptyWork,
-  worksIsEmpty,
-} from "@/lib/utils/commonUtils.ts";
-import ListComponent from "@/components/admin/form/item/listComponent.tsx";
-import { MESSAGE } from "@/constants/admin.ts";
+  getAdminCategories,
+  getAdminWorks,
+} from "@/app/actions/item-post/admin.ts";
+import WorkManagement from "@/components/admin/item/workManagement.tsx";
 
 export default async function Peintures() {
   const type = Type.PAINTING;
   const categories = await getAdminCategories(type);
-  const items = await getAdminWorks(type);
+  const works = await getAdminWorks(type);
 
   return (
     <div className={s.container}>
@@ -24,16 +21,7 @@ export default async function Peintures() {
       <h2 className={s.title2}>Mise en page</h2>
       <ItemLayoutForm type={type} />
       <div className="separate" />
-      <h2
-        className={s.title2}
-      >{`Gestion des peintures ( total : ${worksIsEmpty(items) ? "0" : items.length} )`}</h2>
-      <ListComponent items={items} categories={categories} />
-      <AddButton item={getEmptyWork(type)} categories={categories} />
-      <div className="separate" />
-      <h2 className={s.title2}>Gestion des catégories</h2>
-      <ListComponent items={getCategoriesFull(categories, items)} />
-      <h5>{MESSAGE.category}</h5>
-      <AddButton item={getEmptyCategoryFull(type)} />
+      <WorkManagement works={works} categories={categories} />
     </div>
   );
 }
