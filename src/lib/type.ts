@@ -2,7 +2,6 @@
 /* eslint-disable  @typescript-eslint/no-empty-object-type */
 
 import { Prisma, User } from "@@/prisma/generated/client";
-import prisma from "./prisma.ts";
 import { JSX } from "react";
 
 type StringKeys<T> = {
@@ -18,40 +17,85 @@ export enum Type {
   CATEGORY = "catégorie",
 }
 
-type Painting = Prisma.Result<typeof prisma.painting, {}, any>; // With Image[] field
-type Drawing = Prisma.Result<typeof prisma.drawing, {}, any>; // With Image[] field
-type Sculpture = typeof prisma.sculpture; // No change - just to uniformise name
-export type Work = Painting | Sculpture | Drawing;
+export interface Image {
+  filename: string;
+  width: number;
+  height: number;
+  isMain: boolean;
+}
 
-export type CategoryContent = Prisma.Result<
-  typeof prisma.categoryContent,
-  {},
-  any
->; // With Image field
-export type Category = {
+export interface Category {
   id: number;
   key: string;
   value: string;
-  content: CategoryContent;
-};
-export type CategoryFull = Category & {
+  content: {
+    title: string;
+    text: string;
+    image: Image;
+  };
+}
+
+export interface Work {
+  id: number;
+  type: Type.PAINTING | Type.SCULPTURE | Type.DRAWING;
+  title: string;
+  date: Date;
+  technique: string;
+  description: string;
+  height: number;
+  width: number;
+  length: number;
+  isToSell: boolean;
+  price: number | null;
+  sold: boolean;
+  images: Image[];
+  categoryId: number | null;
+  isOut: boolean;
+  outInformation: string;
+}
+
+export interface Post {
+  id: number;
+  type: Type.POST;
+  title: string;
+  date: Date;
+  text: string;
+  published: boolean;
+  viewCount: number;
+  images: Image[];
+}
+
+export interface Admin {
+  id: number;
+  type: Type;
+  modifiable: boolean;
+}
+
+export interface AdminCategory extends Category {
   type: Type.CATEGORY;
   workType: Type.PAINTING | Type.SCULPTURE | Type.DRAWING;
   images: Image[];
   count: number;
-};
+  modifiable: boolean;
+}
 
-export type Post = Prisma.Result<typeof prisma.post, {}, any>; // No change - just to uniformise name
+export interface AdminWork extends Work {
+  modifiable: boolean;
+}
 
-export type Item = Work | Post | CategoryFull;
+export interface AdminPost extends Post {
+  modifiable: boolean;
+}
 
-export type Message = {
+export interface Message {
   id: number;
   date: Date;
   dateUpdated: Date | null;
   text: string;
-  author: User;
-};
+  author: Prisma.UserGetPayload<{
+    omit: { password: true };
+  }>;
+}
 
 export enum Layout {
   MONO,
@@ -70,20 +114,25 @@ export enum HomeLayout {
   NAV,
 }
 
+export const Label = {
+  INTRO: "INTRO",
+  SLIDER: "SLIDER",
+  ADDRESS: "ADDRESS",
+  PHONE: "PHONE",
+  EMAIL: "EMAIL",
+  TEXT_CONTACT: "TEXT_CONTACT",
+  PRESENTATION: "PRESENTATION",
+  DEMARCHE: "DEMARCHE",
+  INSPIRATION: "INSPIRATION",
+} as const;
+
+export type Label = (typeof Label)[keyof typeof Label];
+
 export type ContentFull = {
-  id: number;
-  label: string;
+  label: Label;
   title: string | null;
   text: string;
   images: Image[];
-};
-
-export type Image = {
-  id: number;
-  filename: string;
-  width: number;
-  height: number;
-  isMain: boolean;
 };
 
 export interface Photo {

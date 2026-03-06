@@ -1,19 +1,18 @@
 import { Meta } from "@@/prisma/generated/client";
 import { Label } from "@@/prisma/generated/enums";
 import {
+  AdminCategory,
+  AdminPost,
+  AdminWork,
   Category,
-  CategoryContent,
-  CategoryFull,
   ContentFull,
   DragListElement,
   Filter,
   HomeLayout,
   Image,
-  Item,
   ItemDarkBackground,
   Layout,
   Message,
-  Post,
   Type,
   Work,
 } from "@/lib/type.ts";
@@ -83,30 +82,35 @@ export const getMetaMap = (metas: Meta[]): Map<string, string> => {
   return map;
 };
 
-export const getImageSrc = (item: Item) => {
+export const getThumbnailSrc = (
+  item: AdminCategory | AdminWork | AdminPost,
+) => {
   if (item.id === 0) return "";
-  let src;
-  if (item.type === Type.CATEGORY) {
-    src =
-      item.content.image.filename !== ""
+
+  switch (item.type) {
+    case Type.CATEGORY: {
+      return item.content.image.filename !== ""
         ? `/images/${item.workType}/sm/${item.content.image.filename}`
         : "";
-  } else if (item.type === Type.POST) {
-    let image = item.images.filter((i: Image) => i.isMain)[0];
-    if (!image) {
-      image = item.images[0];
     }
-    src = image ? `/images/post/${image.filename}` : "";
-  } else {
-    src = `/images/${item.type}/${item.images[0].filename}`;
+    case Type.POST: {
+      let image = item.images.find((i: Image) => i.isMain);
+      if (!image) image = item.images[0];
+      return image && image.filename !== ""
+        ? `/images/post/${image.filename}`
+        : "";
+    }
+    default: {
+      return item.images[0].filename !== ""
+        ? `/images/${item.type}/${item.images[0].filename}`
+        : "";
+    }
   }
-
-  return src;
 };
 
 export const getEmptyWork = (
   type: Type.SCULPTURE | Type.DRAWING | Type.PAINTING,
-): Work => {
+): AdminWork => {
   return {
     id: 0,
     type,
@@ -118,27 +122,32 @@ export const getEmptyWork = (
     width: 0,
     length: 0,
     isToSell: false,
-    price: undefined,
+    price: null,
     sold: false,
     images: [],
     categoryId: null,
+    isOut: false,
+    outInformation: "",
+    modifiable: true,
   };
 };
 
-export const getEmptyPost = (): Post => {
+export const getEmptyPost = (): AdminPost => {
   return {
     id: 0,
     type: Type.POST,
     title: "",
     date: new Date(),
     text: "",
-    images: [],
+    images: [] as Image[],
+    published: false,
+    viewCount: 0,
+    modifiable: true,
   };
 };
 
 export const getEmptyImage = (): Image => {
   return {
-    id: 0,
     filename: "",
     width: 0,
     height: 0,
@@ -146,27 +155,23 @@ export const getEmptyImage = (): Image => {
   };
 };
 
-export const getEmptyCategoryContent = (): CategoryContent => {
-  return {
-    id: 0,
-    title: "",
-    text: "",
-    image: getEmptyImage(),
-  };
-};
-
-export const getEmptyCategoryFull = (
+export const getEmptyCategory = (
   workType: Type.PAINTING | Type.DRAWING | Type.SCULPTURE,
-): CategoryFull => {
+): AdminCategory => {
   return {
     id: 0,
+    type: Type.CATEGORY,
+    workType,
     key: "",
     value: "",
-    type: Type.CATEGORY,
+    content: {
+      title: "",
+      text: "",
+      image: getEmptyImage(),
+    },
     count: 0,
-    workType,
-    content: getEmptyCategoryContent(),
     images: [getEmptyImage()],
+    modifiable: true,
   };
 };
 
@@ -175,7 +180,11 @@ export const getNoCategory = (): Category => {
     id: 0,
     key: "no-category",
     value: "Sans catégorie",
-    content: getEmptyCategoryContent(),
+    content: {
+      title: "",
+      text: "",
+      image: getEmptyImage(),
+    },
   };
 };
 
@@ -188,7 +197,6 @@ export const getEmptyMessage = (): Message => {
     author: {
       id: 0,
       email: "",
-      password: "",
       isAdmin: false,
     },
   };
@@ -211,30 +219,6 @@ export const getWorkLayout = (
 
 export const getHomeLayout = (metas: Map<string, string>): HomeLayout => {
   return parseInt(metas.get(META.HOME_LAYOUT) || "0");
-};
-
-export const getCategoriesFull = (
-  categories: Category[],
-  items: Work[],
-): CategoryFull[] => {
-  const map = new Map();
-  categories.forEach((category) => {
-    map.set(category.id, {
-      ...category,
-      type: "catégorie",
-      workType: items[0].type,
-      images: [],
-      count: 0,
-    });
-  });
-  items.forEach((item) => {
-    if (item.id === 0) return [...map.values()];
-    const categoryMap =
-      item.categoryId === null ? map.get(0) : map.get(item.categoryId);
-    categoryMap.images.push(...item.images);
-    categoryMap.count += 1;
-  });
-  return [...map.values()];
 };
 
 export const getYearsFromWorks = (items: Work[]): number[] => {
@@ -264,30 +248,30 @@ export const sortDragList = (
   return dragList.toSorted(compare);
 };
 
-export const worksIsEmpty = (works: Work[]): boolean =>
-  works.length === 1 && works[0].id === 0;
-
-export const filterWorks = (workFulls: Work[], filter: Filter): Work[] => {
-  function filterByCategory(list: Work[]) {
+export const filterWorks = (
+  works: AdminWork[],
+  filter: Filter,
+): AdminWork[] => {
+  function filterByCategory(list: AdminWork[]) {
     return filter.categoryFilter === -1
       ? list
       : filter.categoryFilter === 0
         ? list.filter((i) => !i.categoryId)
         : list.filter((i) => i.categoryId === filter.categoryFilter);
   }
-  function filterByYear(list: Work[]) {
+  function filterByYear(list: AdminWork[]) {
     return filter.yearFilter === -1
       ? list
       : list.filter(
           (i) => new Date(i.date).getFullYear() === filter.yearFilter,
         );
   }
-  function filterByIsOut(list: Work[]) {
+  function filterByIsOut(list: AdminWork[]) {
     return filter.isOutFilter === -1
       ? list
       : filter.isOutFilter === 0
         ? list.filter((i) => !i.isOut)
         : list.filter((i) => i.isOut);
   }
-  return filterByCategory(filterByYear(filterByIsOut(workFulls)));
+  return filterByCategory(filterByYear(filterByIsOut(works)));
 };
