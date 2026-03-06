@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Label } from "@@/prisma/generated/client";
-import SubmitButton from "@/components/admin/form/submitButton";
-import CancelButton from "@/components/admin/form/cancelButton";
-import { useAlert } from "@/app/context/alertProvider";
-import { updateContent } from "@/app/actions/contents/admin";
+import { Label } from "@/lib/type.ts";
+import SubmitButton from "@/components/admin/common/button/submitButton.tsx";
+import CancelButton from "@/components/admin/common/button/cancelButton.tsx";
+import { useAlert } from "@/app/context/alertProvider.tsx";
+import { updateContent } from "@/app/actions/contents/admin.ts";
 
 interface Props {
   label: Label;
@@ -18,7 +18,7 @@ export default function TextAreaForm({ label, textContent, textLabel }: Props) {
   const alert = useAlert();
 
   const action = async (formData: FormData) => {
-    const { message, isError } = await updateContent(null, formData);
+    const { message, isError } = await updateContent(formData);
     alert(message, isError);
     setIsChanged(false);
   };

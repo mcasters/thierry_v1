@@ -12,7 +12,7 @@ import {
   ThemeTarget,
 } from "@/lib/type";
 import ColorPicker from "@/components/admin/theme/dashboard/colorPicker";
-import Modal from "@/components/admin/form/modal.tsx";
+import Modal from "@/components/admin/common/modal.tsx";
 import { createPresetColor } from "@/app/actions/theme/admin";
 import { useAlert } from "@/app/context/alertProvider";
 import { colorNameToHex } from "@/lib/utils/themeUtils";
@@ -98,10 +98,7 @@ export default function ColorSwatch({ themeKey, pageKey, targetKey }: Props) {
         style={{
           backgroundColor: colorNameToHex(color, presetColors),
         }}
-        onClick={(e) => {
-          e.preventDefault();
-          toggle();
-        }}
+        onClick={() => toggle()}
         title={color}
       />
       <p className={s.colorLabel}>{label}</p>

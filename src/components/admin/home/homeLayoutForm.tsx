@@ -2,11 +2,11 @@
 
 import React, { useState } from "react";
 import s from "@/components/admin/admin.module.css";
-import { useAlert } from "@/app/context/alertProvider";
-import { updateMeta } from "@/app/actions/meta/admin";
+import { useAlert } from "@/app/context/alertProvider.tsx";
+import { updateMeta } from "@/app/actions/meta/admin.ts";
 import Image from "next/image";
-import { useMetas } from "@/app/context/metaProvider";
-import { getHomeLayout } from "@/lib/utils/commonUtils";
+import { useMetas } from "@/app/context/metaProvider.tsx";
+import { getHomeLayout } from "@/lib/utils/commonUtils.ts";
 
 export default function HomeLayoutForm() {
   const metas = useMetas();
@@ -14,7 +14,7 @@ export default function HomeLayoutForm() {
   const [value, setValue] = useState<string>(getHomeLayout(metas).toString());
 
   const submit = async (formData: FormData) => {
-    const { message, isError } = await updateMeta(null, formData);
+    const { message, isError } = await updateMeta(formData);
     alert(message, isError);
   };
 

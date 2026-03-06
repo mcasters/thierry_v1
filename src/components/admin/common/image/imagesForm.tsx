@@ -1,18 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import SubmitButton from "@/components/admin/form/submitButton";
-import CancelButton from "@/components/admin/form/cancelButton";
+import SubmitButton from "@/components/admin/common/button/submitButton.tsx";
+import CancelButton from "@/components/admin/common/button/cancelButton.tsx";
 import { useAlert } from "@/app/context/alertProvider";
 import {
   deleteImageContent,
   updateImageContent,
 } from "@/app/actions/contents/admin";
 import s from "@/components/admin/admin.module.css";
-import { Image } from "@/lib/type";
-import Preview from "@/components/admin/form/image/preview.tsx";
-import { Label } from "@@/prisma/generated/client";
-import ImageInput from "@/components/admin/form/image/imageInput.tsx";
+import { Image, Label } from "@/lib/type";
+import Preview from "@/components/admin/common/image/preview.tsx";
+import ImageInput from "@/components/admin/common/image/imageInput.tsx";
 
 type Props = {
   images: Image[];
@@ -37,7 +36,7 @@ export default function ImagesForm({
 
   const submit = async (formData: FormData) => {
     resizedFiles.forEach((file) => formData.append("files", file));
-    const { message, isError } = await updateImageContent(null, formData);
+    const { message, isError } = await updateImageContent(formData);
     alert(message, isError);
     setResizedFiles([]);
     setReset((prevState) => prevState + 1);

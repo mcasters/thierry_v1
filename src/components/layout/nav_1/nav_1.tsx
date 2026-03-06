@@ -8,9 +8,9 @@ import { getDarkerColor } from "@/lib/utils/themeUtils.ts";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import React from "react";
-import { HomeLayout } from "@/lib/type.ts";
-import { getHomeLayout } from "@/lib/utils/commonUtils.ts";
 import { useMetas } from "@/app/context/metaProvider.tsx";
+import { getHomeLayout } from "@/lib/utils/commonUtils.ts";
+import { HomeLayout } from "@/lib/type.ts";
 
 type Props = {
   fixed: boolean;

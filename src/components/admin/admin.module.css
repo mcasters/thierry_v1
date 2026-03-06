@@ -44,7 +44,11 @@
   text-align: left;
 }
 
-.column {
+.filter select {
+  margin: 0;
+}
+
+.columnWrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 1em;
@@ -61,7 +65,7 @@
 }
 
 .checkTextForm label {
-  min-width: 95px;
+  min-width: 120px;
 }
 
 .buttonSection {
@@ -147,6 +151,7 @@
   display: block;
   object-fit: contain;
   padding: 0 2px;
+  width: auto;
 }
 
 /* End image */

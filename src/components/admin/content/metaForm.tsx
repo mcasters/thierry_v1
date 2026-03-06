@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import s from "@/components/admin/admin.module.css";
-import SubmitButton from "@/components/admin/form/submitButton";
-import CancelButton from "@/components/admin/form/cancelButton";
-import { useAlert } from "@/app/context/alertProvider";
-import { updateMeta } from "@/app/actions/meta/admin";
+import SubmitButton from "@/components/admin/common/button/submitButton.tsx";
+import CancelButton from "@/components/admin/common/button/cancelButton.tsx";
+import { useAlert } from "@/app/context/alertProvider.tsx";
+import { updateMeta } from "@/app/actions/meta/admin.ts";
 
 interface Props {
   content: string;
@@ -24,7 +24,7 @@ export default function MetaForm({
   const alert = useAlert();
 
   const action = async (formData: FormData) => {
-    const { message, isError } = await updateMeta(null, formData);
+    const { message, isError } = await updateMeta(formData);
     alert(message, isError);
     setIsChanged(false);
   };
