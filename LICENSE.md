@@ -1,5 +1,5 @@
 
-Copyright (c) 2026, Marion <contact@thierrycasters.fr>
+Copyright (c) 2026, Marion <contact@marioncasters.fr>
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
