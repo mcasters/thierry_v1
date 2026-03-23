@@ -30,9 +30,21 @@ export const THEME_TARGET_LABEL = {
   linkHover: "Lien pointé*",
 };
 
+export const KEY_LABEL = {
+  INTRO: "INTRO",
+  SLIDER: "SLIDER",
+  ADDRESS: "ADDRESS",
+  PHONE: "PHONE",
+  EMAIL: "EMAIL",
+  TEXT_CONTACT: "TEXT_CONTACT",
+  PRESENTATION: "PRESENTATION",
+  DEMARCHE: "DEMARCHE",
+  INSPIRATION: "INSPIRATION",
+} as const;
+
 export const COOKIE_NAME = "adminSession";
 
-export const META = {
+export const KEY_META = {
   SITE_TITLE: "siteTitle",
   SITE_EMAIL: "siteEmail",
   FOOTER: "footerContent",
@@ -72,45 +84,46 @@ export const META = {
 
   DOCUMENT_TITLE_CONTACT: "documentTitleContact",
   DESCRIPTION_CONTACT: "descriptionContact",
-};
+} as const;
 
-export const SEO: { [key: string]: string } = {
-  [META.SEO_SITE_TITLE]: "Titre du site",
-  [META.URL]: "Url du site",
-  [META.KEYWORDS]: "Mots clés",
+export const SEO = {
+  [KEY_META.SEO_SITE_TITLE]: "Titre du site",
+  [KEY_META.URL]: "Url du site",
+  [KEY_META.KEYWORDS]: "Mots clés",
 
-  [META.DOCUMENT_TITLE_HOME]: "Titre de la page home",
-  [META.DESCRIPTION_HOME]: "Description de la page home",
+  [KEY_META.DOCUMENT_TITLE_HOME]: "Titre de la page home",
+  [KEY_META.DESCRIPTION_HOME]: "Description de la page home",
 
-  [META.DOCUMENT_TITLE_PAINTING_HOME]:
+  [KEY_META.DOCUMENT_TITLE_PAINTING_HOME]:
     "Titre de la page d'accueil des peintures",
-  [META.DESCRIPTION_PAINTING_HOME]:
+  [KEY_META.DESCRIPTION_PAINTING_HOME]:
     "Description de la page d'accueil des peintures",
-  [META.DOCUMENT_TITLE_PAINTING]: "Titre de la page peintures",
-  [META.DESCRIPTION_PAINTING]: "Description de la page peintures",
+  [KEY_META.DOCUMENT_TITLE_PAINTING]: "Titre de la page peintures",
+  [KEY_META.DESCRIPTION_PAINTING]: "Description de la page peintures",
 
-  [META.DOCUMENT_TITLE_SCULPTURE_HOME]:
+  [KEY_META.DOCUMENT_TITLE_SCULPTURE_HOME]:
     "Titre de la page d'accueil des sculptures",
-  [META.DESCRIPTION_SCULPTURE_HOME]:
+  [KEY_META.DESCRIPTION_SCULPTURE_HOME]:
     "Description de la page d'accueil des sculptures",
-  [META.DOCUMENT_TITLE_SCULPTURE]: "Titre de la page sculptures",
-  [META.DESCRIPTION_SCULPTURE]: "Description de la page sculptures",
+  [KEY_META.DOCUMENT_TITLE_SCULPTURE]: "Titre de la page sculptures",
+  [KEY_META.DESCRIPTION_SCULPTURE]: "Description de la page sculptures",
 
-  [META.DOCUMENT_TITLE_DRAWING_HOME]: "Titre de la page d'accueil des dessins",
-  [META.DESCRIPTION_DRAWING_HOME]:
+  [KEY_META.DOCUMENT_TITLE_DRAWING_HOME]:
+    "Titre de la page d'accueil des dessins",
+  [KEY_META.DESCRIPTION_DRAWING_HOME]:
     "Description de la page d'accueil des dessins",
-  [META.DOCUMENT_TITLE_DRAWING]: "Titre de la page dessins",
-  [META.DESCRIPTION_DRAWING]: "Description de la page dessins",
+  [KEY_META.DOCUMENT_TITLE_DRAWING]: "Titre de la page dessins",
+  [KEY_META.DESCRIPTION_DRAWING]: "Description de la page dessins",
 
-  [META.DOCUMENT_TITLE_POST]: "Titre de la page posts",
-  [META.DESCRIPTION_POST]: "Description de la page posts",
+  [KEY_META.DOCUMENT_TITLE_POST]: "Titre de la page posts",
+  [KEY_META.DESCRIPTION_POST]: "Description de la page posts",
 
-  [META.DOCUMENT_TITLE_PRESENTATION]: "Titre de la page présentation",
-  [META.DESCRIPTION_PRESENTATION]: "Description de la page présentation",
+  [KEY_META.DOCUMENT_TITLE_PRESENTATION]: "Titre de la page présentation",
+  [KEY_META.DESCRIPTION_PRESENTATION]: "Description de la page présentation",
 
-  [META.DOCUMENT_TITLE_CONTACT]: "Titre de la page contact",
-  [META.DESCRIPTION_CONTACT]: "Description de la page contact",
-};
+  [KEY_META.DOCUMENT_TITLE_CONTACT]: "Titre de la page contact",
+  [KEY_META.DESCRIPTION_CONTACT]: "Description de la page contact",
+} as const;
 
 export const MESSAGE = {
   category:
@@ -119,8 +132,10 @@ export const MESSAGE = {
     "Parmi les renseignements facultatif d'une catégorie, en plus d'un descriptif, la photo d'une" +
     " œuvre peut être assignée à cette catégorie, cela permet à l'utilisateur d'avoir une idée du genre d'œuvre qui s'y trouve (cette photo s'affiche dans la pastille sur laquelle on clique pour voir les œuvres de la catégorie). Cependant, cette photo ne peut être ajoutée qu'une fois que des œuvres y sont classées, puisque le choix de la photo s'effectue parmi ces œuvres. Donc après avoir créé la catégorie, et après y avoir classé des œuvres, tu pourras alors choisir une photo en allant dans la mise à jour de la catégorie.",
   error_sizeUpload:
-    "La taille totale des fichiers excède la limite de sécurité (30 MB).\nAjouter moins de fichier à" +
+    "La taille totale du transfert excède la limite de sécurité (30 MB).\nAjouter moins de fichier à" +
     " la fois.",
   error_imageSize:
     "Dimension de l'image trop petite. Largeur minimum : 2000 pixels",
+  error_imageType:
+    "Type de fichier incorrect.\nFichier accepté : jpeg, jpg, png",
 };
