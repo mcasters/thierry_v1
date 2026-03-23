@@ -10,11 +10,14 @@
   /*
   * Font size
   * ======================================================================== */
-  --font-size-title: 32px;
-  --font-size-nav1: 19px;
-  --font-size-nav2: 17px;
+  --font-size-title0: 36px;
+  --font-size-title1: 32px;
+  --font-size-title2: 28px;
+  --font-size-title3: 22px;
+  --font-size-title4: 19px;
   --font-size: 17px;
-  --font-size-min: 15px;
+  --font-size-min: 16px;
+  --font-size-micro: 15px;
 
   /*
    * Layout
@@ -65,7 +68,7 @@
 }
 
 html {
-  font-family: var(--font-family-serif);
+  font-family: var(--font-family-serif), serif;
   -webkit-font-smoothing: antialiased;
   font-size: var(--font-size);
 }
@@ -171,54 +174,39 @@ figure {
 /*
  * Forms
  */
-
-button,
-.button {
-  cursor: pointer;
+.inputContainer {
+  margin: 0 0 1.5em;
 }
 
 input,
 button,
-.button,
 select,
-textarea,
-label, .label {
-  font-family: var(--font-family-serif);
+textarea {
+  font-family: var(--font-family-serif), serif;
   -webkit-font-smoothing: antialiased;
   font-size: var(--font-size-min);
 }
 
-label {
+label, .label {
   display: block;
   text-align: left;
-  font-family: var(--font-family-serif-caps);
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-family-serif-caps), serif;
   font-size: 14px;
   letter-spacing: 3px;
+  margin: 10px 0 0;
 }
 
 textarea,
-.labelCheckbox,
-input:not([type="file"], [type="checkbox"]),
+input:not([type="checkbox"], [type="file"]),
 select {
+  display: block;
   width: 100%;
   background-color: white;
   border: 1px solid #d9d9d9;
   border-radius: unset;
   user-select: text;
   padding: 5px;
-  margin: 0 0 1em;
-}
-
-.area {
-  background-color: white;
-  border: 1px solid #d9d9d9;
-}
-
-input,
-.checkboxLabel,
-select {
-  height: 40px;
-  line-height: 40px;
 }
 
 textarea {
@@ -226,23 +214,51 @@ textarea {
   resize: vertical;
 }
 
+input,
+select {
+  height: 40px;
+  line-height: 40px;
+}
+
+.labelCheckbox {
+  height: 40px;
+  line-height: 40px;
+  margin: 10px 0 0;
+}
+
 input[type="checkbox"] {
-  height: unset;
-  margin-right: 8px;
+  margin: 10px 8px 0 0;
+}
+
+.list {
+  background-color: white;
+  border: 1px solid #d9d9d9;
 }
 
 .adminButton {
-  font-family: var(--font-family-serif);
+  font-family: var(--font-family-serif), serif;
   min-width: 200px;
   min-height: 40px;
-  box-shadow: inset 0 0.8em 1em 0 #efefef;
+  box-shadow: inset 0 0.8em 1em 0 #f6f6f6;
   border: 1px solid #d9d9d9;
-  background-color: #e2e2e2;
+  background-color: #efefef;
+  margin: 0 1em;
+  padding: 0.5em;
 }
 
-.adminButton {
-  margin: 0.5em;
-  padding: 0.5em;
+.adminButton:hover {
+  border-color: #c9c9c9;
+  background-color: #e5e5e5;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled, button:disabled:hover {
+  cursor: initial;
+  border-color: #d9d9d9;
+  background-color: #efefef;
 }
 
 /*
