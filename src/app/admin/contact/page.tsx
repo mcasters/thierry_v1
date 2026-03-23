@@ -5,12 +5,12 @@ import {
   getPhone,
 } from "@/lib/utils/commonUtils";
 import s from "@/components/admin/admin.module.css";
-import { Label } from "@/lib/type";
-import TextAreaForm from "@/components/admin/content/textAreaForm.tsx";
+import TextAreaForm from "@/components/admin/text/textAreaForm.tsx";
 import React from "react";
-import InputForm from "@/components/admin/content/inputForm.tsx";
+import InputForm from "@/components/admin/text/inputForm.tsx";
 import { getContentsFull } from "@/app/actions/contents";
 import { updateContent } from "@/app/actions/contents/admin.ts";
+import { KEY_LABEL } from "@/constants/admin.ts";
 
 export default async function Contact() {
   const contents = await getContentsFull();
@@ -19,31 +19,33 @@ export default async function Contact() {
     <div className={s.container}>
       <h1 className={s.title1}>Contenus de la page contact</h1>
       <TextAreaForm
-        textContent={getAddress(contents)}
-        label={Label.ADDRESS}
-        textLabel="Adresse"
+        text={getAddress(contents)}
+        dbKey={KEY_LABEL.ADDRESS}
+        updateAction={updateContent}
+        title="Adresse"
       />
       <div className="separate" />
       <InputForm
-        dbLabel={Label.PHONE}
+        dbKey={KEY_LABEL.PHONE}
         text={getPhone(contents)}
         updateAction={updateContent}
-        label="Téléphone"
+        title="Téléphone"
         isPhone
       />
       <div className="separate" />
       <InputForm
-        dbLabel={Label.EMAIL}
+        dbKey={KEY_LABEL.EMAIL}
         text={getEmail(contents)}
         updateAction={updateContent}
-        label="E-mail"
+        title="E-mail"
         isEmail
       />
       <div className="separate" />
       <TextAreaForm
-        textContent={getContactText(contents)}
-        label={Label.TEXT_CONTACT}
-        textLabel="Texte d'accompagnement (facultatif)"
+        text={getContactText(contents)}
+        dbKey={KEY_LABEL.TEXT_CONTACT}
+        updateAction={updateContent}
+        title="Texte d'accompagnement (facultatif)"
       />
     </div>
   );

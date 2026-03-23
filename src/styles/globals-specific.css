@@ -32,6 +32,7 @@
    * Colors
    * ======================================================================== */
 
+    --color-main: var(--color-prussian-blue);
   --color-light: #dcdcdc;
   --color-medium: #c4c3c3;
   --color-dark: #818181;
