@@ -5,15 +5,13 @@ import React from "react";
 interface Props {
   onCancel: () => void;
   text?: string;
-  classname?: string;
   disabled?: boolean;
 }
 
 export default function CancelButton({
   onCancel,
   text,
-  classname,
-  disabled,
+  disabled = false,
 }: Props) {
   return (
     <button
@@ -21,8 +19,8 @@ export default function CancelButton({
         e.preventDefault();
         onCancel();
       }}
-      className={`${classname ? classname : ""} adminButton`}
-      disabled={disabled ? disabled : false}
+      className="adminButton"
+      disabled={disabled}
     >
       {text ? text : "Annuler"}
     </button>

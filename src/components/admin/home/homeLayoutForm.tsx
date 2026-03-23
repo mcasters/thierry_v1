@@ -1,29 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useActionState, useState } from "react";
 import s from "@/components/admin/admin.module.css";
-import { useAlert } from "@/app/context/alertProvider.tsx";
-import { updateMeta } from "@/app/actions/meta/admin.ts";
 import Image from "next/image";
 import { useMetas } from "@/app/context/metaProvider.tsx";
 import { getHomeLayout } from "@/lib/utils/commonUtils.ts";
+import { updateMeta } from "@/app/actions/meta";
+import { KEY_META } from "@/constants/admin.ts";
+import useActionResult from "@/components/hooks/useActionResult.ts";
 
 export default function HomeLayoutForm() {
   const metas = useMetas();
-  const alert = useAlert();
   const [value, setValue] = useState<string>(getHomeLayout(metas).toString());
-
-  const submit = async (formData: FormData) => {
-    const { message, isError } = await updateMeta(formData);
-    alert(message, isError);
-  };
+  const [state, action] = useActionState(updateMeta, null);
+  useActionResult(state);
 
   return (
-    <form action={submit} className={s.layoutForm}>
-      <input type="hidden" name="label" value={"homeLayout"} />
+    <form action={action} className={s.layoutForm}>
+      <input type="hidden" name="key" value={KEY_META.HOME_LAYOUT} />
       <input type="hidden" name="text" value={value} />
 
-      <label className={s.layoutLabel}>
+      <p className={s.layoutLabel}>
         <button
           onClick={(e) => setValue(e.currentTarget.value)}
           className={
@@ -41,13 +38,13 @@ export default function HomeLayoutForm() {
             unoptimized
           />
         </button>
-        <p>
+        <span>
           <strong>{`Texte séparé :`}</strong>
           <br />
           {`Le titre du site, les menus, et l'introduction sont situés au dessus de l'image.`}
-        </p>
-      </label>
-      <label className={s.layoutLabel}>
+        </span>
+      </p>
+      <p className={s.layoutLabel}>
         <button
           onClick={(e) => setValue(e.currentTarget.value)}
           className={
@@ -65,12 +62,12 @@ export default function HomeLayoutForm() {
             unoptimized
           />
         </button>
-        <p>
+        <span>
           <strong>{`Texte intégré :`}</strong>
           <br />
           {`Le titre du site, les menus, et l'introduction sont situés sur l'image qui prend tout l'écran. Leur couleur doit alors être accordée avec l'image pour qu'ils restent lisibles : Mettre une seule image est sans doute plus simple.`}
-        </p>
-      </label>
+        </span>
+      </p>
     </form>
   );
 }

@@ -7,7 +7,7 @@
 }
 
 .sectionTitle {
-  font-family: var( --font-family-serif-caps);
+  font-family: var( --font-family-serif-caps), serif;
   letter-spacing: 3px;
   padding-bottom: 1em;
   font-size: 1.1em;
@@ -20,7 +20,7 @@
 
 .subTitle {
   text-decoration: underline;
-  font-size: 1em;
+  font-size: var(--font-size);
   text-align: left;
 }
 
@@ -56,8 +56,12 @@
   height: 28px;
   border-radius: 1px;
   border: 1px solid #aaa;
-  cursor: pointer;
   margin: 4px;
+  transition: transform .2s;
+}
+
+.swatch:hover {
+  transform: scale(1.1);
 }
 
 .colorLabel {
@@ -87,9 +91,11 @@ ColorPicker
 
 .colorPicker .halfWidth {
   display: inline-block;
-  width: 50%;
-  height: 36px;
+  min-width: unset;
+  width: 45%;
+  height: 40px;
   vertical-align: top;
+  margin: 0 0 1em;
 }
 
 .pickerPresetColor {
@@ -101,7 +107,7 @@ ColorPicker
 .presetColorContainer {
   width: 50px;
   padding: 0 1px;
-  font-family: var(--font-family-sans);
+  font-family: var(--font-family-sans), sans-serif;
   font-size: 11px;
   word-break: break-word;
 }

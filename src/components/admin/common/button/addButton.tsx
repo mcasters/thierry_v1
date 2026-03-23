@@ -2,28 +2,21 @@
 
 import Modal from "@/components/admin/common/modal.tsx";
 import React from "react";
-import s from "@/components/admin/admin.module.css";
 import useModal from "@/components/hooks/useModal.ts";
 
 interface Props {
   renderForm: (arg0: () => void) => React.ReactNode;
+  modalWidth: number;
 }
-export default function AddButton({ renderForm }: Props) {
+export default function AddButton({ renderForm, modalWidth }: Props) {
   const { isOpen, toggle } = useModal();
 
   return (
     <>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          toggle();
-        }}
-        className={`${s.addButton} adminButton`}
-        aria-label={"Ajout"}
-      >
+      <button onClick={toggle} className="adminButton">
         Ajouter
       </button>
-      <Modal isOpen={isOpen} title={`Ajout`}>
+      <Modal isOpen={isOpen} title={`Ajout`} width={modalWidth}>
         {renderForm(toggle)}
       </Modal>
     </>

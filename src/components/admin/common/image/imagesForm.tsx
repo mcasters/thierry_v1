@@ -1,24 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useActionState, useState } from "react";
+import s from "@/components/admin/admin.module.css";
+import { Image, KeyContent } from "@/lib/type";
+import ImageInput from "@/components/admin/common/image/imageInput.tsx";
+import useActionResult from "@/components/hooks/useActionResult.ts";
+import { updateImageContent } from "@/app/actions/contents/admin.ts";
 import SubmitButton from "@/components/admin/common/button/submitButton.tsx";
 import CancelButton from "@/components/admin/common/button/cancelButton.tsx";
-import { useAlert } from "@/app/context/alertProvider";
-import {
-  deleteImageContent,
-  updateImageContent,
-} from "@/app/actions/contents/admin";
-import s from "@/components/admin/admin.module.css";
-import { Image, Label } from "@/lib/type";
-import Preview from "@/components/admin/common/image/preview.tsx";
-import ImageInput from "@/components/admin/common/image/imageInput.tsx";
 
 type Props = {
   images: Image[];
   isMultiple: boolean;
-  label: Label;
+  label: KeyContent;
   acceptSmallImage: boolean;
-  title: string;
+  title?: string;
   isMain?: boolean;
 };
 
@@ -30,42 +26,33 @@ export default function ImagesForm({
   title,
   isMain = false,
 }: Props) {
-  const alert = useAlert();
-  const [resizedFiles, setResizedFiles] = useState<File[]>([]);
-  const [reset, setReset] = useState<number>(0);
-
-  const submit = async (formData: FormData) => {
-    resizedFiles.forEach((file) => formData.append("files", file));
-    const { message, isError } = await updateImageContent(formData);
-    alert(message, isError);
-    setResizedFiles([]);
-    setReset((prevState) => prevState + 1);
+  const [resetInput, setResetInput] = useState<number>(0);
+  const [changed, setChanged] = useState<boolean>(false);
+  const [state, action] = useActionState(updateImageContent, null);
+  const reset = (): void => {
+    setResetInput(resetInput + 1);
+    setChanged(false);
   };
+  useActionResult(state, reset);
 
   return (
-    <>
-      <label className={s.label}>{title}</label>
-      <Preview
-        filenames={images.map((i) => i.filename)}
-        pathImage="/images/miscellaneous"
-        deleteAction={(filename) => deleteImageContent(filename)}
+    <form action={action}>
+      <input type="hidden" name="key" value={label} />
+      <input type="hidden" name="isMain" value={isMain?.toString()} />
+      <ImageInput
+        key={resetInput}
+        filesPath={images.map(
+          (i: Image) => `/images/miscellaneous/sm/${i.filename}`,
+        )}
+        isMultiple={isMultiple}
+        smallImageOption={acceptSmallImage}
+        onChange={() => setChanged(true)}
+        title={title}
       />
-      <form action={submit}>
-        <input type="hidden" name="label" value={label} />
-        <input type="hidden" name="isMain" value={isMain?.toString()} />
-        <ImageInput
-          key={reset}
-          isMultiple={isMultiple}
-          acceptSmallImage={acceptSmallImage}
-          onNewFiles={setResizedFiles}
-        />
-        <div className={s.buttonSection}>
-          <SubmitButton />
-          <CancelButton
-            onCancel={() => setReset((prevState) => prevState + 1)}
-          />
-        </div>
-      </form>
-    </>
+      <div className={s.buttonSection}>
+        <SubmitButton disabled={!changed} />
+        <CancelButton disabled={!changed} onCancel={reset} />
+      </div>
+    </form>
   );
 }

@@ -4,18 +4,22 @@ import React from "react";
 
 interface Props {
   disabled?: boolean;
-  text?: string;
-  classname?: string;
 }
 
-export default function SubmitButton({ disabled, text, classname }: Props) {
+export default function SubmitButton({ disabled }: Props) {
   return (
     <button
-      disabled={disabled ? disabled : false}
+      className="adminButton"
       type="submit"
-      className={`${classname ? classname : ""} adminButton`}
+      disabled={disabled !== undefined ? disabled : false}
+      style={{
+        outline:
+          disabled !== undefined && !disabled
+            ? "2px solid var(--color-main)"
+            : undefined,
+      }}
     >
-      {text ? text : "Enregistrer"}
+      Enregistrer
     </button>
   );
 }

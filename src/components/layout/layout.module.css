@@ -50,8 +50,8 @@ HEADER
 }
 
 .title {
-  font-family: var(--font-family-serif-caps);
-  font-size: var(--font-size-title);
+  font-family: var(--font-family-serif-caps), serif;
+  font-size: var(--font-size-title1);
   font-weight: 400;
   margin: 0;
 }

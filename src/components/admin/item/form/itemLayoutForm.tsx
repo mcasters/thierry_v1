@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useActionState, useState } from "react";
 import s from "@/components/admin/admin.module.css";
-import { useAlert } from "@/app/context/alertProvider.tsx";
-import { updateMeta } from "@/app/actions/meta/admin.ts";
 import { Type } from "@/lib/type.ts";
 import Image from "next/image";
 import { getWorkLayout } from "@/lib/utils/commonUtils.ts";
 import { useMetas } from "@/app/context/metaProvider.tsx";
+import { updateMeta } from "@/app/actions/meta";
+import useActionResult from "@/components/hooks/useActionResult.ts";
 
 type Props = {
   type: Type.PAINTING | Type.SCULPTURE | Type.DRAWING;
@@ -15,23 +15,19 @@ type Props = {
 
 export default function ItemLayoutForm({ type }: Props) {
   const metas = useMetas();
-  const alert = useAlert();
   const [itemLayout, itemDarkBackground] = getWorkLayout(metas, type);
   const [layout, setLayout] = useState<string>(itemLayout.toString());
   const [darkBackground, setDarkBackground] = useState<boolean>(
     itemDarkBackground === 1,
   );
-
-  const submit = async (formData: FormData) => {
-    const { message, isError } = await updateMeta(formData);
-    alert(message, isError);
-  };
+  const [state, action] = useActionState(updateMeta, null);
+  useActionResult(state);
 
   return (
-    <form action={submit} className={s.layoutForm}>
+    <form action={action} className={s.layoutForm}>
       <input
         type="hidden"
-        name="label"
+        name="key"
         value={
           type === Type.PAINTING
             ? "paintingLayout"
@@ -48,7 +44,7 @@ export default function ItemLayoutForm({ type }: Props) {
       />
       {(type === Type.PAINTING || type === Type.DRAWING) && (
         <>
-          <label className={s.layoutLabel}>
+          <p className={s.layoutLabel}>
             <button
               onClick={() => setLayout("0")}
               className={
@@ -65,13 +61,13 @@ export default function ItemLayoutForm({ type }: Props) {
                 unoptimized
               />
             </button>
-            <p>
+            <span>
               <strong>{`Une seule image dans la largeur :`}</strong>
               <br />
               {`Les œuvres se suivent, l'image est plus grande, et la description est à côté.`}
-            </p>
-          </label>
-          <label className={s.layoutLabel}>
+            </span>
+          </p>
+          <p className={s.layoutLabel}>
             <button
               onClick={() => setLayout("1")}
               className={
@@ -88,17 +84,17 @@ export default function ItemLayoutForm({ type }: Props) {
                 unoptimized
               />
             </button>
-            <p>
+            <span>
               <strong>{`Deux images dans la largeur :`}</strong>
               <br />
               {`Les œuvres sont individualisées, leur description est en
                 dessous.`}
-            </p>
-          </label>
+            </span>
+          </p>
         </>
       )}
       {type === Type.SCULPTURE && (
-        <label className={s.layoutLabel}>
+        <p className={s.layoutLabel}>
           <button
             onClick={() => setLayout("3")}
             className={
@@ -115,15 +111,15 @@ export default function ItemLayoutForm({ type }: Props) {
               unoptimized
             />
           </button>
-          <p>
+          <span>
             <strong>{`Images de la sculpture groupées :`}</strong>
             <br />
             {`Les sculptures sont individualisées, leur description est en
               dessous. Les images d'une même œuvre étant groupées ensemble, il est plus joli qu'elles aient toutes le même ratio (rapport largeur/hauteur)`}
-          </p>
-        </label>
+          </span>
+        </p>
       )}
-      <label className={s.layoutLabel}>
+      <p className={s.layoutLabel}>
         <button
           onClick={() => setLayout("2")}
           className={
@@ -140,15 +136,15 @@ export default function ItemLayoutForm({ type }: Props) {
             unoptimized
           />
         </button>
-        <p>
+        <span>
           <strong>{`Galerie : toutes les images s'imbriquent :`}</strong>
           <br />
           {`Vision d'ensemble, toutes les œuvres sont ensembles, et leur description n'apparait que lorsqu'on ouvre la "lightbox" (lorsqu'on clic sur l'image et qu'elle s'affiche en grand sur fond noir).`}
-        </p>
-      </label>
+        </span>
+      </p>
       <br />
       <br />
-      <label>
+      <p className={s.layoutLabel}>
         <button
           onClick={() => setDarkBackground(!darkBackground)}
           className={
@@ -158,7 +154,7 @@ export default function ItemLayoutForm({ type }: Props) {
           }
         />
         <strong>Zone plus foncée derrière les œuvres</strong>
-      </label>
+      </p>
     </form>
   );
 }

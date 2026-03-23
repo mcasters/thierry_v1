@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useActionState, useState } from "react";
 import s from "@/components/admin/admin.module.css";
 import { Category, Image, Type, Work } from "@/lib/type.ts";
-import { useAlert } from "@/app/context/alertProvider.tsx";
 import SubmitButton from "@/components/admin/common/button/submitButton.tsx";
 import CancelButton from "@/components/admin/common/button/cancelButton.tsx";
 import { createItem, updateItem } from "@/app/actions/item-post/admin.ts";
-import Preview from "@/components/admin/common/image/preview.tsx";
 import ImageInput from "@/components/admin/common/image/imageInput.tsx";
 import { format } from "date-fns/format";
+import useActionResult from "@/components/hooks/useActionResult.ts";
 
 interface Props {
   work: Work;
@@ -18,173 +17,162 @@ interface Props {
 }
 
 export default function WorkForm({ work, onClose, categories }: Props) {
-  const isUpdate = work.id !== 0;
   const isSculpture = work.type === Type.SCULPTURE;
-  const alert = useAlert();
   const [workItem, setWorkItem] = useState<Work>(work);
-  const [date, setDate] = useState<string>(
-    format(new Date(work.date), "yyyy-MM-dd"),
+  const [state, action] = useActionState(
+    work.id !== 0 ? updateItem : createItem,
+    null,
   );
-  const [filenamesToDelete, setFilenamesToDelete] = useState<string[]>([]);
-  const [newFiles, setNewFiles] = useState<File[]>([]);
-
-  useEffect(() => {
-    if (!isSculpture && workItem.images.length > 0 && newFiles.length > 0) {
-      handleDeleteFile(workItem.images[0].filename);
-    }
-  }, [newFiles]);
-
-  const handleDeleteFile = (filename: string) => {
-    const images = workItem.images.filter(
-      (i: Image) => i.filename !== filename,
-    );
-    setWorkItem({ ...workItem, images });
-    setFilenamesToDelete([...filenamesToDelete, filename]);
-  };
-
-  const submit = async (formData: FormData) => {
-    newFiles.forEach((file) => formData.append("files", file));
-    const action = isUpdate ? updateItem : createItem;
-    const { message, isError } = await action(formData);
-    if (!isError) onClose();
-    alert(message, isError);
-  };
+  useActionResult(state, onClose);
 
   return (
-    <form action={submit}>
+    <form action={action}>
       <input name="type" type="hidden" value={work.type} />
-      {isUpdate && (
-        <>
-          <input name="id" type="hidden" value={work.id} />
-          <input
-            name="filenamesToDelete"
-            type="hidden"
-            value={filenamesToDelete}
-          />
-          {work.categoryId !== workItem.categoryId && (
-            <input
-              name="oldCategoryId"
-              type="hidden"
-              value={String(work.categoryId)}
-            />
-          )}
-        </>
+      <input name="id" type="hidden" value={work.id} />
+      {work.categoryId !== workItem.categoryId && (
+        <input
+          name="oldCategoryId"
+          type="hidden"
+          value={String(work.categoryId)}
+        />
       )}
       <div className={s.columnWrapper}>
         <div>
-          <input
-            name="title"
-            type="text"
-            placeholder="Titre"
-            value={workItem.title}
-            onChange={(e) =>
-              setWorkItem({ ...workItem, title: e.target.value })
-            }
-            autoFocus
-            required
-          />
-          <input
-            name="date"
-            type="date"
-            placeholder="Date"
-            value={date}
-            onChange={(e) => {
-              setDate(e.target.value);
-            }}
-            required
-          />
-          <div className={s.dimensions}>
+          <label>
+            Titre *
             <input
-              name="height"
-              type="number"
-              placeholder="Hauteur (cm)"
-              value={workItem.height === 0 ? "" : workItem.height.toString()}
+              name="title"
+              type="text"
+              value={workItem.title}
               onChange={(e) =>
-                setWorkItem({ ...workItem, height: Number(e.target.value) })
+                setWorkItem({ ...workItem, title: e.target.value })
               }
               required
             />
+          </label>
+          <label>
+            Date *
             <input
-              name="width"
-              type="number"
-              placeholder="Largeur (cm)"
-              value={workItem.width === 0 ? "" : workItem.width.toString()}
+              name="date"
+              type="date"
+              value={format(new Date(workItem.date), "yyyy-MM-dd")}
               onChange={(e) =>
-                setWorkItem({ ...workItem, width: Number(e.target.value) })
+                setWorkItem({ ...workItem, date: new Date(e.target.value) })
               }
               required
             />
-            {isSculpture && (
+          </label>
+          <div className={s.flexPart}>
+            <label>
+              Hauteur *
               <input
-                name="length"
+                name="height"
                 type="number"
-                placeholder="Profondeur (cm)"
-                value={workItem.length === 0 ? "" : workItem.length.toString()}
+                placeholder="cm"
+                value={workItem.height === 0 ? "" : workItem.height.toString()}
                 onChange={(e) =>
-                  setWorkItem({ ...workItem, length: Number(e.target.value) })
+                  setWorkItem({ ...workItem, height: Number(e.target.value) })
                 }
                 required
               />
+            </label>
+            <label>
+              Largeur *
+              <input
+                name="width"
+                type="number"
+                placeholder="cm"
+                value={workItem.width === 0 ? "" : workItem.width.toString()}
+                onChange={(e) =>
+                  setWorkItem({ ...workItem, width: Number(e.target.value) })
+                }
+                required
+              />
+            </label>
+            {isSculpture && (
+              <label>
+                Profondeur *
+                <input
+                  name="length"
+                  type="number"
+                  placeholder="cm"
+                  value={
+                    workItem.length === 0 ? "" : workItem.length.toString()
+                  }
+                  onChange={(e) =>
+                    setWorkItem({ ...workItem, length: Number(e.target.value) })
+                  }
+                  required
+                />
+              </label>
             )}
           </div>
-          <textarea
-            name="description"
-            placeholder="Description (facultative)"
-            value={workItem.description}
-            onChange={(e) =>
-              setWorkItem({ ...workItem, description: e.target.value })
-            }
-            rows={3}
-          />
+          <label>
+            Description
+            <textarea
+              name="description"
+              value={workItem.description}
+              onChange={(e) =>
+                setWorkItem({ ...workItem, description: e.target.value })
+              }
+              rows={3}
+            />
+          </label>
         </div>
-        <div className={s.col2}>
-          <select
-            name="categoryId"
-            value={workItem.categoryId?.toString()}
-            onChange={(e) => {
-              setWorkItem(
-                Object.assign({}, workItem, {
-                  categoryId: e.target.value,
-                }),
-              );
-            }}
-          >
-            <option value={0}>-- Aucune catégorie --</option>
-            {categories &&
-              categories.map((cat) => {
-                if (cat.value !== "Sans catégorie")
-                  return (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.value}
-                    </option>
-                  );
-              })}
-          </select>
-          <input
-            name="technique"
-            type="text"
-            placeholder="Technique"
-            value={workItem.technique}
-            onChange={(e) =>
-              setWorkItem({ ...workItem, technique: e.target.value })
-            }
-            required
-          />
-          <div className={s.checkTextForm}>
-            <label className="checkboxLabel">
-              <input
-                name="isToSell"
-                type="checkbox"
-                checked={workItem.isToSell}
-                onChange={(e) => {
-                  const isToSell = e.target.checked;
-                  setWorkItem({
-                    ...workItem,
-                    isToSell,
-                    sold: !isToSell,
-                  });
-                }}
-              />
+        <div>
+          <label>
+            Catégorie
+            <select
+              name="categoryId"
+              value={workItem.categoryId?.toString()}
+              onChange={(e) => {
+                setWorkItem(
+                  Object.assign({}, workItem, {
+                    categoryId: e.target.value,
+                  }),
+                );
+              }}
+            >
+              <option value={0}>-- Aucune catégorie --</option>
+              {categories &&
+                categories.map((cat) => {
+                  if (cat.value !== "Sans catégorie")
+                    return (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.value}
+                      </option>
+                    );
+                })}
+            </select>
+          </label>
+          <label>
+            Technique *
+            <input
+              name="technique"
+              type="text"
+              value={workItem.technique}
+              onChange={(e) =>
+                setWorkItem({ ...workItem, technique: e.target.value })
+              }
+              required
+            />
+          </label>
+          <div className={`${s.flexPart} ${s.withMarginTop}`}>
+            <input
+              id="isToSell"
+              name="isToSell"
+              type="checkbox"
+              checked={workItem.isToSell}
+              onChange={(e) => {
+                const isToSell = e.target.checked;
+                setWorkItem({
+                  ...workItem,
+                  isToSell,
+                  sold: isToSell ? false : workItem.sold,
+                });
+              }}
+            />
+            <label htmlFor="isToSell" className="labelCheckbox">
               À vendre
             </label>
             {workItem.isToSell && (
@@ -200,24 +188,26 @@ export default function WorkForm({ work, onClose, categories }: Props) {
                 onChange={(e) =>
                   setWorkItem({ ...workItem, price: Number(e.target.value) })
                 }
+                className={s.optionInput}
               />
             )}
           </div>
-          <div className={s.checkTextForm}>
-            <label className="checkboxLabel">
-              <input
-                name="sold"
-                type="checkbox"
-                checked={workItem.sold}
-                onChange={(e) => {
-                  const sold = e.target.checked;
-                  setWorkItem({
-                    ...workItem,
-                    sold,
-                    isToSell: !sold,
-                  });
-                }}
-              />
+          <div className={s.flexPart}>
+            <input
+              id="sold"
+              name="sold"
+              type="checkbox"
+              checked={workItem.sold}
+              onChange={(e) => {
+                const sold = e.target.checked;
+                setWorkItem({
+                  ...workItem,
+                  sold,
+                  isToSell: sold ? false : workItem.isToSell,
+                });
+              }}
+            />
+            <label htmlFor="sold" className="labelCheckbox">
               Vendu
             </label>
             {workItem.sold && (
@@ -233,58 +223,49 @@ export default function WorkForm({ work, onClose, categories }: Props) {
                 onChange={(e) =>
                   setWorkItem({ ...workItem, price: Number(e.target.value) })
                 }
+                className={s.optionInput}
               />
             )}
           </div>
-          <div className={s.checkTextForm}>
-            <label className="checkboxLabel">
-              <input
-                name="isOut"
-                type="checkbox"
-                checked={workItem.isOut}
-                onChange={(e) =>
-                  setWorkItem({ ...workItem, isOut: e.target.checked })
-                }
-              />
+          <div className={s.flexPart}>
+            <input
+              id="isOut"
+              name="isOut"
+              type="checkbox"
+              checked={workItem.isOut}
+              onChange={(e) =>
+                setWorkItem({ ...workItem, isOut: e.target.checked })
+              }
+            />
+            <label htmlFor="isOut" className="labelCheckbox">
               Sortie
             </label>
             {workItem.isOut && (
               <textarea
                 name="outInformation"
-                placeholder="Information de sortie (facultative)"
+                placeholder="Information de sortie (facultatif)"
                 value={workItem.outInformation}
                 onChange={(e) =>
                   setWorkItem({ ...workItem, outInformation: e.target.value })
                 }
-                rows={3}
+                rows={2}
+                className={s.optionInput}
               />
             )}
           </div>
         </div>
       </div>
-      <Preview
-        filenames={workItem.images.map((i: Image) => i.filename)}
-        pathImage={`/images/${work.type}`}
-        onDelete={handleDeleteFile}
-        title={isSculpture ? "Une photo minimum :" : "Une seule photo :"}
-      />
       <ImageInput
+        filesPath={workItem.images.map(
+          (i: Image) => `/images/${work.type}/sm/${i.filename}`,
+        )}
         isMultiple={isSculpture}
-        acceptSmallImage={true}
-        onNewFiles={setNewFiles}
+        smallImageOption={true}
+        title={isSculpture ? "Images * :" : "Image * :"}
+        required
       />
       <div className={s.buttonSection}>
-        <SubmitButton
-          disabled={
-            workItem.title === "" ||
-            workItem.technique === "" ||
-            date === "" ||
-            workItem.height === 0 ||
-            workItem.width === 0 ||
-            (isSculpture && workItem.length === 0) ||
-            (newFiles.length === 0 && workItem.images.length === 0)
-          }
-        />
+        <SubmitButton />
         <CancelButton onCancel={onClose} />
       </div>
     </form>
